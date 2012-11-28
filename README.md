@@ -1,5 +1,7 @@
 # JSNLog
 
+[Click here to install JSNLog](http://www.jsnlog.com#installation)
+
 JSNLog is a JavaScript logging library with strong integration in .Net. Configure your JavaScript loggers in your server side web.config. Receive log messages on the server and have them logged by your server side logging package (Log4Net, NLog, etc.) without writing a line of code.
 
 ## Background
