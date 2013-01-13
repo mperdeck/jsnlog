@@ -66,11 +66,6 @@ namespace JSNLog.Infrastructure
         }
 
 
-        //###########private static void ProcessElement(
-        //    XmlElement xe, IEnumerable<TagInfo> tagInfos, object context, Sequence sequence, StringBuilder sb)
-        //{
-        //}
-
         /// <summary>
         /// Processes a list of nodes. All XmlElements among the nodes are processed,
         /// any other types of nodes (comments, etc.) are ignored.

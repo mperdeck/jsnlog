@@ -27,8 +27,8 @@
 * (see below)
 *
 * Author: Mattijs Perdeck 
-* Version: 1.0.0
-* Build date: 18 November 2012
+* Version: 1.1.0
+* Build date: 13 Jan 2013
 */
 
 /**
@@ -139,7 +139,15 @@ var jsnlog = (function () {
     JSNLog.prototype = new EventSupport();
 
     jsnlog = new JSNLog();
-    jsnlog.version = "1.0.0";
+    jsnlog.version = "1.1.0";
+
+    // ----------------------
+
+    jsnlog.clientIP = null;
+
+    jsnlog.setClientIp = function (newClientIp) {
+        jsnlog.clientIP = newClientIp;
+    };
 
     /* -------------------------------------------------------------------------- */
     // Utility functions
@@ -376,6 +384,45 @@ var jsnlog = (function () {
         evt.returnValue = false;
     }
 
+
+    // Returns true if a given event is ok to be logged. False otherwise.
+    //
+    // eventLevel (type: Level)
+    //     The level of the event itself
+    //
+    // checkLevel (type: Level)
+    //     The level of the logger or appender
+    //
+    // userAgentRegex
+    //     Regex to be matched against the current user agent. if userAgentRegex is empty string or null,
+    //     there is always a match. If there is no match, this function returns false.
+    //
+    // ipRegex
+    //     Regex to be matched against the current user IP address. if ipRegex is empty string or null,
+    //     there is always a match. If there is no match, this function returns false.
+    //
+    //     For this to work, you need to set the client IP first by calling jsnlog.setClientIp.
+    function eventCanBeLogged(eventLevel, checkLevel, userAgentRegex, ipRegex) {
+        if (!eventLevel.isGreaterOrEqual(checkLevel)) { return false; }
+
+        if ((userAgentRegex != null) &&
+            (userAgentRegex != '')) {
+
+            var userAgentRegexPatt = new RegExp(userAgentRegex);
+            if (!userAgentRegexPatt.test(navigator.userAgent)) { return false; }
+        }
+
+        if ((ipRegex != null) &&
+            (ipRegex != '') &&
+            (jsnlog.clientIP != null)) {
+
+            var ipRegexPatt = new RegExp(ipRegex);
+            if (!ipRegexPatt.test(jsnlog.clientIP)) { return false; }
+        }
+
+        return true;
+    }
+
     /* ---------------------------------------------------------------------- */
     // Simple logging for jsnlog itself
 
@@ -441,6 +488,8 @@ var jsnlog = (function () {
     jsnlog.isEnabled = function () {
         return enabled;
     };
+
+    // ----------------------
 
     var useTimeStampsInMilliseconds = true;
 
@@ -523,7 +572,9 @@ var jsnlog = (function () {
         this.children = [];
 
         var appenders = [];
-        var loggerLevel = null;
+        var loggerLevel = null; // Type Level
+        var loggerUserAgentRegex = null; // Type string
+        var loggerIpRegex = null; // Type string
         var isRoot = (this.name === rootLoggerName);
         var isNull = (this.name === nullLoggerName);
 
@@ -549,6 +600,9 @@ var jsnlog = (function () {
                 this.invalidateAppenderCache();
             }
         };
+
+        // ---------------------------------
+        // Appenders
 
         // Create methods that use the appenders variable in this scope
         this.addAppender = function (appender) {
@@ -603,8 +657,12 @@ var jsnlog = (function () {
             }
         };
 
+        // ----------------------
+
         this.log = function (level, params) {
-            if (enabled && level.isGreaterOrEqual(this.getEffectiveLevel())) {
+            if (enabled &&
+                eventCanBeLogged(level, this.getEffectiveLevel(), this.getEffectiveUserAgentRegex(), this.getEffectiveIpRegex())) {
+
                 // Check whether last param is an exception
                 var exception;
                 var finalParamIndex = params.length - 1;
@@ -634,6 +692,9 @@ var jsnlog = (function () {
             }
         };
 
+        // ------------------------------
+        // Levels
+
         this.setLevel = function (level) {
             // Having a level of null on the root logger would be very bad.
             if (isRoot && level === null) {
@@ -658,6 +719,52 @@ var jsnlog = (function () {
                 }
             }
         };
+
+        // ------------------------------
+        // User Agents
+
+        this.setUserAgentRegex = function (newUserAgentRegex) {
+            loggerUserAgentRegex = newUserAgentRegex;
+        };
+
+        this.getUserAgentRegex = function () {
+            return loggerUserAgentRegex;
+        };
+
+        this.getEffectiveUserAgentRegex = function () {
+            for (var logger = this; logger !== null; logger = logger.parent) {
+                var userAgentRegex = logger.getUserAgentRegex();
+                if (userAgentRegex !== null) {
+                    return userAgentRegex;
+                }
+            }
+
+            return null;
+        };
+
+        // ------------------------------
+        // IPs
+
+        this.setIpRegex = function (newIpRegex) {
+            loggerIpRegex = newIpRegex;
+        };
+
+        this.getIpRegex = function () {
+            return loggerIpRegex;
+        };
+
+        this.getEffectiveIpRegex = function () {
+            for (var logger = this; logger !== null; logger = logger.parent) {
+                var ipRegex = logger.getIpRegex();
+                if (ipRegex !== null) {
+                    return ipRegex;
+                }
+            }
+
+            return null;
+        };
+
+        // ------------------------------
 
         var timers = {};
 
@@ -688,6 +795,8 @@ var jsnlog = (function () {
                 }
             }
         };
+
+        // ----------------------
 
         this.assertEqual = function (v1, v2) {
             if (enabled && (v1 != v2)) {
@@ -963,12 +1072,17 @@ var jsnlog = (function () {
 
     Appender.prototype.layout = new JsonLayout(false, false);
     Appender.prototype.threshold = Level.ALL;
+    Appender.prototype.userAgentRegex = null;
+    Appender.prototype.ipRegex = null;
+
     Appender.prototype.loggers = [];
 
     // Performs threshold checks before delegating actual logging to the
     // subclass's specific append method.
     Appender.prototype.doAppend = function (loggingEvent) {
-        if (enabled && loggingEvent.level.level >= this.threshold.level) {
+        if (enabled &&
+            eventCanBeLogged(loggingEvent.level, this.threshold, this.userAgentRegex, this.ipRegex)) {
+
             this.append(loggingEvent);
         }
     };
@@ -995,6 +1109,14 @@ var jsnlog = (function () {
             handleError("Appender.setThreshold: threshold supplied to " +
 				this.toString() + " is not a subclass of Level");
         }
+    };
+
+    Appender.prototype.setUserAgentRegex = function (newUserAgentRegex) {
+        this.userAgentRegex = newUserAgentRegex;
+    };
+
+    Appender.prototype.setIpRegex = function (newIpRegex) {
+        this.ipRegex = newIpRegex;
     };
 
     Appender.prototype.setAddedToLogger = function (logger) {

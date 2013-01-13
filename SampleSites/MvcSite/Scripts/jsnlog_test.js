@@ -9,5 +9,11 @@
 
         var speciallogger = new jsnlog_speciallogger();
         speciallogger.initialise();
+
+        var useragenttest = new jsnlog_useragenttest();
+        useragenttest.initialise();
+
+        var iptest = new jsnlog_iptest();
+        iptest.initialise();
     }
 } ());

@@ -3,10 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebFormsSite", "WebFormsSite", "{75F5FB0A-183D-4191-B11B-ADE34C94FB62}"
 	ProjectSection(WebsiteProperties) = preProject
-		SccProjectName = "SAK"
-		SccAuxPath = "SAK"
-		SccLocalPath = "SAK"
-		SccProvider = "SAK"
+		SccProjectName = ""
+		SccAuxPath = ""
+		SccLocalPath = ""
+		SccProvider = ""
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		Debug.AspNetCompiler.VirtualPath = "/WebFormsSite"
 		Debug.AspNetCompiler.PhysicalPath = "WebFormsSite\"
@@ -28,20 +28,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcSite", "MvcSite\MvcSite.csproj", "{CAC9BB4D-6B5C-4985-9685-20FBC1DFA16E}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://user-pc:8080/tfs/defaultcollection
-		SccProjectUniqueName0 = MvcSite\\MvcSite.csproj
-		SccProjectName0 = MvcSite
-		SccLocalPath0 = MvcSite
-		SccLocalPath1 = .
-		SccWebProject2 = true
-		SccProjectUniqueName2 = WebFormsSite
-		SccProjectName2 = WebFormsSite
-		SccLocalPath2 = WebFormsSite
-		SccProjectEnlistmentChoice2 = 2
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

@@ -12,10 +12,14 @@
     <AssemblyName>JSNLog</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -61,6 +65,7 @@
     <Compile Include="Exceptions\MissingAttributeException.cs" />
     <Compile Include="Exceptions\UnknownRootTagException.cs" />
     <Compile Include="Exceptions\UnknownTagException.cs" />
+    <Compile Include="Infrastructure\ConfigProcessor.cs" />
     <Compile Include="Infrastructure\JavaScriptHelpers.cs" />
     <Compile Include="Infrastructure\Sequence.cs" />
     <Compile Include="Infrastructure\XmlHelpers.cs" />
