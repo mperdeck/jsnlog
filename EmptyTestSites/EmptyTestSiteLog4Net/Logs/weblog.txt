@@ -1,0 +1,4 @@
+2013-08-20 09:07:32,191 | INFO | serverlogger | Info Message generated on server
+2013-08-20 09:07:32,198 | ERROR | serverlogger | Error Message generated on server
+2013-08-20 09:09:15,663 | INFO | serverlogger | Info Message generated on server
+2013-08-20 09:09:15,663 | ERROR | serverlogger | Error Message generated on server

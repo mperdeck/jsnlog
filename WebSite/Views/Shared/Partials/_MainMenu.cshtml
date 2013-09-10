@@ -1,0 +1,26 @@
+﻿@using ViewExtensions
+
+<div class="main-menu"> 
+        <ul>
+        <li>
+        @Html.ActionLink("Home", "Index", "Home")
+        </li>
+        <li>
+            @Html.ViewLink("downloadinstall")
+        </li>
+        <li>
+            @Html.ViewLink("getstartedlogging")
+        </li>
+        <li>
+            @Html.ViewLink("webconfig", "Documentation")
+        </li>
+        <li>
+            <a href="https://github.com/mperdeck/jsnlog" target="_blank">Source</a>
+        </li>
+        @*<li>
+        <a href="http://groups.google.com/group/jsnlog" target="_blank">Forum</a>
+        </li>
+        *@</ul>
+</div>
+
+

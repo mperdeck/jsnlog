@@ -1,0 +1,51 @@
+﻿@using JSNLog.Tests.Logic
+
+<h2>Index2</h2>
+
+<!-- 
+    Ensure no appenders are defined when JSNLog is not enabled,
+    and that logging something doesn't crash the JS
+-->
+
+@Html.Raw(JSNLog.Tests.Logic.Utils.SetupTest(
+"235.1.99.12", "id123",
+@"
+<jsnlog enabled=""false"">
+    <assembly name=""JSNLog.Tests"" />
+    
+    <dummyAppender name=""da1"" />
+    <logger name="""" appenders=""da1"" />
+</jsnlog>
+",
+new [] {
+    new T(1000, "", 0),
+    new T(1500, "", 0),
+    new T(2000, "", 0),
+    new T(3000, "", 0)
+    
+}))
+
+<script type="text/javascript">
+    var resultDiv;
+    var appenderDefined = false;
+
+    try {
+        appenderDefined = (a0 !== undefined);
+    }
+    catch (e) {
+    }
+
+
+
+    if (appenderDefined) {
+        resultDiv = $('<div style="border-top: 3px red solid" class="error-occurred">appender a0 unexpectedly defined</div>');
+    } else {
+        resultDiv = $('<div style="border-top: 3px green solid" >not-enabled test passed</div>');
+    }
+
+    $('body').append(resultDiv);
+
+    $('#running').remove();
+
+</script>
+

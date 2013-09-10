@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "info Method";
+    ViewBag.Key = "jsnlogjs-logger-info";
+    ViewBag.Description = "Creates a log item with severity INFO";
+}
+
+
+@section Definition {
+    @Html.Partial("_LevelLogMethodDefinition",new ViewDataDictionary  { { "level", "info"} })
+}
+
+@section Examples {
+    @Html.Partial("_LevelLogMethodExample",new ViewDataDictionary  { { "level", "info"} })
+}
+

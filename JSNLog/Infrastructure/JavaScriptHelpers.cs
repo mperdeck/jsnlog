@@ -31,53 +31,85 @@ namespace JSNLog.Infrastructure
         }
 
         /// <summary>
-        /// Use this for tags that have 1 attribute called "value"
+        /// Generates the JavaScript for a JSON object.
         /// </summary>
-        /// <param name="xe">
-        /// XmlElement of the tag
-        /// </param>
-        /// <param name="parentName">
-        /// Name of the JavaScript variable that refers to the parent (such as a logger).
-        /// </param>
-        /// <param name="validValueRegex">
-        /// Used to validate the value
-        /// </param>
-        /// <param name="js">
-        /// Template of the JavaScript to be appended to sb.
-        /// {0} gets replaced by the parents variable name.
-        /// {1} gets replaced by the value.
-        /// </param>
-        /// <param name="sb">
-        /// The JavaScript gets appended to this.
-        /// </param>
-        public static void ProcessTagWithValue(
-            XmlElement xe, string parentName, string validValueRegex, string js, StringBuilder sb)
+        /// <param name="optionValues"></param>
+        /// <returns>
+        /// JS code with the JSON object.
+        /// </returns>
+        public static string GenerateJson(AttributeValueCollection optionValues)
         {
-            if (xe == null) { return; }
+            StringBuilder sb = new StringBuilder();
 
-            string value = XmlHelpers.RequiredAttribute(xe, "value", validValueRegex);
+            sb.Append("{");
 
-            string content = string.Format(js, parentName, value);
+            bool firstItem = true;
+            foreach (KeyValuePair<string, Value> option in optionValues)
+            {
+                // Do not test for IsNullOrEmpty. For example, appenders="" is legitimate (use 0 appenders)
+                if (option.Value.Text == null)
+                {
+                    continue;
+                }
 
-            WriteLine(content, sb);
+                sb.AppendFormat("{0}\"{1}\": {2}", firstItem ? "" : ", ", option.Key, option.Value.AsJavaScript());
+                firstItem = false;
+            }
+
+            sb.Append("}");
+
+            return sb.ToString();
         }
 
         /// <summary>
-        /// Generates the JavaScript for an appender.
+        /// Generates the JavaScript to set options on an object
         /// </summary>
-        /// <param name="appenderVariableName"></param>
-        /// <param name="appenderUrl"></param>
+        /// <param name="parentName">
+        /// Name of the JavaScript variable that holds the object.
+        /// </param>
+        /// <param name="optionValues">
+        /// The names and values of the options.
+        /// </param>
+        /// <param name="sb">
+        /// The JavaScript code is added to this StringBuilder.
+        /// </param>
+        public static void GenerateSetOptions(string parentName, AttributeValueCollection optionValues, StringBuilder sb)
+        {
+            string optionsJson = GenerateJson(optionValues);
+            sb.AppendLine(string.Format("{0}.setOptions({1});", parentName, optionsJson));
+        }
+
+        /// <summary>
+        /// Generates the JavaScript create an object.
+        /// </summary>
+        /// <param name="objectVariableName"></param>
+        /// <param name="createMethodName"></param>
+        /// <param name="name">
+        /// Name of the object as known to the user. For example the appender name.
+        /// </param>
         /// <param name="sb"></param>
-        public static void GenerateAppender(string appenderVariableName, string appenderUrl, StringBuilder sb)
+        public static void GenerateCreate(string objectVariableName, string createMethodName, string name, StringBuilder sb)
         {
-            JavaScriptHelpers.WriteLine(string.Format("var {0}=new jsnlog.AjaxAppender(\"{1}\")", appenderVariableName, appenderUrl), sb);
-            JavaScriptHelpers.WriteLine(string.Format("{0}.setLayout(new jsnlog.JsonLayout(false, false));", appenderVariableName), sb);
+            JavaScriptHelpers.WriteLine(string.Format("var {0}=JL.{1}('{2}');", objectVariableName, createMethodName, name), sb);
         }
 
-        public static void AddAppenderToLogger(string loggerVariableName, string appenderVariableName, StringBuilder sb)
+        /// <summary>
+        /// Generate the JavaScript to create a logger. 
+        /// </summary>
+        /// <param name="loggerVariableName">
+        /// New logger object will be assigned to this JS variable.
+        /// </param>
+        /// <param name="loggerName">
+        /// Name of the logger. Could be null (for the root logger).
+        /// </param>
+        /// <param name="sb">
+        /// JS code will be appended to this.
+        /// </param>
+        public static void GenerateLogger(string loggerVariableName, string loggerName, StringBuilder sb)
         {
-            JavaScriptHelpers.WriteLine(string.Format("{0}.addAppender({1});", loggerVariableName, appenderVariableName), sb);
+            string quotedLoggerName =
+                loggerName == null ? "" : @"""" + loggerName + @"""";
+            JavaScriptHelpers.WriteLine(string.Format("var {0}=JL({1});", loggerVariableName, quotedLoggerName), sb);
         }
-
     }
 }

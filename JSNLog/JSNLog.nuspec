@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>http://jsnlog.com</projectUrl>
+    <iconUrl>http://nuget.org/Media/Default/Packages/LinqToCsv/1.0.0.0/logo.jpg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>Copyright 2013</copyright>
+    <tags>JavaScript logging exceptions log4net nlog</tags>
+      <dependencies>
+          <dependency id="Common.Logging" />
+          <dependency id="WebActivatorEx" version="2.0.0" />
+      </dependencies>
+  </metadata>
+    <files>
+        <file src="NuGet\AdditionalContent\*.*" target="content" />
+        <file src="NuGet\AdditionalAppStart\*.*" target="content\App_Start" />
+        <file src="NuGet\readme.txt" target="" />
+    </files>
+</package>

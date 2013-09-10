@@ -1,0 +1,83 @@
+﻿@using ViewExtensions
+
+@{
+    ViewBag.Title = "<logger> Element";
+    ViewBag.Key = "webconfig-logger";
+    ViewBag.Description = "Configures a logger";
+    Layout = "~/Views/Shared/_ElementLayout.cshtml";
+}
+
+@section Definition {
+<pre>&lt;configuration&gt; 
+    &lt;jsnlog&gt;
+        &lt;logger 
+            name="string" 
+            appenders="Appender Name(s)" 
+            level="number|TRACE|DEBUG|INFO|WARN|ERROR|FATAL" 
+            ipRegex="regular expression"
+            userAgentRegex="regular expression" /&gt;
+    &lt;/jsnlog&gt;
+&lt;/configuration&gt; 
+</pre>
+}
+
+@section Remarks {
+    <p>
+    The &lt;logger&gt; element can have the following attributes: 
+        </p>
+
+    @Html.Partial("_LoggerRemarks",new ViewDataDictionary { 
+            { "objectType", "Logger"}, 
+            { "configSource", "web.config"}, 
+            { "appenderDescriptionKey", "webconfig-ajaxappender"}  
+        })
+}
+
+@section Examples {
+<p>
+    This sets the level of logger &quot;a.b&quot; to 3000.
+</p>
+
+<pre>&lt;logger name="a.b" level="3000" /&gt;</pre>
+
+<p>
+    This sets the level of the root logger.
+</p>
+
+<pre>&lt;logger level="3000" /&gt;</pre>
+
+<p>
+    This sets the level of logger &quot;a.b&quot; to INFO (which is the same as setting it to 3000).
+</p>
+
+<pre>&lt;logger name="a.b" level="INFO" /&gt;</pre>
+
+<p>
+    This sets the level to 4000.
+    It also disables the logger for all browsers, except those whose user agent string contains <span class="term">MSIE 7|MSIE 8</span>
+    (that is, it is version 7 or 8 of Internet Explorer).
+</p>
+
+<pre>&lt;logger name="a.b" userAgentRegex="MSIE 7|MSIE 8" level="4000" /&gt;</pre>
+
+<p>
+    This creates an appender &quot;appender&quot; and then tells the logger &quot;a.b&quot; to send
+    all log messages to it.
+</p>
+
+<pre>&lt;ajaxAppender name="appender" /&gt;
+&lt;logger name="a.b" appenders="appender" /&gt;</pre>
+
+<p>
+    This creates two appenders and then tells the logger &quot;a.b&quot; to send
+    all log messages to them.
+</p>
+
+<pre>&lt;ajaxAppender name="appender1" /&gt;
+&lt;ajaxAppender name="appender2" /&gt;
+&lt;logger name="a.b" appenders="appender1;appender2" /&gt;</pre>
+}
+
+
+
+

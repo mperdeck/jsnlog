@@ -1,0 +1,53 @@
+﻿@using ViewExtensions
+
+@{
+    bool showNameAttribute =
+        ((string)(ViewData["configSource"]) == "web.config");
+
+    bool showTypeColumn =
+        ((string)(ViewData["configSource"]) != "web.config");
+}
+
+    <table class="border">
+        @Html.Partial("_OptionsTableHeading",ViewData)
+        <tbody>
+       @if (showNameAttribute)
+       {
+            @Html.TableRowHtml("name", "required", 
+            "",
+            @"Name of the AjaxAppender you want to configure.")
+       }
+        @Html.Partial("_SharedFilterTableRows",ViewData)
+        @Html.TableRowHtml("storeInBufferLevel", "optional", (showTypeColumn ? "number" : null), "-2147483648",
+                @"If the severity of the log message is equal or greater than this,
+                 but smaller than <span class=""term"">level</span>,
+                 the log message will not be sent to the server, but stored in an internal buffer.
+                <p>
+                If <span class=""term"">bufferSize</span> is 0 or less, the log message is simply ignored.
+                ")
+        @Html.TableRowHtml("sendWithBufferLevel", "optional", (showTypeColumn ? "number" : null), "2147483647",
+                @"If the severity of a log message is equal or greater than this,
+                 not only the log message but also all log messages stored in the internal buffer
+                 will be sent to the server.
+                <p>
+                This allows you to store low priority trace messages in the internal buffer,
+                and only send them when a high priority fatal message is sent.
+                ")
+        @Html.TableRowHtml("bufferSize", "optional", (showTypeColumn ? "number" : null), "0",
+                @"Sets the size of the buffer used with <span class=""term"">sendWithBufferLevel</span> and
+                 <span class=""term"">storeInBufferLevel</span>.")
+        @Html.TableRowHtml("batchSize", "optional", (showTypeColumn ? "number" : null), "1",
+                @"Allows you to improve performance by sending multiple log messages in one go, 
+                rather than one by one.")
+        @Html.TableRowHtml("url", "optional", (showTypeColumn ? "string" : null), "jsnlog.logger",
+                @"All log messages will be sent to this URL.
+The default url is as expected by the server side code of JSNLog.")
+        </tbody>
+    </table>
+
+
+
+
+
+
+

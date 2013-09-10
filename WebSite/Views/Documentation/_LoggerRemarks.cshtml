@@ -1,0 +1,27 @@
+﻿@using ViewExtensions
+
+@{
+    bool showNameAttribute =
+        ((string)(ViewData["configSource"]) == "web.config");
+
+    bool showTypeColumn =
+        ((string)(ViewData["configSource"]) != "web.config");
+}
+
+    <table class="border">
+        @Html.Partial("_OptionsTableHeading",ViewData)
+        <tbody>
+       @if (showNameAttribute)
+       {
+            @Html.TableRowHtml("name", "optional", 
+            "(empty)",
+            @"Name of the logger you want to configure. To configure the root logger, simply omit the <span class=""term"">name</span> attribute.")
+       }
+        @Html.Partial("_SharedFilterTableRows",ViewData)
+        @Html.TableRowHtml("appenders", "optional", (showTypeColumn ? "array of appenders" : null), 
+            "(inherited from parent logger)",
+            @"One or more appenders for the logger to send its log messages to. See the examples.")
+        </tbody>
+    </table>
+
+    @Html.Partial("_InheritanceAndDefaultLogger",ViewData)

@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "debug Method";
+    ViewBag.Key = "jsnlogjs-logger-debug";
+    ViewBag.Description = "Creates a log item with severity DEBUG";
+}
+
+@section Definition {
+    @Html.Partial("_LevelLogMethodDefinition",new ViewDataDictionary  { { "level", "debug"} })
+}
+
+@section Examples {
+    @Html.Partial("_LevelLogMethodExample",new ViewDataDictionary  { { "level", "debug"} })
+}
+

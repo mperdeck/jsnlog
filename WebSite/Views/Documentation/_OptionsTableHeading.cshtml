@@ -1,0 +1,18 @@
+﻿@using ViewExtensions
+
+@{
+    bool showTypeColumn =
+        ((string)(ViewData["configSource"]) != "web.config");
+    string memberName =
+        ((string)(ViewData["configSource"]) != "web.config") ? "Field" : "Attribute";
+}
+
+<thead>
+    <tr>
+        <th>@memberName</th>
+        @if (showTypeColumn) { <th>Type</th> }
+        <th>Default</th>
+        <th>Description</th>
+    </tr>
+</thead>
+

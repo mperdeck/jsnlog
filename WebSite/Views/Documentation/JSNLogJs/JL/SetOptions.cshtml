@@ -1,0 +1,54 @@
+﻿@using ViewExtensions
+
+@{
+    ViewBag.Title = "setOptions Method";
+    ViewBag.Key = "jsnlogjs-jl-setOptions";
+    ViewBag.Description = "Sets library wide options";
+}
+
+
+@section Definition {
+    @Html.Partial("_SetOptionsMethodDefinition")
+}
+
+@section Remarks {
+    <p>
+    The JSON object can have the following fields: 
+        </p>
+
+    <table class="border">
+        @Html.Partial("_OptionsTableHeading")
+        <tbody>
+        @Html.TableRowHtml("enabled", "optional", "bool", "true", "If false, all loggers are disabled.")
+        @Html.TableRowHtml("clientIP", "optional", "string", "(empty)", 
+                @"The IP address of the browser. Used with the ipRegex option of " +
+                Html.ViewLink("jsnlogjs-logger-setOptions", "loggers") +
+                @" and " +
+                Html.ViewLink("jsnlogjs-ajaxappender-setOptions", "appenders") +
+                ".")
+        @Html.TableRowHtml("requestId", "optional", "string",  "(empty)", 
+                @"Sent with all log messages to the server, so make it easier to identify all log messages for 
+                  a given request. Reported via the <span class=""term"">%requestId</span> placeholder of the 
+                  <span class=""term"">serverSideMessageFormat</span>
+                  attribute of the " +
+                Html.ViewLink("webconfig-jsnlog") +
+                ".")
+        </tbody>
+    </table>
+}
+
+@section Examples {
+<p>
+    This sets the requestId to be sent with all log messages to the server.
+</p>
+
+<pre>JL.setOptions({
+    "requestId": "35F7416D-86F1-47FA-A9EC-547FFF510086"
+});</pre>
+}
+
+
+
+
+
+

@@ -1,0 +1,94 @@
+﻿@using ViewExtensions
+
+@{
+    ViewBag.Title = "setOptions Method";
+    ViewBag.Key = "jsnlogjs-logger-setOptions";
+    ViewBag.Description = "Sets options for a logger";
+}
+
+
+@section Definition {
+    @Html.Partial("_SetOptionsMethodDefinition")
+}
+
+@section Remarks {
+    <p>
+    The JSON object can have the following fields: 
+        </p>
+
+    @Html.Partial("_LoggerRemarks",new ViewDataDictionary { 
+            { "objectType", "Logger"}, 
+            { "configSource", "jsnlog.js"}, 
+            { "appenderDescriptionKey", "jsnlogjs-ajaxappender-setOptions"}  
+        })
+
+}
+
+@section Examples {
+<p>
+    This sets the level of logger &quot;a.b&quot; to 3000.
+</p>
+
+<pre>var logger = JL("a.b");
+logger.setOptions({
+    "level": 3000
+});</pre>
+
+<p>
+    This sets the level of the root logger.
+</p>
+
+<pre>var rootlogger = JL();
+rootlogger.setOptions({
+    "level": 3000
+});</pre>
+
+<p>
+    This sets the level of logger &quot;a.b&quot; to INFO (which is the same as setting it to 3000).
+This code shows you don't need to use the variable <span class="term">logger</span>.
+</p>
+
+<pre>JL("a.b").setOptions({
+    "level": JL.getInfoLevel()
+});</pre>
+
+<p>
+    This sets the level to 4000.
+    It also disables the logger for all browsers, except those whose user agent string contains <span class="term">MSIE 7|MSIE 8</span>
+    (that is, it is version 7 or 8 of Internet Explorer).
+</p>
+
+<pre>var logger = JL("a.b");
+logger.setOptions({
+    "level": 4000,
+    "userAgentRegex": "MSIE 7|MSIE 8"
+});</pre>
+
+<p>
+    This creates an appender &quot;appender&quot; and then tells the logger &quot;a.b&quot; to send
+    all log messages to it.
+</p>
+
+<pre>var appender=JL.createAjaxAppender('appender');
+
+var logger = JL("a.b");
+logger.setOptions({
+    "appenders": [appender]
+});</pre>
+
+<p>
+    This creates two appenders and then tells the logger &quot;a.b&quot; to send
+    all log messages to them.
+</p>
+
+<pre>var appender1=JL.createAjaxAppender('appender1');
+var appender2=JL.createAjaxAppender('appender2');
+
+var logger = JL("a.b");
+logger.setOptions({
+    "appenders": [appender1, appender2]
+});</pre>
+
+
+}
+

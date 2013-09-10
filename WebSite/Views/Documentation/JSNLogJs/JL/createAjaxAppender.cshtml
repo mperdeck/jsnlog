@@ -1,0 +1,36 @@
+﻿@using ViewExtensions
+
+@{
+    ViewBag.Title = "createAjaxAppender Method";
+    ViewBag.Key = "jsnlogjs-jl-createAjaxAppender";
+    ViewBag.Description = "Creates an AjaxAppender.";
+}
+
+
+@section Definition {
+<pre>createAjaxAppender(appenderName: string): AjaxAppender</pre>
+
+<section class="parameters">
+<h3>Parameters</h3>
+
+<dl>
+    <dt>appenderName</dt>
+    <dd>Name of the new appender.</dd>
+</dl>
+    
+<h3>Return Value</h3>
+<p>
+    A new 
+                @Html.ViewLink("jsnlogjs-ajaxappender", "AjaxAppender")<text>.</text>
+</p>
+}
+
+@section Examples {
+<p>
+    This creates an appender &quot;appender&quot;.
+</p>
+
+<pre>var appender=JL.createAjaxAppender('appender');</pre>
+}
+
+

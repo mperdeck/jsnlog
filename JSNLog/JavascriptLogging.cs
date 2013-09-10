@@ -14,14 +14,14 @@ namespace JSNLog
     public class JavascriptLogging
     {
 
-        public static string Configure()
+        public static string Configure(string requestId = null)
         {
             XmlElement xe = XmlHelpers.RootElement();
 
             StringBuilder sb = new StringBuilder();
 
             var configProcessor = new ConfigProcessor();
-            configProcessor.ProcessRoot(xe, sb);
+            configProcessor.ProcessRoot(xe, requestId, sb);
 
             return sb.ToString();
         }

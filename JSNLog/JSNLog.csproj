@@ -56,7 +56,12 @@
   <ItemGroup>
     <Compile Include="ConfigurationSectionHandler.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Elements\AjaxAppenderElement.cs" />
+    <Compile Include="Elements\AppenderElementBase.cs" />
+    <Compile Include="Elements\ElementBase.cs" />
+    <Compile Include="Elements\LoggerElement.cs" />
     <Compile Include="Exceptions\BaseException.cs" />
+    <Compile Include="Exceptions\GeneralAppenderException.cs" />
     <Compile Include="Exceptions\MissingRootTagException.cs" />
     <Compile Include="Exceptions\UnknownAttributeException.cs" />
     <Compile Include="Exceptions\UnknownAppenderException.cs" />
@@ -65,25 +70,60 @@
     <Compile Include="Exceptions\MissingAttributeException.cs" />
     <Compile Include="Exceptions\UnknownRootTagException.cs" />
     <Compile Include="Exceptions\UnknownTagException.cs" />
+    <Compile Include="Infrastructure\AttributeInfo.cs" />
     <Compile Include="Infrastructure\ConfigProcessor.cs" />
+    <Compile Include="Infrastructure\IElement.cs" />
     <Compile Include="Infrastructure\JavaScriptHelpers.cs" />
+    <Compile Include="Infrastructure\LevelUtils.cs" />
+    <Compile Include="Infrastructure\AttributeValueCollection.cs" />
     <Compile Include="Infrastructure\Sequence.cs" />
+    <Compile Include="Infrastructure\Utils.cs" />
+    <Compile Include="Infrastructure\Value.cs" />
     <Compile Include="Infrastructure\XmlHelpers.cs" />
     <Compile Include="JavascriptLogging.cs" />
-    <Compile Include="LoggerHandler.cs" />
+    <Compile Include="LogHandling\LoggerProcessor.cs" />
+    <Compile Include="ValueInfos\AppendersValue.cs" />
+    <Compile Include="ValueInfos\UrlValue.cs" />
+    <Compile Include="ValueInfos\IntegerGreaterZeroValue.cs" />
+    <Compile Include="ValueInfos\PositiveIntegerValue.cs" />
+    <Compile Include="ValueInfos\BoolValue.cs" />
+    <Compile Include="ValueInfos\LevelValue.cs" />
+    <Compile Include="ValueInfos\IValueInfo.cs" />
+    <Compile Include="ValueInfos\StringValue.cs" />
+    <Compile Include="LogHandling\LoggerHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="JSNLog.nuspec" />
+    <None Include="NuGet\AdditionalAppStart\JSNLogConfig.cs.pp" />
+    <None Include="NuGet\AdditionalContent\web.config.transform" />
+    <None Include="NuGet\Build\BuildNuGetPackage.bat" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Scripts\jsnlog.js.map">
+      <DependentUpon>jsnlog.ts</DependentUpon>
+    </None>
+    <None Include="Scripts\jsnlog.min.js.map">
+      <DependentUpon>jsnlog.js</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dependencies\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\jsnlog.js" />
-    <Content Include="Scripts\jsnlog_stub.js" />
+    <TypeScriptCompile Include="Scripts\jsnlog.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\jsnlog_interfaces.d.ts" />
+    <TypeScriptCompile Include="Scripts\jsnlog.d.ts" />
+    <Content Include="NuGet\readme.txt" />
+    <Content Include="Scripts\jsnlog.js">
+      <DependentUpon>jsnlog.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jsnlog.min.js">
+      <DependentUpon>jsnlog.ts</DependentUpon>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
