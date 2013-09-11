@@ -13,6 +13,7 @@ namespace JSNLog.Tests.UnitTests
     public class LoggerProcessorTests
     {
         private string _json1 = null;
+        private string _json1root = null;
         private string _json2 = null;
 
         private DateTime _dtFirstLogUtc;
@@ -37,6 +38,12 @@ namespace JSNLog.Tests.UnitTests
 'r': 'therequestid',
 'lg': [
 { 'm': 'first message', 'n': 'a.b.c', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
+] }";
+
+            _json1root = @"{
+'r': 'therequestid',
+'lg': [
+{ 'm': 'first message', 'n': '', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
 ] }";
 
             _json2 = @"{
@@ -66,6 +73,28 @@ namespace JSNLog.Tests.UnitTests
             // Act and Assert
 
             RunTest(configXml, _json1, "my browser", "12.345.98.7",
+                        _dtServerUtc, "http://mydomain.com/main", expected);
+        }
+
+        [TestMethod]
+        public void DefaultFormatOneLogItemRootLogger()
+        {
+            // Arrange
+
+            string configXml = @"
+                <jsnlog></jsnlog>
+";
+
+            var expected = new[] {
+                new LoggerProcessor.LogData("first message", Constants.RootLoggerNameServerSide,Constants.Level.ERROR, 1500,
+                    "first message", 1500, Constants.RootLoggerNameServerSide, "therequestid", 
+                    _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
+                    "my browser", "12.345.98.7", "http://mydomain.com/main")
+            };
+
+            // Act and Assert
+
+            RunTest(configXml, _json1root, "my browser", "12.345.98.7",
                         _dtServerUtc, "http://mydomain.com/main", expected);
         }
 

@@ -179,7 +179,9 @@ namespace JSNLog.LogHandling
 
             // ----------------
 
+            if (string.IsNullOrWhiteSpace(logger)) { logger = Constants.RootLoggerNameServerSide; }
             string finalLoggerName = serversideLoggerNameOverride ?? logger;
+
             string finalLevel = levelOverride ?? level;
 
             // ----------------
