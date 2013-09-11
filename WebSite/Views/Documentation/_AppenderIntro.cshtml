@@ -1,0 +1,21 @@
+﻿@using ViewExtensions
+
+@{
+    string attributesName =
+        ((string)(ViewData["configSource"]) == "web.config") ? "attributes" : "options";
+
+    string keyLoggerOptions =
+        ((string)(ViewData["configSource"]) == "web.config") ? "webconfig-logger" : "jsnlogjs-logger-setOptions";
+}
+
+    <p>
+Loggers do not process log messages themselves. Instead, they pass them on
+        to an appender. That way, the @attributesName that have to do with for example sending log messages to the server
+        are centralized, making them more easy to manage.
+    </p>
+    <p>
+        JSNLog creates a default appender, so there is no need to create one yourself in order to start logging. Details
+        about this default appender, and how to associate loggers with appenders, are 
+                    @Html.ViewLink(keyLoggerOptions, "here")<text>.</text>
+    </p>
+

@@ -160,16 +160,19 @@ namespace JSNLog.Infrastructure
         /// <returns></returns>
         public static string LevelRegex()
         {
-            string regexNames = "";
-            Array names = Enum.GetNames(typeof(Constants.Level));
-
-            foreach (string name in names)
-            {
-                regexNames += name + "|";
-            }
-
-            string regex = "^("+regexNames+"([0-9]+))$";
+            string regex = "^(" + NamedLevels() + "|([0-9]+))$";
             return regex;
+        }
+
+        /// <summary>
+        /// Returns a string with all named levels, separated by |
+        /// </summary>
+        /// <returns></returns>
+        public static string NamedLevels()
+        {
+            string[] names = Enum.GetNames(typeof(Constants.Level));
+            string namedLevels = string.Join("|", names);
+            return namedLevels;
         }
     }
 }

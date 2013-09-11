@@ -11,6 +11,7 @@
     string appenderDescriptionKey = (string)ViewData["appenderDescriptionKey"];
 }
 
+<a name="inheritance"></a>
     <h3>Logger names and option inheritance</h3>
     <p>
         Loggers not only get their options through the @thisTextHtml,
@@ -67,7 +68,7 @@
             </tr>
         </thead>
         <tbody>
-        @Html.TableRowHtml("level", "", "2000 (corresponds to level DEBUG).")
+        @Html.TableRowHtml("level", "", "DEBUG")
         @Html.TableRowHtml("userAgentRegex", "", "(empty)")
         @Html.TableRowHtml("ipRegex", "", "(empty)")
         @Html.TableRowHtml("appenders", "", "(default appender)")
@@ -75,8 +76,8 @@
     </table>
     
     <p>
-        Note that because the default <span class="term">level</span> for root logger is 2000,
-        by default only log messages with severity 2000 or higher get processed.
+        Note that because the default <span class="term">level</span> for root logger is DEBUG,
+        by default only log messages with severity DEBUG or higher get processed.
     </p>
 <p>
     You can change the options used with the root logger in the same way

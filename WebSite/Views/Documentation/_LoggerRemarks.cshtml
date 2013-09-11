@@ -15,7 +15,9 @@
        {
             @Html.TableRowHtml("name", "optional", 
             "(empty)",
-            @"Name of the logger you want to configure. To configure the root logger, simply omit the <span class=""term"">name</span> attribute.")
+            @"Name of the logger you want to configure. To configure the root logger, 
+              simply omit the <span class=""term"">name</span> attribute.<p/>" +
+             Html.Partial("_LoggerRootNameOnServer"))
        }
         @Html.Partial("_SharedFilterTableRows",ViewData)
         @Html.TableRowHtml("appenders", "optional", (showTypeColumn ? "array of appenders" : null), 

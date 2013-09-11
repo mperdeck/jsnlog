@@ -6,6 +6,9 @@
 
     bool showTypeColumn =
         ((string)(ViewData["configSource"]) != "web.config");
+        
+    string keyLoggerOptions =
+        ((string)(ViewData["configSource"]) == "web.config") ? "webconfig-logger" : "jsnlogjs-logger-setOptions";
 }
 
     <table class="border">
@@ -44,6 +47,15 @@
 The default url is as expected by the server side code of JSNLog.")
         </tbody>
     </table>
+
+<h3>Logger level and appender level</h3>
+<p>
+    Notice that both 
+                @Html.ViewLink(keyLoggerOptions, "loggers")
+     and appenders have a level. This means that a log message must have 
+    a severity that is equal or higher than both these levels in order to be processed.
+</p>
+
 
 
 

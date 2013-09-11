@@ -1,7 +1,10 @@
-﻿@{
+﻿@using ViewExtensions
+@using JSNLog
+
+@{
     ViewBag.Title = "<ajaxAppender> Element";
     ViewBag.Key = "webconfig-ajaxappender";
-    ViewBag.Description = "Configures an Ajax Appender";
+    ViewBag.Description = "Configures an Ajax Appender.";
     Layout = "~/Views/Shared/_ElementLayout.cshtml";
 }
 
@@ -11,11 +14,13 @@
     &lt;jsnlog&gt;
         &lt;ajaxAppender 
             name="string" 
-            level="number|TRACE|DEBUG|INFO|WARN|ERROR|FATAL" 
+            level="number|@JSNLog.Infrastructure.LevelUtils.NamedLevels()"
             ipRegex="regular expression"
             userAgentRegex="regular expression"
-            storeInBufferLevel="number|TRACE|DEBUG|INFO|WARN|ERROR|FATAL" 
-            sendWithBufferLevel="number|TRACE|DEBUG|INFO|WARN|ERROR|FATAL" 
+            storeInBufferLevel=
+                "number|@JSNLog.Infrastructure.LevelUtils.NamedLevels()"
+            sendWithBufferLevel=
+                "number|@JSNLog.Infrastructure.LevelUtils.NamedLevels()" 
             bufferSize="number" 
             batchSize="number" 
             url="string"/&gt;
@@ -25,6 +30,10 @@
 }
 
 @section Remarks {
+    @Html.Partial("_AppenderIntro",new ViewDataDictionary { 
+            { "configSource", "web.config"} 
+        })
+
     <p>
     The &lt;ajaxAppender&gt; element can have the following attributes: 
         </p>
@@ -45,27 +54,27 @@
             It has an internal buffer that stores at most 20 log messages;
         </li>
         <li>
-Log messages with severity smaller than 1000 (TRACE) are ignored.
+Log messages with severity smaller than TRACE are ignored.
         </li>
         <li>
-Log messages with severity equal or greater than 1000 (TRACE) and lower than 4000 (WARN) are stored in the internal buffer,
+Log messages with severity equal or greater than TRACE and lower than WARN are stored in the internal buffer,
         but not sent to the server;
         </li>
         <li>
-Log messages with severity equal or greater than 4000 (WARN) and lower than 6000 (FATAL) are 
+Log messages with severity equal or greater than WARN and lower than FATAL are 
             sent to the server on their own;
         </li>
         <li>
-Log messages with severity equal or greater than 6000 (FATAL) are 
+Log messages with severity equal or greater than FATAL are 
             sent to the server, along with all messages stored in the internal buffer.
         </li>
     </ul>
 
 <pre>&lt;ajaxAppender 
     name="appender1" 
-    storeInBufferLevel="1000" 
-    level="4000" 
-    sendWithBufferLevel="6000" 
+    storeInBufferLevel="TRACE" 
+    level="WARN" 
+    sendWithBufferLevel="FATAL" 
     bufferSize="20"/&gt;
 &lt;logger appenders="appender1"/&gt;</pre>
 

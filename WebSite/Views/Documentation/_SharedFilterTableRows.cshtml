@@ -9,7 +9,7 @@
 }
 
         @Html.TableRowHtml("level", "optional", showTypeColumn ? "number" : null, 
-            (ViewData["objectType"] == "Logger") ? "(inherited from parent logger)" : "1000 (TRACE)",
+            (ViewData["objectType"] == "Logger") ? "(inherited from parent logger)" : "TRACE",
             "Only log messages with a severity equal or higher than this can be sent to the server.")
         @Html.TableRowHtml("userAgentRegex", "optional", showTypeColumn ? "regular expression" : null, 
             (ViewData["objectType"] == "Logger") ? "(inherited from parent logger)" : "(empty)",

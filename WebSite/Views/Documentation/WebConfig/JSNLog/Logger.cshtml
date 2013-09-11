@@ -1,9 +1,10 @@
 ﻿@using ViewExtensions
+@using JSNLog
 
 @{
     ViewBag.Title = "<logger> Element";
     ViewBag.Key = "webconfig-logger";
-    ViewBag.Description = "Configures a logger";
+    ViewBag.Description = "Configures a logger.";
     Layout = "~/Views/Shared/_ElementLayout.cshtml";
 }
 
@@ -13,7 +14,7 @@
         &lt;logger 
             name="string" 
             appenders="Appender Name(s)" 
-            level="number|TRACE|DEBUG|INFO|WARN|ERROR|FATAL" 
+            level="number|@JSNLog.Infrastructure.LevelUtils.NamedLevels()"
             ipRegex="regular expression"
             userAgentRegex="regular expression" /&gt;
     &lt;/jsnlog&gt;

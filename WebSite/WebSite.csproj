@@ -228,6 +228,18 @@
   <ItemGroup>
     <Content Include="Views\Documentation\_AjaxAppenderRemarks.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Documentation\_AppenderIntro.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JSNLog\JSNLog.csproj">
+      <Project>{3cc2929c-a313-4ca6-b8ef-d1a2590e5dbb}</Project>
+      <Name>JSNLog</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Documentation\_LoggerRootNameOnServer.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
