@@ -46,16 +46,29 @@
 </p>
 <pre>JL().log(2500, "log message with severity 2500");</pre>
 
-<h2>Filtering out low priority messages</h2>
+<h2>Filtering out low priority messages using the level attribute</h2>
 <p>
     In your web.config, you can 
     
                 @Html.ViewLink("webconfig-logger", "configure your loggers")
-     to only pass on messages with a given severity or higher:
+     to only pass on messages with a given severity or higher using the <span class="term">level</span> attribute:
 </p>
 <pre>&lt;logger name="function1.logger1" level="ERROR" /&gt;</pre>
+<p>
+    When setting a <span class="term">level</span>, in addition to 
+       <span class="term">TRACE</span>,
+   <span class="term">DEBUG</span>,
+   <span class="term">INFO</span>,
+   <span class="term">WARN</span>,
+ <span class="term">ERROR</span>, or
+  <span class="term">FATAL</span>, you can use:
+</p>
+    <ul>
+        <li><span class="term">ALL</span> - to allow all log messages;</li>
+        <li><span class="term">OFF</span> - to disallow all log messages.</li>
+    </ul> 
 
-<h2>Configure multiple loggers through inheritance</h2>
+<h2>Configuring multiple loggers through inheritance</h2>
 <p>
     To make it easier to manage your loggers, they are organized in a 
     
@@ -83,6 +96,10 @@
 
 <pre>&lt;!-- set level on root logger --&gt;
 &lt;logger level="ERROR" /&gt;</pre>
+<p>
+By default, the root logger has level <span class="term">DEBUG</span>. 
+    This means that by default, messages with severity <span class="term">TRACE</span> are not processed.  
+</p>
 
 <h2>Learn more</h2>
 <p>
