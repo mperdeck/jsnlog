@@ -21,14 +21,14 @@
             @"Name of the AjaxAppender you want to configure.")
        }
         @Html.Partial("_SharedFilterTableRows",ViewData)
-        @Html.TableRowHtml("storeInBufferLevel", "optional", (showTypeColumn ? "number" : null), "-2147483648",
+        @Html.TableRowHtml("storeInBufferLevel", "optional", (showTypeColumn ? "number" : null), "ALL",
                 @"If the severity of the log message is equal or greater than this,
                  but smaller than <span class=""term"">level</span>,
                  the log message will not be sent to the server, but stored in an internal buffer.
                 <p>
                 If <span class=""term"">bufferSize</span> is 0 or less, the log message is simply ignored.
                 ")
-        @Html.TableRowHtml("sendWithBufferLevel", "optional", (showTypeColumn ? "number" : null), "2147483647",
+        @Html.TableRowHtml("sendWithBufferLevel", "optional", (showTypeColumn ? "number" : null), "OFF",
                 @"If the severity of a log message is equal or greater than this,
                  not only the log message but also all log messages stored in the internal buffer
                  will be sent to the server.

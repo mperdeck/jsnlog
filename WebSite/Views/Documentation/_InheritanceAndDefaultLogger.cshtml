@@ -96,11 +96,11 @@
             </tr>
         </thead>
         <tbody>
-        @Html.TableRowHtml("level", "", "1000 (corresponds to level TRACE).")
+        @Html.TableRowHtml("level", "", "TRACE")
         @Html.TableRowHtml("userAgentRegex", "", "(empty)")
         @Html.TableRowHtml("ipRegex", "", "(empty)")
-        @Html.TableRowHtml("storeInBufferLevel", "", "-2147483648")
-        @Html.TableRowHtml("sendWithBufferLevel", "", "2147483647")
+        @Html.TableRowHtml("storeInBufferLevel", "", "ALL")
+        @Html.TableRowHtml("sendWithBufferLevel", "", "OFF")
         @Html.TableRowHtml("bufferSize", "", "0")
         @Html.TableRowHtml("batchSize", "", "1")
         @Html.TableRowHtml("url", "", "jsnlog.logger")

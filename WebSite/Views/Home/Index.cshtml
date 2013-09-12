@@ -5,7 +5,7 @@
 
 @section Hero {
     <section class="hero large-text">
-        <section class="benefits">
+        <section class="benefits" style="float: left; width: 650px; margin-top: 5px;">
             <h1>Client side logging integrated with ASP.NET and MVC</h1>
             <p>
             JSNLog lets you insert loggers in your client side JavaScript,
@@ -13,87 +13,94 @@
             in your server side logs - without any server side coding.
             </p>
         </section>
+<div class="download" style="float: right; margin-bottom: 10px;"> 
+        @Html.Raw(Html.Partial("Partials/_DownloadButton").ToHtmlString())
+        </div>
+
     </section>
 }
 
 <section class="features">
     <div class="leftColumn">
-        @Feature(
-            "",
-            @"Insert client side loggers",
-            @"<pre>jsnlog.getLogger(""jsLogger"").fatal(<br />    ""Client side message, severity fatal"");</pre>")
-
-        @Feature(
+    @Feature(
         "",
-        @"Log any object, not just text",
-        @"<pre>var myObject = new MyObject(); 
-jsnlog.getLogger(""mylogger"").info(myObject);
-</pre>
-")
+        @"Works with your server side loggers",
+        @"<ul class=""halfspaced"">
+        <li>
+Sends log messages from the client to the server using AJAX.
+        </li>
+        <li>
+Hands the log messages to your server side logging package.
+        </li>
+        <li>
+Supports Log4Net, NLog, Common.Logging.
+        </li>
+        </ul>")
 
     @Feature(
         "",
         @"Store client side log messages in your server side logs",
-        @"<pre>
-csLogger, ERROR, Server side message
-jsLogger, FATAL, Client side message, severity fatal
-csLogger2, INFO, Server side info message
-...
-</pre>
+        @"
+<table class=""log"">
+<tr><th>Logger</th><th>Severity</th><th>Message</th></tr>
+<tr><td>csLogger</td><td>ERROR</td><td>Server side error message</td></tr>
+<tr><td>jsLogger</td><td>FATAL</td><td>Client side fatal message</td></tr>
+<tr><td>csLogger2</td><td>INFO</td><td>Server side info message</td></tr>
+<tr><td colspan=""3"">...</td></tr>
+</table>
 ")
 
     @Feature(
         "",
-        @"Easy to use:",
-        @"<ul>
-        <li>
-        Fully documented
-        </li>
-        <li>
-        Open source, MIT license
-        </li>
-        <li>
-        No dependencies on other JavaScript libraries
-        </li>
-        <li>
-        Highly configurable
-        </li>
-        </ul>")
+        @"See which messages belong to the same request",
+        @"
+<table class=""log"">
+<tr><th>Request ID</th><th>Message</th></tr>
+<tr><td class=""highlight""><span>D623A22B-3454....</span></td><td>An error message</td></tr>
+<tr><td>CB0734CE-4C99....</td><td>A fatal message</td></tr>
+<tr><td class=""highlight""><span>D623A22B-3454....</span></td><td>Some other message</td></tr>
+<tr><td colspan=""2"">...</td></tr>
+</table>
+")
     </div>
     <div class="rightColumn">
+        @Feature(
+            "",
+            @"Insert loggers in your JavaScript",
+            @"<pre>JL(""jsLogger"").fatal(""log message"");</pre>")
+
     @Feature(
         "",
         @"Configure loggers in your web.config",
-        @"<pre>&lt;jsnlog ... &gt;
-   &lt;logger name=&quot;jsLogger&quot;&gt;
-      &lt;level value=&quot;ERROR&quot;&gt;
-   &lt;/logger&gt;
-&lt;/jsnlog&gt;
-</pre>
+        @"<pre>&lt;logger name=""jslogger"" level=""FATAL"" /&gt;</pre>
 ")
 
     @Feature(
         "",
         @"Reduce AJAX requests by batching log messages",
-        @"<pre>&lt;appender name=&quot;appender1&quot;&gt;
-   <b>&lt;batchSize value=&quot;2&quot;&gt;</b>
-&lt;/appender&gt;</pre>
+        @"<pre>&lt;ajaxAppender name=""appender1"" batchSize=""3""/&gt;</pre>
 ")
 
     @Feature(
         "",
         @"Only log for certain user agents or IP addresses",
-                        @"<pre>&lt;logger name=&quot;jsLogger&quot;&gt;
-   &lt;userAgentRegex value=&quot;MSIE 7&quot;&gt;
-&lt;/logger&gt;</pre>
+        @"<pre>&lt;logger name=&quot;jslogger&quot; userAgentRegex=&quot;MSIE 7|MSIE 8&quot; /&gt;</pre>
 ")
 
     @Feature(
         "",
-        @"",
-        @"<div class=""download"">" + 
-        Html.Raw(Html.Partial("Partials/_DownloadButton").ToHtmlString()) +
-        "</div>")
+        @"Get the info you need, but only <u>when</u> you need it",
+        @"<ul class=""spaced"">
+        <li>
+        To solve a JavaScript exception, you may need debug messages generated before the exception happened. 
+        </li>
+        <li>
+        But you only want to send those debug messages to the server if there actually is an exception.
+        </li>
+        <li>
+        Solution: Store the debug messages on the client in a buffer. Send the buffered messages when there is a fatal message.
+        </li>
+        </ul>")
     </div>
 </section>
 
