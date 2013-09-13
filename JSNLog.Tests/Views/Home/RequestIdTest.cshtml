@@ -1,0 +1,26 @@
+﻿@using JSNLog
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>RequestIdTest</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+    @Html.Raw(JSNLog.Tests.Logic.Utils.SetupRequestIdTest(ViewBag.PassedInRequestId, 
+        @"<jsnlog productionLibraryPath=""~/Scripts/jsnlog.js""></jsnlog>"))
+
+    <div id="IdFromController">@ViewBag.RequestId</div>
+    <div id="IdFromView">@JSNLog.JavascriptLogging.RequestId()</div>
+    <div id="IdFromJL"></div>
+
+    <script type="text/ecmascript">
+        $("#IdFromJL").html(JL.requestId);
+    </script>
+
+</body>
+</html>

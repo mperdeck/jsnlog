@@ -173,5 +173,17 @@ namespace JSNLog.Tests.Logic
 
             return xe;
         }
+
+        public static string SetupRequestIdTest(string requestId, string configXml)
+        {
+            var sb = new StringBuilder();
+            XmlElement xe = ConfigToXe(configXml);
+
+            var configProcessor = new ConfigProcessor();
+            configProcessor.ProcessRoot(xe, requestId, sb);
+            string js = sb.ToString();
+
+            return js;
+        }
     }
 }

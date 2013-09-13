@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
 using System.Xml;
 
 namespace JSNLog.Infrastructure
@@ -43,36 +42,6 @@ namespace JSNLog.Infrastructure
             if (validate != null) { validate(attributeValues); }
 
             JavaScriptHelpers.GenerateSetOptions(parentName, attributeValues, sb);
-        }
-
-        /// <summary>
-        /// Creates an ID that is unique hopefully.
-        /// 
-        /// This method initially tries to use the request id that IIS already uses internally. This allows us to correlate across even more log files.
-        /// If this fails, for example if this is not part of a web request, than it uses a random GUID.
-        /// 
-        /// See
-        /// http://blog.tatham.oddie.com.au/2012/02/07/code-request-correlation-in-asp-net/
-        /// </summary>
-        /// <returns></returns>
-        public static string CreateRequestId()
-        {
-            var provider = (IServiceProvider)HttpContext.Current;
-            if (provider != null)
-            {
-                var workerRequest = (HttpWorkerRequest)provider.GetService(typeof(HttpWorkerRequest));
-                if (workerRequest != null)
-                {
-                    Guid requestIdGuid = workerRequest.RequestTraceIdentifier;
-                    if (requestIdGuid != Guid.Empty)
-                    {
-                        return requestIdGuid.ToString();
-                    }
-                }
-            }
-
-            // Couldn't get the GUID as used in in all ETW outputs by IIS. So, use a random GUID.
-            return Guid.NewGuid().ToString();
         }
 
         /// <summary>

@@ -36,7 +36,7 @@ namespace JSNLog.Infrastructure
         public void ProcessRoot(XmlElement xe, string requestId, StringBuilder sb)
         {
             string userIp = HttpContext.Current.Request.UserHostAddress;
-            ProcessRootExec(xe, sb, VirtualPathUtility.ToAbsolute, userIp, requestId ?? Utils.CreateRequestId(), true);
+            ProcessRootExec(xe, sb, VirtualPathUtility.ToAbsolute, userIp, requestId ?? RequestId.Get(), true);
         }
 
         // This version is not reliant on sitting in a web site, so can be unit tested.

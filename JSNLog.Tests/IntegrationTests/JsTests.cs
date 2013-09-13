@@ -30,5 +30,38 @@ namespace JSNLog.Tests.IntegrationTests
 
             Assert.IsFalse(ErrorOnPage());
         }
+
+        [TestMethod]
+        public void RequestIdTest()
+        {
+            OpenPage("/home/RequestIdTest");
+            string requestId1 = RequestIdFieldsConsistent(false);
+
+            OpenPage("/home/RequestIdTest");
+            string requestId2 = RequestIdFieldsConsistent(false);
+
+            Assert.AreNotEqual(requestId1, requestId2, "request ids are equal, so are not unique per request");
+
+            OpenPage("/home/RequestIdTest/6789");
+            string requestId3 = RequestIdFieldsConsistent(true);
+
+            Assert.AreEqual(requestId3, "6789", "JL.RequestId not the same as passed in");
+        }
+
+        private string RequestIdFieldsConsistent(bool jlCanDifferFromOthers)
+        {
+            string idFromController = _driver.FindElement(By.Id("IdFromController")).Text;
+            string idFromView = _driver.FindElement(By.Id("IdFromView")).Text;
+            string idFromJL = _driver.FindElement(By.Id("IdFromJL")).Text;
+
+            Assert.AreEqual(idFromView, idFromController, "request id not the same during request - 1");
+            if (!jlCanDifferFromOthers)
+            {
+                Assert.AreEqual(idFromView, idFromJL, "request id not the same during request - 2");
+            }
+
+            return idFromJL;
+        }
     }
 }
+
