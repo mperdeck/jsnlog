@@ -135,6 +135,9 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\ViewExtensionsConfig.cs" />
+    <Compile Include="Areas\Version1\Controllers\DocumentationController.cs" />
+    <Compile Include="Areas\Version1\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Version1\Version1AreaRegistration.cs" />
     <Compile Include="Controllers\DocumentationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -143,6 +146,35 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Version1\Content\Site.css" />
+    <Content Include="Areas\Version1\Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Areas\Version1\Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Areas\Version1\Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Areas\Version1\Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Areas\Version1\Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Areas\Version1\Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Areas\Version1\Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Areas\Version1\Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Areas\Version1\Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Areas\Version1\Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Areas\Version1\Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Areas\Version1\Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Areas\Version1\Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Areas\Version1\Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Areas\Version1\Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Areas\Version1\Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Areas\Version1\Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Areas\Version1\Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Areas\Version1\Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Areas\Version1\Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Areas\Version1\Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Areas\Version1\Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Areas\Version1\Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Areas\Version1\Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Areas\Version1\Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Areas\Version1\Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Areas\Version1\Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Areas\Version1\Images\messageflow.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\download.png" />
@@ -198,6 +230,7 @@
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Version1\Models\" />
     <Folder Include="Models\" />
     <Folder Include="Scripts\" />
   </ItemGroup>
@@ -239,6 +272,36 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Documentation\_LoggerRootNameOnServer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Version1\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Version1\Views\Documentation\Benefits.cshtml" />
+    <Content Include="Areas\Version1\Views\Documentation\Configuration.cshtml" />
+    <Content Include="Areas\Version1\Views\Documentation\GettingStarted.cshtml" />
+    <Content Include="Areas\Version1\Views\Documentation\Install.cshtml" />
+    <Content Include="Areas\Version1\Views\Documentation\JavaScriptFunctions.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Version1\Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Version1\Views\Shared\Partials\_DownloadButton.cshtml" />
+    <Content Include="Areas\Version1\Views\Shared\Partials\_Logo.cshtml" />
+    <Content Include="Areas\Version1\Views\Shared\Partials\_MainMenu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Version1\Views\Shared\_DocumentationLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Version1\Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Version1\Views\Shared\Error.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Version1\Views\_ViewStart.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

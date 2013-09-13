@@ -16,19 +16,22 @@ namespace WebSite
             routes.MapRoute(
                 name: "Default",
                 url: "",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new String[] { "MainSite.Controllers" } 
             );
 
             routes.MapRoute(
                 name: "Default2",
                 url: "Index",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new String[] { "MainSite.Controllers" } 
             );
 
             routes.MapRoute(
                 name: "Documentation",
-                url: "{*pathInfo}",
-                defaults: new { controller = "Documentation", action = "Index" }
+                url: "Documentation/{*pathInfo}",
+                defaults: new { controller = "Documentation", action = "Index" },
+                namespaces: new String[] { "MainSite.Controllers" } 
             );
         }
     }

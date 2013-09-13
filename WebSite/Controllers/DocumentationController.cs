@@ -11,7 +11,8 @@ namespace MainSite.Controllers
     {
         public ActionResult Index(string pathInfo)
         {
-            string view = Views.ByUrl(pathInfo).ViewPath;
+            string url = HttpContext.Request.Url.AbsolutePath.Trim(new char[] {'/'});
+            string view = Views.ByUrl(url).ViewPath;
             return View(view);
         }
 
