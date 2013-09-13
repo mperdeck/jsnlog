@@ -1,0 +1,2 @@
+2013-09-13 14:58:03,031 | INFO | serverlogger | Info Message generated on server
+2013-09-13 14:58:49,631 | INFO | serverlogger | Info Message generated on server
