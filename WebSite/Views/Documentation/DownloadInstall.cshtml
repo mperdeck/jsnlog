@@ -37,6 +37,12 @@ Enter the following at the PM> prompt to install JSNLog:
     <a name="additional"></a>
 <h2>2. Make it work with your server side logging package</h2>
 
+<p>
+    JSNLog assumes you already have a server side logging package installed. It uses a third party package, Common.Logging,
+    to pass log messages onto your server side logging package. To make this work, some additional package specific
+    configuration is needed.
+</p>
+
 <h3>Log4Net</h3>
 <ol type="a">
 <li>
