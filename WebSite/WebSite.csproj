@@ -148,6 +148,7 @@
   <ItemGroup>
     <Content Include="Areas\Version1\Content\Site.css" />
     <Content Include="Areas\Version1\Images\messageflow.png" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\download.png" />
@@ -284,6 +285,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Documentation\JavascriptLogging\RequestId.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\jsnlog.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
