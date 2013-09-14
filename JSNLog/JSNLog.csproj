@@ -95,7 +95,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="JSNLog.nuspec" />
+    <None Include="JSNLog.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="NuGet\AdditionalAppStart\JSNLogConfig.cs.pp" />
     <None Include="NuGet\AdditionalContent\web.config.transform" />
     <None Include="NuGet\Build\BuildNuGetPackage.bat" />

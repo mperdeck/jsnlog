@@ -160,7 +160,9 @@ footer .container
     font-size: 1em;
 }
 
-.download-button
+a.download-button,
+a.download-button:visited,
+a.download-button:hover
 {
     background: #AD0101 url("/Images/download.png") no-repeat 85% 50%;
     padding: 7px;
@@ -169,10 +171,11 @@ footer .container
     height: 50px;
     cursor:pointer;
     margin-top: -4px;
+    display: block;
+    text-decoration: none;
 }
 
-.download-button a:visited,
-.download-button a
+.download-button span.download-button-caption
 {
     text-decoration: none;
     color: #fff;    
