@@ -18,7 +18,7 @@ also change the Nuget readme file
 
 <ol type="a">
 <li>
-Load your solution or project in Visual Studio, 
+Load your solution in Visual Studio, 
 and open the Package Manager Console: <i>Tools</i> | <i>Library Package Manager</i> | <i>Package Manager Console</i>.
 <p />
 </li>
@@ -38,9 +38,10 @@ Enter the following at the PM> prompt to install JSNLog:
 <h2>2. Make it work with your server side logging package</h2>
 
 <p>
-    JSNLog assumes you already have a server side logging package installed. It uses a third party package, Common.Logging,
-    to pass log messages onto your server side logging package. To make this work, some additional package specific
-    configuration is needed.
+    JSNLog assumes you already have a server side logging package installed.
+    The steps below provide the glue between JSNLog and your specific server side logging package.
+    If you get stuck, look at these 
+    <a href="https://github.com/mperdeck/jsnlogSimpleWorkingDemos" target="_blank">simple working demo sites</a>.
 </p>
 
 <h3>Log4Net</h3>
@@ -65,6 +66,15 @@ The instructions refer to <span class="term">Common.Logging.Log4net<b>1210</b></
 
 <h3>NLog</h3>
 <ol type="a">
+<li>
+    <b>If you use a WebForms <i>Web Site</i></b>, 
+    a Microsoft package that is installed along with JSNLog updates the 
+    &lt;nlog&gt;...&lt;/nlog&gt; section in your web.config, causing it to no longer work. Before you follow the steps below,
+    make a copy of that section in a text file, and restore it after the installation. 
+    This does not apply to WebForms <i>Applications</i> and MVC sites.
+<p />
+</li>
+
 <li>
     Install the Common.Logging.NLog20 package at the PM&gt; prompt:
     <pre>Install-Package Common.Logging.NLog20</pre>
