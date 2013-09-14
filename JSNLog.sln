@@ -11,6 +11,35 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EmptyTestSites", "EmptyTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSite", "WebSite\WebSite.csproj", "{71625D39-CC16-42D2-ABD0-7ED0DE860B49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmptyElmah", "EmptyTestSites\EmptyElmah\EmptyElmah.csproj", "{1CC485D9-6D89-4758-82E9-65F5B3939EE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmptyLog4Net", "EmptyTestSites\EmptyLog4Net\EmptyLog4Net.csproj", "{7A0CB990-2691-4B43-8AE6-DB5649E62FE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmptyNLog", "EmptyTestSites\EmptyNLog\EmptyNLog.csproj", "{CDCB7529-1F4A-45BF-B644-D6CDCAF95F64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmptyWebFormsApplication", "EmptyTestSites\EmptyWebFormsApplication\EmptyWebFormsApplication.csproj", "{13AD9BA7-CD69-4BC3-B254-DF9A2AA3848D}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EmptyWebFormsWebsite", "http://localhost:42132", "{6165603F-0419-4209-9BDB-68ED9D71DF56}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_42132"
+		Debug.AspNetCompiler.PhysicalPath = "..\DemoSites\EmptyWebFormsWebsite\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_42132\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_42132"
+		Release.AspNetCompiler.PhysicalPath = "..\DemoSites\EmptyWebFormsWebsite\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_42132\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "..\DemoSites\EmptyWebFormsWebsite\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,11 +62,36 @@ Global
 		{71625D39-CC16-42D2-ABD0-7ED0DE860B49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71625D39-CC16-42D2-ABD0-7ED0DE860B49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71625D39-CC16-42D2-ABD0-7ED0DE860B49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CC485D9-6D89-4758-82E9-65F5B3939EE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CC485D9-6D89-4758-82E9-65F5B3939EE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CC485D9-6D89-4758-82E9-65F5B3939EE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CC485D9-6D89-4758-82E9-65F5B3939EE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A0CB990-2691-4B43-8AE6-DB5649E62FE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A0CB990-2691-4B43-8AE6-DB5649E62FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A0CB990-2691-4B43-8AE6-DB5649E62FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A0CB990-2691-4B43-8AE6-DB5649E62FE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDCB7529-1F4A-45BF-B644-D6CDCAF95F64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDCB7529-1F4A-45BF-B644-D6CDCAF95F64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDCB7529-1F4A-45BF-B644-D6CDCAF95F64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDCB7529-1F4A-45BF-B644-D6CDCAF95F64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13AD9BA7-CD69-4BC3-B254-DF9A2AA3848D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13AD9BA7-CD69-4BC3-B254-DF9A2AA3848D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13AD9BA7-CD69-4BC3-B254-DF9A2AA3848D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13AD9BA7-CD69-4BC3-B254-DF9A2AA3848D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6165603F-0419-4209-9BDB-68ED9D71DF56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6165603F-0419-4209-9BDB-68ED9D71DF56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6165603F-0419-4209-9BDB-68ED9D71DF56}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{6165603F-0419-4209-9BDB-68ED9D71DF56}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1EB12C39-42F2-4782-8A7B-AB533B2F83E6} = {14891813-B727-41A3-95C8-C147EDD57467}
+		{1CC485D9-6D89-4758-82E9-65F5B3939EE9} = {14891813-B727-41A3-95C8-C147EDD57467}
+		{7A0CB990-2691-4B43-8AE6-DB5649E62FE8} = {14891813-B727-41A3-95C8-C147EDD57467}
+		{CDCB7529-1F4A-45BF-B644-D6CDCAF95F64} = {14891813-B727-41A3-95C8-C147EDD57467}
+		{13AD9BA7-CD69-4BC3-B254-DF9A2AA3848D} = {14891813-B727-41A3-95C8-C147EDD57467}
+		{6165603F-0419-4209-9BDB-68ED9D71DF56} = {14891813-B727-41A3-95C8-C147EDD57467}
 	EndGlobalSection
 EndGlobal
