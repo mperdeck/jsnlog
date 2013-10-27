@@ -325,7 +325,7 @@ var JL;
                     if (logObject instanceof RegExp) {
                         return logObject.toString();
                     } else {
-                        return logObject();
+                        return this.stringifyLogObject(logObject());
                     }
                 case "object":
                     if ((logObject instanceof RegExp) || (logObject instanceof String) || (logObject instanceof Number) || (logObject instanceof Boolean)) {

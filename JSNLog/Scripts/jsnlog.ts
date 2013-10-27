@@ -310,7 +310,7 @@ module JL {
                   if (logObject instanceof RegExp) {
                     return logObject.toString();
                   } else {
-                    return logObject();
+                      return this.stringifyLogObject(logObject());
                   }
                 case "object":
                   if ((logObject instanceof RegExp) ||

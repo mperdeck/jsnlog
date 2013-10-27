@@ -24,6 +24,7 @@
 
 <section class="features">
     <div class="leftColumn">
+
     @Feature(
         "",
         @"Works with your server side loggers",
@@ -38,6 +39,49 @@ Hands the log messages to your server side logging package.
 Supports Log4Net, NLog, Elmah, Common.Logging.
         </li>
         </ul>")
+
+        @Feature(
+            "",
+            @"Insert loggers in your JavaScript",
+            @"<pre>JL(""jsLogger"").fatal(""log message"");</pre>")
+
+    @Feature(
+        "",
+        @"Configure loggers in your web.config",
+        @"<pre>&lt;logger name=""jslogger"" level=""FATAL"" /&gt;</pre>
+")
+
+    @Feature(
+        "",
+        @"Reduce AJAX requests by batching log messages",
+        @"<pre>&lt;ajaxAppender name=""appender1"" batchSize=""3""/&gt;</pre>
+")
+
+    @Feature(
+        "",
+        @"Only log for certain user agents or IP addresses",
+        @"<pre>&lt;logger name=&quot;jslogger&quot; userAgentRegex=&quot;MSIE 7|MSIE 8&quot; /&gt;</pre>
+")
+
+    @Feature(
+        "",
+        @"Log objects as well as strings",
+        @"<pre>var obj = {""f1"": ""v1"", ""f2"": ""v2""};
+JL().log(2500, obj);</pre>
+")
+
+    @Feature(
+        "",
+        @"Pass in function that returns log info",
+        @"<pre>JL().log(2500, function() { 
+    // Only executed when log info 
+    // will actually be logged.
+    var loginfo = expensiveOperation();
+    return loginfo; 
+});</pre>
+")
+    </div>
+    <div class="rightColumn">
 
     @Feature(
         "",
@@ -63,30 +107,6 @@ Supports Log4Net, NLog, Elmah, Common.Logging.
 <tr><td class=""highlight""><span>D623A22B-3454....</span></td><td>Some other message</td></tr>
 <tr><td colspan=""2"">...</td></tr>
 </table>
-")
-    </div>
-    <div class="rightColumn">
-        @Feature(
-            "",
-            @"Insert loggers in your JavaScript",
-            @"<pre>JL(""jsLogger"").fatal(""log message"");</pre>")
-
-    @Feature(
-        "",
-        @"Configure loggers in your web.config",
-        @"<pre>&lt;logger name=""jslogger"" level=""FATAL"" /&gt;</pre>
-")
-
-    @Feature(
-        "",
-        @"Reduce AJAX requests by batching log messages",
-        @"<pre>&lt;ajaxAppender name=""appender1"" batchSize=""3""/&gt;</pre>
-")
-
-    @Feature(
-        "",
-        @"Only log for certain user agents or IP addresses",
-        @"<pre>&lt;logger name=&quot;jslogger&quot; userAgentRegex=&quot;MSIE 7|MSIE 8&quot; /&gt;</pre>
 ")
 
     @Feature(

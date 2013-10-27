@@ -105,6 +105,8 @@ new [] {
     new T(3000, "", 1, logObject: "{\"f1\": \"v1\", \"f2\": \"v2\"}", expectedMsg: "{\"f1\":\"v1\",\"f2\":\"v2\"}"),
     new T(3000, "", 1, logObject: "null", expectedMsg: "null"),
     new T(3000, "", 1, logObject: "function() { return \"funcreturn\"; }", expectedMsg: "funcreturn"),
+    new T(3000, "", 1, logObject: "function() { return {\"f1\": \"v1a\", \"f2\": \"v2a\"}; }", expectedMsg: "{\"f1\":\"v1a\",\"f2\":\"v2a\"}"),
+    new T(3000, "", 1, logObject: "function() { return function() { return {\"f1\": \"v1b\", \"f2\": \"v2b\"}; }; }", expectedMsg: "{\"f1\":\"v1b\",\"f2\":\"v2b\"}"),
     
     new T(1500, "x1", 0), // test inheritance of level from root
     new T(2000, "x1", 1),
