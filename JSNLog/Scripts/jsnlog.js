@@ -311,6 +311,33 @@ var JL;
         function Logger(loggerName) {
             this.loggerName = loggerName;
         }
+        Logger.prototype.stringifyLogObject = function (logObject) {
+            switch (typeof logObject) {
+                case "string":
+                    return logObject;
+                case "number":
+                    return logObject.toString();
+                case "boolean":
+                    return logObject.toString();
+                case "undefined":
+                    return "undefined";
+                case "function":
+                    if (logObject instanceof RegExp) {
+                        return logObject.toString();
+                    } else {
+                        return logObject();
+                    }
+                case "object":
+                    if ((logObject instanceof RegExp) || (logObject instanceof String) || (logObject instanceof Number) || (logObject instanceof Boolean)) {
+                        return logObject.toString();
+                    } else {
+                        return JSON.stringify(logObject);
+                    }
+                default:
+                    return "unknown";
+            }
+        };
+
         Logger.prototype.setOptions = function (options) {
             copyProperty("level", options, this);
             copyProperty("userAgentRegex", options, this);
@@ -320,14 +347,17 @@ var JL;
             return this;
         };
 
-        Logger.prototype.log = function (level, message) {
+        Logger.prototype.log = function (level, logObject) {
             var i = 0;
+            var message;
 
             if (!this.appenders) {
                 return;
             }
 
             if (((level >= this.level)) && allow(this)) {
+                message = this.stringifyLogObject(logObject);
+
                 i = this.appenders.length - 1;
                 while (i >= 0) {
                     this.appenders[i].log(level, message, this.loggerName);
@@ -338,23 +368,23 @@ var JL;
             return this;
         };
 
-        Logger.prototype.trace = function (message) {
-            return this.log(getTraceLevel(), message);
+        Logger.prototype.trace = function (logObject) {
+            return this.log(getTraceLevel(), logObject);
         };
-        Logger.prototype.debug = function (message) {
-            return this.log(getDebugLevel(), message);
+        Logger.prototype.debug = function (logObject) {
+            return this.log(getDebugLevel(), logObject);
         };
-        Logger.prototype.info = function (message) {
-            return this.log(getInfoLevel(), message);
+        Logger.prototype.info = function (logObject) {
+            return this.log(getInfoLevel(), logObject);
         };
-        Logger.prototype.warn = function (message) {
-            return this.log(getWarnLevel(), message);
+        Logger.prototype.warn = function (logObject) {
+            return this.log(getWarnLevel(), logObject);
         };
-        Logger.prototype.error = function (message) {
-            return this.log(getErrorLevel(), message);
+        Logger.prototype.error = function (logObject) {
+            return this.log(getErrorLevel(), logObject);
         };
-        Logger.prototype.fatal = function (message) {
-            return this.log(getFatalLevel(), message);
+        Logger.prototype.fatal = function (logObject) {
+            return this.log(getFatalLevel(), logObject);
         };
         return Logger;
     })();

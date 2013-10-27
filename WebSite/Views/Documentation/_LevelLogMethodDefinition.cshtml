@@ -1,12 +1,14 @@
-﻿
-<pre>@(((string)(ViewData["level"])).ToLower())<text>(message: string): Logger</text></pre>
+﻿@using ViewExtensions
+
+<pre>@(((string)(ViewData["level"])).ToLower())<text>(logObject: any): Logger</text></pre>
 
 <section class="parameters">
 <h3>Parameters</h3>
 
 <dl>
-    <dt>message</dt>
-    <dd>Message to be logged.</dd>
+    <dt>logObject</dt>
+    <dd>String or object to be logged, or a function that returns the string or object to be logged
+        (@Html.ViewLink("jsnlogjs-logger-log", "details", fragment: "Remarks")).</dd>
 </dl>
     
 <h3>Return Value</h3>

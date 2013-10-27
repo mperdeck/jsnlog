@@ -294,6 +294,38 @@ module JL {
         constructor(public loggerName: string) {
         }
 
+        private stringifyLogObject(logObject: any): string
+        {
+            switch (typeof logObject)
+            {
+                case "string":
+                  return logObject;
+                case "number":
+                  return logObject.toString();
+                case "boolean":
+                  return logObject.toString();
+                case "undefined":
+                  return "undefined";
+                case "function":
+                  if (logObject instanceof RegExp) {
+                    return logObject.toString();
+                  } else {
+                    return logObject();
+                  }
+                case "object":
+                  if ((logObject instanceof RegExp) ||
+                      (logObject instanceof String) ||
+                      (logObject instanceof Number) ||
+                      (logObject instanceof Boolean)) {
+                    return logObject.toString();
+                  } else {
+                    return JSON.stringify(logObject);
+                  }
+                default:
+                  return "unknown";
+            }
+        }
+
         public setOptions(options: JSNLogLoggerOptions): JSNLogLogger {
             copyProperty("level", options, this);
             copyProperty("userAgentRegex", options, this);
@@ -303,13 +335,16 @@ module JL {
             return this;
         }
 
-        public log(level: number, message: string): JSNLogLogger {
+        public log(level: number, logObject: any): JSNLogLogger {
             var i: number = 0;
+            var message: string;
 
             // If we can't find any appenders, do nothing
             if (!this.appenders) { return; }
 
             if (((level >= this.level)) && allow(this)) {
+                message = this.stringifyLogObject(logObject);
+
                 i = this.appenders.length - 1;
                 while (i >= 0) {
                     this.appenders[i].log(level, message, this.loggerName);
@@ -320,12 +355,12 @@ module JL {
             return this;
         }
 
-        public trace(message: string): JSNLogLogger { return this.log(getTraceLevel(), message); }
-        public debug(message: string): JSNLogLogger { return this.log(getDebugLevel(), message); }
-        public info(message: string): JSNLogLogger { return this.log(getInfoLevel(), message); }
-        public warn(message: string): JSNLogLogger { return this.log(getWarnLevel(), message); }
-        public error(message: string): JSNLogLogger { return this.log(getErrorLevel(), message); }
-        public fatal(message: string): JSNLogLogger { return this.log(getFatalLevel(), message); }
+        public trace(logObject: any): JSNLogLogger { return this.log(getTraceLevel(), logObject); }
+        public debug(logObject: any): JSNLogLogger { return this.log(getDebugLevel(), logObject); }
+        public info(logObject: any): JSNLogLogger { return this.log(getInfoLevel(), logObject); }
+        public warn(logObject: any): JSNLogLogger { return this.log(getWarnLevel(), logObject); }
+        public error(logObject: any): JSNLogLogger { return this.log(getErrorLevel(), logObject); }
+        public fatal(logObject: any): JSNLogLogger { return this.log(getFatalLevel(), logObject); }
     }
 
     // -----------------------

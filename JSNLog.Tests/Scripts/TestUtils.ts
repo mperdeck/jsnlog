@@ -16,9 +16,9 @@ module TestUtils {
         if (comparisonResult) {
             resultDiv = $('<table style="border-top: 3px red solid" class="error-occurred" />');
             resultDiv.append('<tr><td>Error at Check</td><td>' + checkNbr + '</td></tr>');
-            resultDiv.append('<tr><td colspan=\'2\'>' + comparisonResult + '</td></tr>');
-            resultDiv.append('<tr><td>Expected:</td><td>' + expectedString + '</td></tr>');
-            resultDiv.append('<tr><td>Actual:</td><td>' + actualString + '</td></tr>');
+            resultDiv.append('<tr><td valign="top" colspan=\'2\'>' + comparisonResult + '</td></tr>');
+            resultDiv.append('<tr><td valign="top">Expected:</td><td>' + expectedString + '</td></tr>');
+            resultDiv.append('<tr><td valign="top">Actual:</td><td>' + actualString + '</td></tr>');
         } else {
             resultDiv = $('<div style="border-top: 3px green solid" >Passed: ' + checkNbr + '</div>');
         }

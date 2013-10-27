@@ -91,6 +91,21 @@ new [] {
     new T(1500, "", 0),
     new T(2000, "", 1),
     new T(3000, "", 1),
+
+    new T(3000, "", 1, logObject: "\"string\"", expectedMsg: "string"),
+    new T(3000, "", 1, logObject: "new String(\"string object\")", expectedMsg: "string object"),
+    new T(3000, "", 1, logObject: "121", expectedMsg: "121"),
+    new T(3000, "", 1, logObject: "new Number(124)", expectedMsg: "124"),
+    new T(3000, "", 1, logObject: "true", expectedMsg: "true"),
+    new T(3000, "", 1, logObject: "new Boolean(false)", expectedMsg: "false"),
+    new T(3000, "", 1, logObject: "undefined", expectedMsg: "undefined"),
+    new T(3000, "", 1, logObject: "new Date(Date.UTC(2013,10,26,22,59,45,11))", expectedMsg: "\"2013-11-26T22:59:45.011Z\""),
+    new T(3000, "", 1, logObject: "/[abc]*/", expectedMsg: "/[abc]*/"),
+    new T(3000, "", 1, logObject: "[ \"a\", \"b\"]", expectedMsg: "[\"a\",\"b\"]"),
+    new T(3000, "", 1, logObject: "{\"f1\": \"v1\", \"f2\": \"v2\"}", expectedMsg: "{\"f1\":\"v1\",\"f2\":\"v2\"}"),
+    new T(3000, "", 1, logObject: "null", expectedMsg: "null"),
+    new T(3000, "", 1, logObject: "function() { return \"funcreturn\"; }", expectedMsg: "funcreturn"),
+    
     new T(1500, "x1", 0), // test inheritance of level from root
     new T(2000, "x1", 1),
     new T(3000, "x1", 1),

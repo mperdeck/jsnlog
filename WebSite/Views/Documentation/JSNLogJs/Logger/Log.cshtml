@@ -1,4 +1,5 @@
-﻿@{
+﻿@using ViewExtensions
+@{
     ViewBag.Title = "log Method";
     ViewBag.Key = "jsnlogjs-logger-log";
     ViewBag.Description = "Creates a log item";
@@ -6,7 +7,7 @@
 
 
 @section Definition {
-<pre>log(level: number, message: string): Logger</pre>
+<pre>log(level: number, logObject: any): Logger</pre>
 
 <section class="parameters">
 <h3>Parameters</h3>
@@ -14,8 +15,8 @@
 <dl>
     <dt>level</dt>
     <dd>Severity of the message to be logged.</dd>
-    <dt>message</dt>
-    <dd>Message to be logged.</dd>
+    <dt>logObject</dt>
+    <dd>String or object to be logged, or a function that returns the string or object to be logged. See remarks.</dd>
 </dl>
     
 <h3>Return Value</h3>
@@ -23,6 +24,9 @@
 The logger itself.
 </p>
 </section>
+}
+
+@section Remarks {
 }
 
 @section Examples {

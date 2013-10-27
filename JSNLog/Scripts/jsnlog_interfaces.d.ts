@@ -45,13 +45,13 @@ interface JSNLogAjaxAppenderOptions extends JSNLogAppenderOptions {
 interface JSNLogLogger {
     setOptions(options: JSNLogLoggerOptions): JSNLogLogger;
 
-    trace(message: string): JSNLogLogger;
-    debug(message: string): JSNLogLogger;
-    info(message: string): JSNLogLogger;
-    warn(message: string): JSNLogLogger;
-    error(message: string): JSNLogLogger;
-    fatal(message: string): JSNLogLogger;
-    log(level: number, message: string): JSNLogLogger;
+    trace(logObject: any): JSNLogLogger;
+    debug(logObject: any): JSNLogLogger;
+    info(logObject: any): JSNLogLogger;
+    warn(logObject: any): JSNLogLogger;
+    error(logObject: any): JSNLogLogger;
+    fatal(logObject: any): JSNLogLogger;
+    log(level: number, logObject: any): JSNLogLogger;
 }
 
 interface JSNLogAppender {

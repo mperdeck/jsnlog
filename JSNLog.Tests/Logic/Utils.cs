@@ -57,7 +57,7 @@ namespace JSNLog.Tests.Logic
             {
                 if (t.CheckExpected == checkNbr)
                 {
-                    string msg = Msg(seq, t.Level, t.Logger);
+                    string msg = t.ExpectedMsg ?? Msg(seq, t.Level, t.Logger);
                     string timestamp = GetTimestampJs(seq);
 
                     sb.AppendLine(string.Format("  {0}{{", first ? "" : ","));
@@ -113,8 +113,8 @@ namespace JSNLog.Tests.Logic
                 {
                     // Level given, so generate call to logger.
 
-                    string msg = Msg(seq, t.Level, t.Logger);
-                    string logCallJs = string.Format(@"JL(""{0}"").log({1}, ""{2}"");", t.Logger, t.Level, msg);
+                    string msg = t.LogObject ?? @"""" + Msg(seq, t.Level, t.Logger) + @"""";
+                    string logCallJs = string.Format(@"JL(""{0}"").log({1}, {2});", t.Logger, t.Level, msg);
                     string storeTimestampJs = StoreTimestampJs(seq);
                     sb.AppendLine(logCallJs + " " + storeTimestampJs);
                 }
