@@ -17,18 +17,30 @@ namespace JSNLog.Infrastructure
             NoOption,
 
             // Will be used as an option for setOptions. Optional.
-            OptionalOption
+            OptionalOption,
+
+            // Will be used as an option for setOptions. Required.
+            RequiredOption
         }
 
         public string Name { get; private set; }
         public IValueInfo ValueInfo { get; private set; }
+
         public AttributeValidityEnum AttributeValidity { get; private set; }
 
-        public AttributeInfo(string name, IValueInfo valueInfo, AttributeValidityEnum attributeValidity)
+        // If this is null, this attribute is a normal attribute of the tag, with a single value.
+        // If this is not null, the tag can have sub elements with this tag name (that is, a tag name equalling SubTagName).
+        // These sub elements have one required attribute, with name Name, and a value described by ValueInfo.
+        // The key used for the setOptions call is SubTagName.
+        // The ultimate value is a JavaScript array.
+        public string SubTagName { get; private set; }
+
+        public AttributeInfo(string name, IValueInfo valueInfo, AttributeValidityEnum attributeValidity, string subTagName = null)
         {
             Name = name;
             ValueInfo = valueInfo ?? new StringValue();
             AttributeValidity = attributeValidity;
+            SubTagName = subTagName;
         }
     }
 }

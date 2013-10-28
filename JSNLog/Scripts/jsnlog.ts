@@ -287,9 +287,21 @@ module JL {
     export class Logger implements JSNLogLogger, JSNLogFilterOptions {
         public appenders: Appender[];
 
+        // Array of strings with regular expressions. Used to stop duplicate messages.
+        // If a message matches a regex
+        // that has been matched before, that message will not be sent.
+        public onceOnly: string[];
+
         public level: number;
         public userAgentRegex: string;
         public ipRegex: string;
+
+        // Used to remember which regexes in onceOnly have been successfully 
+        // matched against a message. Index into this array is same as index
+        // in onceOnly of the corresponding regex.
+        // When a regex has never been matched, the corresponding entry in this
+        // array is undefined, which is falsey.
+        private seenRegexes: boolean[];
 
         constructor(public loggerName: string) {
         }
@@ -331,6 +343,10 @@ module JL {
             copyProperty("userAgentRegex", options, this);
             copyProperty("ipRegex", options, this);
             copyProperty("appenders", options, this);
+            copyProperty("onceOnly", options, this);
+
+            // Reset seenRegexes, in case onceOnly has been changed.
+            this.seenRegexes = [];
 
             return this;
         }
@@ -340,10 +356,29 @@ module JL {
             var message: string;
 
             // If we can't find any appenders, do nothing
-            if (!this.appenders) { return; }
+            if (!this.appenders) { return this; }
 
             if (((level >= this.level)) && allow(this)) {
                 message = this.stringifyLogObject(logObject);
+
+                // See whether message is a duplicate
+
+                if (this.onceOnly) {
+                    i = this.onceOnly.length - 1;
+                    while (i >= 0) {
+                        if (new RegExp(this.onceOnly[i]).test(message)) {
+                            if (this.seenRegexes[i]) {
+                                return this;
+                            }
+
+                            this.seenRegexes[i] = true;
+                        }
+
+                        i--;
+                    }
+                }
+
+                // Pass message to all appenders
 
                 i = this.appenders.length - 1;
                 while (i >= 0) {

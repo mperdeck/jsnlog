@@ -76,6 +76,25 @@
 
     <logger name=""l61"" appenders=""da1"" level=""OFF"" />
 
+    <!-- Stopping duplicates -->
+
+    <!-- Logger inherit appender from root -->
+    <logger name=""l100"" /> 
+
+    <logger name=""l101"">
+       <onceOnly regex=""msg"" />
+    </logger> 
+
+    <logger name=""l102"" level=""1000"">
+       <onceOnly regex=""msg"" />
+       <onceOnly regex=""xyz"" />
+    </logger> 
+
+    <logger name=""l103"">
+       <onceOnly regex=""msg"" />
+       <onceOnly regex=""x[a-z]z"" />
+       <onceOnly regex=""abc"" />
+    </logger> 
 
 </jsnlog>
 ",
@@ -92,22 +111,6 @@ new [] {
     new T(2000, "", 1),
     new T(3000, "", 1),
 
-    new T(3000, "", 1, logObject: "\"string\"", expectedMsg: "string"),
-    new T(3000, "", 1, logObject: "new String(\"string object\")", expectedMsg: "string object"),
-    new T(3000, "", 1, logObject: "121", expectedMsg: "121"),
-    new T(3000, "", 1, logObject: "new Number(124)", expectedMsg: "124"),
-    new T(3000, "", 1, logObject: "true", expectedMsg: "true"),
-    new T(3000, "", 1, logObject: "new Boolean(false)", expectedMsg: "false"),
-    new T(3000, "", 1, logObject: "undefined", expectedMsg: "undefined"),
-    new T(3000, "", 1, logObject: "new Date(Date.UTC(2013,10,26,22,59,45,11))", expectedMsg: "\"2013-11-26T22:59:45.011Z\""),
-    new T(3000, "", 1, logObject: "/[abc]*/", expectedMsg: "/[abc]*/"),
-    new T(3000, "", 1, logObject: "[ \"a\", \"b\"]", expectedMsg: "[\"a\",\"b\"]"),
-    new T(3000, "", 1, logObject: "{\"f1\": \"v1\", \"f2\": \"v2\"}", expectedMsg: "{\"f1\":\"v1\",\"f2\":\"v2\"}"),
-    new T(3000, "", 1, logObject: "null", expectedMsg: "null"),
-    new T(3000, "", 1, logObject: "function() { return \"funcreturn\"; }", expectedMsg: "funcreturn"),
-    new T(3000, "", 1, logObject: "function() { return {\"f1\": \"v1a\", \"f2\": \"v2a\"}; }", expectedMsg: "{\"f1\":\"v1a\",\"f2\":\"v2a\"}"),
-    new T(3000, "", 1, logObject: "function() { return function() { return {\"f1\": \"v1b\", \"f2\": \"v2b\"}; }; }", expectedMsg: "{\"f1\":\"v1b\",\"f2\":\"v2b\"}"),
-    
     new T(1500, "x1", 0), // test inheritance of level from root
     new T(2000, "x1", 1),
     new T(3000, "x1", 1),
@@ -341,5 +344,78 @@ new [] {
     
     new T(0, "l61", 0),
     new T(6000, "l61", 0),
-    new T(checkNbr: 81, checkAppender: "a0")
+    new T(checkNbr: 81, checkAppender: "a0"),
+
+    // ---------------------
+        
+    new T(header: "Passing objects and functions"),
+    
+    new T(3000, "", 91, logObject: "\"string\"", expectedMsg: "string"),
+    new T(3000, "", 91, logObject: "new String(\"string object\")", expectedMsg: "string object"),
+    new T(3000, "", 91, logObject: "121", expectedMsg: "121"),
+    new T(3000, "", 91, logObject: "new Number(124)", expectedMsg: "124"),
+    new T(3000, "", 91, logObject: "true", expectedMsg: "true"),
+    new T(3000, "", 91, logObject: "new Boolean(false)", expectedMsg: "false"),
+    new T(3000, "", 91, logObject: "undefined", expectedMsg: "undefined"),
+    new T(3000, "", 91, logObject: "new Date(Date.UTC(2013,10,26,22,59,45,11))", expectedMsg: "\"2013-11-26T22:59:45.011Z\""),
+    new T(3000, "", 91, logObject: "/[abc]*/", expectedMsg: "/[abc]*/"),
+    new T(3000, "", 91, logObject: "[ \"a\", \"b\"]", expectedMsg: "[\"a\",\"b\"]"),
+    new T(3000, "", 91, logObject: "{\"f1\": \"v1\", \"f2\": \"v2\"}", expectedMsg: "{\"f1\":\"v1\",\"f2\":\"v2\"}"),
+    new T(3000, "", 91, logObject: "null", expectedMsg: "null"),
+    new T(3000, "", 91, logObject: "function() { return \"funcreturn\"; }", expectedMsg: "funcreturn"),
+    new T(3000, "", 91, logObject: "function() { return {\"f1\": \"v1a\", \"f2\": \"v2a\"}; }", expectedMsg: "{\"f1\":\"v1a\",\"f2\":\"v2a\"}"),
+    new T(3000, "", 91, logObject: "function() { return function() { return {\"f1\": \"v1b\", \"f2\": \"v2b\"}; }; }", expectedMsg: "{\"f1\":\"v1b\",\"f2\":\"v2b\"}"),
+    
+    new T(checkNbr: 91, checkAppender: "a0"),
+    
+    // ---------------------
+        
+    new T(header: "Stopping duplicates"),
+
+    new T(3000, "l100", 100, logObject: "\"abc\"", expectedMsg: "abc"),
+    new T(3000, "l100", 100, logObject: "\"33msg9\"", expectedMsg: "33msg9"),
+    new T(3000, "l100", 100, logObject: "\"xyz\"", expectedMsg: "xyz"),
+    new T(3000, "l100", 100, logObject: "{ \"f1\": \"abc\" }", expectedMsg: "{\"f1\":\"abc\"}"),
+    new T(3000, "l100", 100, logObject: "function() { return \"msg\"; }", expectedMsg: "msg"),
+    new T(3000, "l100", 100, logObject: "[ \"xyz\", \"zyx\"]", expectedMsg: "[\"xyz\",\"zyx\"]"),
+    new T(3000, "l100", 100, logObject: "\"abc\"", expectedMsg: "abc"),
+    new T(3000, "l100", 100, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
+    new T(3000, "l100", 100, logObject: "\"xyz\"", expectedMsg: "xyz"),
+    new T(checkNbr: 100, checkAppender: "a0"),
+    
+    new T(3000, "l101", 101, logObject: "\"abc\"", expectedMsg: "abc"),
+    new T(3000, "l101", 101, logObject: "\"33msg9\"", expectedMsg: "33msg9"),
+    new T(3000, "l101", 101, logObject: "\"xyz\"", expectedMsg: "xyz"),
+    new T(3000, "l101", 101, logObject: "{ \"f1\": \"abc\" }", expectedMsg: "{\"f1\":\"abc\"}"),
+    new T(3000, "l101", 0, logObject: "function() { return \"msg\"; }", expectedMsg: "msg"),
+    new T(3000, "l101", 101, logObject: "[ \"xyz\", \"zyx\"]", expectedMsg: "[\"xyz\",\"zyx\"]"),
+    new T(3000, "l101", 101, logObject: "\"abc\"", expectedMsg: "abc"),
+    new T(3000, "l101", 0, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
+    new T(3000, "l101", 101, logObject: "\"xyz\"", expectedMsg: "xyz"),
+    new T(checkNbr: 101, checkAppender: "a0"),
+
+    new T(3000, "l102", 102, logObject: "\"abc\"", expectedMsg: "abc"),
+    new T(3000, "l102", 102, logObject: "\"33msg9\"", expectedMsg: "33msg9"),
+    new T(3000, "l102", 102, logObject: "\"xyz\"", expectedMsg: "xyz"),
+    new T(3000, "l102", 102, logObject: "{ \"f1\": \"abc\" }", expectedMsg: "{\"f1\":\"abc\"}"),
+    new T(3000, "l102", 0, logObject: "function() { return \"msg\"; }", expectedMsg: "msg"),
+    new T(3000, "l102", 0, logObject: "[ \"xyz\", \"zyx\"]", expectedMsg: "[\"xyz\",\"zyx\"]"),
+    new T(3000, "l102", 102, logObject: "\"abc\"", expectedMsg: "abc"),
+    new T(3000, "l102", 0, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
+    new T(3000, "l102", 0, logObject: "\"xyz\"", expectedMsg: "xyz"),
+    new T(checkNbr: 102, checkAppender: "a0"),
+
+    new T(3000, "l103", 103, logObject: "\"abc\"", expectedMsg: "abc"),
+    new T(3000, "l103", 103, logObject: "\"33msg9\"", expectedMsg: "33msg9"),
+    new T(3000, "l103", 103, logObject: "\"xyz\"", expectedMsg: "xyz"),
+    new T(3000, "l103", 0, logObject: "{ \"f1\": \"abc\" }", expectedMsg: "{\"f1\":\"abc\"}"),
+    new T(3000, "l103", 103, logObject: "1033", expectedMsg: "1033"),
+    new T(3000, "l103", 0, logObject: "function() { return \"msg\"; }", expectedMsg: "msg"),
+    new T(3000, "l103", 0, logObject: "[ \"xyz\", \"zyx\"]", expectedMsg: "[\"xyz\",\"zyx\"]"),
+    new T(3000, "l103", 103, logObject: "\"a-bc\"", expectedMsg: "a-bc"),
+    new T(3000, "l103", 0, logObject: "\"abc\"", expectedMsg: "abc"),
+    new T(3000, "l103", 0, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
+    new T(3000, "l103", 103, logObject: "function() { return \"catdog\"; }", expectedMsg: "catdog"),
+    new T(3000, "l103", 0, logObject: "\"xyz\"", expectedMsg: "xyz"),
+    new T(checkNbr: 103, checkAppender: "a0")
 }))

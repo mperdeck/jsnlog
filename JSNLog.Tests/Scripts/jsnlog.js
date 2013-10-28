@@ -343,6 +343,10 @@ var JL;
             copyProperty("userAgentRegex", options, this);
             copyProperty("ipRegex", options, this);
             copyProperty("appenders", options, this);
+            copyProperty("onceOnly", options, this);
+
+            // Reset seenRegexes, in case onceOnly has been changed.
+            this.seenRegexes = [];
 
             return this;
         };
@@ -352,12 +356,28 @@ var JL;
             var message;
 
             if (!this.appenders) {
-                return;
+                return this;
             }
 
             if (((level >= this.level)) && allow(this)) {
                 message = this.stringifyLogObject(logObject);
 
+                if (this.onceOnly) {
+                    i = this.onceOnly.length - 1;
+                    while (i >= 0) {
+                        if (new RegExp(this.onceOnly[i]).test(message)) {
+                            if (this.seenRegexes[i]) {
+                                return this;
+                            }
+
+                            this.seenRegexes[i] = true;
+                        }
+
+                        i--;
+                    }
+                }
+
+                // Pass message to all appenders
                 i = this.appenders.length - 1;
                 while (i >= 0) {
                     this.appenders[i].log(level, message, this.loggerName);

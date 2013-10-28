@@ -58,7 +58,10 @@ namespace JSNLog.Infrastructure
             // Name of the tag
             public string Tag { get; private set; }
             
+            // Method that hanldes the xml element
             public XmlElementProcessor XmlElementProcessor { get; private set; }
+
+            // Describes all the attributes of this tag
             public IEnumerable<AttributeInfo> AttributeInfos { get; private set; }
 
             // Determines the order in which each element type is processed. Lower orderNbr goes first.
@@ -69,6 +72,7 @@ namespace JSNLog.Infrastructure
             // assemblies to create TagInfos.
             public int OrderNbr { get; private set; }
 
+            // The number of this type of tag elements that the parent is allowed to have
             public int MaxNbrTags { get; private set; }
 
             public TagInfo(string tag, XmlElementProcessor xmlElementProcessor, IEnumerable<AttributeInfo> attributeInfos, 
@@ -151,18 +155,15 @@ namespace JSNLog.Infrastructure
 
                     if (!Regex.IsMatch(xe.Name, childNodeNameRegex)) { continue; }
 
-                    if (xe != null)
+                    if (xe.Name == tagInfo.Tag)
                     {
-                        if (xe.Name == tagInfo.Tag)
-                        {
-                            // Check that all attributes are valid
+                        // Check that all attributes are valid
 
-                            EnsureAllAttributesKnown(xe, tagInfo.AttributeInfos);
+                        EnsureAllAttributesKnown(xe, tagInfo.AttributeInfos);
 
-                            nbrTagsFound++;
+                        nbrTagsFound++;
 
-                            tagInfo.XmlElementProcessor(xe, parentName, appenderNames, sequence, tagInfo.AttributeInfos, sb);
-                        }
+                        tagInfo.XmlElementProcessor(xe, parentName, appenderNames, sequence, tagInfo.AttributeInfos, sb);
                     }
                 }
 
@@ -223,16 +224,95 @@ namespace JSNLog.Infrastructure
             foreach (AttributeInfo attributeInfo in attributeInfos)
             {
                 // Get value of the attribute and validate that it is correct. We want to do this for all attributes.
+                // Note that if the attribute has a SubTagName, it will not appear as an xml attribute in the xml,
+                // so attributeValueText will always be null.
+
                 string attributeName = attributeInfo.Name;
                 string attributeValueText = OptionalAttribute(xe, attributeName, null, attributeInfo.ValueInfo.ValidValueRegex);
 
                 if (attributeInfo.AttributeValidity == AttributeInfo.AttributeValidityEnum.NoOption) { continue; }
 
-                if (attributeValueText != null)
+                if (attributeInfo.SubTagName != null)
                 {
-                    attributeValues[attributeName] = new Value(attributeValueText, attributeInfo.ValueInfo);
+                    IEnumerable<string> subTagValues = SubTagValues(xe, attributeInfo);
+
+                    attributeValues[attributeInfo.SubTagName] = new Value(subTagValues, attributeInfo.ValueInfo);
+                }
+                else
+                {
+                    // Attribute is a real xml attribute, rather than a sub tag.
+
+                    if (attributeValueText != null)
+                    {
+                        attributeValues[attributeName] = new Value(attributeValueText, attributeInfo.ValueInfo);
+                    }
+                    else if (attributeInfo.AttributeValidity == AttributeInfo.AttributeValidityEnum.RequiredOption)
+                    {
+                        throw new MissingAttributeException(xe.Name, attributeName);
+                    }
                 }
             }
+        }
+
+        private static IEnumerable<string> SubTagValues(XmlElement xe, AttributeInfo attributeInfo)
+        {
+            return SubTagValues(xe, attributeInfo.SubTagName, attributeInfo.Name,
+                attributeInfo.ValueInfo.ValidValueRegex,
+                attributeInfo.AttributeValidity == AttributeInfo.AttributeValidityEnum.RequiredOption);
+        }
+
+        /// <summary>
+        /// Finds all child elements of xe.
+        /// Of those whose tag equals subTagName, get the value of the attribute attributeName. 
+        /// This value is required. It must match ValidValueRegex.
+        /// 
+        /// Return a collection with the attribute values.
+        /// 
+        /// Each tag can have only one attribute!
+        /// 
+        /// Note that xe may legitamitly have sub elements with tags different from subTagName.
+        /// </summary>
+        /// <param name="xe"></param>
+        /// <param name="subTagName"></param>
+        /// <param name="attributeName"></param>
+        /// <param name="required">
+        /// True if there must be at least one sub tag.
+        /// </param>
+        /// <returns></returns>
+        private static IEnumerable<string> SubTagValues(XmlElement xe, string subTagName, 
+            string attributeName, string ValidValueRegex, bool required)
+        {
+            var subTagValues = new List<string>();
+            bool foundSubTag = false;
+
+            foreach (XmlNode xmlNode in xe.ChildNodes)
+            {
+                XmlElement childElement = xmlNode as XmlElement;
+
+                // If xmlNode is not an XmlElement, ignore it.
+                // This will be the case when xmlNode is a comment.
+                if (childElement == null) { continue; }
+
+                if (childElement.Name == subTagName)
+                {
+                    foundSubTag = true;
+
+                    if (childElement.Attributes.Count != 1)
+                    {
+                        throw new SubTagHasTooManyAttributesException(subTagName, attributeName);
+                    }
+
+                    string attributeValueText = RequiredAttribute(childElement, attributeName, ValidValueRegex);
+                    subTagValues.Add(attributeValueText);
+                }
+            }
+
+            if (required && !foundSubTag)
+            {
+                throw new MissingSubTagException(xe.Name, subTagName);
+            }
+
+            return subTagValues;
         }
 
         /// <summary>
@@ -251,7 +331,7 @@ namespace JSNLog.Infrastructure
 
             if (attribute == null)
             {
-                throw new MissingAttributeException(xe, attributeName);
+                throw new MissingAttributeException(xe.Name, attributeName);
             }
 
             string attributeValue = attribute.Value;

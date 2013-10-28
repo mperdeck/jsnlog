@@ -46,13 +46,23 @@ namespace JSNLog.Infrastructure
             bool firstItem = true;
             foreach (KeyValuePair<string, Value> option in optionValues)
             {
+                string jsValue = null;
+
                 // Do not test for IsNullOrEmpty. For example, appenders="" is legitimate (use 0 appenders)
-                if (option.Value.Text == null)
+                if (option.Value.Text != null)
+                {
+                    jsValue = option.Value.ValueInfo.ToJavaScript(option.Value.Text);
+                }
+                else if (option.Value.TextCollection != null)
+                {
+                    jsValue = "[" + String.Join(",", option.Value.TextCollection.Select(t => option.Value.ValueInfo.ToJavaScript(t))) + "]";
+                }
+                else
                 {
                     continue;
                 }
 
-                sb.AppendFormat("{0}\"{1}\": {2}", firstItem ? "" : ", ", option.Key, option.Value.AsJavaScript());
+                sb.AppendFormat("{0}\"{1}\": {2}", firstItem ? "" : ", ", option.Key, jsValue);
                 firstItem = false;
             }
 

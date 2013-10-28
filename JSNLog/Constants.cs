@@ -83,7 +83,8 @@ namespace JSNLog
             FilterAttributes.Union(
             new[] {
                 new AttributeInfo("name", null, AttributeInfo.AttributeValidityEnum.NoOption),
-                new AttributeInfo("appenders", null, AttributeInfo.AttributeValidityEnum.NoOption)
+                new AttributeInfo("appenders", null, AttributeInfo.AttributeValidityEnum.NoOption),
+                new AttributeInfo("regex", null, AttributeInfo.AttributeValidityEnum.OptionalOption, subTagName: "onceOnly")
             });
 
         public static readonly IEnumerable<AttributeInfo> AppenderAttributes =

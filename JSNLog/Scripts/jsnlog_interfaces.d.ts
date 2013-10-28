@@ -28,6 +28,7 @@ interface JSNLogFilterOptions {
 
 interface JSNLogLoggerOptions extends JSNLogFilterOptions {
     appenders?: JSNLogAppender[];
+    onceOnly?: string[];
 }
 
 // Base for all appender options types
