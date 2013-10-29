@@ -23,6 +23,10 @@
         @Html.TableRowHtml("appenders", "optional", (showTypeColumn ? "array of appenders" : null), 
             "(inherited from parent logger)",
             @"One or more appenders for the logger to send its log messages to. See the examples.")
+        @Html.TableRowHtml("onceOnly", "optional", (showTypeColumn ? "array of strings" : null), 
+            "(inherited from parent logger)",
+            @"One or more regular expressions. When a message matches a regular expression, then
+              any subsequent messages matching that same regular expression will be suppressed. See the remarks and examples.")
         </tbody>
     </table>
 

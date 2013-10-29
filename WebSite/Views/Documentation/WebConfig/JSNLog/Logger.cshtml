@@ -16,7 +16,10 @@
             appenders="Appender Name(s)" 
             level="number|@JSNLog.Infrastructure.LevelUtils.NamedLevels()"
             ipRegex="regular expression"
-            userAgentRegex="regular expression" /&gt;
+            userAgentRegex="regular expression" &gt;
+
+            &lt;onceOnly regex="regular expression" /&gt;
+        &lt;/logger&gt; 
     &lt;/jsnlog&gt;
 &lt;/configuration&gt; 
 </pre>
@@ -77,6 +80,40 @@
 <pre>&lt;ajaxAppender name="appender1" /&gt;
 &lt;ajaxAppender name="appender2" /&gt;
 &lt;logger name="a.b" appenders="appender1;appender2" /&gt;</pre>
+
+<p>
+Suppress duplicate messages that match the regular expression
+    &quot;Parameter x too high - x =&quot;.
+</p>
+
+<pre>&lt;logger name=&quot;a&quot;&gt;
+    &lt;onceOnly regex=&quot;Parameter x too high - x =&quot; /&gt;
+&lt;/logger&gt;</pre>
+
+<p>
+Suppress duplicate messages that match the regular expression
+    &quot;Parameter x too high - x =&quot;. Also suppress duplicate messages that 
+    match &quot;x = \d+ and y = \d+&quot;. 
+</p>
+
+<pre>&lt;logger name=&quot;a&quot;&gt;
+    &lt;onceOnly regex=&quot;Parameter x too high - x =&quot; /&gt;
+    &lt;onceOnly regex=&quot;x = \d+ and y = \d+&quot; /&gt;
+&lt;/logger&gt;</pre>
+
+<p>
+    Loggers inherit
+<span class="term">onceOnly</span>
+    from their parents. 
+    Assume you have a logger &quot;a.b&quot; whose parent &quot;a&quot; suppresses duplicates,
+    but you want logger &quot;a.b&quot; to not suppress duplicates. To make that happen, give it 
+    a <span class="term">onceOnly</span> collection without any regular expressions:
+</p>
+
+<pre>&lt;logger name=&quot;a.b&quot;&gt;
+    &lt;onceOnly  /&gt;
+&lt;/logger&gt;</pre>
+
 }
 
 
