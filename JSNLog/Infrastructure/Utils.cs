@@ -20,6 +20,12 @@ namespace JSNLog.Infrastructure
         /// </param>
         /// <param name="attributeInfos">
         /// Describes which attributes to use as options and how to validate them.
+        /// 
+        /// As regards attributeInfos that have a SubTagName:
+        /// * The value of such an attribute is an array, for example [ 'a', 'b' ]
+        /// * If there are no child elements with the given sub tag name, there is no value, and no entry for that attributeinfo in 
+        ///   the generated setOption.
+        /// * If there is only one child element and it does not have an attribute, the value is an empty array [].
         /// </param>
         /// <param name="initialAttributeValues">
         /// Initial attribute values. The elements found in xe will be added to this.

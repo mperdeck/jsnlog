@@ -205,6 +205,12 @@ namespace JSNLog.Infrastructure
         /// 
         /// Validates the attributes based on the contents of attributeInfos. Attributes that have been
         /// listed as Ignore will not be added to attributeValues.
+        /// 
+        /// As regards attributeInfos that have a SubTagName:
+        /// * If there are no child elements with that sub tag name, than nothing will be added to attributeValues.
+        /// * If there is a child element, but it has no attribute, than no value will be added to the collection of
+        ///   values of that sub tag. This means that if there is only one child element and it has no attribute,
+        ///   you get an empty collection.
         /// </summary>
         /// <param name="xe"></param>
         /// <param name="attributeInfos"></param>
@@ -236,7 +242,10 @@ namespace JSNLog.Infrastructure
                 {
                     IEnumerable<string> subTagValues = SubTagValues(xe, attributeInfo);
 
-                    attributeValues[attributeInfo.SubTagName] = new Value(subTagValues, attributeInfo.ValueInfo);
+                    if (subTagValues != null)
+                    {
+                        attributeValues[attributeInfo.SubTagName] = new Value(subTagValues, attributeInfo.ValueInfo);
+                    }
                 }
                 else
                 {
@@ -262,21 +271,25 @@ namespace JSNLog.Infrastructure
         }
 
         /// <summary>
-        /// Finds all child elements of xe.
-        /// Of those whose tag equals subTagName, get the value of the attribute attributeName. 
-        /// This value is required. It must match ValidValueRegex.
+        /// Finds all child elements of xe with tag subTagName. These child elements can have an attribute
+        /// with name attributeName.
         /// 
-        /// Return a collection with the attribute values.
+        /// The values of those attributes are returned in a collection.
+        /// The values must match ValidValueRegex (otherwise exception).
         /// 
-        /// Each tag can have only one attribute!
+        /// If there are no child elements, returns null.
+        /// If a child element does not have an attribute, no value is added to the collection for that child element.
+        /// This allows the user to create an empty collection (as opposed to null - meaning no collection).
         /// 
-        /// Note that xe may legitamitly have sub elements with tags different from subTagName.
+        /// Each child element can have at most one attribute!
+        /// 
+        /// Note that xe may legitamitly have child elements with tags different from subTagName.
         /// </summary>
         /// <param name="xe"></param>
         /// <param name="subTagName"></param>
         /// <param name="attributeName"></param>
         /// <param name="required">
-        /// True if there must be at least one sub tag.
+        /// True if there must be at least one child element with tag subTagName.
         /// </param>
         /// <returns></returns>
         private static IEnumerable<string> SubTagValues(XmlElement xe, string subTagName, 
@@ -297,19 +310,27 @@ namespace JSNLog.Infrastructure
                 {
                     foundSubTag = true;
 
-                    if (childElement.Attributes.Count != 1)
+                    if (childElement.Attributes.Count > 1)
                     {
                         throw new SubTagHasTooManyAttributesException(subTagName, attributeName);
                     }
 
-                    string attributeValueText = RequiredAttribute(childElement, attributeName, ValidValueRegex);
-                    subTagValues.Add(attributeValueText);
+                    string attributeValueText = OptionalAttribute(childElement, attributeName, ValidValueRegex);
+                    if (attributeValueText != null) 
+                    { 
+                        subTagValues.Add(attributeValueText); 
+                    }
                 }
             }
 
-            if (required && !foundSubTag)
+            if (!foundSubTag)
             {
-                throw new MissingSubTagException(xe.Name, subTagName);
+                if (required)
+                {
+                    throw new MissingSubTagException(xe.Name, subTagName);
+                }
+
+                return null;
             }
 
             return subTagValues;

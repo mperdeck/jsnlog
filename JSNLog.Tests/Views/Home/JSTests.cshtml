@@ -96,6 +96,14 @@
        <onceOnly regex=""abc"" />
     </logger> 
 
+    <logger name=""l103.x2"">
+       <onceOnly regex=""msg"" />
+    </logger> 
+
+    <logger name=""l103.x3"">
+       <onceOnly />
+    </logger> 
+
 </jsnlog>
 ",
 new [] {
@@ -116,7 +124,7 @@ new [] {
     new T(3000, "x1", 1),
 
     new T(2000, "x2", 0), // x2 sets level
-    new T(3000, "x2", 1),
+    new T(3000, "x2", 1), 
     new T(2000, "x2.b", 0), // test inheritance from x2
     new T(3000, "x2.b", 1),
     new T(2000, "x2.b.c", 0), // test inheritance from inheritance from x2
@@ -194,7 +202,6 @@ new [] {
     new T(4000, "l22c", 27),
     new T(checkNbr: 27, checkAppender: "a4"),
     
-    
     // User Agent matching
     
     new T(header: "User Agent matching - these tests assume current browser is Firefox"),
@@ -229,8 +236,7 @@ new [] {
     new T(4000, "l32c", 37),
     new T(checkNbr: 37, checkAppender: "a6"),
 
-    
-    // ++++++++++++++++++++++++++++++++
+    // -----------
     
     new T(header: "Buffer tests"),
     
@@ -417,5 +423,46 @@ new [] {
     new T(3000, "l103", 0, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
     new T(3000, "l103", 103, logObject: "function() { return \"catdog\"; }", expectedMsg: "catdog"),
     new T(3000, "l103", 0, logObject: "\"xyz\"", expectedMsg: "xyz"),
-    new T(checkNbr: 103, checkAppender: "a0")
+    new T(checkNbr: 103, checkAppender: "a0"),
+
+    // Test inheritance of onceOnly
+    
+    new T(3000, "l103.x", 104, logObject: "\"abc\"", expectedMsg: "abc"),
+    new T(3000, "l103.x", 104, logObject: "\"33msg9\"", expectedMsg: "33msg9"),
+    new T(3000, "l103.x", 104, logObject: "\"xyz\"", expectedMsg: "xyz"),
+    new T(3000, "l103.x", 0, logObject: "{ \"f1\": \"abc\" }", expectedMsg: "{\"f1\":\"abc\"}"),
+    new T(3000, "l103.x", 104, logObject: "1033", expectedMsg: "1033"),
+    new T(3000, "l103.x", 0, logObject: "function() { return \"msg\"; }", expectedMsg: "msg"),
+    new T(3000, "l103.x", 0, logObject: "[ \"xyz\", \"zyx\"]", expectedMsg: "[\"xyz\",\"zyx\"]"),
+    new T(3000, "l103.x", 104, logObject: "\"a-bc\"", expectedMsg: "a-bc"),
+    new T(3000, "l103.x", 0, logObject: "\"abc\"", expectedMsg: "abc"),
+    new T(3000, "l103.x", 0, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
+    new T(3000, "l103.x", 104, logObject: "function() { return \"catdog\"; }", expectedMsg: "catdog"),
+    new T(3000, "l103.x", 0, logObject: "\"xyz\"", expectedMsg: "xyz"),
+    new T(checkNbr: 104, checkAppender: "a0"),
+    
+    // l103.x2 inherits from l103, but overrides onceOnly so only duplicates of msg are stopped
+    
+    new T(3000, "l103.x2", 105, logObject: "\"abc\"", expectedMsg: "abc"),
+    new T(3000, "l103.x2", 105, logObject: "\"33msg9\"", expectedMsg: "33msg9"),
+    new T(3000, "l103.x2", 105, logObject: "\"xyz\"", expectedMsg: "xyz"),
+    new T(3000, "l103.x2", 105, logObject: "{ \"f1\": \"abc\" }", expectedMsg: "{\"f1\":\"abc\"}"),
+    new T(3000, "l103.x2", 0, logObject: "function() { return \"msg\"; }", expectedMsg: "msg"),
+    new T(3000, "l103.x2", 105, logObject: "[ \"xyz\", \"zyx\"]", expectedMsg: "[\"xyz\",\"zyx\"]"),
+    new T(3000, "l103.x2", 105, logObject: "\"abc\"", expectedMsg: "abc"),
+    new T(3000, "l103.x2", 0, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
+    new T(3000, "l103.x2", 105, logObject: "\"xyz\"", expectedMsg: "xyz"),
+    new T(checkNbr: 105, checkAppender: "a0"),
+    
+    new T(3000, "l103.x3", 106, logObject: "\"abc\"", expectedMsg: "abc"),
+    new T(3000, "l103.x3", 106, logObject: "\"33msg9\"", expectedMsg: "33msg9"),
+    new T(3000, "l103.x3", 106, logObject: "\"xyz\"", expectedMsg: "xyz"),
+    new T(3000, "l103.x3", 106, logObject: "{ \"f1\": \"abc\" }", expectedMsg: "{\"f1\":\"abc\"}"),
+    new T(3000, "l103.x3", 106, logObject: "function() { return \"msg\"; }", expectedMsg: "msg"),
+    new T(3000, "l103.x3", 106, logObject: "[ \"xyz\", \"zyx\"]", expectedMsg: "[\"xyz\",\"zyx\"]"),
+    new T(3000, "l103.x3", 106, logObject: "\"abc\"", expectedMsg: "abc"),
+    new T(3000, "l103.x3", 106, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
+    new T(3000, "l103.x3", 106, logObject: "\"xyz\"", expectedMsg: "xyz"),
+    new T(checkNbr: 106, checkAppender: "a0")
+    
 }))
