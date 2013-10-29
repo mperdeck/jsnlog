@@ -7,25 +7,44 @@ function JL(loggerName?: string): JSNLogLogger {
         return JL.__;
     }
 
-    var ancestorName='';
+    var accumulatedLoggerName='';
     var logger: JL.Logger = ('.' + loggerName).split('.').reduce(
         function (prev: JL.Logger, curr: string, idx: number, arr: string[]) { 
-            // if loggername is a.b, than ancestor will be set to the loggers
+            // if loggername is a.b.c, than currentLogger will be set to the loggers
             // root   (prev: JL, curr: '')
             // a      (prev: JL.__, curr: 'a')
             // a.b    (prev: JL.__.__a, curr: 'b')
+            // a.b.c  (prev: JL.__.__a.__a.b, curr: 'c')
 
-            var ancestor = prev['__' + curr];
-        
-            // ancestorName evaluates false ('' is falsy) in first iteration when prev is the root logger.
-            // ancestorName will be the logger name corresponding with the logger in ancestor.
-            // Keep in mind that the ancestor may not be defined yet, so can't get the name from
-            // the ancestor object itself.
-            if (ancestorName) { ancestorName += '.' + curr; } else { ancestorName = curr; }
+            // Note that when a new logger name is encountered (such as 'a.b.c'),
+            // a new logger object is created and added as a property to the parent ('a.b').
+            // The root logger is added as a property of the JL object itself.
 
-            // If the ancestor (or the actual logger being sought) does not yet exist, 
+            // It is essential that the name of the property containing the child logger
+            // contains the full 'path' name of the child logger ('a.b.c') instead of
+            // just the bit after the last period ('c').
+            // This is because the parent inherits properties from its ancestors.
+            // So if the root has a child logger 'c' (stored in a property 'c' of the root logger),
+            // then logger 'a.b' has that same property 'c' through inheritance.
+
+            // The names of the logger properties start with __, so the root logger 
+            // (which has name ''), has a nice property name '__'.              
+
+            // accumulatedLoggerName evaluates false ('' is falsy) in first iteration when prev is the root logger.
+            // accumulatedLoggerName will be the logger name corresponding with the logger in currentLogger.
+            // Keep in mind that the currentLogger may not be defined yet, so can't get the name from
+            // the currentLogger object itself.
+            if (accumulatedLoggerName) {
+                accumulatedLoggerName += '.' + curr;
+            } else {
+                accumulatedLoggerName = curr;
+            }
+
+            var currentLogger = prev['__' + accumulatedLoggerName];
+            
+            // If the currentLogger (or the actual logger being sought) does not yet exist, 
             // create it now.
-            if (ancestor === undefined) {
+            if (currentLogger === undefined) {
 
                 // Set the prototype of the Logger constructor function to the parent of the logger
                 // to be created. This way, __proto of the new logger object will point at the parent.
@@ -36,11 +55,11 @@ function JL(loggerName?: string): JSNLogLogger {
 
                 <any>JL.Logger.prototype = prev;
 
-                ancestor = new JL.Logger(ancestorName);
-                prev['__' + curr] = ancestor;  
+                currentLogger = new JL.Logger(accumulatedLoggerName);
+                prev['__' + accumulatedLoggerName] = currentLogger;  
             }
-        
-            return ancestor;
+            
+            return currentLogger;
         }, JL.__);
 
     return logger;
@@ -304,6 +323,9 @@ module JL {
         private seenRegexes: boolean[];
 
         constructor(public loggerName: string) {
+            // Create seenRexes, otherwise this logger will use the seenRexes
+            // of its parent via the prototype chain.
+            this.seenRegexes = [];
         }
 
         private stringifyLogObject(logObject: any): string

@@ -10,21 +10,17 @@ function JL(loggerName) {
         return JL.__;
     }
 
-    var ancestorName = '';
+    var accumulatedLoggerName = '';
     var logger = ('.' + loggerName).split('.').reduce(function (prev, curr, idx, arr) {
-        // if loggername is a.b, than ancestor will be set to the loggers
-        // root   (prev: JL, curr: '')
-        // a      (prev: JL.__, curr: 'a')
-        // a.b    (prev: JL.__.__a, curr: 'b')
-        var ancestor = prev['__' + curr];
-
-        if (ancestorName) {
-            ancestorName += '.' + curr;
+        if (accumulatedLoggerName) {
+            accumulatedLoggerName += '.' + curr;
         } else {
-            ancestorName = curr;
+            accumulatedLoggerName = curr;
         }
 
-        if (ancestor === undefined) {
+        var currentLogger = prev['__' + accumulatedLoggerName];
+
+        if (currentLogger === undefined) {
             // Set the prototype of the Logger constructor function to the parent of the logger
             // to be created. This way, __proto of the new logger object will point at the parent.
             // When logger.level is evaluated and is not present, the JavaScript runtime will
@@ -33,11 +29,11 @@ function JL(loggerName) {
             // Note that prev at this point refers to the parent logger.
             JL.Logger.prototype = prev;
 
-            ancestor = new JL.Logger(ancestorName);
-            prev['__' + curr] = ancestor;
+            currentLogger = new JL.Logger(accumulatedLoggerName);
+            prev['__' + accumulatedLoggerName] = currentLogger;
         }
 
-        return ancestor;
+        return currentLogger;
     }, JL.__);
 
     return logger;
@@ -310,6 +306,9 @@ var JL;
     var Logger = (function () {
         function Logger(loggerName) {
             this.loggerName = loggerName;
+            // Create seenRexes, otherwise this logger will use the seenRexes
+            // of its parent via the prototype chain.
+            this.seenRegexes = [];
         }
         Logger.prototype.stringifyLogObject = function (logObject) {
             switch (typeof logObject) {
