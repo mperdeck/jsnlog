@@ -1,6 +1,5 @@
 ﻿@{
     string returnedObjectName = (string)(ViewData["returnType"]);
-    if (returnedObjectName == "void") { returnedObjectName = ""; }
 }
 
 <pre>setOptions(options: any): @((string)(ViewData["returnType"]))</pre>
@@ -13,9 +12,13 @@
     <dd>A JSON object with options. See the Remarks sections below.</dd>
 </dl>
     
+    @if (returnedObjectName != "void")
+    {
 <h3>Return Value</h3>
 <p>
 The 
     @returnedObjectName itself.
+        
 </p>
+    }
 
