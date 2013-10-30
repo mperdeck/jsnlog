@@ -8,7 +8,9 @@
 
 
 @section Definition {
-    @Html.Partial("_SetOptionsMethodDefinition")
+    @Html.Partial("_SetOptionsMethodDefinition",new ViewDataDictionary { 
+            { "returnType", "Logger"}
+        })
 }
 
 @section Remarks {
@@ -89,6 +91,38 @@ logger.setOptions({
     "appenders": [appender1, appender2]
 });</pre>
 
+
+<p>
+Suppress duplicate messages that match the regular expression
+    &quot;Parameter x too high - x =&quot;.
+</p>
+
+<pre>JL("a").setOptions({
+    "onceOnly": [ "Parameter x too high - x =" ]
+});</pre>
+
+<p>
+Suppress duplicate messages that match the regular expression
+    &quot;Parameter x too high - x =&quot;. Also suppress duplicate messages that 
+    match &quot;x = \d+ and y = \d+&quot;. 
+</p>
+
+<pre>JL("a").setOptions({
+    "onceOnly": [ "Parameter x too high - x =", "x = \\d+ and y = \\d+" ]
+});</pre>
+
+<p>
+    Loggers inherit
+<span class="term">onceOnly</span>
+    from their parents. 
+    Assume you have a logger &quot;a.b&quot; whose parent &quot;a&quot; suppresses duplicates,
+    but you want logger &quot;a.b&quot; to not suppress duplicates. To make that happen, give it 
+    a <span class="term">onceOnly</span> collection without any regular expressions:
+</p>
+
+<pre>JL("a.b").setOptions({
+    "onceOnly": [ ]
+});</pre>
 
 }
 

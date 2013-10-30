@@ -289,9 +289,9 @@ a.download-button:hover
     font-weight: normal;
 }
 
-.feature td,
-.feature th {
-    padding: 5px;
+.feature th,
+.feature td {
+    padding: 1px 0 1px 5px;
     margin: 0px;
 }
 

@@ -88,11 +88,11 @@ JL().log(2500, obj);</pre>
         @"Store client side log messages in your server side logs",
         @"
 <table class=""log"">
-<tr><th>Logger</th><th>Severity</th><th>Message</th></tr>
-<tr><td>csLogger</td><td>ERROR</td><td>Server side error message</td></tr>
-<tr><td>jsLogger</td><td>FATAL</td><td>Client side fatal message</td></tr>
-<tr><td>csLogger2</td><td>INFO</td><td>Server side info message</td></tr>
-<tr><td colspan=""3"">...</td></tr>
+<tr><th style=""width: 120px"">Logger</th><th>Message</th></tr>
+<tr><td>csLogger</td><td>Server side error message</td></tr>
+<tr><td>jsLogger</td><td>Client side fatal message</td></tr>
+<tr><td>csLogger2</td><td>Server side info message</td></tr>
+<tr><td colspan=""2"">...</td></tr>
 </table>
 ")
 
@@ -101,11 +101,25 @@ JL().log(2500, obj);</pre>
         @"See which messages belong to the same request",
         @"
 <table class=""log"">
-<tr><th>Request ID</th><th>Message</th></tr>
+<tr><th style=""width: 120px"">Request ID</th><th>Message</th></tr>
 <tr><td class=""highlight""><span>D623A22B-3454....</span></td><td>An error message</td></tr>
 <tr><td>CB0734CE-4C99....</td><td>A fatal message</td></tr>
 <tr><td class=""highlight""><span>D623A22B-3454....</span></td><td>Some other message</td></tr>
 <tr><td colspan=""2"">...</td></tr>
+</table>
+")
+
+    @Feature(
+        "",
+        @"Suppress duplicate messages",
+        @"
+<table class=""log"">
+<tr><th style=""width: 120px"">Logger</th><th>Message</th></tr>
+<tr><td>jsLogger</td><td>x too high (x = 5)</td></tr>
+<tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 6)</td></tr>
+<tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 7)</td></tr>
+<tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 8)</td></tr>
+<tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 9)</td></tr>
 </table>
 ")
 
