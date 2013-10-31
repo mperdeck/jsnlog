@@ -105,6 +105,28 @@ var JL;
         return true;
     }
 
+    /**
+    Returns true if a log should go ahead, based on the message.
+    
+    @param filters
+    Filters that determine whether a log can go ahead.
+    
+    @param message
+    Message to be logged.
+    */
+    function allowMessage(filters, message) {
+        try  {
+            if (filters.disallow) {
+                if (new RegExp(filters.disallow).test(message)) {
+                    return false;
+                }
+            }
+        } catch (e) {
+        }
+
+        return true;
+    }
+
     function setOptions(options) {
         copyProperty("enabled", options, this);
         copyProperty("clientIP", options, this);
@@ -193,6 +215,7 @@ var JL;
             copyProperty("level", options, this);
             copyProperty("ipRegex", options, this);
             copyProperty("userAgentRegex", options, this);
+            copyProperty("disallow", options, this);
             copyProperty("sendWithBufferLevel", options, this);
             copyProperty("storeInBufferLevel", options, this);
             copyProperty("bufferSize", options, this);
@@ -215,6 +238,9 @@ var JL;
             var logItem;
 
             if (!allow(this)) {
+                return;
+            }
+            if (!allowMessage(this, message)) {
                 return;
             }
 
@@ -340,6 +366,7 @@ var JL;
         Logger.prototype.setOptions = function (options) {
             copyProperty("level", options, this);
             copyProperty("userAgentRegex", options, this);
+            copyProperty("disallow", options, this);
             copyProperty("ipRegex", options, this);
             copyProperty("appenders", options, this);
             copyProperty("onceOnly", options, this);
@@ -361,26 +388,28 @@ var JL;
             if (((level >= this.level)) && allow(this)) {
                 message = this.stringifyLogObject(logObject);
 
-                if (this.onceOnly) {
-                    i = this.onceOnly.length - 1;
-                    while (i >= 0) {
-                        if (new RegExp(this.onceOnly[i]).test(message)) {
-                            if (this.seenRegexes[i]) {
-                                return this;
+                if (allowMessage(this, message)) {
+                    if (this.onceOnly) {
+                        i = this.onceOnly.length - 1;
+                        while (i >= 0) {
+                            if (new RegExp(this.onceOnly[i]).test(message)) {
+                                if (this.seenRegexes[i]) {
+                                    return this;
+                                }
+
+                                this.seenRegexes[i] = true;
                             }
 
-                            this.seenRegexes[i] = true;
+                            i--;
                         }
+                    }
 
+                    // Pass message to all appenders
+                    i = this.appenders.length - 1;
+                    while (i >= 0) {
+                        this.appenders[i].log(level, message, this.loggerName);
                         i--;
                     }
-                }
-
-                // Pass message to all appenders
-                i = this.appenders.length - 1;
-                while (i >= 0) {
-                    this.appenders[i].log(level, message, this.loggerName);
-                    i--;
                 }
             }
 

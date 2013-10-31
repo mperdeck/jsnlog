@@ -25,3 +25,7 @@
                 Html.ViewLink("jsnlogjs-jl-setOptions", "setOptions method of the JL object") +
                 ".") :
                 ""))
+        @Html.TableRowHtml("disallow", "optional", showTypeColumn ? "regular expression" : null, 
+            (ViewData["objectType"] == "Logger") ? "(inherited from parent logger)" : "(empty)",
+                @"If not empty, log messages are suppressed if they match this regular expression. If an object is being logged,
+                  it is converted to a JSON string, which is then matched.")

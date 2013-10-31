@@ -53,6 +53,12 @@ Supports Log4Net, NLog, Elmah, Common.Logging.
 
     @Feature(
         "",
+        @"Or configure them in your JavaScript code",
+        @"<pre>JL(""jsLogger"").setOptions({ ""level"": 4000 });</pre>
+")
+
+    @Feature(
+        "",
         @"Reduce AJAX requests by batching log messages",
         @"<pre>&lt;ajaxAppender name=""appender1"" batchSize=""3""/&gt;</pre>
 ")
@@ -80,6 +86,13 @@ JL().log(2500, obj);</pre>
     return loginfo; 
 });</pre>
 ")
+
+    @Feature(
+        "",
+        @"Suppress messages that match a regular expression",
+        @"<pre>&lt;logger disallow=""suppress me"" /&gt;</pre>
+")
+
     </div>
     <div class="rightColumn">
 

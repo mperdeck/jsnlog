@@ -24,6 +24,7 @@ interface JSNLogFilterOptions {
     level?: number;
     ipRegex?: string;
     userAgentRegex?: string;
+    disallow?: string;
 }
 
 interface JSNLogLoggerOptions extends JSNLogFilterOptions {

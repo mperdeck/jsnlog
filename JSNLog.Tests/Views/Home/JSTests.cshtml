@@ -104,6 +104,14 @@
        <onceOnly />
     </logger> 
 
+    <!-- disallow -->
+
+    <dummyAppender name=""da110"" disallow=""x[a-z]z"" />
+
+    <logger name=""l110"" appenders=""da110"" />
+    <logger name=""l111"" disallow=""msg"" />
+    <logger name=""l111.x1"" disallow="""" />
+
 </jsnlog>
 ",
 new [] {
@@ -463,6 +471,21 @@ new [] {
     new T(3000, "l103.x3", 106, logObject: "\"abc\"", expectedMsg: "abc"),
     new T(3000, "l103.x3", 106, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
     new T(3000, "l103.x3", 106, logObject: "\"xyz\"", expectedMsg: "xyz"),
-    new T(checkNbr: 106, checkAppender: "a0")
+    new T(checkNbr: 106, checkAppender: "a0"),
     
+    // -------------
+    
+    new T(header: "disallow"),
+
+    new T(3000, "l110", 0, logObject: "'123 xyz 999'", expectedMsg: "123 xyz 999"),
+    new T(3000, "l110", 110, logObject: "'123 msg 999'", expectedMsg: "123 msg 999"),
+    new T(checkNbr: 110, checkAppender: "a12"),
+
+    new T(3000, "l111", 111, logObject: "'123 xyz 999'", expectedMsg: "123 xyz 999"),
+    new T(3000, "l111", 0, logObject: "'123 msg 999'", expectedMsg: "123 msg 999"),
+    new T(3000, "l111.x2", 111, logObject: "'123 xyz 999'", expectedMsg: "123 xyz 999"),
+    new T(3000, "l111.x2", 0, logObject: "'123 msg 999'", expectedMsg: "123 msg 999"),
+    new T(3000, "l111.x1", 111, logObject: "'123 xyz 999'", expectedMsg: "123 xyz 999"),
+    new T(3000, "l111.x1", 111, logObject: "'123 msg 999'", expectedMsg: "123 msg 999"),
+    new T(checkNbr: 111, checkAppender: "a0")
 }))

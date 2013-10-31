@@ -13,10 +13,11 @@
     &lt;jsnlog&gt;
         &lt;logger 
             name="string" 
-            appenders="Appender Name(s)" 
             level="number|@JSNLog.Infrastructure.LevelUtils.NamedLevels()"
+            userAgentRegex="regular expression"
             ipRegex="regular expression"
-            userAgentRegex="regular expression" &gt;
+            disallow="regular expression" 
+            appenders="Appender Name(s)" &gt;
 
             &lt;onceOnly regex="regular expression" /&gt;
         &lt;/logger&gt; 

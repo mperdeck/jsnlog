@@ -76,7 +76,8 @@ namespace JSNLog
             new[] {
                 new AttributeInfo(AttributeNameLevel, new LevelValue(), AttributeInfo.AttributeValidityEnum.OptionalOption),
                 new AttributeInfo("ipRegex", null, AttributeInfo.AttributeValidityEnum.OptionalOption),
-                new AttributeInfo("userAgentRegex", null, AttributeInfo.AttributeValidityEnum.OptionalOption)
+                new AttributeInfo("userAgentRegex", null, AttributeInfo.AttributeValidityEnum.OptionalOption),
+                new AttributeInfo("disallow", null, AttributeInfo.AttributeValidityEnum.OptionalOption)
             };
 
         public static readonly IEnumerable<AttributeInfo> LoggerAttributes =

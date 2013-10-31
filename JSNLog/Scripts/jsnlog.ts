@@ -123,6 +123,28 @@ module JL {
         return true;
     }
 
+    /**
+    Returns true if a log should go ahead, based on the message.
+
+    @param filters
+        Filters that determine whether a log can go ahead.
+
+    @param message
+        Message to be logged.
+    */
+    function allowMessage(filters: JSNLogFilterOptions, message: string): boolean {
+        // If the regex contains a bug, that will throw an exception.
+        // Ignore this, and pass the log item (better too much than too little).
+
+        try {
+            if (filters.disallow) {
+                if (new RegExp(filters.disallow).test(message)) { return false; }
+            }
+        } catch (e) { }
+
+        return true;
+    }
+
     export function setOptions(options: JSNLogOptions): JSNLogStatic {
         copyProperty("enabled", options, this);
         copyProperty("clientIP", options, this);
@@ -159,6 +181,7 @@ module JL {
         public level: number = JL.getTraceLevel();
         public ipRegex: string;
         public userAgentRegex: string;
+        public disallow: string;
 
         // set to super high level, so if user increases level, level is unlikely to get 
         // above sendWithBufferLevel
@@ -191,6 +214,7 @@ module JL {
             copyProperty("level", options, this);
             copyProperty("ipRegex", options, this);
             copyProperty("userAgentRegex", options, this);
+            copyProperty("disallow", options, this);
             copyProperty("sendWithBufferLevel", options, this);
             copyProperty("storeInBufferLevel", options, this);
             copyProperty("bufferSize", options, this);
@@ -211,6 +235,7 @@ module JL {
             var logItem: LogItem;
 
             if (!allow(this)) { return; }
+            if (!allowMessage(this, message)) { return; }
 
             if (level < this.storeInBufferLevel) {
                 // Ignore the log item completely
@@ -314,6 +339,7 @@ module JL {
         public level: number;
         public userAgentRegex: string;
         public ipRegex: string;
+        public disallow: string;
 
         // Used to remember which regexes in onceOnly have been successfully 
         // matched against a message. Index into this array is same as index
@@ -363,6 +389,7 @@ module JL {
         public setOptions(options: JSNLogLoggerOptions): JSNLogLogger {
             copyProperty("level", options, this);
             copyProperty("userAgentRegex", options, this);
+            copyProperty("disallow", options, this);
             copyProperty("ipRegex", options, this);
             copyProperty("appenders", options, this);
             copyProperty("onceOnly", options, this);
@@ -383,29 +410,32 @@ module JL {
             if (((level >= this.level)) && allow(this)) {
                 message = this.stringifyLogObject(logObject);
 
-                // See whether message is a duplicate
+                if (allowMessage(this, message)) {
 
-                if (this.onceOnly) {
-                    i = this.onceOnly.length - 1;
-                    while (i >= 0) {
-                        if (new RegExp(this.onceOnly[i]).test(message)) {
-                            if (this.seenRegexes[i]) {
-                                return this;
+                    // See whether message is a duplicate
+
+                    if (this.onceOnly) {
+                        i = this.onceOnly.length - 1;
+                        while (i >= 0) {
+                            if (new RegExp(this.onceOnly[i]).test(message)) {
+                                if (this.seenRegexes[i]) {
+                                    return this;
+                                }
+
+                                this.seenRegexes[i] = true;
                             }
 
-                            this.seenRegexes[i] = true;
+                            i--;
                         }
+                    }
 
+                    // Pass message to all appenders
+
+                    i = this.appenders.length - 1;
+                    while (i >= 0) {
+                        this.appenders[i].log(level, message, this.loggerName);
                         i--;
                     }
-                }
-
-                // Pass message to all appenders
-
-                i = this.appenders.length - 1;
-                while (i >= 0) {
-                    this.appenders[i].log(level, message, this.loggerName);
-                    i--;
                 }
             }
 
