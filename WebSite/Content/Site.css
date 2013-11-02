@@ -41,6 +41,15 @@ a:hover
     margin: 0 auto;
 }
 
+.container:after
+{ 
+ content: ".";  
+ display: block; 
+ height: 0; 
+ clear: both; 
+ visibility: hidden; 
+}
+
 header
 {
     padding: 20px 0 20px 0;
@@ -73,6 +82,27 @@ header a.logo
     font-weight: bold;
     font-size: 30pt;
     float: left;
+}
+
+.versions span,
+.versions a {
+    width:50px; 
+    text-align: center; 
+    font-size: 80%; 
+    padding: 0 2px 0 2px; 
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.versions span {
+    background-color: #0566C9; 
+    color: #ffffff; 
+}
+
+.versions a {
+    color: #0566C9; 
+    border: 1px solid #0566C9; 
+    background-color: #ffffff; 
 }
 
 .main-menu
@@ -131,15 +161,6 @@ footer .container
 
 .large-text
 {
-}
-
-.large-text:after
-{
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
 }
 
 .large-text .benefits

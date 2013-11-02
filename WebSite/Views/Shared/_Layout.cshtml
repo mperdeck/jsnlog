@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using WebSite.Extensions
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -13,6 +15,9 @@
         <div class="container">
             @Html.Partial("Partials/_Logo")
             @Html.Partial("Partials/_MainMenu")
+        </div>
+        <div class="versions container" style="margin-top: 10px;">
+            @Html.VersionSwitcher()
         </div>
     </header>
 

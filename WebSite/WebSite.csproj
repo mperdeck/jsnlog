@@ -133,6 +133,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\Extensions\PageVersions.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\ViewExtensionsConfig.cs" />
     <Compile Include="Areas\Version1\Controllers\DocumentationController.cs" />
@@ -203,7 +204,6 @@
     <Content Include="Views\Documentation\_LevelGetMethodExample.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Version1\Models\" />
     <Folder Include="Models\" />
