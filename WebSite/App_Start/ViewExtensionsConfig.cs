@@ -15,5 +15,16 @@ namespace WebSite
         {
             Views.Load("/Views/Documentation");
         }
+
+        public static void RegisterPageVersions()
+        {
+            var versionInfos = new[] 
+            {
+                new PageVersions.VersionInfo { VersionName = "NetJs", Caption = ".Net + JS", IsDefault = true },
+                new PageVersions.VersionInfo { VersionName = "JsOnly", Caption = "JS Only" }
+            };
+
+            PageVersions.Load(versionInfos);
+        }
     }
 }

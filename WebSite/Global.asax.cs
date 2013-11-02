@@ -20,6 +20,7 @@ namespace WebSite
             AreaRegistration.RegisterAllAreas();
 
             ViewExtensionsConfig.RegisterViews();
+            ViewExtensionsConfig.RegisterPageVersions();
         }
     }
 }
