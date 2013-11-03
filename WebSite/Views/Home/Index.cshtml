@@ -2,19 +2,42 @@
 @using WebSite.App_Code
 
 @{
-    ViewBag.Title = "JSNLog - Better JavaScript Logging";
+    ViewBag.Title = "Better JavaScript Logging";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section Hero {
     <section class="hero large-text">
         <section class="benefits" style="float: left; width: 650px; margin-top: 5px;">
+@if (PageVersions.CurrentVersion() == "NetJs")
+{
             <h1>Client side logging integrated with ASP.NET and MVC</h1>
             <p>
+
+
             JSNLog lets you insert loggers in your client side JavaScript,
             configure them in your web.config, and store their messages
             in your server side logs - without any server side coding.
             </p>
+}
+@if (PageVersions.CurrentVersion() == "JsOnly")
+{
+            <h1>JavaScript logging redone</h1>
+            <p>
+                small
+                simple
+                efficient - reduce bandwidth
+                easy to integrate with server
+                easy to use
+                well documented
+
+
+
+            JSNLog lets you insert loggers in your client side JavaScript,
+            configure them in your web.config, and store their messages
+            in your server side logs - without any server side coding.
+            </p>
+}
         </section>
 <div class="download" style="float: right; margin-bottom: 10px;"> 
         @Html.Raw(Html.Partial("Partials/_DownloadButton").ToHtmlString())
@@ -31,6 +54,8 @@
 <section class="features">
     <div class="leftColumn">
 
+@if (PageVersions.CurrentVersion() == "NetJs")
+{
     @Feature(
         "",
         @"Works with your server side loggers",
@@ -45,35 +70,78 @@ Hands the log messages to your server side logging package.
 Supports Log4Net, NLog, Elmah, Common.Logging.
         </li>
         </ul>")
+}
 
         @Feature(
             "",
             @"Insert loggers in your JavaScript",
             @"<pre>JL(""jsLogger"").fatal(""log message"");</pre>")
 
+@if (PageVersions.CurrentVersion() == "NetJs")
+{
     @Feature(
         "",
         @"Configure loggers in your web.config",
         @"<pre>&lt;logger name=""jslogger"" level=""FATAL"" /&gt;</pre>
 ")
+}
 
+@if (PageVersions.CurrentVersion() == "NetJs")
+{
     @Feature(
         "",
         @"Or configure them in your JavaScript code",
         @"<pre>JL(""jsLogger"").setOptions({ ""level"": 4000 });</pre>
 ")
+}
+@if (PageVersions.CurrentVersion() == "JsOnly")
+{
+    @Feature(
+        "",
+        @"Configure loggers in your JavaScript code",
+        @"<pre>JL(""jsLogger"").setOptions({ ""level"": 4000 });</pre>
+")
+}
 
+@*===========================================================*@
+
+@if (PageVersions.CurrentVersion() == "NetJs")
+{
     @Feature(
         "",
         @"Reduce AJAX requests by batching log messages",
         @"<pre>&lt;ajaxAppender name=""appender1"" batchSize=""3""/&gt;</pre>
 ")
+}
+@if (PageVersions.CurrentVersion() == "JsOnly")
+{
+    @Feature(
+        "",
+        @"Reduce AJAX requests by batching log messages",
+        @"<pre>appender.setOptions({ ""batchSize"": 3 });</pre>
+")
+}
 
+@*===========================================================*@
+
+@if (PageVersions.CurrentVersion() == "NetJs")
+{
     @Feature(
         "",
         @"Only log for certain user agents or IP addresses",
         @"<pre>&lt;logger userAgentRegex=&quot;MSIE 7|MSIE 8&quot; /&gt;</pre>
 ")
+}
+@if (PageVersions.CurrentVersion() == "JsOnly")
+{
+    @Feature(
+        "",
+        @"Configure loggers in your JavaScript code",
+        @"<pre>JL().setOptions({ ""userAgentRegex"": ""MSIE 7|MSIE 8"" });</pre>
+")
+}
+
+@*===========================================================*@
 
     @Feature(
         "",
@@ -93,15 +161,28 @@ JL().log(2500, obj);</pre>
 });</pre>
 ")
 
+@if (PageVersions.CurrentVersion() == "NetJs")
+{
     @Feature(
         "",
         @"Suppress messages that match a regular expression",
         @"<pre>&lt;logger disallow=""suppress me"" /&gt;</pre>
 ")
+}
+@if (PageVersions.CurrentVersion() == "JsOnly")
+{
+    @Feature(
+        "",
+        @"Suppress messages that match a regular expression",
+        @"<pre>JL(""jsLogger"").setOptions({ ""disallow"": ""suppress me"" });</pre>
+")
+}
 
     </div>
     <div class="rightColumn">
 
+@if (PageVersions.CurrentVersion() == "NetJs")
+{
     @Feature(
         "",
         @"Store client side log messages in your server side logs",
@@ -114,6 +195,7 @@ JL().log(2500, obj);</pre>
 <tr><td colspan=""2"">...</td></tr>
 </table>
 ")
+}
 
     @Feature(
         "",
