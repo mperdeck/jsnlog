@@ -1,4 +1,5 @@
 ﻿@using ViewExtensions
+@using WebSite.App_Code
 
 @{
     ViewBag.Title = "Download/Installation";
@@ -6,6 +7,8 @@
     ViewBag.Description = "How to download and install JSNLog.";
 }
 
+@if (PageVersions.CurrentVersion() == "NetJs")
+{
 
 @*
 --------------------------------------------------------------------------
@@ -126,5 +129,165 @@ that use JSNLog loggers.
     @Html.ViewLink("getstartedlogging")
     &gt;&gt;
 </p>
+}
 
+@*====================================================================================================*@
+@* JS Only *@
+@*====================================================================================================*@
+
+@if (PageVersions.CurrentVersion() == "JsOnly")
+{
+    <p>
+        <small>If you use .Net, <a href="?version=NetJs">click here</a>.</small>
+    </p>
+    
+    <p>
+        Firstly, <a href="@SiteConstants.DownloadLinkJsnlogJs" target="_blank">download jsnlog.js</a> and add it to your site.
+    </p>
+    
+    <p>
+        The second step is to let your server receive log messages from jsnlog.js. Two things are in play here:
+    </p>
+<ol>
+    <li>The URL where you will receive log messages;</li>
+    <li>The format of the log messages.</li>
+</ol>    
+    
+    <h2>URL where you will receive log messages</h2>
+    
+    <p>
+        The built in AJAX appender by default sends all log messages to this url:
+    </p>
+    <pre>jsnlog.logger</pre>
+    
+    <p>
+        You can change this using the 
+        @Html.ViewLink("jsnlogjs-ajaxappender-setOptions")<text>.</text>
+    </p>
+    
+    <h2>Format of the log messages</h2>
+    <p>
+        The AJAX appender sends messages as JSON strings, in this format:
+    </p>
+    <pre>{
+    r:  "request id",
+    lg: [
+        { l: level, m: 'message', n: 'logger name', t: timestamp },
+        ...
+    ]
+}</pre>
+ 
+    <p>
+        Note that a single JSON message to the server can contain multiple log messages. This is because the AJAX appender can be configured
+        to batch messages, for example 2 log messages per JSON message to the server. 
+    </p>
+    <p>
+        About the individual fields:
+    </p>
+    <table class="border">
+    <tr valign="top">
+    <th>Field</th>
+    <th>Description</th>
+    </tr>
+    <tr>
+    <td valign="top">
+        request id
+    </td>
+    <td>
+Identifies the current request. You can set this on the server while generating the page using the JL
+        @Html.ViewLink("jsnlogjs-jl-setOptions")<text>.</text>
+        <p />
+        Use this feature to see which log message belong to the same request. 
+        This feauture is optional, so no need to worry about it.
+    </td>
+    </tr>
+    <tr>
+    <td valign="top">
+        level
+    </td>
+    <td>
+        Severity of the log message. This is a number. See below.
+    </td>
+    </tr>
+    <tr>
+    <td valign="top">
+        message
+    </td>
+    <td>
+        Message to be logged.
+    </td>
+    </tr>
+    <tr>
+    <td valign="top">
+        logger&nbsp;name
+    </td>
+    <td>
+        Name of the logger. 
+    </td>
+    </tr>
+    <tr>
+    <td valign="top">
+        timestamp
+    </td>
+    <td>
+        The time the message was logged by your JavaScript.
+         This is the number of milliseconds since 1 January 1970 00:00:00 UTC, according to the client machine's clock.
+    </td>
+    </tr>
+    </table>
+
+    <p>
+        Levels translate to the more common TRACE, DEBUG, ..., FATAL as follows: 
+    </p>
+    
+    <table class="border">
+    <tr valign="top">
+    <th>Named Severity</th>
+    <th>Level</th>
+    </tr>
+    <tr>
+    <td valign="top">TRACE
+    </td>
+    <td>1000
+    </td>
+    </tr>
+    
+    <tr>
+    <td valign="top">DEBUG
+    </td>
+    <td>2000
+    </td>
+    </tr>
+    
+    <tr>
+    <td valign="top">INFO
+    </td>
+    <td>3000
+    </td>
+    </tr>
+    
+    <tr>
+    <td valign="top">WARN
+    </td>
+    <td>4000
+    </td>
+    </tr>
+    
+    <tr>
+    <td valign="top">ERROR
+    </td>
+    <td>5000
+    </td>
+    </tr>
+    
+    <tr>
+    <td valign="top">FATAL
+    </td>
+    <td>6000
+    </td>
+    </tr>
+</table>
+    
+    
+}
 

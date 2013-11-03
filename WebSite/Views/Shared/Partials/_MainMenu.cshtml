@@ -12,7 +12,14 @@
             @Html.ViewLink("getstartedlogging")
         </li>
         <li>
-            @Html.ViewLink("webconfig", "Documentation")
+            @if (PageVersions.CurrentVersion() == "NetJs")
+            {
+                @Html.ViewLink("webconfig", "Documentation")
+            }
+            @if (PageVersions.CurrentVersion() == "JsOnly")
+            {
+                @Html.ViewLink("jsnlogjs", "Documentation")
+            }
         </li>
         <li>
             <a href="https://github.com/mperdeck/jsnlog" target="_blank">Source</a>

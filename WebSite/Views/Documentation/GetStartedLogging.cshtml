@@ -46,7 +46,13 @@
 </p>
 <pre>JL().log(2500, "log message with severity 2500");</pre>
 
+@*======================================================================*@
+
 <h2>Filtering out low priority messages using the level attribute</h2>
+
+@if (PageVersions.CurrentVersion() == "NetJs")
+{
+
 <p>
     In your web.config, you can 
     
@@ -54,6 +60,23 @@
      to only pass on messages with a given severity or higher using the <span class="term">level</span> attribute:
 </p>
 <pre>&lt;logger name="function1.logger1" level="ERROR" /&gt;</pre>
+    
+}
+
+@if (PageVersions.CurrentVersion() == "JsOnly")
+{
+    <p>
+    In your JavaScript, you can 
+    
+                @Html.ViewLink("jsnlogjs-logger-setOptions", "configure your loggers")
+     to only pass on messages with a given severity or higher:
+</p>
+<pre>JL("function1.logger1").setOptions({
+    "level": JL.getInfoLevel()
+});</pre>
+
+}
+    
 <p>
     When setting a <span class="term">level</span>, in addition to 
        <span class="term">TRACE</span>,
@@ -72,7 +95,15 @@
 <p>
     To make it easier to manage your loggers, they are organized in a 
     
+@if (PageVersions.CurrentVersion() == "NetJs")
+{
                     @Html.ViewLink("webconfig-logger", "hierarchy", fragment: "inheritance")
+}
+@if (PageVersions.CurrentVersion() == "JsOnly")
+{
+                    @Html.ViewLink("jsnlogjs-logger-setOptions", "hierarchy", fragment: "inheritance")
+}
+
      based on their names:
 </p>
 
@@ -89,6 +120,8 @@
     Loggers inherit their attributes from their parents, unless you override them.
     Ultimately, they all inherit from the root logger.
 </p>
+@if (PageVersions.CurrentVersion() == "NetJs")
+{
 <p>
     To set the level of the root logger, simply leave out the
     <span class="term">name</span> attribute:
@@ -96,6 +129,17 @@
 
 <pre>&lt;!-- set level on root logger --&gt;
 &lt;logger level="ERROR" /&gt;</pre>
+}
+@if (PageVersions.CurrentVersion() == "JsOnly")
+{
+<p>
+    To set the level of the root logger, simply leave out the name:
+</p>
+
+<pre>JL().setOptions({
+    "level": JL.getInfoLevel()
+});</pre>
+}
 <p>
 By default, the root logger has level <span class="term">DEBUG</span>. 
     This means that by default, messages with severity <span class="term">TRACE</span> are not processed.  
@@ -121,7 +165,15 @@ By default, the root logger has level <span class="term">DEBUG</span>.
     For more information, read these pages:
 </p>
 <ul>
+@if (PageVersions.CurrentVersion() == "NetJs")
+{
 <li>@Html.ViewLink("webconfig-logger")</li>
 <li>@Html.ViewLink("javascriptlogging-requestid")</li>
 <li>@Html.ViewLink("webconfig-ajaxappender")</li>
+}
+@if (PageVersions.CurrentVersion() == "JsOnly")
+{
+<li>@Html.ViewLink("jsnlogjs-logger-setOptions", "Logger options")</li>
+<li>@Html.ViewLink("jsnlogjs-ajaxappender-setOptions", "AjaxAppender options")</li>
+}
 </ul>
