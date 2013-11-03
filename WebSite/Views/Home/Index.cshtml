@@ -1,4 +1,7 @@
-﻿@{
+﻿@using ViewExtensions
+@using WebSite.App_Code
+
+@{
     ViewBag.Title = "JSNLog - Better JavaScript Logging";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -17,7 +20,10 @@
         @Html.Raw(Html.Partial("Partials/_DownloadButton").ToHtmlString())
         </div>
 
-        <div class="nugetline">PM> Install-Package JSNLog</div>
+        @if (PageVersions.CurrentVersion() == "NetJs")
+        {
+            <div class="nugetline">PM> Install-Package JSNLog</div>
+        }
 
     </section>
 }

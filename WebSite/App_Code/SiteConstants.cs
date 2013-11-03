@@ -10,6 +10,8 @@ namespace WebSite.App_Code
         public const string CurrentVersion = "2.3.0";
         public const string JsnlogJsFileSize = "1.5kb";
 
+        public const string NugetDownloadUrl = "http://www.nuget.org/packages/JSNLog/";
+
         public static string DownloadLinkJsnlogJs 
         {
             get { return string.Format("https://raw.github.com/mperdeck/jsnlog/{0}/JSNLog/Scripts/jsnlog.min.js", CurrentVersion); }
