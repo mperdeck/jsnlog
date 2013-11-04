@@ -20,11 +20,11 @@ namespace WebSite
         {
             var versionInfos = new[] 
             {
-                new PageVersions.VersionInfo { VersionName = "NetJs", Caption = ".Net + JS", IsDefault = true },
-                new PageVersions.VersionInfo { VersionName = "JsOnly", Caption = "JS Only" }
+                new PageVersions.VersionInfo { VersionUrlName = "netjs", VersionName = "NetJs", Caption = ".Net + JS", IsDefault = true },
+                new PageVersions.VersionInfo { VersionUrlName = "js", VersionName = "JsOnly", Caption = "JS Only" }
             };
 
-            PageVersions.Load(versionInfos);
+            PageVersions.Load(versionInfos, false, true);
         }
     }
 }
