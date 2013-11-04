@@ -40,8 +40,9 @@ What this project needs is integration with PHP, Java and other Linux based envi
 This is where you come in.
 
 We are looking for people who are familiar with a Linux based web technology, and who want to write server side code that:
-* Receives log data from the JSNLog.js JavaScript library and either hands it to a server side logging package such as Log4J, or stores it on the server itself.
-* Allows a web master to configure JSNLog loggers via a server side configuration file.
+* Receives log data from the JSNLog.js JavaScript library and stores it on the server, for example by handing it to a server side logging package such as Log4J.
+
+* Allows a web master to configure JSNLog loggers via a server side configuration file. When a page is requested, your code would read the configuration in the file and write JavaScript into the page that configures the JavaScript loggers.
 
 Essentially, this would be your own project, with its own Github page. But you would be leveraging the work already done to develop the JSNLog.js library. Your focus would be on the server side, leaving the JavaScript library as is.
 
