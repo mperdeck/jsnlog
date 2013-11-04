@@ -1,10 +1,10 @@
 # JSNLog
 
-JSNLog lets you insert loggers in your client side JavaScript, configure them in your web.config, and store their messages in your server side logs - without any server side coding.
+JSNLog lets you insert loggers in your client side JavaScript, configure them via a configuration file on the web server, and store their messages in your server side logs - without any server side coding.
 
 Visit [jsnlog.com](http://www.jsnlog.com) to:
 
-* Install JSNLog with the JSNLog NuGet package; 
+* Download and install JSNLog; 
 * Get started quickly with JSNLog;
 * Get full documentation.
 
@@ -12,17 +12,17 @@ Visit [jsnlog.com](http://www.jsnlog.com) to:
 
 The focus of JSNLog is on letting you log events in your JavaScript running on a browser, getting that log data back to your web server and storing it there.
 
-This makes it different from existing JavaScript logging libraries. These either focus on logging to the browser's console, making them useful only during debugging. Or they are essentially ports of log4j to JavaScript, making them rather bloated.
+This makes it different from other JavaScript logging libraries. These either focus on logging to the browser's console, making them useful only during debugging. Or they are essentially ports of log4j to JavaScript, making them rather bloated.
 
-Recognizing that JSNLog runs as part of a JavaScript program has led to these design features:
+Recognizing that JSNLog runs as part of a JavaScript program on the browser has led to these design choices:
 
 * JSNLog has to travel over the Internet to the browser - so its file size has been kept to a minimum;
 * It has many options that allow you to keep the amount of log data going back to the server to a minimum - such as suppressing duplicate log messages, batching of messages and filtering by browser type.
 * Having a good JavaScript library is not enough, because the web server is very much part of the equation. Therefore:
-> * JSNLog includes server side code that receives log data from the JavaScript library and hands it to a server side logging package for storage on the server;
-> * It lets you configure your loggers via a configuration file on the server, so you don't have to change your JavaScript code.
+   * JSNLog includes server side code that receives log data from the JavaScript library and hands it to a server side logging package for storage on the server;
+   * It lets you configure your loggers via a configuration file on the server, so you don't have to change your JavaScript code.
 
-The integration with the server is currently only available in .Net environments - see jsnlog.com.
+The integration with the web server is currently only available in .Net environments - see jsnlog.com.
 
 If you do not use .Net, the JavaScript library works very well on its own - see js.jsnlog.com.
 
