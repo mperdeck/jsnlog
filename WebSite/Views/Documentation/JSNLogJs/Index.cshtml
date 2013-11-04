@@ -11,6 +11,9 @@
 <p>
     Use the JSNLog.js library to configure client side logging and create log items.
 </p>
+
+@if (PageVersions.CurrentVersion() == "NetJs")
+{
 <p>
     If you use the JSNLog elements in web.config to configure client side logging, there is little need to become familiar
     with JSNLog.js. In that case, the only JSNLog specific JavaScript code you actually write is to
@@ -18,6 +21,8 @@
     @Html.ViewLink("getstartedlogging")
     section.
 </p>
-@Html.ChildrenTable(cssClass: "border")
+}
+
+    @Html.ChildrenTable(cssClass: "border")
 
 
