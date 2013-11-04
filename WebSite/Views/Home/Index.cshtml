@@ -24,18 +24,10 @@
 {
             <h1>JavaScript logging redone</h1>
             <p>
-                small
-                simple
-                efficient - reduce bandwidth
-                easy to integrate with server
-                easy to use
-                well documented
-
-
-
-            JSNLog lets you insert loggers in your client side JavaScript,
-            configure them in your web.config, and store their messages
-            in your server side logs - without any server side coding.
+                JSNLog.js 
+                is a tiny JavaScript logging library, simple and well documented.
+                It has unique options to cut down on the amount of logging data you receive while 
+                still getting the information you actually need.
             </p>
 }
         </section>
@@ -59,7 +51,7 @@
     @Feature(
         "",
         @"Works with your server side loggers",
-        @"<ul class=""halfspaced"">
+        @"<ul class=""halfspaced noindent"">
         <li>
 Sends log messages from the client to the server using AJAX.
         </li>
@@ -118,7 +110,8 @@ Supports Log4Net, NLog, Elmah, Common.Logging.
     @Feature(
         "",
         @"Reduce AJAX requests by batching log messages",
-        @"<pre>appender.setOptions({ ""batchSize"": 3 });</pre>
+        @"<pre>appender.setOptions(
+    { ""batchSize"": 3 });</pre>
 ")
 }
 
@@ -136,8 +129,29 @@ Supports Log4Net, NLog, Elmah, Common.Logging.
 {
     @Feature(
         "",
-        @"Configure loggers in your JavaScript code",
-        @"<pre>JL().setOptions({ ""userAgentRegex"": ""MSIE 7|MSIE 8"" });</pre>
+        @"Only log for certain user agents or IP addresses",
+        @"<pre>JL().setOptions(
+    { ""userAgentRegex"": ""MSIE 7|MSIE 8"" });</pre>
+")
+}
+
+@*===========================================================*@
+
+@if (PageVersions.CurrentVersion() == "NetJs")
+{
+    @Feature(
+        "",
+        @"Suppress messages that match a regular expression",
+        @"<pre>&lt;logger disallow=""suppress me"" /&gt;</pre>
+")
+}
+@if (PageVersions.CurrentVersion() == "JsOnly")
+{
+    @Feature(
+        "",
+        @"Suppress messages that match a regular expression",
+        @"<pre>JL(""jsLogger"").setOptions(
+    { ""disallow"": ""suppress me"" });</pre>
 ")
 }
 
@@ -161,25 +175,21 @@ JL().log(2500, obj);</pre>
 });</pre>
 ")
 
-@if (PageVersions.CurrentVersion() == "NetJs")
-{
-    @Feature(
-        "",
-        @"Suppress messages that match a regular expression",
-        @"<pre>&lt;logger disallow=""suppress me"" /&gt;</pre>
-")
-}
+    </div>
+    <div class="rightColumn">
+
+@*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*@
+
 @if (PageVersions.CurrentVersion() == "JsOnly")
 {
     @Feature(
         "",
-        @"Suppress messages that match a regular expression",
-        @"<pre>JL(""jsLogger"").setOptions({ ""disallow"": ""suppress me"" });</pre>
+        @"Easily send logging data to the server",
+        @"Built in AjaxAppender uses simple, well documented message format. 
 ")
 }
 
-    </div>
-    <div class="rightColumn">
+@*===========================================================*@
 
 @if (PageVersions.CurrentVersion() == "NetJs")
 {
@@ -199,19 +209,6 @@ JL().log(2500, obj);</pre>
 
     @Feature(
         "",
-        @"See which messages belong to the same request",
-        @"
-<table class=""log"">
-<tr><th style=""width: 120px"">Request ID</th><th>Message</th></tr>
-<tr><td class=""highlight""><span>D623A22B-3454....</span></td><td>An error message</td></tr>
-<tr><td>CB0734CE-4C99....</td><td>A fatal message</td></tr>
-<tr><td class=""highlight""><span>D623A22B-3454....</span></td><td>Some other message</td></tr>
-<tr><td colspan=""2"">...</td></tr>
-</table>
-")
-
-    @Feature(
-        "",
         @"Suppress duplicate messages",
         @"
 <table class=""log"">
@@ -227,17 +224,31 @@ JL().log(2500, obj);</pre>
     @Feature(
         "",
         @"Get the info you need, but only <u>when</u> you need it",
-        @"<ul class=""spaced"">
+        @"<ul class=""spaced noindent"">
         <li>
-        To solve a JavaScript exception, you may need debug messages generated before the exception happened. 
+        To solve JavaScript exceptions, you often need to know what happened before they happened. 
         </li>
         <li>
-        But you only want to send those debug messages to the server if there actually is an exception.
+        But you don't want to send trace messages with that context unless there actually is an exception.
         </li>
         <li>
-        Solution: Store the debug messages on the client in a buffer. Send the buffered messages when there is a fatal message.
+        Solution: JSNLog lets you buffer log messages on the client, and only send them 
+when there is a fatal message.
         </li>
         </ul>")
+
+    @Feature(
+        "",
+        @"See which messages belong to the same request",
+        @"
+<table class=""log"">
+<tr><th style=""width: 120px"">Request ID</th><th>Message</th></tr>
+<tr><td class=""highlight""><span>D623A22B-3454....</span></td><td>An error message</td></tr>
+<tr><td>CB0734CE-4C99....</td><td>A fatal message</td></tr>
+<tr><td class=""highlight""><span>D623A22B-3454....</span></td><td>Some other message</td></tr>
+<tr><td colspan=""2"">...</td></tr>
+</table>
+")
     </div>
 </section>
 
