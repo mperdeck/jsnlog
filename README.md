@@ -7,7 +7,7 @@ Visit [jsnlog.com](http://www.jsnlog.com) to:
 * Download and install JSNLog; 
 * Get started quickly with JSNLog;
 * Get full documentation.
-<a name="why"></a>
+
 ## Why JSNLog?
 
 The focus of JSNLog is on letting you log events in your JavaScript running on a browser, getting that log data back to your web server and storing it there.
@@ -25,7 +25,7 @@ Recognizing that JSNLog runs as part of a JavaScript program on the browser has 
 The integration with the web server is currently only available in .Net environments - see [jsnlog.com](http://www.jsnlog.com).
 
 If you do not use .Net, the JavaScript library works very well on its own - see [js.jsnlog.com](http://js.jsnlog.com).
-<a name="contributors"></a>
+
 ## Contributors welcome
 
 Contributors are very much welcome on the JSNLog project. Unlike contributing to other projects, 
