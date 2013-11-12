@@ -7,7 +7,7 @@ Visit [jsnlog.com](http://www.jsnlog.com) to:
 * Download and install JSNLog; 
 * Get started quickly with JSNLog;
 * Get full documentation.
-
+<a name="why"></a>
 ## Why JSNLog?
 
 The focus of JSNLog is on letting you log events in your JavaScript running on a browser, getting that log data back to your web server and storing it there.
@@ -25,7 +25,7 @@ Recognizing that JSNLog runs as part of a JavaScript program on the browser has 
 The integration with the web server is currently only available in .Net environments - see [jsnlog.com](http://www.jsnlog.com).
 
 If you do not use .Net, the JavaScript library works very well on its own - see [js.jsnlog.com](http://js.jsnlog.com).
-
+<a name="contributors"></a>
 ## Contributors welcome
 
 Contributors are very much welcome on the JSNLog project. Unlike contributing to other projects, 
@@ -37,9 +37,9 @@ As described above, a major design feature of JSNLog is its integration with the
 
 What this project needs is integration with PHP, Java and other Linux based environments.
 
-This is where you come in.
+That's where I need your help.
 
-We are looking for people who are familiar with a Linux based web technology, and who want to write server side code that:
+I am looking for people who are familiar with a Linux based web technology, and who want to write server side code that:
 * Receives log data from the JSNLog.js JavaScript library and stores it on the server, for example by handing it to a server side logging package such as Log4J.
 
 * Allows a web master to configure JSNLog loggers via a server side configuration file. When a page is requested, your code would read the configuration in the file and write JavaScript into the page that configures the JavaScript loggers.
@@ -53,7 +53,7 @@ To see what is involved in integrating the JSNLog JavaScript logging library wit
 * http://js.jsnlog.com/Documentation/JSNLogJs
 
 For inspiration, you may want to have a look at the way integration with the web server has been done for .Net:
-* http://jsnlog.com/
+* http://jsnlog.com
 
 All communication is via the issues page of the JSNLog project on Github. Feel free to say hello, ask any questions or raise any issues:
 https://github.com/mperdeck/jsnlog/issues?state=open
