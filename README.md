@@ -28,18 +28,15 @@ If you do not use .Net, the JavaScript library works very well on its own - see 
 
 ## Contributors welcome
 
-Contributors are very much welcome on the JSNLog project. Unlike contributing to other projects, 
+Contributors are very much welcome on the JSNLog project: 
 * you will have a lot of autonomy from day one, 
 * you'll mostly write new code rather than bug fixes,
 * you'll produce a recognizable part of the system. 
 
 As described above, a major design feature of JSNLog is its integration with the web server. And that integration currently has only been implemented for .Net environments.
 
-What this project needs is integration with PHP, Java and other Linux based environments.
+I am looking for people who are familiar with a Linux based web technology such as PHP or Java, and who want to write server side code that:
 
-This is where you come in.
-
-We are looking for people who are familiar with a Linux based web technology, and who want to write server side code that:
 * Receives log data from the JSNLog.js JavaScript library and stores it on the server, for example by handing it to a server side logging package such as Log4J.
 
 * Allows a web master to configure JSNLog loggers via a server side configuration file. When a page is requested, your code would read the configuration in the file and write JavaScript into the page that configures the JavaScript loggers.
