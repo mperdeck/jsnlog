@@ -191,10 +191,10 @@ namespace JSNLog.LogHandling
 
             string finalMessage = messageFormat
                 .Replace("%message", message)
-                .Replace("%utcDate", utcTimestamp.ToString(dateFormat))
                 .Replace("%utcDateServer", serverSideTimeUtc.ToString(dateFormat))
-                .Replace("%date", Utils.UtcToLocalDateTime(utcTimestamp).ToString(dateFormat))
+                .Replace("%utcDate", utcTimestamp.ToString(dateFormat))
                 .Replace("%dateServer", Utils.UtcToLocalDateTime(serverSideTimeUtc).ToString(dateFormat))
+                .Replace("%date", Utils.UtcToLocalDateTime(utcTimestamp).ToString(dateFormat))
                 .Replace("%level", level)
                 .Replace("%newline", System.Environment.NewLine)
                 .Replace("%userAgent", userAgent)

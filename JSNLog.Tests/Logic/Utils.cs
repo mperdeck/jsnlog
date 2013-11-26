@@ -158,11 +158,11 @@ namespace JSNLog.Tests.Logic
         /// </summary>
         /// <param name="dtUtc"></param>
         /// <returns></returns>
-        public static int MsSince1970(DateTime dtUtc)
+        public static Double MsSince1970(DateTime dtUtc)
         {
             TimeSpan ts = dtUtc - new DateTime(1970, 1, 1);
             Double result = ts.TotalMilliseconds;
-            return (int)result;
+            return result;
         }
 
         public static XmlElement ConfigToXe(string configXml)

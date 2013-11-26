@@ -36,7 +36,7 @@ namespace JSNLog.Tests.UnitTests
             _dtServer = JSNLog.Infrastructure.Utils.UtcToLocalDateTime(_dtServerUtc);
 
             _json1 = @"{
-'r': 'therequestid',
+'r': 'therequestid1',
 'lg': [
 { 'm': 'first message', 'n': 'a.b.c', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
 ] }";
@@ -70,8 +70,8 @@ namespace JSNLog.Tests.UnitTests
 ";
 
             var expected = new [] {
-                new LoggerProcessor.LogData("first message", "a.b.c",Constants.Level.ERROR, 1500,
-                    "first message", 1500, "a.b.c", "therequestid", 
+                new LoggerProcessor.LogData("first message", "a.b.c",Constants.Level.DEBUG, 1500,
+                    "first message", 1500, "a.b.c", "therequestid1", 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
             };
@@ -92,7 +92,7 @@ namespace JSNLog.Tests.UnitTests
 ";
 
             var expected = new[] {
-                new LoggerProcessor.LogData("first message", Constants.RootLoggerNameServerSide,Constants.Level.ERROR, 1500,
+                new LoggerProcessor.LogData("first message", Constants.RootLoggerNameServerSide,Constants.Level.DEBUG, 1500,
                     "first message", 1500, Constants.RootLoggerNameServerSide, "therequestid", 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
@@ -117,14 +117,14 @@ namespace JSNLog.Tests.UnitTests
                 new LoggerProcessor.LogData(
                     "first message", 
                     "a.b.c",Constants.Level.DEBUG, 1500,
-                    "first message", 1500, "a.b.c", "therequestid", 
+                    "first message", 1500, "a.b.c", "therequestid2", 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main"),
                 new LoggerProcessor.LogData(
                     "second message",
                     "a2.b3.c4",Constants.Level.INFO, 3000,
                     "second message", 3000, "a2.b3.c4", "therequestid2", 
-                    _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
+                    _dtSecondLogUtc, _dtServerUtc, _dtSecondLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
             };
 
@@ -153,7 +153,7 @@ dateFormat="""+dateFormat+@"""
                             _dtFirstLogUtc.ToString(dateFormat), _dtServerUtc.ToString(dateFormat), 
                             _dtFirstLog.ToString(dateFormat), _dtServer.ToString(dateFormat)),
                     "a.b.c",Constants.Level.DEBUG, 1500,
-                    "first message", 1500, "a.b.c", "therequestid", 
+                    "first message", 1500, "a.b.c", "therequestid1", 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
             };
@@ -175,7 +175,7 @@ dateFormat="""+dateFormat+@"""
 
             var expected = new[] {
                 new LoggerProcessor.LogData("first message", "server.logger",Constants.Level.FATAL, 6000,
-                    "first message", 1500, "a.b.c", "therequestid", 
+                    "first message", 1500, "a.b.c", "therequestid1", 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
             };
@@ -198,8 +198,8 @@ dateFormat="""+dateFormat+@"""
             var expected = new[] {
                 new LoggerProcessor.LogData(
                     string.Format("first message | {0}", _dtFirstLogUtc.ToString("yyyy-MM-dd HH:mm:ss,fff")), 
-                    "server.logger",Constants.Level.DEBUG, 1500,
-                    "first message", 1500, "a.b.c", "therequestid", 
+                    "a.b.c",Constants.Level.DEBUG, 1500,
+                    "first message", 1500, "a.b.c", "therequestid1", 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
             };
@@ -220,7 +220,7 @@ dateFormat="""+dateFormat+@"""
 ";
 
             var expected = new[] {
-                new LoggerProcessor.LogData("first message", "a.b.c",Constants.Level.ERROR, 1500,
+                new LoggerProcessor.LogData("first message", "a.b.c",Constants.Level.DEBUG, 1500,
                     "first message", 1500, "a.b.c", "", 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
@@ -252,22 +252,22 @@ dateFormat="""+dateFormat+@"""
 
             for (int i = 0; i < expected.Count(); i++)
             {
-                Assert.AreEqual(expected.ElementAt(i).Message, expected.ElementAt(i).Message);
-                Assert.AreEqual(expected.ElementAt(i).LoggerName, expected.ElementAt(i).LoggerName);
-                Assert.AreEqual(expected.ElementAt(i).Level, expected.ElementAt(i).Level);
-                Assert.AreEqual(expected.ElementAt(i).LevelInt, expected.ElementAt(i).LevelInt);
+                Assert.AreEqual(expected.ElementAt(i).Message, actual.ElementAt(i).Message);
+                Assert.AreEqual(expected.ElementAt(i).LoggerName, actual.ElementAt(i).LoggerName);
+                Assert.AreEqual(expected.ElementAt(i).Level, actual.ElementAt(i).Level);
+                Assert.AreEqual(expected.ElementAt(i).LevelInt, actual.ElementAt(i).LevelInt);
 
-                Assert.AreEqual(expected.ElementAt(i).ClientLogMessage, expected.ElementAt(i).ClientLogMessage);
-                Assert.AreEqual(expected.ElementAt(i).ClientLogLevel, expected.ElementAt(i).ClientLogLevel);
-                Assert.AreEqual(expected.ElementAt(i).ClientLogLoggerName, expected.ElementAt(i).ClientLogLoggerName);
-                Assert.AreEqual(expected.ElementAt(i).ClientLogRequestId, expected.ElementAt(i).ClientLogRequestId);
-                Assert.AreEqual(expected.ElementAt(i).LogDateUtc, expected.ElementAt(i).LogDateUtc);
-                Assert.AreEqual(expected.ElementAt(i).LogDateServerUtc, expected.ElementAt(i).LogDateServerUtc);
-                Assert.AreEqual(expected.ElementAt(i).LogDate, expected.ElementAt(i).LogDate);
-                Assert.AreEqual(expected.ElementAt(i).LogDateServer, expected.ElementAt(i).LogDateServer);
-                Assert.AreEqual(expected.ElementAt(i).UserAgent, expected.ElementAt(i).UserAgent);
-                Assert.AreEqual(expected.ElementAt(i).UserHostAddress, expected.ElementAt(i).UserHostAddress);
-                Assert.AreEqual(expected.ElementAt(i).LogRequestUrl, expected.ElementAt(i).LogRequestUrl);
+                Assert.AreEqual(expected.ElementAt(i).ClientLogMessage, actual.ElementAt(i).ClientLogMessage);
+                Assert.AreEqual(expected.ElementAt(i).ClientLogLevel, actual.ElementAt(i).ClientLogLevel);
+                Assert.AreEqual(expected.ElementAt(i).ClientLogLoggerName, actual.ElementAt(i).ClientLogLoggerName);
+                Assert.AreEqual(expected.ElementAt(i).ClientLogRequestId, actual.ElementAt(i).ClientLogRequestId);
+                Assert.AreEqual(expected.ElementAt(i).LogDateUtc, actual.ElementAt(i).LogDateUtc);
+                Assert.AreEqual(expected.ElementAt(i).LogDateServerUtc, actual.ElementAt(i).LogDateServerUtc);
+                Assert.AreEqual(expected.ElementAt(i).LogDate, actual.ElementAt(i).LogDate);
+                Assert.AreEqual(expected.ElementAt(i).LogDateServer, actual.ElementAt(i).LogDateServer);
+                Assert.AreEqual(expected.ElementAt(i).UserAgent, actual.ElementAt(i).UserAgent);
+                Assert.AreEqual(expected.ElementAt(i).UserHostAddress, actual.ElementAt(i).UserHostAddress);
+                Assert.AreEqual(expected.ElementAt(i).LogRequestUrl, actual.ElementAt(i).LogRequestUrl);
             }
         }
     }
