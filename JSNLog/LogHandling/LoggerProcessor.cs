@@ -138,7 +138,10 @@ namespace JSNLog.LogHandling
             JavaScriptSerializer js = new JavaScriptSerializer();
             LogRequestData logRequestData = js.Deserialize<LogRequestData>(json);
 
-            string requestId = logRequestData["r"].ToString();
+            // Request Id will be missing from the message if the user never set it. 
+            // This will be common when jsnlog.js is used stand alone.
+            string requestId = SafeGet(logRequestData, "r", "");
+
             Object[] logItems = (Object[])(logRequestData["lg"]);
 
             List<LogData> logDatas = new List<LogData>();
@@ -209,6 +212,24 @@ namespace JSNLog.LogHandling
                 userAgent, userHostAddress, url);
 
             return logData;
+        }
+
+        /// <summary>
+        /// Returns the value associated with a key in a dictionary.
+        /// If the key is not present, returns the default value - rather than throwing an exception.
+        /// </summary>
+        /// <param name="dictionary"></param>
+        /// <param name="key"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        private static string SafeGet(Dictionary<string, Object> dictionary, string key, string defaultValue)
+        {
+            if (dictionary.ContainsKey(key))
+            {
+                return dictionary[key].ToString();
+            }
+
+            return defaultValue;
         }
     }
 }

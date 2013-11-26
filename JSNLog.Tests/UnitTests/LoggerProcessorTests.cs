@@ -15,6 +15,7 @@ namespace JSNLog.Tests.UnitTests
         private string _json1 = null;
         private string _json1root = null;
         private string _json2 = null;
+        private string _json3 = null;
 
         private DateTime _dtFirstLogUtc;
         private DateTime _dtSecondLogUtc;
@@ -51,6 +52,11 @@ namespace JSNLog.Tests.UnitTests
 'lg': [
 { 'm': 'first message', 'n': 'a.b.c', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"},
 { 'm': 'second message', 'n': 'a2.b3.c4', 'l': 3000, 't': " + Utils.MsSince1970(_dtSecondLogUtc).ToString() + @"}
+] }";
+            // Same as _json1, but without 'r' field
+            _json3 = @"{
+'lg': [
+{ 'm': 'first message', 'n': 'a.b.c', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
 ] }";
         }
 
@@ -201,6 +207,28 @@ dateFormat="""+dateFormat+@"""
             // Act and Assert
 
             RunTest(configXml, _json1, "my browser", "12.345.98.7",
+                        _dtServerUtc, "http://mydomain.com/main", expected);
+        }
+
+        [TestMethod]
+        public void MissingRequestId()
+        {
+            // Arrange
+
+            string configXml = @"
+                <jsnlog></jsnlog>
+";
+
+            var expected = new[] {
+                new LoggerProcessor.LogData("first message", "a.b.c",Constants.Level.ERROR, 1500,
+                    "first message", 1500, "a.b.c", "", 
+                    _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
+                    "my browser", "12.345.98.7", "http://mydomain.com/main")
+            };
+
+            // Act and Assert
+
+            RunTest(configXml, _json3, "my browser", "12.345.98.7",
                         _dtServerUtc, "http://mydomain.com/main", expected);
         }
 
