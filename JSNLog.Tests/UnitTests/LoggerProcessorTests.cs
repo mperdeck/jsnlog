@@ -16,6 +16,7 @@ namespace JSNLog.Tests.UnitTests
         private string _json1root = null;
         private string _json2 = null;
         private string _json3 = null;
+        private string _json4 = null;
 
         private DateTime _dtFirstLogUtc;
         private DateTime _dtSecondLogUtc;
@@ -57,6 +58,11 @@ namespace JSNLog.Tests.UnitTests
             _json3 = @"{
 'lg': [
 { 'm': 'first message', 'n': 'a.b.c', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
+] }";
+            // Same as _json3, but without 'm' field. This is invalid and should cause an internal error.
+            _json4 = @"{
+'lg': [
+{ 'n': 'a.b.c', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
 ] }";
         }
 
@@ -230,6 +236,27 @@ dateFormat="""+dateFormat+@"""
 
             RunTest(configXml, _json3, "my browser", "12.345.98.7",
                         _dtServerUtc, "http://mydomain.com/main", expected);
+        }
+
+        [TestMethod]
+        public void InternalError()
+        {
+            string configXml = @"
+                <jsnlog></jsnlog>
+";
+
+            XmlElement xe = Utils.ConfigToXe(configXml);
+
+            // Act
+
+            List<LoggerProcessor.LogData> actual =
+                LoggerProcessor.ProcessLogRequestExec(_json4, "my browser", "12.345.98.7",
+                    _dtServerUtc, "http://mydomain.com/main", xe);
+
+            // Assert
+
+            Assert.AreEqual(1, actual.Count);
+            Assert.AreEqual(Constants.JSNLogInternalErrorLoggerName, actual.ElementAt(0).LoggerName);
         }
 
         private void RunTest(string configXml, string json, string userAgent, string userHostAddress,

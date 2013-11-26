@@ -81,7 +81,7 @@ namespace JSNLog.LogHandling
         {
             XmlElement xe = XmlHelpers.RootElement();
 
-            List<LogData> logDatas = 
+            List<LogData> logDatas =
                 ProcessLogRequestExec(json, userAgent, userHostAddress, serverSideTimeUtc, url, xe);
 
             // ---------------------------------
@@ -135,21 +135,46 @@ namespace JSNLog.LogHandling
         public static List<LogData> ProcessLogRequestExec(string json, string userAgent, string userHostAddress,
             DateTime serverSideTimeUtc, string url, XmlElement xe)
         {
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            LogRequestData logRequestData = js.Deserialize<LogRequestData>(json);
-
-            // Request Id will be missing from the message if the user never set it. 
-            // This will be common when jsnlog.js is used stand alone.
-            string requestId = SafeGet(logRequestData, "r", "");
-
-            Object[] logItems = (Object[])(logRequestData["lg"]);
-
             List<LogData> logDatas = new List<LogData>();
 
-            foreach (Object logItem in logItems)
+            try
             {
-                LogData logData = ProcessLogItem((Dictionary<string, Object>)logItem, userAgent, userHostAddress, requestId, serverSideTimeUtc, url, xe);
-                logDatas.Add(logData);
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                LogRequestData logRequestData = js.Deserialize<LogRequestData>(json);
+
+                // Request Id will be missing from the message if the user never set it. 
+                // This will be common when jsnlog.js is used stand alone.
+                string requestId = SafeGet(logRequestData, "r", "");
+
+                Object[] logItems = (Object[])(logRequestData["lg"]);
+
+                foreach (Object logItem in logItems)
+                {
+                    LogData logData = ProcessLogItem((Dictionary<string, Object>)logItem, userAgent, userHostAddress, requestId, serverSideTimeUtc, url, xe);
+                    logDatas.Add(logData);
+                }
+            }
+            catch (Exception e)
+            {
+                try
+                {
+                    ILog log = LogManager.GetLogger(Constants.JSNLogInternalErrorLoggerName);
+
+                    string message =
+                        string.Format(
+                            "json: {0}, userAgent: {1}, userHostAddress: {2}, serverSideTimeUtc: {3}, url: {4}, exception: {5}",
+                            json, userAgent, userHostAddress, serverSideTimeUtc, url, e);
+
+                    var logData = new LogData(message, Constants.JSNLogInternalErrorLoggerName, Constants.Level.ERROR,
+                        5000, "", 5000, "", "", serverSideTimeUtc, serverSideTimeUtc,
+                        Utils.UtcToLocalDateTime(serverSideTimeUtc), Utils.UtcToLocalDateTime(serverSideTimeUtc), 
+                        userAgent, userHostAddress, url);
+
+                    logDatas.Add(logData);
+                }
+                catch
+                {
+                }
             }
 
             return logDatas;
