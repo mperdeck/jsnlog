@@ -170,7 +170,7 @@ that use JSNLog loggers.
         The AJAX appender sends messages as JSON strings, in this format:
     </p>
     <pre>{
-    r:  "request id",
+    r:  "request id", // may not be present
     lg: [
         { l: level, m: 'message', n: 'logger name', t: timestamp },
         ...
@@ -178,9 +178,21 @@ that use JSNLog loggers.
 }</pre>
  
     <p>
-        Note that a single JSON message to the server can contain multiple log messages. This is because the AJAX appender can be configured
-        to batch messages, for example 2 log messages per JSON message to the server. 
+        Some less obvious things about this format:
     </p>
+    <ul>
+        <li>
+            The "r" field (containing the request id) will only be present in the message if the request id has been set
+            (using the JL
+        @Html.ViewLink("jsnlogjs-jl-setOptions")<text>).</text> Be sure that your code doesn't crash
+            if that field is not in the message.
+            <p />
+        </li>
+        <li>
+        A single JSON message to the server can contain multiple log messages. This is because the AJAX appender can be configured
+        to batch messages, for example 2 log messages per JSON message to the server. 
+        </li>
+    </ul>
     <p>
         About the individual fields:
     </p>
