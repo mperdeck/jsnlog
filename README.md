@@ -10,7 +10,7 @@ Visit [jsnlog.com](http://www.jsnlog.com) to:
 
 ## Why JSNLog?
 
-The focus of JSNLog is on letting you log events in your JavaScript running on a browser, getting that log data back to your web server and storing it there.
+JSNLog lets you log events in your client side JavaScript code, get that log data back to your web server and store it there.
 
 This makes it different from other JavaScript logging libraries. These either focus on logging to the browser's console, making them useful only during debugging. Or they are essentially ports of log4j to JavaScript, making them rather bloated.
 
@@ -46,8 +46,8 @@ Essentially, this would be your own project, with its own Github page. But you w
 Once your first version has gone live, you'll get a permanent link from jsnlog.com to your project page. This makes it easier for people to appreciate your work, whilst maintaining your autonomy to run your project in your own way.
 
 To see what is involved in integrating the JSNLog JavaScript logging library with your server environment, have a look at:
-* http://js.jsnlog.com/Documentation/DownloadInstall
-* http://js.jsnlog.com/Documentation/JSNLogJs
+* [Format of log messages](http://js.jsnlog.com/Documentation/DownloadInstall)
+* [JSNLog.js documentation](http://js.jsnlog.com/Documentation/JSNLogJs)
 
 For inspiration, you may want to have a look at the way integration with the web server has been done for .Net:
 * http://jsnlog.com
