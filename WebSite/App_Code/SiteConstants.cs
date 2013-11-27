@@ -7,7 +7,7 @@ namespace WebSite.App_Code
 {
     public static class SiteConstants
     {
-        public const string CurrentVersion = "2.3.0";
+        public const string CurrentVersion = "2.3.1";
         public const string JsnlogJsFileSize = "1.5kb";
 
         public const string NugetDownloadUrl = "http://www.nuget.org/packages/JSNLog/";

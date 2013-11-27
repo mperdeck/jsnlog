@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("JSNLog")]
-[assembly: AssemblyDescription("Insert loggers in your client side JavaScript, configure them in your web.config, and store their messages in your server side logs - without any server side coding.")]
+[assembly: AssemblyDescription("JavaScript logging package. Insert loggers in your client side JavaScript, configure them in your web.config, and store their messages in your server side logs - without any server side coding.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Matt Perdeck")]
 [assembly: AssemblyProduct("JSNLog")]
