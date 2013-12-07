@@ -183,6 +183,24 @@ JL().log(2500, obj);</pre>
 
 @*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*@
 
+@if (PageVersions.CurrentVersion() == "NetJs")
+{
+    @Feature(
+        "",
+        @"Limit total messages sent to server",
+        @"<pre>&lt;jsnlog maxMessages=""3""&gt;</pre>
+")
+}
+@if (PageVersions.CurrentVersion() == "JsOnly")
+{
+    @Feature(
+        "",
+        @"Limit total messages sent to server",
+        @"<pre>JL.setOptions({""maxMessages"": 3});</pre>")
+}
+
+@*===========================================================*@
+
 @if (PageVersions.CurrentVersion() == "JsOnly")
 {
     @Feature(

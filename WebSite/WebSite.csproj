@@ -290,6 +290,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\jsnlog.pubxml" />
+    <Content Include="Views\Documentation\_MaxMessagesRemarks.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
