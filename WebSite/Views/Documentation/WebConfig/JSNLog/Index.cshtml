@@ -12,6 +12,7 @@
 <pre>&lt;configuration&gt; 
     &lt;jsnlog
         enabled="true|false"
+        maxMessages="number"
         serverSideLogger="string"
         serverSideLevel="number|TRACE|DEBUG|INFO|WARN|ERROR|FATAL" 
         serverSideMessageFormat="string"
@@ -34,6 +35,7 @@
         <tbody>
         @Html.TableRowHtml("enabled", "optional", "true",
             @"If false, all loggers are disabled.")
+        @Html.TableRowHtml("maxMessages", "optional", "no maximum", "Limits total number of messages sent to the server. See remarks below.")
         @Html.TableRowHtml("serverSideLogger", "optional", "(empty)",
             @"By default, all log messages from your JavaScript code are passed on to your server side logging package 
 with the name of the JavaScript logger.
@@ -53,6 +55,10 @@ This makes sense if you for example combine jsnlog.js with your other
 JavaScript files and you use your own &lt;script&gt; tag to load this combined file.")
         </tbody>
     </table>
+
+    @Html.Partial("_MaxMessagesRemarks",new ViewDataDictionary { 
+        { "configSource", "web.config"}, 
+    })
 
     <h3>serverSideMessageFormat</h3>
 
