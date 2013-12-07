@@ -68,6 +68,7 @@ function JL(loggerName?: string): JSNLogLogger {
 module JL {
 
     export var enabled: boolean;
+    export var maxMessages: number;
     export var clientIP: string;
     export var requestId: string;
 
@@ -103,6 +104,14 @@ module JL {
         // Note that undefined==null (!)
         if (!(JL.enabled == null)) {
             if (!JL.enabled) { return false; }
+        }
+
+        // If maxMessages is not null or undefined, then if it is 0, then return false.
+        // Note that maxMessages contains number of messages that are still allowed to send.
+        // It is decremented each time messages are sent. It can be negative when batch size > 1.
+        // Note that undefined==null (!)
+        if (!(JL.maxMessages == null)) {
+            if (JL.maxMessages < 1) { return false; }
         }
 
         // If the regex contains a bug, that will throw an exception.
@@ -147,6 +156,7 @@ module JL {
 
     export function setOptions(options: JSNLogOptions): JSNLogStatic {
         copyProperty("enabled", options, this);
+        copyProperty("maxMessages", options, this);
         copyProperty("clientIP", options, this);
         copyProperty("requestId", options, this);
         return this;
@@ -282,6 +292,13 @@ module JL {
         private sendBatch(): void {
             if (this.batchBuffer.length == 0) {
                 return;
+            }
+
+            // If maxMessages is not null or undefined, then decrease it by the batch size.
+            // This can result in a negative maxMessages.
+            // Note that undefined==null (!)
+            if (!(JL.maxMessages == null)) {
+                JL.maxMessages -= this.batchBuffer.length;
             }
 
             this.sendLogItems(this.batchBuffer);

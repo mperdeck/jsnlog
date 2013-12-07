@@ -48,6 +48,14 @@ namespace JSNLog.Tests.IntegrationTests
         }
 
         [TestMethod]
+        public void MaxMessagesTestBatching()
+        {
+            OpenPage("/home/MaxMessagesTest0");
+
+            Assert.IsFalse(ErrorOnPage());
+        }
+
+        [TestMethod]
         public void RequestIdTest()
         {
             OpenPage("/home/RequestIdTest");

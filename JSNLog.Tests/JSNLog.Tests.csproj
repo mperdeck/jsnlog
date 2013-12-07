@@ -208,6 +208,9 @@
   <ItemGroup>
     <Content Include="Views\Home\MaxMessagesTest0.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\MaxMessagesTestBatching.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

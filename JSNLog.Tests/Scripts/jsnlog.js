@@ -42,6 +42,7 @@ function JL(loggerName) {
 var JL;
 (function (JL) {
     JL.enabled;
+    JL.maxMessages;
     JL.clientIP;
     JL.requestId;
 
@@ -80,6 +81,12 @@ var JL;
     function allow(filters) {
         if (!(JL.enabled == null)) {
             if (!JL.enabled) {
+                return false;
+            }
+        }
+
+        if (!(JL.maxMessages == null)) {
+            if (JL.maxMessages < 1) {
                 return false;
             }
         }
@@ -129,6 +136,7 @@ var JL;
 
     function setOptions(options) {
         copyProperty("enabled", options, this);
+        copyProperty("maxMessages", options, this);
         copyProperty("clientIP", options, this);
         copyProperty("requestId", options, this);
         return this;
@@ -284,6 +292,10 @@ var JL;
         Appender.prototype.sendBatch = function () {
             if (this.batchBuffer.length == 0) {
                 return;
+            }
+
+            if (!(JL.maxMessages == null)) {
+                JL.maxMessages -= this.batchBuffer.length;
             }
 
             this.sendLogItems(this.batchBuffer);
