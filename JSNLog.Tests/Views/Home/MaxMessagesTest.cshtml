@@ -1,0 +1,39 @@
+﻿@using JSNLog.Tests.Logic
+
+<h2>MaxMessagesTests</h2>
+
+<!-- 
+    Ensure that no more than MaxMessages will be sent, if MaxMessages > 0
+-->
+
+@Html.Raw(JSNLog.Tests.Logic.Utils.SetupTest(
+"235.1.99.12", "id123",
+@"
+<jsnlog maxMessages=""3"">
+    <assembly name=""JSNLog.Tests"" />
+    
+    <dummyAppender name=""da1"" />
+    <logger name="""" appenders=""da1"" />
+    <logger name=""a"" appenders=""da1"" />
+    
+    <dummyAppender name=""da2"" />
+    <logger name=""b"" appenders=""da2"" />
+    
+    <dummyAppender name=""da3"" />
+    <logger name=""c"" appenders=""da2"" />
+</jsnlog>
+",
+new [] {
+    new T(3000, "a", 1),
+    new T(3000, "c", 2),
+    new T(3000, "", 1),
+    new T(3000, "b", 0),
+    new T(3000, "a", 0),
+    new T(3000, "", 0),
+    
+    new T(checkNbr: 1, checkAppender: "a0"),
+    new T(checkNbr: 2, checkAppender: "a2"),
+    new T(checkNbr: 3, checkAppender: "a1")
+}))
+
+

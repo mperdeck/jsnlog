@@ -227,6 +227,21 @@ namespace JSNLog.Tests.UnitTests
             RunTest(configXml);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(InvalidAttributeException))]
+        public void InvalidMaxMessages()
+        {
+            // Arrange
+
+            string configXml = @"
+                <jsnlog maxMessages=""xyz"">
+</jsnlog>
+";
+
+            // Act and Assert
+            RunTest(configXml);
+        }
+
         private void RunTest(string configXml)
         {
             var sb = new StringBuilder();

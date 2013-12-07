@@ -32,6 +32,22 @@ namespace JSNLog.Tests.IntegrationTests
         }
 
         [TestMethod]
+        public void MaxMessagesTest()
+        {
+            OpenPage("/home/MaxMessagesTest");
+
+            Assert.IsFalse(ErrorOnPage());
+        }
+
+        [TestMethod]
+        public void MaxMessagesTest0()
+        {
+            OpenPage("/home/MaxMessagesTest0");
+
+            Assert.IsFalse(ErrorOnPage());
+        }
+
+        [TestMethod]
         public void RequestIdTest()
         {
             OpenPage("/home/RequestIdTest");

@@ -27,6 +27,16 @@ namespace JSNLog.Tests.Controllers
             return View();
         }
 
+        public ActionResult MaxMessagesTest()
+        {
+            return View();
+        }
+
+        public ActionResult MaxMessagesTest0()
+        {
+            return View();
+        }
+
         public ActionResult RequestIdTest(string id)
         {
             ViewBag.RequestId = JavascriptLogging.RequestId();
