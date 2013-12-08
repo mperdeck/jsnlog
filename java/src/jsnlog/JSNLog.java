@@ -39,6 +39,20 @@ public class JSNLog {
 		this.logger = logger;
 	}
 	
+	public static JSNLog getInstance(Logger customLogger) {
+		String logType = customLogger.getClass().getName();
+		
+		JSNLog log = instances.get(logType.toLowerCase());
+		if (log != null) {
+			return log;
+		}
+		
+		log = new JSNLog(customLogger);
+		instances.put(logType, log);
+		
+		return log;
+	}
+	
 	public static JSNLog getInstance(String logType) {
 		JSNLog log = instances.get(logType.toLowerCase());
 		if (log != null) {
