@@ -8,6 +8,7 @@ import java.util.HashMap;
 import jsnlog.loggers.CommonsLogger;
 import jsnlog.loggers.Log4JLogger;
 import jsnlog.loggers.Logger;
+import jsnlog.loggers.PlayFramework1_xLogger;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -65,6 +66,9 @@ public class JSNLog {
 		} else if ("Log4J".equalsIgnoreCase(logType)) {
 			Logger logger = new Log4JLogger();
 			log = new JSNLog(logger);
+		} else if ("PlayFramework1_x".equalsIgnoreCase(logType)) {
+			Logger logger = new PlayFramework1_xLogger();
+			log = new JSNLog(logger);
 		}
 		
 		if (log == null) {
@@ -82,6 +86,10 @@ public class JSNLog {
 	
 	public static JSNLog getLog4JLogger() {
 		return getInstance("Log4J");
+	}
+
+	public static JSNLog getPlayFramework1_xLogger() {
+		return getInstance("PlayFramework1_x");
 	}
 
 	public void setDateFormat(DateFormat dateFormat) {
@@ -124,43 +132,43 @@ public class JSNLog {
 		}
 	}
 
-	private String formatMessage(long timestamp, String message) {
-		return dateFormat.format(new Date(timestamp))+" - "+message;
+	private String formatMessage(String loggerName, long timestamp, String message) {
+		return loggerName+": "+dateFormat.format(new Date(timestamp))+" - "+message;
 	}
 
 	private void trace(String loggerName, long timestamp, String message) {
 		if (logger.isLevelEnabled("trace")) {
-			logger.trace(formatMessage(timestamp, message));
+			logger.trace(formatMessage(loggerName, timestamp, message));
 		}
 	}
 
 	private void debug(String loggerName, long timestamp, String message) {
 		if (logger.isLevelEnabled("debug")) {
-			logger.debug(formatMessage(timestamp, message));
+			logger.debug(formatMessage(loggerName, timestamp, message));
 		}
 	}
 
 	private void info(String loggerName, long timestamp, String message) {
 		if (logger.isLevelEnabled("info")) {
-			logger.info(formatMessage(timestamp, message));
+			logger.info(formatMessage(loggerName, timestamp, message));
 		}
 	}
 
 	private void warn(String loggerName, long timestamp, String message) {
 		if (logger.isLevelEnabled("warn")) {
-			logger.warn(formatMessage(timestamp, message));
+			logger.warn(formatMessage(loggerName, timestamp, message));
 		}
 	}
 
 	private void error(String loggerName, long timestamp, String message) {
 		if (logger.isLevelEnabled("error")) {
-			logger.error(formatMessage(timestamp, message));
+			logger.error(formatMessage(loggerName, timestamp, message));
 		}
 	}
 
 	private void fatal(String loggerName, long timestamp, String message) {
 		if (logger.isLevelEnabled("fatal")) {
-			logger.fatal(formatMessage(timestamp, message));
+			logger.fatal(formatMessage(loggerName, timestamp, message));
 		}
 	}
 
