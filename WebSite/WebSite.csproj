@@ -291,6 +291,8 @@
   <ItemGroup>
     <None Include="Properties\PublishProfiles\jsnlog.pubxml" />
     <Content Include="Views\Documentation\_MaxMessagesRemarks.cshtml" />
+    <Content Include="Views\Home\PhpJs.cshtml" />
+    <Content Include="Views\Documentation\JSNLogJs\JL\getOffLevel.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

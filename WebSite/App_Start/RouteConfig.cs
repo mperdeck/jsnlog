@@ -28,6 +28,13 @@ namespace WebSite
             );
 
             routes.MapRoute(
+                name: "PhpJs",
+                url: "phpjs",
+                defaults: new { controller = "Home", action = "PhpJs", id = UrlParameter.Optional },
+                namespaces: new String[] { "MainSite.Controllers" }
+            );
+
+            routes.MapRoute(
                 name: "Documentation",
                 url: "Documentation/{*pathInfo}",
                 defaults: new { controller = "Documentation", action = "Index" },

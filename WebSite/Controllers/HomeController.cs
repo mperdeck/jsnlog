@@ -13,5 +13,9 @@ namespace MainSite.Controllers
             return View();
         }
 
+        public ActionResult PhpJs()
+        {
+            return View();
+        }
     }
 }

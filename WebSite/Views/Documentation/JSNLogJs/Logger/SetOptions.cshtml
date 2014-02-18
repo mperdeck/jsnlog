@@ -55,6 +55,14 @@ This code shows you don't need to use the variable <span class="term">logger</sp
 });</pre>
 
 <p>
+    This sets the level of logger &quot;a.b&quot; to OFF, so it is completely switched off.
+</p>
+
+<pre>JL("a.b").setOptions({
+    "level": JL.getOffLevel()
+});</pre>
+
+<p>
     This sets the level to 4000.
     It also disables the logger for all browsers, except those whose user agent string contains <span class="term">MSIE 7|MSIE 8</span>
     (that is, it is version 7 or 8 of Internet Explorer).

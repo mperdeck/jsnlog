@@ -295,6 +295,12 @@ var JL;
             }
 
             if (!(JL.maxMessages == null)) {
+                if (JL.maxMessages < 1) {
+                    return;
+                }
+            }
+
+            if (!(JL.maxMessages == null)) {
                 JL.maxMessages -= this.batchBuffer.length;
             }
 

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.AspNet.Web.Optimization.WebForms</id>
+    <version>1.0.0</version>
+    <title>Microsoft.AspNet.WebOptimization.WebForms</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>http://www.microsoft.com/web/webpi/eula/weboptimization_1_eula_ENU.htm</licenseUrl>
+    <iconUrl>https://download-codeplex.sec.s-msft.com/Download?ProjectName=aspnetwebstack&amp;DownloadId=360555</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>A WebForms control for Microsoft.AspNet.Web.Optimization</description>
+    <copyright>Copyright 2012</copyright>
+    <tags>Optimization WebForms Control</tags>
+    <dependencies>
+      <dependency id="Microsoft.Web.Infrastructure" />
+      <dependency id="Microsoft.AspNet.Web.Optimization" version="[1.0.0, 2.0.0)" />
+    </dependencies>
+  </metadata>
+</package>

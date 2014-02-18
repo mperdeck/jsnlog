@@ -294,6 +294,12 @@ module JL {
                 return;
             }
 
+            if (!(JL.maxMessages == null)) {
+                if (JL.maxMessages < 1) { return; }
+            }
+
+
+
             // If maxMessages is not null or undefined, then decrease it by the batch size.
             // This can result in a negative maxMessages.
             // Note that undefined==null (!)
