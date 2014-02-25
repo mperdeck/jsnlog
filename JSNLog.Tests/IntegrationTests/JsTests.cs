@@ -72,6 +72,14 @@ namespace JSNLog.Tests.IntegrationTests
             Assert.AreEqual(requestId3, "6789", "JL.RequestId not the same as passed in");
         }
 
+        [TestMethod]
+        public void RequireJSTests()
+        {
+            OpenPage("/Html/requirejstest.html");
+            
+            Assert.IsFalse(ErrorOnPage());
+        }
+
         private string RequestIdFieldsConsistent(bool jlCanDifferFromOthers)
         {
             string idFromController = _driver.FindElement(By.Id("IdFromController")).Text;

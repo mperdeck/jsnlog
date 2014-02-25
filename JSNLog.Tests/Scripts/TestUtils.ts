@@ -1,5 +1,5 @@
 ﻿/// <reference path="jquery.d.ts"/>
-/// <reference path="../../JSNLog/Scripts/jsnlog.ts"/>
+/// <reference path="../../../jsnlog.js/Sources/jsnlog.ts"/>
 
 module TestUtils {
     export function Check(checkAppender: any, checkNbr: number, expected: JL.LogItem[]) {
@@ -18,7 +18,7 @@ module TestUtils {
             resultDiv.append('<tr><td>Error at Check</td><td>' + checkNbr + '</td></tr>');
             resultDiv.append('<tr><td valign="top" colspan=\'2\'>' + comparisonResult + '</td></tr>');
             resultDiv.append('<tr><td valign="top">Expected:</td><td>' + expectedString + '</td></tr>');
-            resultDiv.append('<tr><td valign="top">Actual:</td><td>' + actualString + '</td></tr>');
+            resultDiv.append('<tr><td valign="top">Actual:</td><td>' + actualString + '</td></tr></table>');
         } else {
             resultDiv = $('<div style="border-top: 3px green solid" >Passed: ' + checkNbr + '</div>');
         }

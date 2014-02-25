@@ -39,8 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging">
-      <HintPath>Dependencies\Common.Logging.dll</HintPath>
+    <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -103,9 +104,7 @@
     <None Include="NuGet\AdditionalAppStart\JSNLogConfig.cs.pp" />
     <None Include="NuGet\AdditionalContent\web.config.transform" />
     <None Include="NuGet\Build\BuildNuGetPackage.bat" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
     <None Include="Scripts\jsnlog.js.map">
       <DependentUpon>jsnlog.ts</DependentUpon>
     </None>

@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<script type="text/javascript">
+    JL().error("error message from client via root logger");
+
+    // -------------
+
+    JL("clientlogger").info("message from client");
+
+    // -------------
+
+    var a2 = JL.createAjaxAppender('da10');
+    a2.setOptions({ "batchSize": 2 });
+
+    var logger = JL("clientlogger2");
+    logger.setOptions({ "appenders": [a2], "level": 4000 });
+
+    JL("clientlogger2").fatal("message from client 2 - batch of 2");
+    JL("clientlogger2.a").fatal("message from client 2a - batch of 2");
+</script>
+

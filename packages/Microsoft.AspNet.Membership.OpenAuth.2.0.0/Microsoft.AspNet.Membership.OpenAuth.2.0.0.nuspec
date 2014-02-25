@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.AspNet.Membership.OpenAuth</id>
+    <version>2.0.0</version>
+    <title>Microsoft DotNetOpenAuth helpers for ASP.NET Membership</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>http://www.microsoft.com/web/webpi/eula/aspnetcomponent_rtw_ENU.htm</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>A series of helpers to enable using DotNetOpenAuth in an ASP.NET application that utilizes the Membership system for user management.</description>
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <language>en-US</language>
+    <tags>Microsoft AspNet OpenId OAuth authentication</tags>
+    <dependencies>
+      <dependency id="EntityFramework" version="6.0.0" />
+    </dependencies>
+  </metadata>
+</package>
