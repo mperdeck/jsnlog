@@ -7,14 +7,14 @@ namespace WebSite.App_Code
 {
     public static class SiteConstants
     {
-        public const string CurrentVersion = "2.4.0";
+        public static string CurrentVersion = Generated.Version;
         public const string JsnlogJsFileSize = "1.5kb";
 
         public const string NugetDownloadUrl = "http://www.nuget.org/packages/JSNLog/";
 
         public static string DownloadLinkJsnlogJs 
         {
-            get { return string.Format("https://raw.github.com/mperdeck/jsnlog/{0}/JSNLog/Scripts/jsnlog.min.js", CurrentVersion); }
+            get { return string.Format("https://raw.github.com/mperdeck/jsnlog.js/{0}/jsnlog.min.js", CurrentVersion); }
         }
     }
 }
