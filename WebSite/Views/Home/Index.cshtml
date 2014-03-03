@@ -4,12 +4,14 @@
 @{
     ViewBag.Title = "Better JavaScript Logging";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string currentVersion = PageVersions.CurrentVersion();
 }
 
 @section Hero {
     <section class="hero large-text">
         <section class="benefits" style="float: left; width: 650px; margin-top: 5px;">
-@if (PageVersions.CurrentVersion() == "NetJs")
+@if (currentVersion == "NetJs")
 {
             <h1>Client side logging integrated with ASP.NET and MVC</h1>
             <p>
@@ -20,7 +22,7 @@
             in your server side logs - without any server side coding.
             </p>
 }
-@if (PageVersions.CurrentVersion() == "JsOnly")
+@if (currentVersion == "JsOnly")
 {
             <h1>JavaScript logging redone</h1>
             <p>
@@ -35,7 +37,7 @@
         @Html.Raw(Html.Partial("Partials/_DownloadButton").ToHtmlString())
         </div>
 
-        @if (PageVersions.CurrentVersion() == "NetJs")
+        @if (currentVersion == "NetJs")
         {
             <div class="nugetline">PM> Install-Package JSNLog</div>
         }
@@ -46,7 +48,7 @@
 <section class="features">
     <div class="leftColumn">
 
-@if (PageVersions.CurrentVersion() == "NetJs")
+@if (currentVersion == "NetJs")
 {
     @Feature(
         "",
@@ -72,7 +74,7 @@ Supports Log4Net, NLog, Elmah, Common.Logging.
             @"Insert loggers in your JavaScript",
             @"<pre>JL(""jsLogger"").fatal(""log message"");</pre>")
 
-@if (PageVersions.CurrentVersion() == "NetJs")
+@if (currentVersion == "NetJs")
 {
     @Feature(
         "",
@@ -81,7 +83,7 @@ Supports Log4Net, NLog, Elmah, Common.Logging.
 ")
 }
 
-@if (PageVersions.CurrentVersion() == "NetJs")
+@if (currentVersion == "NetJs")
 {
     @Feature(
         "",
@@ -89,7 +91,7 @@ Supports Log4Net, NLog, Elmah, Common.Logging.
         @"<pre>JL(""jsLogger"").setOptions({ ""level"": 4000 });</pre>
 ")
 }
-@if (PageVersions.CurrentVersion() == "JsOnly")
+@if (currentVersion == "JsOnly")
 {
     @Feature(
         "",
@@ -100,7 +102,7 @@ Supports Log4Net, NLog, Elmah, Common.Logging.
 
 @*===========================================================*@
 
-@if (PageVersions.CurrentVersion() == "NetJs")
+@if (currentVersion == "NetJs")
 {
     @Feature(
         "",
@@ -108,7 +110,7 @@ Supports Log4Net, NLog, Elmah, Common.Logging.
         @"<pre>&lt;ajaxAppender name=""appender1"" batchSize=""3""/&gt;</pre>
 ")
 }
-@if (PageVersions.CurrentVersion() == "JsOnly")
+@if (currentVersion == "JsOnly")
 {
     @Feature(
         "",
@@ -120,7 +122,7 @@ Supports Log4Net, NLog, Elmah, Common.Logging.
 
 @*===========================================================*@
 
-@if (PageVersions.CurrentVersion() == "NetJs")
+@if (currentVersion == "NetJs")
 {
     @Feature(
         "",
@@ -128,7 +130,7 @@ Supports Log4Net, NLog, Elmah, Common.Logging.
         @"<pre>&lt;logger userAgentRegex=&quot;MSIE 7|MSIE 8&quot; /&gt;</pre>
 ")
 }
-@if (PageVersions.CurrentVersion() == "JsOnly")
+@if (currentVersion == "JsOnly")
 {
     @Feature(
         "",
@@ -140,7 +142,7 @@ Supports Log4Net, NLog, Elmah, Common.Logging.
 
 @*===========================================================*@
 
-@if (PageVersions.CurrentVersion() == "NetJs")
+@if (currentVersion == "NetJs")
 {
     @Feature(
         "",
@@ -148,7 +150,7 @@ Supports Log4Net, NLog, Elmah, Common.Logging.
         @"<pre>&lt;logger disallow=""suppress me"" /&gt;</pre>
 ")
 }
-@if (PageVersions.CurrentVersion() == "JsOnly")
+@if (currentVersion == "JsOnly")
 {
     @Feature(
         "",
@@ -178,12 +180,20 @@ JL().log(2500, obj);</pre>
 });</pre>
 ")
 
+        @if (currentVersion == "JsOnly")
+        {
+            @Feature(
+                "",
+                    @"Supports AMD and CommonJS loaders",
+                    @"As well as loading with a simple script tag.")
+        }
+
     </div>
     <div class="rightColumn">
 
 @*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*@
 
-@if (PageVersions.CurrentVersion() == "NetJs")
+@if (currentVersion == "NetJs")
 {
     @Feature(
         "",
@@ -191,7 +201,7 @@ JL().log(2500, obj);</pre>
         @"<pre>&lt;jsnlog maxMessages=""3""&gt;</pre>
 ")
 }
-@if (PageVersions.CurrentVersion() == "JsOnly")
+@if (currentVersion == "JsOnly")
 {
     @Feature(
         "",
@@ -201,7 +211,7 @@ JL().log(2500, obj);</pre>
 
 @*===========================================================*@
 
-@if (PageVersions.CurrentVersion() == "JsOnly")
+@if (currentVersion == "JsOnly")
 {
     @Feature(
         "",
@@ -212,7 +222,7 @@ JL().log(2500, obj);</pre>
 
 @*===========================================================*@
 
-@if (PageVersions.CurrentVersion() == "NetJs")
+@if (currentVersion == "NetJs")
 {
     @Feature(
         "",
