@@ -86,6 +86,7 @@
     <Compile Include="Infrastructure\XmlHelpers.cs" />
     <Compile Include="JavascriptLogging.cs" />
     <Compile Include="LogHandling\LoggerProcessor.cs" />
+    <None Include="Properties\AssemblyInfo.cs.template" />
     <Compile Include="ValueInfos\AppendersValue.cs" />
     <Compile Include="ValueInfos\UrlValue.cs" />
     <Compile Include="ValueInfos\IntegerGreaterZeroValue.cs" />
@@ -105,29 +106,12 @@
     <None Include="NuGet\AdditionalContent\web.config.transform" />
     <None Include="NuGet\Build\BuildNuGetPackage.bat" />
     <None Include="packages.config" />
-    <None Include="Scripts\jsnlog.js.map">
-      <DependentUpon>jsnlog.ts</DependentUpon>
-    </None>
-    <None Include="Scripts\jsnlog.min.js.map">
-      <DependentUpon>jsnlog.js</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dependencies\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\jsnlog.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="Scripts\jsnlog_interfaces.d.ts" />
-    <TypeScriptCompile Include="Scripts\jsnlog.d.ts" />
     <Content Include="NuGet\readme.txt" />
-    <Content Include="Scripts\jsnlog.js">
-      <DependentUpon>jsnlog.ts</DependentUpon>
-    </Content>
-    <Content Include="Scripts\jsnlog.min.js">
-      <DependentUpon>jsnlog.ts</DependentUpon>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

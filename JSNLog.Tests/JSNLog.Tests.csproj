@@ -148,7 +148,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="..\..\jsnlog.js\Sources\jsnlog.js">
+    <Content Include="..\..\jsnlog.js\jsnlog.js">
       <Link>Scripts\libs\jsnlog.js</Link>
     </Content>
     <Content Include="Global.asax" />
