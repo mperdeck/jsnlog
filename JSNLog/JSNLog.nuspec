@@ -18,6 +18,8 @@
       </dependencies>
   </metadata>
     <files>
+        <file src="..\..\jsnlog.js\jsnlog.js" target="content\Scripts" />
+        <file src="..\..\jsnlog.js\jsnlog.min.js" target="content\Scripts" />
         <file src="NuGet\AdditionalContent\*.*" target="content" />
         <file src="NuGet\AdditionalAppStart\*.*" target="content\App_Start" />
         <file src="NuGet\readme.txt" target="" />
