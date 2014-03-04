@@ -22,10 +22,24 @@
             }
         </li>
         <li>
-            <a href="https://github.com/mperdeck/jsnlog" target="_blank">Source</a>
+            @if (PageVersions.CurrentVersion() == "NetJs")
+            {
+                <a href="https://github.com/mperdeck/jsnlog" target="_blank">Source</a>
+            }
+            @if (PageVersions.CurrentVersion() == "JsOnly")
+            {
+                <a href="https://github.com/mperdeck/jsnlog.js" target="_blank">Source</a>
+            }
         </li>
         <li>
-        <a href="https://github.com/mperdeck/jsnlog/issues" target="_blank">Support</a>
+            @if (PageVersions.CurrentVersion() == "NetJs")
+            {
+                <a href="https://github.com/mperdeck/jsnlog/issues" target="_blank">Support</a>
+            }
+            @if (PageVersions.CurrentVersion() == "JsOnly")
+            {
+                <a href="https://github.com/mperdeck/jsnlog.js/issues" target="_blank">Support</a>
+            }
         </li>
         </ul>
 </div>
