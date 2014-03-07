@@ -8,6 +8,10 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    @Html.ActionLink("Home", "Index", "Home")
+    |
+    @Html.ActionLink("Level1/Page1", "Page1", "Level1")
+
     @RenderBody()
 
     @Scripts.Render("~/bundles/jquery")

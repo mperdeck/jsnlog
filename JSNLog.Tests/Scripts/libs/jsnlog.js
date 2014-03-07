@@ -352,7 +352,7 @@ var JL;
         __extends(AjaxAppender, _super);
         function AjaxAppender(appenderName) {
             _super.call(this, appenderName, AjaxAppender.prototype.sendLogItemsAjax);
-            this.url = "jsnlog.logger";
+            this.url = "/jsnlog.logger";
         }
         AjaxAppender.prototype.setOptions = function (options) {
             copyProperty("url", options, this);
