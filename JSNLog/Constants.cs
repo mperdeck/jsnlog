@@ -45,11 +45,13 @@ namespace JSNLog
         {
             Assembly,
             AjaxAppender,
+            ConsoleAppender,
             Logger
         }
 
         public const string TagAssembly = "assembly";
         public const string TagAjaxAppender = "ajaxAppender";
+        public const string TagConsoleAppender = "consoleAppender";
         public const string TagLogger = "logger";
 
         public static readonly string AttributeNameBufferSize = "bufferSize";
@@ -105,5 +107,8 @@ namespace JSNLog
             new[] {
                 new AttributeInfo("url", new UrlValue(), AttributeInfo.AttributeValidityEnum.OptionalOption)
             });
+
+        public static readonly IEnumerable<AttributeInfo> ConsoleAppenderAttributes =
+            AppenderAttributes;
     }
 }

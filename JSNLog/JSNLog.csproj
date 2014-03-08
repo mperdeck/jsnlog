@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="ConfigurationSectionHandler.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Elements\ConsoleAppenderElement.cs" />
     <Compile Include="Elements\AjaxAppenderElement.cs" />
     <Compile Include="Elements\AppenderElementBase.cs" />
     <Compile Include="Elements\ElementBase.cs" />
