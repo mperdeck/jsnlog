@@ -225,6 +225,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\console.png" />
     <Content Include="Images\download.png" />
     <Content Include="Nuget\icon.png" />
     <Content Include="App_Code\Generated.cs.template" />

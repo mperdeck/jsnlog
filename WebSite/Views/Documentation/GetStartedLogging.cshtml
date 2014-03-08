@@ -170,10 +170,12 @@ By default, the root logger has level <span class="term">DEBUG</span>.
 <li>@Html.ViewLink("webconfig-logger")</li>
 <li>@Html.ViewLink("javascriptlogging-requestid")</li>
 <li>@Html.ViewLink("webconfig-ajaxappender")</li>
+<li>@Html.ViewLink("webconfig-consoleappender")</li>
 }
 @if (PageVersions.CurrentVersion() == "JsOnly")
 {
 <li>@Html.ViewLink("jsnlogjs-logger-setOptions", "Logger options")</li>
 <li>@Html.ViewLink("jsnlogjs-ajaxappender-setOptions", "AjaxAppender options")</li>
+<li>@Html.ViewLink("jsnlogjs-consoleappender", "ConsoleAppender")</li>
 }
 </ul>
