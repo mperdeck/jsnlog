@@ -1,0 +1,32 @@
+﻿@using ViewExtensions
+
+@{
+    string appenderType = (string)(ViewData["objectType"]);
+
+    bool showUrlAttribute = (appenderType == "ajaxAppender");
+}
+
+<pre>&lt;configuration&gt; 
+    &lt;jsnlog&gt;
+        &lt;@appenderType 
+            name="string" 
+            level="number|@JSNLog.Infrastructure.LevelUtils.NamedLevels()"
+            userAgentRegex="regular expression"
+            ipRegex="regular expression"
+            disallow="regular expression"
+            storeInBufferLevel=
+                "number|@JSNLog.Infrastructure.LevelUtils.NamedLevels()"
+            sendWithBufferLevel=
+                "number|@JSNLog.Infrastructure.LevelUtils.NamedLevels()" 
+            bufferSize="number" 
+            batchSize="number" 
+            @if (showUrlAttribute) 
+            { <text>           url="string" /&gt;
+</text> }
+            else
+            { <text>       /&gt;
+</text>}                                                         
+    &lt;/jsnlog&gt;
+&lt;/configuration&gt; 
+</pre>
+

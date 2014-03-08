@@ -9,30 +9,15 @@
     ViewBag.VersionNameRegex = "NetJs";
 }
 
-
 @section Definition {
-<pre>&lt;configuration&gt; 
-    &lt;jsnlog&gt;
-        &lt;ajaxAppender 
-            name="string" 
-            level="number|@JSNLog.Infrastructure.LevelUtils.NamedLevels()"
-            userAgentRegex="regular expression"
-            ipRegex="regular expression"
-            disallow="regular expression"
-            storeInBufferLevel=
-                "number|@JSNLog.Infrastructure.LevelUtils.NamedLevels()"
-            sendWithBufferLevel=
-                "number|@JSNLog.Infrastructure.LevelUtils.NamedLevels()" 
-            bufferSize="number" 
-            batchSize="number" 
-            url="string"/&gt;
-    &lt;/jsnlog&gt;
-&lt;/configuration&gt; 
-</pre>
+@Html.Partial("_AppenderWebConfigDefinition", new ViewDataDictionary {
+            { "objectType", "ajaxAppender"},
+            { "configSource", "web.config"}
+        })
 }
 
 @section Remarks {
-    @Html.Partial("_AppenderIntro",new ViewDataDictionary { 
+    @Html.Partial("_AjaxAppenderIntro", new ViewDataDictionary { 
             { "configSource", "web.config"} 
         })
 
