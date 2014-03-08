@@ -292,6 +292,11 @@
     <Content Include="Views\Documentation\_LevelLogMethodExample.cshtml" />
     <Content Include="Views\Documentation\_LevelGetMethodDefinition.cshtml" />
     <Content Include="Views\Documentation\_LevelGetMethodExample.cshtml" />
+    <Content Include="Views\Documentation\JSNLogJs\ConsoleAppender\Index.cshtml" />
+    <Content Include="Views\Documentation\JSNLogJs\ConsoleAppender\SetOptions.cshtml" />
+    <Content Include="Views\Documentation\WebConfig\JSNLog\ConsoleAppender.cshtml" />
+    <Content Include="Views\Documentation\_AppenderWebConfigDefinition.cshtml" />
+    <Content Include="Views\Documentation\_AjaxAppenderIntro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -323,10 +328,10 @@
     <Content Include="Views\Documentation\_LoggerRemarks.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Documentation\_AjaxAppenderRemarks.cshtml" />
+    <Content Include="Views\Documentation\_AppenderRemarks.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Documentation\_AppenderIntro.cshtml" />
+    <Content Include="Views\Documentation\_ConsoleAppenderIntro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JSNLog\JSNLog.csproj">
