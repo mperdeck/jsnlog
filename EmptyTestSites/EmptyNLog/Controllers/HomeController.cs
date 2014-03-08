@@ -20,5 +20,12 @@ namespace EmptyLog4Net.Controllers
             return View();
         }
 
+        public ActionResult ConsoleAppender()
+        {
+            Logger logger = LogManager.GetLogger("serverlogger");
+            logger.Warn("Warn Message generated on server, on ConsoleAppender page");
+
+            return View();
+        }
     }
 }
