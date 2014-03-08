@@ -8,65 +8,65 @@
 
 
 @section Definition {
-    @Html.Partial("_SetOptionsMethodDefinition",new ViewDataDictionary { 
+    @Html.Partial("_SetOptionsMethodDefinition", new ViewDataDictionary {
             { "returnType", "Logger"}
         })
 }
 
 @section Remarks {
     <p>
-    The JSON object can have the following fields: 
-        </p>
+        The JSON object can have the following fields:
+    </p>
 
-    @Html.Partial("_LoggerRemarks",new ViewDataDictionary { 
-            { "objectType", "Logger"}, 
-            { "configSource", "jsnlog.js"}, 
-            { "appenderDescriptionKey", "jsnlogjs-ajaxappender-setOptions"}  
+    @Html.Partial("_LoggerRemarks", new ViewDataDictionary {
+            { "objectType", "Logger"},
+            { "configSource", "jsnlog.js"},
+            { "appenderDescriptionKey", "jsnlogjs-ajaxappender-setOptions"}
         })
 
 }
 
 @section Examples {
-<p>
-    This sets the level of logger &quot;a.b&quot; to 3000.
-</p>
+    <p>
+        This sets the level of logger &quot;a.b&quot; to 3000.
+    </p>
 
 <pre>var logger = JL("a.b");
 logger.setOptions({
     "level": 3000
 });</pre>
 
-<p>
-    This sets the level of the root logger.
-</p>
+    <p>
+        This sets the level of the root logger.
+    </p>
 
 <pre>var rootlogger = JL();
 rootlogger.setOptions({
     "level": 3000
 });</pre>
 
-<p>
-    This sets the level of logger &quot;a.b&quot; to INFO (which is the same as setting it to 3000).
-This code shows you don't need to use the variable <span class="term">logger</span>.
-</p>
+    <p>
+        This sets the level of logger &quot;a.b&quot; to INFO (which is the same as setting it to 3000).
+        This code shows you don't need to use the variable <span class="term">logger</span>.
+    </p>
 
 <pre>JL("a.b").setOptions({
     "level": JL.getInfoLevel()
 });</pre>
 
-<p>
-    This sets the level of logger &quot;a.b&quot; to OFF, so it is completely switched off.
-</p>
+    <p>
+        This sets the level of logger &quot;a.b&quot; to OFF, so it is completely switched off.
+    </p>
 
 <pre>JL("a.b").setOptions({
     "level": JL.getOffLevel()
 });</pre>
 
-<p>
-    This sets the level to 4000.
-    It also disables the logger for all browsers, except those whose user agent string contains <span class="term">MSIE 7|MSIE 8</span>
-    (that is, it is version 7 or 8 of Internet Explorer).
-</p>
+    <p>
+        This sets the level to 4000.
+        It also disables the logger for all browsers, except those whose user agent string contains <span class="term">MSIE 7|MSIE 8</span>
+        (that is, it is version 7 or 8 of Internet Explorer).
+    </p>
 
 <pre>var logger = JL("a.b");
 logger.setOptions({
@@ -74,59 +74,54 @@ logger.setOptions({
     "userAgentRegex": "MSIE 7|MSIE 8"
 });</pre>
 
-<p>
-    This creates an appender &quot;appender&quot; and then tells the logger &quot;a.b&quot; to send
-    all log messages to it.
-</p>
+    <p>
+        This creates an appender &quot;appender&quot; and then tells the logger &quot;a.b&quot; to send
+        all log messages to it.
+    </p>
 
 <pre>var appender=JL.createAjaxAppender('appender');
-
 var logger = JL("a.b");
 logger.setOptions({
     "appenders": [appender]
 });</pre>
 
-<p>
-    This creates two appenders and then tells the logger &quot;a.b&quot; to send
-    all log messages to them.
-</p>
+    <p>
+        This creates an AjaxAppender and a ConsoleAppender and then tells the logger &quot;mylogger&quot; to send
+        all log messages to them both.
+    </p>
 
-<pre>var appender1=JL.createAjaxAppender('appender1');
-var appender2=JL.createAjaxAppender('appender2');
+<pre>var ajaxAppender=JL.createAjaxAppender('ajaxAppender');
+var consoleAppender=JL.createConsoleAppender('consoleAppender');
+JL("mylogger").setOptions({"appenders": [ajaxAppender,consoleAppender]});
+</pre>
 
-var logger = JL("a.b");
-logger.setOptions({
-    "appenders": [appender1, appender2]
-});</pre>
-
-
-<p>
-Suppress duplicate messages that match the regular expression
-    &quot;Parameter x too high - x =&quot;.
-</p>
+    <p>
+        Suppress duplicate messages that match the regular expression
+        &quot;Parameter x too high - x =&quot;.
+    </p>
 
 <pre>JL("a").setOptions({
     "onceOnly": [ "Parameter x too high - x =" ]
 });</pre>
 
-<p>
-Suppress duplicate messages that match the regular expression
-    &quot;Parameter x too high - x =&quot;. Also suppress duplicate messages that 
-    match &quot;x = \d+ and y = \d+&quot;. 
-</p>
+    <p>
+        Suppress duplicate messages that match the regular expression
+        &quot;Parameter x too high - x =&quot;. Also suppress duplicate messages that
+        match &quot;x = \d+ and y = \d+&quot;.
+    </p>
 
 <pre>JL("a").setOptions({
     "onceOnly": [ "Parameter x too high - x =", "x = \\d+ and y = \\d+" ]
 });</pre>
 
-<p>
-    Loggers inherit
-<span class="term">onceOnly</span>
-    from their parents. 
-    Assume you have a logger &quot;a.b&quot; whose parent &quot;a&quot; suppresses duplicates,
-    but you want logger &quot;a.b&quot; to not suppress duplicates. To make that happen, give it 
-    a <span class="term">onceOnly</span> collection without any regular expressions:
-</p>
+    <p>
+        Loggers inherit
+        <span class="term">onceOnly</span>
+        from their parents.
+        Assume you have a logger &quot;a.b&quot; whose parent &quot;a&quot; suppresses duplicates,
+        but you want logger &quot;a.b&quot; to not suppress duplicates. To make that happen, give it
+        a <span class="term">onceOnly</span> collection without any regular expressions:
+    </p>
 
 <pre>JL("a.b").setOptions({
     "onceOnly": [ ]

@@ -9,6 +9,8 @@
         
     string keyLoggerOptions =
         ((string)(ViewData["configSource"]) == "web.config") ? "webconfig-logger" : "jsnlogjs-logger-setOptions";
+        
+    string appenderType = (string)(ViewData["objectType"]);
 }
 
     <table class="border">
@@ -18,7 +20,7 @@
        {
             @Html.TableRowHtml("name", "required", 
             "",
-            @"Name of the AjaxAppender you want to configure.")
+                @"Name of the " + appenderType + " you want to configure.")
        }
         @Html.Partial("_SharedFilterTableRows",ViewData)
         @Html.TableRowHtml("storeInBufferLevel", "optional", (showTypeColumn ? "number" : null), "ALL",
