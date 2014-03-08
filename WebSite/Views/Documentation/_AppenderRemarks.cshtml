@@ -9,8 +9,10 @@
         
     string keyLoggerOptions =
         ((string)(ViewData["configSource"]) == "web.config") ? "webconfig-logger" : "jsnlogjs-logger-setOptions";
-        
+
     string appenderType = (string)(ViewData["objectType"]);
+
+    bool showUrlTableRow = (appenderType == "AjaxAppender");
 }
 
     <table class="border">
@@ -44,9 +46,12 @@
         @Html.TableRowHtml("batchSize", "optional", (showTypeColumn ? "number" : null), "1",
                 @"Allows you to improve performance by sending multiple log messages in one go, 
                 rather than one by one.")
+            @if (showUrlTableRow)
+            { 
         @Html.TableRowHtml("url", "optional", (showTypeColumn ? "string" : null), "jsnlog.logger",
                 @"All log messages will be sent to this URL.
 The default url is as expected by the server side code of JSNLog.")
+            }
         </tbody>
     </table>
 
