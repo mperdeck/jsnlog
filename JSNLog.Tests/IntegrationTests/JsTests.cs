@@ -80,6 +80,14 @@ namespace JSNLog.Tests.IntegrationTests
             Assert.IsFalse(ErrorOnPage());
         }
 
+        [TestMethod]
+        public void ExceptionTests()
+        {
+            OpenPage("/Html/exceptiontests.html");
+
+            Assert.IsFalse(ErrorOnPage());
+        }
+
         private string RequestIdFieldsConsistent(bool jlCanDifferFromOthers)
         {
             string idFromController = _driver.FindElement(By.Id("IdFromController")).Text;
