@@ -86,7 +86,7 @@ function f2() {
         f1();
     }
     catch (e) {
-        throw new JL.Exception("in f2", { "i3": 77, "j3": "ghi" }, e);
+        throw new JL.Exception({ "i3": 77, "j3": "ghi" }, e);
     }
 }
 
@@ -104,7 +104,7 @@ function fd() {
     TestUtils.Check(a0, 4, [
       {
           l: 6000,
-          m: /{\"stack\":\"@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,5}\\n@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,5}\\n\",\"message\":\"in f2\",\"name\":\"JL\.Exception\",\"data\":{\"i3\":77,\"j3\":\"ghi\"},\"inner\":{\"stack\":\"f1@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\nf2@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\nfd@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\n@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}.*\",\"message\":\"i is not defined\",\"name\":\"ReferenceError\"},\"logData\":\"{\\\"i4\\\":88,\\\"j4\\\":\\\"jkl\\\"}\"}/,
+          m: /{\"stack\":\"@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,5}\\n@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,5}\\n\",\"message\":\"{\\\"i3\\\":77,\\\"j3\\\":\\\"ghi\\\"}\",\"name\":\"JL\.Exception\",\"inner\":{\"stack\":\"f1@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\nf2@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\nfd@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\n@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}.*\",\"message\":\"i is not defined\",\"name\":\"ReferenceError\"},\"logData\":\"{\\\"i4\\\":88,\\\"j4\\\":\\\"jkl\\\"}\"}/,
           n: 'l4',
           t: __timestamp4
       }
@@ -124,7 +124,7 @@ function fd() {
     TestUtils.Check(a0, 5, [
       {
           l: 6000,
-          m: /{\"stack\":\"@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,5}\\n@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,5}\\n\",\"message\":\"in f2\",\"name\":\"JL\.Exception\",\"data\":{\"i3\":77,\"j3\":\"ghi\"},\"inner\":{\"stack\":\"f1@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\nf2@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\nfd@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\n@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}.*\",\"message\":\"i is not defined\",\"name\":\"ReferenceError\"},\"logData\":\"null\"}/,
+          m: /{\"stack\":\"@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,5}\\n@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,5}\\n\",\"message\":\"{\\\"i3\\\":77,\\\"j3\\\":\\\"ghi\\\"}\",\"name\":\"JL\.Exception\",\"inner\":{\"stack\":\"f1@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\nf2@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\nfd@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\n@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}.*\",\"message\":\"i is not defined\",\"name\":\"ReferenceError\"},\"logData\":\"null\"}/,
           n: 'l5',
           t: __timestamp5
       }
