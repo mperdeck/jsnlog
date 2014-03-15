@@ -29,7 +29,7 @@ module TestUtils {
     }
 
     function FormatResult(idx: number, fieldName: string, expected: string, actual: string): string {
-        return "idx: "+idx+", field: "+fieldName+", expected: "+expected+", actual: "+ actual;
+        return "idx: " + idx + "</br>field: " + fieldName + "</br>expected: " + expected +"</br>actual: "+ actual;
     }
 
     // Returns string with comparison result. 
@@ -49,11 +49,25 @@ module TestUtils {
                 return FormatResult(i, "level", expected[i].l, actual[i].l);
             }
 
-            if (expected[i].m != actual[i].m) {
+            var m = expected[i].m;
+            var match = false;
+
+            if (m instanceof RegExp)
+            {
+                match = m.test(actual[i].m);
+            }
+            else
+            {
+                match = (expected[i].m == actual[i].m);
+            }
+
+            if (!match)
+            {
                 return FormatResult(i, "msg", expected[i].m, actual[i].m);
             }
 
-            if (expected[i].n != actual[i].n) {
+            if (expected[i].n != actual[i].n)
+            {
                 return FormatResult(i, "logger name", expected[i].n, actual[i].n);
             }
 

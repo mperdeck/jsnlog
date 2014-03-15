@@ -29,7 +29,7 @@ var TestUtils;
     TestUtils.Check = Check;
 
     function FormatResult(idx, fieldName, expected, actual) {
-        return "idx: " + idx + ", field: " + fieldName + ", expected: " + expected + ", actual: " + actual;
+        return "idx: " + idx + "</br>field: " + fieldName + "</br>expected: " + expected + "</br>actual: " + actual;
     }
 
     // Returns string with comparison result.
@@ -47,7 +47,16 @@ var TestUtils;
                 return FormatResult(i, "level", expected[i].l, actual[i].l);
             }
 
-            if (expected[i].m != actual[i].m) {
+            var m = expected[i].m;
+            var match = false;
+
+            if (m instanceof RegExp) {
+                match = m.test(actual[i].m);
+            } else {
+                match = (expected[i].m == actual[i].m);
+            }
+
+            if (!match) {
                 return FormatResult(i, "msg", expected[i].m, actual[i].m);
             }
 
