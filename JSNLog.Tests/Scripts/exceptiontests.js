@@ -8,7 +8,6 @@ var a0 = JL.createDummyAppender('da1');
 JL().setOptions({ "appenders": [a0] });
 
 // --------------------------------------------------
-// Act
 
 // Built in exception
 
@@ -20,18 +19,38 @@ function fa() {
         JL('l1').fatalException(null, e);
         __timestamp1 = (new Date).getTime();
     }
+
+    TestUtils.Check(a0, 1, [
+      {
+          l: 6000,
+          m: /{\"stack\":\"fa@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{2}\\n@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,4}.*\",\"message\":\"i is not defined\",\"name\":\"ReferenceError\",\"logData\":\"null\"}/,
+          n: 'l1',
+          t: __timestamp1
+      }
+    ]
+    );
 }
 
 // JL.Exception 
 
 function fb() {
     try {
-        throw new JL.Exception(null, "throwing JL.Exception");
+        throw new JL.Exception("throwing JL.Exception");
     }
     catch (e) {
         JL('l2').fatalException({ "i": 5, "j": "abc" }, e);
         __timestamp2 = (new Date).getTime();
     }
+
+    TestUtils.Check(a0, 2, [
+      {
+          l: 6000,
+          m: /{\"stack\":\"@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,4}\\n@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,4}\\n\",\"message\":\"throwing JL.Exception\",\"name\":\"JL.Exception\",\"logData\":\"{\\\"i\\\":5,\\\"j\\\":\\\"abc\\\"}\"}/,
+          n: 'l2',
+          t: __timestamp2
+      }
+    ]
+    );
 }
 
 // Exception not derived from Error
@@ -44,6 +63,16 @@ function fc() {
         JL('l3').fatalException(function () { return { "i2": 66, "j2": "def" } }, e);
         __timestamp3 = (new Date).getTime();
     }
+
+    TestUtils.Check(a0, 3, [
+      {
+          l: 6000,
+          m: /{\"e\":\"Not derived from Error\",\"logData\":\"{\\\"i2\\\":66,\\\"j2\\\":\\\"def\\\"}\"}/,
+          n: 'l3',
+          t: __timestamp3
+      }
+    ]
+    );
 }
 
 // -----------------------------
@@ -57,7 +86,7 @@ function f2() {
         f1();
     }
     catch (e) {
-        throw new JL.Exception("special exception", "in f2", { "i3": 77, "j3": "ghi" }, e);
+        throw new JL.Exception("in f2", { "i3": 77, "j3": "ghi" }, e);
     }
 }
 
@@ -72,6 +101,15 @@ function fd() {
         __timestamp4 = (new Date).getTime();
     }
 
+    TestUtils.Check(a0, 4, [
+      {
+          l: 6000,
+          m: /{\"stack\":\"@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,5}\\n@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,5}\\n\",\"message\":\"in f2\",\"name\":\"JL\.Exception\",\"data\":{\"i3\":77,\"j3\":\"ghi\"},\"inner\":{\"stack\":\"f1@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\nf2@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\nfd@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\n@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}.*\",\"message\":\"i is not defined\",\"name\":\"ReferenceError\"},\"logData\":\"{\\\"i4\\\":88,\\\"j4\\\":\\\"jkl\\\"}\"}/,
+          n: 'l4',
+          t: __timestamp4
+      }
+    ]
+    );
 
     // Add inner exception, but no data
 
@@ -82,58 +120,30 @@ function fd() {
         JL('l5').fatalException(null, e);
         __timestamp5 = (new Date).getTime();
     }
-}
 
-// --------------------------------------------------
-// Assert
-
-function fassert() {
-    TestUtils.Check(a0, 1, [
+    TestUtils.Check(a0, 5, [
       {
           l: 6000,
-          m: '{"stack":"ReferenceError: i is not defined\n    at http://localhost:31972/Scripts/exceptiontests.js:19:5","message":"i is not defined","name":"ReferenceError","logData":"null"}',
-          n: 'l1',
-          t: __timestamp1
-      },
-      {
-          l: 6000,
-          m: '{"stack":"Error\n    at JL (http://localhost:31972/Scripts/libs/jsnlog.js:231:27)\n    at http://localhost:31972/Scripts/libs/jsnlog.js:674:3","message":"throwing JL.Exception","name":"Exception","logData":"{\"i\":5,\"j\":\"abc\"}"}',
-          n: 'l2',
-          t: __timestamp2
-      },
-      {
-          l: 6000,
-          m: '{"e":"Not derived from Error","logData":"{\"i2\":66,\"j2\":\"def\"}"}',
-          n: 'l3',
-          t: __timestamp3
-      },
-      {
-          l: 6000,
-          m: '{"stack":"ReferenceError: Exception is not defined\n    at f2 (http://localhost:31972/Scripts/exceptiontests.js:62:19)\n    at http://localhost:31972/Scripts/exceptiontests.js:67:5","message":"Exception is not defined","name":"ReferenceError","logData":"{\"i4\":88,\"j4\":\"jkl\"}"}',
-          n: 'l4',
-          t: __timestamp4
-      },
-      {
-          l: 6000,
-          m: '{"stack":"ReferenceError: Exception is not defined\n    at f2 (http://localhost:31972/Scripts/exceptiontests.js:62:19)\n    at http://localhost:31972/Scripts/exceptiontests.js:78:5","message":"Exception is not defined","name":"ReferenceError","logData":"null"}',
+          m: /{\"stack\":\"@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,5}\\n@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,5}\\n\",\"message\":\"in f2\",\"name\":\"JL\.Exception\",\"data\":{\"i3\":77,\"j3\":\"ghi\"},\"inner\":{\"stack\":\"f1@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\nf2@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\nfd@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\n@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}.*\",\"message\":\"i is not defined\",\"name\":\"ReferenceError\"},\"logData\":\"null\"}/,
           n: 'l5',
           t: __timestamp5
       }
     ]
     );
-
-    // The integration tests looks not only for error messages (generated by TestUtils) but also 
-    // whether the #running message is still on the page (indicating that the test code crashed).
-    $('#running').remove();
 }
 
+// --------------------------------------------------
+// Act and Assert
 
 $(function () {
     fa();
     fb();
     fc();
     fd();
-    fassert();
+
+    // The integration tests looks not only for error messages (generated by TestUtils) but also 
+    // whether the #running message is still on the page (indicating that the test code crashed).
+    $('#running').remove();
 });
 
 
