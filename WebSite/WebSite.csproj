@@ -298,6 +298,8 @@
     <Content Include="Views\Documentation\WebConfig\JSNLog\ConsoleAppender.cshtml" />
     <Content Include="Views\Documentation\_AppenderWebConfigDefinition.cshtml" />
     <Content Include="Views\Documentation\_AjaxAppenderIntro.cshtml" />
+    <Content Include="Views\Documentation\JSNLogJs\Logger\FatalException.cshtml" />
+    <Content Include="Views\Documentation\JSNLogJs\Exception\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

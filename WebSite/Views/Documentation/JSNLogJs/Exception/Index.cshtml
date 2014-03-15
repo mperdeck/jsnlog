@@ -1,0 +1,116 @@
+﻿@using ViewExtensions
+
+@{
+    ViewBag.Title = "Exception Object";
+    ViewBag.Key = "jsnlogjs-exception";
+    ViewBag.Description = "Allows you to create custom exceptions that hold a JSON object and an inner exception.";
+}
+
+@section Remarks {
+    <p>
+        Similar to the
+        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" target="_blank">standard Error object</a>,
+        the Exception object allows you to throw a custom exception when things go wrong:
+    </p>
+<pre>function f(i, j) {
+    if (i &lt; 10) { 
+        throw new JL.Exception("i is too small!");
+    }
+    ...
+}</pre>
+
+    <h3>Add information to aid in debugging</h3>
+    <p>
+        However, instead of a string, you can also pass in a JSON object with more information, to help you fix the issue:
+    </p>
+<pre>function f(i, j) {
+    if (i &lt; 10) { 
+        throw new JL.Exception({
+            "message": "i is too small!",
+            "i": i,
+            "j": j    
+        });
+    }
+    ...
+}</pre>
+    <h3>Add inner exceptions</h3>
+    <p>
+        The Exception object supports inner exceptions - essentially storing one exception within another.
+        To see how this works, consider this code:
+    </p>
+    <pre>function f2(v) {
+    var x, y;
+    ... some code
+    if (somethingWentWrong) {
+        throw new JL.Exception({ "x": x, "y": y, "v": v });
+    }
+}<br />
+function f1(anArray) {
+    var i;    
+    for(i = 0; i &lt; anArray.length; i++) {
+        f2(anArray[i]);
+    }
+}<br />
+try {
+    f1([1, 2, 3]);
+} catch(e) {
+    JL().fatalException("Exception was thrown!", e);
+}</pre>
+    <p>
+        Function f2 can throw an exception. If it does, it puts all relevant information in the exception to make fixing the problem easier.
+    </p>
+    <p>
+        However, function f1 also has information that might be relevant, such as the value of the index i. It would be good to somehow add that information
+        to the exception.
+    </p>
+    <p>
+        It would be possible to catch the exception in function f1 and then throw a new exception that contains all the information stored by function f2 plus the
+        index i. But that would be complicated, and we'd lose the stack trace of the original exception.
+    </p>
+    <p>
+        The easiest solution is to catch the exception in function f2, and then throw a new one that contains the original exception, plus any additional information.
+        That way, we get to keep all the information stored in the original exception, including its stack trace.
+        The changes are below in red:
+    </p>
+<pre>function f2(v) {
+    var x, y;
+    ... some code
+    if (somethingWentWrong) {
+        throw new JL.Exception({ "x": x, "y": y, "v": v });
+    }
+}<br />
+function f1(anArray) {
+    var i;    
+    <span class="addedcode">try {</span>
+        for(i = 0; i &lt; anArray.length; i++) {
+            f2(anArray[i]);
+        }
+    <span class="addedcode">} catch(e) {
+        // Throw new exception that contains the original one
+        throw new JL.Exception({ "i": i }, e);
+    }</span>
+}<br />
+try {
+    f1([1, 2, 3]);
+} catch(e) {
+    JL().fatalException("Exception was thrown!", e);
+}</pre>
+
+    <p>
+        The fatalException function knows how to read the additional information and the inner exception from the Exception object, and will log it all. 
+    </p>
+
+    <p>
+        If you want to, there is nothing stopping you from having an inner exception that itself has an inner exception. You can go as deep as you want.
+    </p>
+
+
+
+
+
+
+
+
+
+}
+

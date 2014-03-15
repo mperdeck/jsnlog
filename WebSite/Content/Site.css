@@ -31,6 +31,12 @@ a:hover
     font-style:italic;
 }
 
+/* used in code examples to highlight added code */
+.addedcode 
+{
+    color: #AD0101;
+}
+
 /* Block level
 -----------------------------------------------------------*/
 

@@ -163,6 +163,33 @@ var JL;
         return true;
     }
 
+    function stringifyLogObject(logObject) {
+        switch (typeof logObject) {
+            case "string":
+                return logObject;
+            case "number":
+                return logObject.toString();
+            case "boolean":
+                return logObject.toString();
+            case "undefined":
+                return "undefined";
+            case "function":
+                if (logObject instanceof RegExp) {
+                    return logObject.toString();
+                } else {
+                    return stringifyLogObject(logObject());
+                }
+            case "object":
+                if ((logObject instanceof RegExp) || (logObject instanceof String) || (logObject instanceof Number) || (logObject instanceof Boolean)) {
+                    return logObject.toString();
+                } else {
+                    return JSON.stringify(logObject);
+                }
+            default:
+                return "unknown";
+        }
+    }
+
     function setOptions(options) {
         copyProperty("enabled", options, this);
         copyProperty("maxMessages", options, this);
@@ -204,6 +231,30 @@ var JL;
         return 2147483647;
     }
     JL.getOffLevel = getOffLevel;
+
+    // ---------------------
+    var Exception = (function () {
+        // data replaces message. It takes not just strings, but also objects and functions, just like the log function.
+        // internally, the string representation is stored in the message property (inherited from Error)
+        //
+        // inner: inner exception. Can be null or undefined.
+        function Exception(data, inner) {
+            this.inner = inner;
+            this.name = "JL.Exception";
+            this.message = stringifyLogObject(data);
+        }
+        return Exception;
+    })();
+    JL.Exception = Exception;
+
+    // Derive Exception from Error (a Host object), so browsers
+    // are more likely to produce a stack trace for it in their console.
+    //
+    // Note that instanceof against an object created with this constructor
+    // will return true in these cases:
+    // <object> instanceof JL.Exception);
+    // <object> instanceof Error);
+    Exception.prototype = new Error();
 
     // ---------------------
     var LogItem = (function () {
@@ -382,6 +433,83 @@ var JL;
     })(Appender);
     JL.AjaxAppender = AjaxAppender;
 
+    // ---------------------
+    var ConsoleAppender = (function (_super) {
+        __extends(ConsoleAppender, _super);
+        function ConsoleAppender(appenderName) {
+            _super.call(this, appenderName, ConsoleAppender.prototype.sendLogItemsConsole);
+        }
+        ConsoleAppender.prototype.clog = function (logEntry) {
+            console.log(logEntry);
+        };
+
+        ConsoleAppender.prototype.cerror = function (logEntry) {
+            if (console.error) {
+                console.error(logEntry);
+            } else {
+                this.clog(logEntry);
+            }
+        };
+
+        ConsoleAppender.prototype.cwarn = function (logEntry) {
+            if (console.warn) {
+                console.warn(logEntry);
+            } else {
+                this.clog(logEntry);
+            }
+        };
+
+        ConsoleAppender.prototype.cinfo = function (logEntry) {
+            if (console.info) {
+                console.info(logEntry);
+            } else {
+                this.clog(logEntry);
+            }
+        };
+
+        // IE11 has a console.debug function. But its console doesn't have
+        // the option to show/hide debug messages (the same way Chrome and FF do),
+        // even though it does have such buttons for Error, Warn, Info.
+        //
+        // For now, this means that debug messages can not be hidden on IE.
+        // Live with this, seeing that it works fine on FF and Chrome, which
+        // will be much more popular with developers.
+        ConsoleAppender.prototype.cdebug = function (logEntry) {
+            if (console.debug) {
+                console.debug(logEntry);
+            } else {
+                this.cinfo(logEntry);
+            }
+        };
+
+        ConsoleAppender.prototype.sendLogItemsConsole = function (logItems) {
+            try  {
+                if (!console) {
+                    return;
+                }
+
+                var i;
+                for (i = 0; i < logItems.length; ++i) {
+                    var li = logItems[i];
+                    var msg = li.n + ": " + li.m;
+
+                    if (li.l <= JL.getDebugLevel()) {
+                        this.cdebug(msg);
+                    } else if (li.l <= JL.getInfoLevel()) {
+                        this.cinfo(msg);
+                    } else if (li.l <= JL.getWarnLevel()) {
+                        this.cwarn(msg);
+                    } else {
+                        this.cerror(msg);
+                    }
+                }
+            } catch (e) {
+            }
+        };
+        return ConsoleAppender;
+    })(Appender);
+    JL.ConsoleAppender = ConsoleAppender;
+
     // --------------------
     var Logger = (function () {
         function Logger(loggerName) {
@@ -390,33 +518,6 @@ var JL;
             // of its parent via the prototype chain.
             this.seenRegexes = [];
         }
-        Logger.prototype.stringifyLogObject = function (logObject) {
-            switch (typeof logObject) {
-                case "string":
-                    return logObject;
-                case "number":
-                    return logObject.toString();
-                case "boolean":
-                    return logObject.toString();
-                case "undefined":
-                    return "undefined";
-                case "function":
-                    if (logObject instanceof RegExp) {
-                        return logObject.toString();
-                    } else {
-                        return this.stringifyLogObject(logObject());
-                    }
-                case "object":
-                    if ((logObject instanceof RegExp) || (logObject instanceof String) || (logObject instanceof Number) || (logObject instanceof Boolean)) {
-                        return logObject.toString();
-                    } else {
-                        return JSON.stringify(logObject);
-                    }
-                default:
-                    return "unknown";
-            }
-        };
-
         Logger.prototype.setOptions = function (options) {
             copyProperty("level", options, this);
             copyProperty("userAgentRegex", options, this);
@@ -431,9 +532,48 @@ var JL;
             return this;
         };
 
-        Logger.prototype.log = function (level, logObject) {
+        // Turns an exception into an object that can be sent to the server.
+        Logger.prototype.buildExceptionObject = function (e) {
+            var excObject = {};
+
+            if (e.stack) {
+                excObject.stack = e.stack;
+            } else {
+                excObject.e = e;
+            }
+            if (e.message) {
+                excObject.message = e.message;
+            }
+            if (e.name) {
+                excObject.name = e.name;
+            }
+            if (e.data) {
+                excObject.data = e.data;
+            }
+            if (e.inner) {
+                excObject.inner = this.buildExceptionObject(e.inner);
+            }
+
+            return excObject;
+        };
+
+        // Logs a log item.
+        // Parameter e contains an exception (or null or undefined).
+        //
+        // Reason that processing exceptions is done at this low level is that
+        // 1) no need to spend the cpu cycles if the logger is switched off
+        // 2) fatalException takes both a logObject and an exception, and the logObject
+        //    may be a function that should only be executed if the logger is switched on.
+        //
+        // If an exception is passed in, the contents of logObject is attached to the exception
+        // object in a new property logData.
+        // The resulting exception object is than worked into a message to the server.
+        //
+        // If there is no exception, logObject itself is worked into the message to the server.
+        Logger.prototype.log = function (level, logObject, e) {
             var i = 0;
             var message;
+            var excObject;
 
             // If we can't find any appenders, do nothing
             if (!this.appenders) {
@@ -441,7 +581,15 @@ var JL;
             }
 
             if (((level >= this.level)) && allow(this)) {
-                message = this.stringifyLogObject(logObject);
+                // logObject could be a function, so process independently from the exception.
+                message = stringifyLogObject(logObject);
+
+                if (e) {
+                    excObject = this.buildExceptionObject(e);
+                    excObject.logData = message;
+
+                    message = JSON.stringify(excObject);
+                }
 
                 if (allowMessage(this, message)) {
                     // See whether message is a duplicate
@@ -490,6 +638,9 @@ var JL;
         Logger.prototype.fatal = function (logObject) {
             return this.log(getFatalLevel(), logObject);
         };
+        Logger.prototype.fatalException = function (logObject, e) {
+            return this.log(getFatalLevel(), logObject, e);
+        };
         return Logger;
     })();
     JL.Logger = Logger;
@@ -514,6 +665,11 @@ var JL;
         return new AjaxAppender(appenderName);
     }
     JL.createAjaxAppender = createAjaxAppender;
+
+    function createConsoleAppender(appenderName) {
+        return new ConsoleAppender(appenderName);
+    }
+    JL.createConsoleAppender = createConsoleAppender;
 })(JL || (JL = {}));
 
 // Support CommonJS module format
@@ -529,3 +685,4 @@ if (typeof define == 'function' && define.amd) {
         return JL;
     });
 }
+//# sourceMappingURL=jsnlog.js.map
