@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "setOptions Method";
+    ViewBag.Key = "jsnlogjs-ajaxappender-setOptions";
+    ViewBag.Description = "Sets options for an ajax appender.";
+}
+
+@using ViewExtensions
+
+
+@section Definition {
+    @Html.Partial("_SetOptionsMethodDefinition",new ViewDataDictionary { 
+            { "returnType", "AjaxAppender"}
+        })
+}
+
+@section Remarks {
+    <p>
+    The JSON object can have the following fields: 
+        </p>
+
+    @Html.Partial("_AppenderRemarks",new ViewDataDictionary { 
+            { "objectType", "AjaxAppender"}, 
+            { "configSource", "jsnlog.js"} 
+        })
+}
+
+@section Examples {
+<p>
+    This 
+    creates an appender with the behaviour below and than attaches it to the root logger:
+</p>
+    <ul>
+        <li>
+            It has an internal buffer that stores at most 20 log messages;
+        </li>
+        <li>
+Log messages with severity smaller than 1000 (TRACE) are ignored.
+        </li>
+        <li>
+Log messages with severity equal or greater than 1000 (TRACE) and lower than 4000 (WARN) are stored in the internal buffer,
+        but not sent to the server;
+        </li>
+        <li>
+Log messages with severity equal or greater than 4000 (WARN) and lower than 6000 (FATAL) are 
+            sent to the server on their own;
+        </li>
+        <li>
+Log messages with severity equal or greater than 6000 (FATAL) are 
+            sent to the server, along with all messages stored in the internal buffer.
+        </li>
+    </ul>
+
+<pre>var appender = JL.createAjaxAppender("example appender");
+appender.setOptions({
+    "bufferSize": 20,
+    "storeInBufferLevel": 1000,
+    "level": 4000,
+    "sendWithBufferLevel": 6000
+});
+
+JL().setOptions({
+    "appenders": [appender]
+});</pre>
+
+}
+

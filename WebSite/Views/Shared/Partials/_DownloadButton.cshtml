@@ -1,0 +1,22 @@
+﻿@using ViewExtensions
+@using WebSite.App_Code
+
+@{
+    string url = "";
+    
+    if (PageVersions.CurrentVersion() == "NetJs")
+    {
+        url = SiteConstants.NugetDownloadUrl;
+    }
+    if (PageVersions.CurrentVersion() == "JsOnly")
+    {
+        url = SiteConstants.DownloadLinkJsnlogJs;
+    }
+}
+
+
+<a href="@url" class="download-button" target="_blank"><span class="download-button-caption">Download</span>
+    <p>v@(SiteConstants.CurrentVersion) - @SiteConstants.JsnlogJsFileSize min+gz</p></a>
+
+
+

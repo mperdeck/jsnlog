@@ -1,0 +1,48 @@
+﻿@using ViewExtensions
+
+@{
+    bool showWebConfigRelated =
+        ((string)(ViewData["configSource"]) == "web.config");
+}
+
+    <h3>maxMessages and buffering</h3>
+<p>
+    You use maxMessages to limit the number of messages sent to the 
+       @if (showWebConfigRelated)
+       {
+           <text>server, per page load. When the page is loaded by the client, 
+    a counter is set to maxMessages. </text>
+       }
+       else
+       {
+           <text>server. When you set maxMessages via a call to setOptions, 
+    a counter is set to maxMessages. </text>
+       }
+
+    Each time messages are sent to the server, that counter is decremented
+    by the number of messages sent. When the counter gets to zero or below, no more messages will be sent.
+</p>
+
+<p>
+    However, this is affected by
+       @if (showWebConfigRelated)
+       {
+             @Html.ViewLink("webconfig-ajaxappender", "batching and buffering")<text>.</text>
+       }
+       else
+       {
+             @Html.ViewLink("jsnlogjs-ajaxappender-setOptions", "batching and buffering")<text>.</text>
+       }
+</p>
+<p>
+    Take a situation where maxMessages is set to 5 and 2 messages have already been sent - so the message counter
+    is now 3.
+    If 8 messages had been stored in a buffer and those messages are now sent, they will be all sent. That means the server will receive
+    a total of 2 + 8 = 10 messages. After this, no more messages will be sent, because the number of messages sent (10) exceeds maxMessages (5).
+</p>
+<p>
+This means that maxMessages is not a precise limit on the number of messages sent to the server. On the other hand,
+    buffered messages are sent together in a single request to the server, minimizing bandwidth.
+    And buffered messages are often useful in solving exceptions, so there is value in receiving them.
+</p>
+

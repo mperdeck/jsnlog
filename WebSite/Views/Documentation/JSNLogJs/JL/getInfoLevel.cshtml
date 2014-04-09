@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "getInfoLevel Method";
+    ViewBag.Key = "jsnlogjs-jl-getInfoLevel";
+    ViewBag.Description = "Gets numeric value of the INFO level";
+}
+
+@section Definition {
+    @Html.Partial("_LevelGetMethodDefinition",new ViewDataDictionary  { { "level", "Info"} })
+}
+
+@section Examples {
+    @Html.Partial("_LevelGetMethodExample",new ViewDataDictionary  { { "level", "Info"} })
+}
+

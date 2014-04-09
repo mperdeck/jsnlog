@@ -1,0 +1,31 @@
+﻿@using ViewExtensions
+
+@{
+    bool showTypeColumn =
+        ((string)(ViewData["configSource"]) != "web.config");
+
+    bool remindToSetIp =
+        ((string)(ViewData["configSource"]) != "web.config");
+}
+
+        @Html.TableRowHtml("level", "optional", showTypeColumn ? "number" : null, 
+            (ViewData["objectType"] == "Logger") ? "(inherited from parent logger)" : "TRACE",
+            "Only log messages with a severity equal or higher than this can be sent to the server.")
+        @Html.TableRowHtml("userAgentRegex", "optional", showTypeColumn ? "regular expression" : null, 
+            (ViewData["objectType"] == "Logger") ? "(inherited from parent logger)" : "(empty)",
+                @"If not empty, log messages only get processed if this regular expression matches the 
+                  <a href=""http://www.useragentstring.com/"" target=""_blank"">user agent string</a>
+                  of the browser.")
+        @Html.TableRowHtml("ipRegex", "optional", showTypeColumn ? "regular expression" : null, 
+            (ViewData["objectType"] == "Logger") ? "(inherited from parent logger)" : "(empty)",
+                @"If not empty, log messages only get processed if this regular expression matches the IP address
+                  of the browser." + 
+                (remindToSetIp ?
+                (@" If you use this, be sure to set the IP address via the " +
+                Html.ViewLink("jsnlogjs-jl-setOptions", "setOptions method of the JL object") +
+                ".") :
+                ""))
+        @Html.TableRowHtml("disallow", "optional", showTypeColumn ? "regular expression" : null, 
+            (ViewData["objectType"] == "Logger") ? "(inherited from parent logger)" : "(empty)",
+                @"If not empty, log messages are suppressed if they match this regular expression. If an object is being logged,
+                  it is converted to a JSON string, which is then matched.")

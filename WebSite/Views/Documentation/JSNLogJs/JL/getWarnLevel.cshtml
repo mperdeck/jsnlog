@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "getWarnLevel Method";
+    ViewBag.Key = "jsnlogjs-jl-getWarnLevel";
+    ViewBag.Description = "Gets numeric value of the WARN level";
+}
+
+@section Definition {
+    @Html.Partial("_LevelGetMethodDefinition",new ViewDataDictionary  { { "level", "Warn"} })
+}
+
+@section Examples {
+    @Html.Partial("_LevelGetMethodExample",new ViewDataDictionary  { { "level", "Warn"} })
+}
+

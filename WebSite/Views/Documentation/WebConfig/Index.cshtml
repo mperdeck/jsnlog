@@ -1,0 +1,34 @@
+﻿@using ViewExtensions
+
+@{
+    ViewBag.Title = "Web.config";
+    ViewBag.Key = "webconfig";
+    ViewBag.Description = "Configuring loggers in web.config";
+    Layout = "~/Views/Shared/_DocumentationLayout.cshtml";
+    ViewBag.VersionNameRegex = "NetJs";
+}
+
+<h1>@ViewBag.Title</h1>
+<p>
+If you have an ASP.NET MVC or WebForms web site, you can configure your client side loggers
+    from your server side web.config. 
+</p>
+<p>
+    Note that 
+    after 
+@Html.ViewLink("downloadinstall", "installation"),
+JSNLog doesn't need any additional configuration. All you need to do to start logging is 
+    @Html.ViewLink("getstartedlogging", "add loggers to your JavaScript code")<text>.</text>
+You only need to update your web.config if you want to change the default configuration.
+</p>
+<p>
+During installation,
+a 
+    @Html.ViewLink("webconfig-jsnlog")
+    will have been added to your web.config. This is the container for the other elements.
+</p>
+
+@Html.ChildrenTable(cssClass: "border")
+
+
+

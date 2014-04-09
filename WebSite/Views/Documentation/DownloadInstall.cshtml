@@ -1,0 +1,305 @@
+﻿@using ViewExtensions
+@using WebSite.App_Code
+
+@{
+    ViewBag.Title = "Download/Installation";
+    ViewBag.Key = "downloadinstall";
+    ViewBag.Description = "How to download and install JSNLog.";
+}
+
+@if (PageVersions.CurrentVersion() == "NetJs")
+{
+
+@*
+--------------------------------------------------------------------------
+If the url or the hash tag of the additional config steps ever changes,
+also change the Nuget readme file
+--------------------------------------------------------------------------
+*@
+
+<h2>1. Install JSNLog</h2>
+
+<ol type="a">
+<li>
+Load your solution in Visual Studio, 
+and open the Package Manager Console: <i>Tools</i> | <i>Library Package Manager</i> | <i>Package Manager Console</i>.
+<p />
+</li>
+<li>
+Enter the following at the PM> prompt to install JSNLog:
+<pre>Install-Package JSNLog</pre>
+</li>
+</ol>
+
+
+    @*
+    ---------------------------------------------------------
+    The hash "additional" is used in the Nuget readme file
+    ---------------------------------------------------------
+    *@
+    <a name="additional"></a>
+<h2>2. Make it work with your server side logging package</h2>
+
+<p>
+    JSNLog assumes you already have a server side logging package installed.
+    The steps below provide the glue between JSNLog and your specific server side logging package.
+    If you get stuck, look at these 
+    <a href="https://github.com/mperdeck/jsnlogSimpleWorkingDemos" target="_blank">simple working demo sites</a>.
+</p>
+
+<h3>Log4Net</h3>
+<ol type="a">
+<li>
+    Install the Common.Logging.Log4Net1211 package at the PM&gt; prompt:
+    <pre>Install-Package Common.Logging.Log4Net1211</pre>
+</li>
+<li>
+Add Common.Logging.Log4Net1211 to your web.config - 
+    <a href="http://netcommon.sourceforge.net/docs/2.1.0/reference/html/ch01.html#logging-adapters-log4net" target="_blank">click here for instructions</a>.
+<p />
+</li>
+<li>
+The instructions refer to <span class="term">Common.Logging.Log4net<b>1210</b></span>, but that won't work. 
+    In your web.config, replace this with
+    <span class="term">Common.Logging.Log4net<b>1211</b></span>.
+</li>
+</ol>
+
+
+
+<h3>NLog</h3>
+<ol type="a">
+<li>
+    <b>If you use a WebForms <i>Web Site</i></b>, 
+    a Microsoft package that is installed along with JSNLog updates the 
+    &lt;nlog&gt;...&lt;/nlog&gt; section in your web.config, causing it to no longer work. Before you follow the steps below,
+    make a copy of that section in a text file, and restore it after the installation. 
+    This does not apply to WebForms <i>Applications</i> and MVC sites.
+<p />
+</li>
+
+<li>
+    Install the Common.Logging.NLog20 package at the PM&gt; prompt:
+    <pre>Install-Package Common.Logging.NLog20</pre>
+</li>
+<li>
+Add Common.Logging.NLog20 to your web.config - 
+    <a href="http://netcommon.sourceforge.net/docs/2.1.0/reference/html/ch01.html#logging-adapters-nlog" target="_blank">click here for instructions</a>.
+<p />
+</li>
+<li>
+The instructions refer to <span class="term">Common.Logging.<b>NLog10</b></span>, but that won't work. 
+    In your web.config, replace this with
+    <span class="term">Common.Logging.<b>NLog20</b></span>.
+</li>
+</ol>
+
+
+<h3>Elmah</h3>
+<ol type="a">
+<li>
+    Install the Common.Logging.Elmah package at the PM&gt; prompt:
+    <pre>Install-Package Common.Logging.Elmah</pre>
+</li>
+</ol>
+
+<h2>3. Add JSNLog to your pages</h2>
+
+<p>
+Call JSNLog's 
+    @Html.ViewLink("javascriptlogging-configure", "Configure")
+     method in your pages, before any script tags that load JavaScript
+that use JSNLog loggers.
+    </p>
+<ul>
+<li>
+    <b>For Razor (MVC3+)</b>, use:
+<pre>@@Html.Raw(JSNLog.JavascriptLogging.Configure())
+... your other script tags</pre>
+<p />
+</li>
+<li>
+<b>For WebForms</b>, use:
+<pre>&lt;%= JSNLog.JavascriptLogging.Configure() %&gt;
+... your other script tags</pre>
+</li>
+    </ul>
+
+<p>
+    @Html.ViewLink("getstartedlogging")
+    &gt;&gt;
+</p>
+}
+
+@*====================================================================================================*@
+@* JS Only *@
+@*====================================================================================================*@
+
+@if (PageVersions.CurrentVersion() == "JsOnly")
+{
+    <p>
+        <small>If you use .Net, <a href="@PageVersions.UrlWithVersionUrlName("netjs")">click here</a>.</small>
+    </p>
+    
+    <p>
+        Firstly, <a href="@SiteConstants.DownloadLinkJsnlogJs" target="_blank">download jsnlog.js</a> and add it to your site.
+    </p>
+    
+    <p>
+        The second step is to let your server receive log messages from jsnlog.js. Two things are in play here:
+    </p>
+<ol>
+    <li>The URL where you will receive log messages;</li>
+    <li>The format of the log messages.</li>
+</ol>    
+    
+    <h2>URL where you will receive log messages</h2>
+    
+    <p>
+        The built in AJAX appender by default sends all log messages to this url:
+    </p>
+    <pre>jsnlog.logger</pre>
+    
+    <p>
+        You can change this using the 
+        @Html.ViewLink("jsnlogjs-ajaxappender-setOptions")<text>.</text>
+    </p>
+    
+    <h2>Format of the log messages</h2>
+    <p>
+        The AJAX appender sends messages as JSON strings, in this format:
+    </p>
+    <pre>{
+    r:  "request id", // may not be present
+    lg: [
+        { l: level, m: 'message', n: 'logger name', t: timestamp },
+        ...
+    ]
+}</pre>
+ 
+    <p>
+        Some less obvious things about this format:
+    </p>
+    <ul>
+        <li>
+            The "r" field (containing the request id) will only be present in the message if the request id has been set
+            (using the JL
+        @Html.ViewLink("jsnlogjs-jl-setOptions")<text>).</text> Be sure that your code doesn't crash
+            if that field is not in the message.
+            <p />
+        </li>
+        <li>
+        A single JSON message to the server can contain multiple log messages. This is because the AJAX appender can be configured
+        to batch messages, for example 2 log messages per JSON message to the server. 
+        </li>
+    </ul>
+    <p>
+        About the individual fields:
+    </p>
+    <table class="border">
+    <tr valign="top">
+    <th>Field</th>
+    <th>Description</th>
+    </tr>
+    <tr>
+    <td valign="top">
+        request id
+    </td>
+    <td>
+Identifies the current request. You can set this on the server while generating the page using the JL
+        @Html.ViewLink("jsnlogjs-jl-setOptions")<text>.</text>
+        <p />
+        Use this feature to see which log message belong to the same request. 
+        This feauture is optional, so no need to worry about it.
+    </td>
+    </tr>
+    <tr>
+    <td valign="top">
+        level
+    </td>
+    <td>
+        Severity of the log message. This is a number. See below.
+    </td>
+    </tr>
+    <tr>
+    <td valign="top">
+        message
+    </td>
+    <td>
+        Message to be logged.
+    </td>
+    </tr>
+    <tr>
+    <td valign="top">
+        logger&nbsp;name
+    </td>
+    <td>
+        Name of the logger. 
+    </td>
+    </tr>
+    <tr>
+    <td valign="top">
+        timestamp
+    </td>
+    <td>
+        The time the message was logged by your JavaScript.
+         This is the number of milliseconds since 1 January 1970 00:00:00 UTC, according to the client machine's clock.
+    </td>
+    </tr>
+    </table>
+
+    <p>
+        Levels translate to the more common TRACE, DEBUG, ..., FATAL as follows: 
+    </p>
+    
+    <table class="border">
+    <tr valign="top">
+    <th>Named Severity</th>
+    <th>Level</th>
+    </tr>
+    <tr>
+    <td valign="top">TRACE
+    </td>
+    <td>1000
+    </td>
+    </tr>
+    
+    <tr>
+    <td valign="top">DEBUG
+    </td>
+    <td>2000
+    </td>
+    </tr>
+    
+    <tr>
+    <td valign="top">INFO
+    </td>
+    <td>3000
+    </td>
+    </tr>
+    
+    <tr>
+    <td valign="top">WARN
+    </td>
+    <td>4000
+    </td>
+    </tr>
+    
+    <tr>
+    <td valign="top">ERROR
+    </td>
+    <td>5000
+    </td>
+    </tr>
+    
+    <tr>
+    <td valign="top">FATAL
+    </td>
+    <td>6000
+    </td>
+    </tr>
+</table>
+    
+    
+}
+
