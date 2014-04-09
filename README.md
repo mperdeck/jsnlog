@@ -60,9 +60,13 @@ https://github.com/mperdeck/jsnlog/issues?state=open
 <a name="forking"></a>
 ## Forking
 
+When doing a rebuild of the entire solution, you will probably get the error message:
+* Could not copy the file ...\jsnlog.js because it was not found
 
+In the Visual Studio Solution Explorer, in project JSNLog.Tests, remove Scripts/libs/jsnlog.js
+This removes a file link (which I use locally in my environment), allowing Visual Studio to pick up the actual file.
 
-
+When running the tests in JSNLog.Tests, leave out zNuGetTestCommon. It attempts to test installation of the NuGet package, but is very fragile.
 
 Matt Perdeck
 
