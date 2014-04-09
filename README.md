@@ -1,3 +1,5 @@
+[Read this if forking this repo](#forking)
+
 # JSNLog
 
 JSNLog lets you insert loggers in your client side JavaScript, configure them via a configuration file on the web server, and store their messages in your server side logs - without any server side coding.
@@ -54,6 +56,13 @@ For inspiration, you may want to have a look at the way integration with the web
 
 All communication is via the issues page of the JSNLog project on Github. Feel free to say hello, ask any questions or raise any issues:
 https://github.com/mperdeck/jsnlog/issues?state=open
+
+<a name="forking"></a>
+## Forking
+
+
+
+
 
 Matt Perdeck
 
