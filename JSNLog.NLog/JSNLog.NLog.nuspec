@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>JSNLog.NLog</id>
+    <version>2.6.0</version>
+    <title>JSNLog.NLog</title>
+    <authors>Matt Perdeck</authors>
+    <owners>Matt Perdeck</owners>
+    <projectUrl>http://jsnlog.com</projectUrl>
+    <iconUrl>http://jsnlog.com/Nuget/icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Installs JSNLog and configures it for use with NLog. If you use NLog and want to log JavaScript events in your server log, install this package.</description>
+    <copyright>Copyright 2014</copyright>
+    <tags>JavaScript logging exceptions nlog</tags>
+      <dependencies>
+          <dependency id="JSNLog" version="2.6.0" />
+          <dependency id="Common.Logging.NLog20" />
+      </dependencies>
+  </metadata>
+    <files>
+        <file src="web.config.transform" target="content" />
+        <file src="..\readme.txt" target="" />
+    </files>
+</package>

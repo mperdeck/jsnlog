@@ -1,0 +1,15 @@
+<configuration>
+  <configSections>
+    <sectionGroup name="common">
+      <section name="logging" type="Common.Logging.ConfigurationSectionHandler, Common.Logging" />
+    </sectionGroup>
+  </configSections>
+
+  <common>
+    <logging>
+      <factoryAdapter type="Common.Logging.NLog.NLogLoggerFactoryAdapter, Common.Logging.NLog20">
+        <arg key="configType" value="INLINE" />
+      </factoryAdapter>
+    </logging>
+  </common>
+</configuration>
