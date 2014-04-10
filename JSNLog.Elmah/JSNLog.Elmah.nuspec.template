@@ -13,7 +13,7 @@
     <copyright>Copyright 2014</copyright>
     <tags>JavaScript logging exceptions Elmah</tags>
       <dependencies>
-          <dependency id="JSNLog" version="__Version__" />
+          <dependency id="JSNLog" />
           <dependency id="Common.Logging.Elmah" version="1.2.1" />
       </dependencies>
   </metadata>
