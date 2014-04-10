@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>JSNLog.Elmah</id>
-    <version>2.6.3</version>
+    <version>2.6.4</version>
     <title>JSNLog.Elmah</title>
     <authors>Matt Perdeck</authors>
     <owners>Matt Perdeck</owners>
@@ -15,6 +15,7 @@
       <dependencies>
           <dependency id="JSNLog" />
           <dependency id="Common.Logging" version="2.1.2" />
+          <dependency id="Common.Logging.Elmah" />
       </dependencies>
   </metadata>
     <files>

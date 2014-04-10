@@ -15,6 +15,7 @@
       <dependencies>
           <dependency id="JSNLog" />
           <dependency id="Common.Logging" version="2.1.2" />
+          <dependency id="Common.Logging.Elmah" />
       </dependencies>
   </metadata>
     <files>
