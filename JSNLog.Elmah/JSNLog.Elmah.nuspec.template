@@ -14,7 +14,7 @@
     <tags>JavaScript logging exceptions Elmah</tags>
       <dependencies>
           <dependency id="JSNLog" />
-          <dependency id="Common.Logging.Elmah" version="1.2.1" />
+          <dependency id="Common.Logging" version="2.1.2" />
       </dependencies>
   </metadata>
     <files>

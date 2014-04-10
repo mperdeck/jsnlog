@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>JSNLog.CommonLogging</id>
-    <version>2.6.2</version>
+    <version>2.6.3</version>
     <title>JSNLog.CommonLogging</title>
     <authors>Matt Perdeck</authors>
     <owners>Matt Perdeck</owners>
@@ -13,7 +13,7 @@
     <copyright>Copyright 2014</copyright>
     <tags>JavaScript logging exceptions Common.Logging</tags>
       <dependencies>
-          <dependency id="JSNLog" version="2.6.2" />
+          <dependency id="JSNLog" version="2.6.3" />
       </dependencies>
   </metadata>
     <files>
