@@ -9,7 +9,7 @@
     <projectUrl>http://jsnlog.com</projectUrl>
     <iconUrl>http://jsnlog.com/Nuget/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Installs JSNLog and configures it for use with NLog. If you use NLog and want to log JavaScript events in your server log, install this package.</description>
+    <description>Installs JSNLog and configures it for use with NLog. If you use NLog and want to log client side JavaScript exceptions and other events in your server log, install this package.</description>
     <copyright>Copyright 2014</copyright>
     <tags>JavaScript logging exceptions nlog</tags>
       <dependencies>
