@@ -33,14 +33,9 @@
             </p>
 }
         </section>
-<div class="download" style="float: right; margin-bottom: 10px;"> 
+<div class="download" style="float: right; margin-bottom: 10px; margin-top: 12px;"> 
         @Html.Raw(Html.Partial("Partials/_DownloadButton").ToHtmlString())
         </div>
-
-        @if (currentVersion == "NetJs")
-        {
-            <div class="nugetline">PM> Install-Package JSNLog</div>
-        }
 
     </section>
 }
