@@ -13,7 +13,9 @@
     <copyright>Copyright 2014</copyright>
     <tags>JavaScript logging exceptions log4net nlog</tags>
       <dependencies>
-          <dependency id="Common.Logging" />
+	      <!-- Common.Logging.Elmah does not work with Common.Logging versions higher than 2.1.2. 
+		       By accepting 2.1.2, JSNLog doesn't force loading higher versions of Common.Logging -->
+          <dependency id="Common.Logging" version="2.1.2" />
           <dependency id="WebActivatorEx" version="2.0.0" />
       </dependencies>
   </metadata>
