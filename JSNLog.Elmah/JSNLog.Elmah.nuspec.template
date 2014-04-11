@@ -13,9 +13,10 @@
     <copyright>Copyright 2014</copyright>
     <tags>JavaScript logging exceptions Elmah</tags>
       <dependencies>
-          <dependency id="JSNLog" />
-          <dependency id="Common.Logging" version="2.1.2" />
+	      <!-- Common.Logging.Elmah does not work with Common.Logging versions higher than 2.1.2 -->
+          <dependency id="Common.Logging" version="[2.1.2]" />
           <dependency id="Common.Logging.Elmah" />
+          <dependency id="JSNLog" />
       </dependencies>
   </metadata>
     <files>

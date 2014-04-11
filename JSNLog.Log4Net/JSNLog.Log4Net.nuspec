@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>JSNLog.Log4Net</id>
-    <version>2.6.4</version>
+    <version>2.6.5</version>
     <title>JSNLog.Log4Net</title>
     <authors>Matt Perdeck</authors>
     <owners>Matt Perdeck</owners>
@@ -13,7 +13,7 @@
     <copyright>Copyright 2014</copyright>
     <tags>JavaScript logging exceptions Log4Net</tags>
       <dependencies>
-          <dependency id="JSNLog" version="2.6.4" />
+          <dependency id="JSNLog" version="2.6.5" />
           <dependency id="Common.Logging.Log4Net1211" />
       </dependencies>
   </metadata>
