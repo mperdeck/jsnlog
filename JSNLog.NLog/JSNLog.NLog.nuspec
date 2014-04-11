@@ -13,8 +13,10 @@
     <copyright>Copyright 2014</copyright>
     <tags>JavaScript logging exceptions nlog</tags>
       <dependencies>
-          <dependency id="JSNLog" version="2.6.5" />
+	      <!-- Common.Logging.NLog20 does not work with Common.Logging versions lower than 2.2.0 -->
+          <dependency id="Common.Logging" version="2.2.0" />
           <dependency id="Common.Logging.NLog20" />
+          <dependency id="JSNLog" version="2.6.5" />
       </dependencies>
   </metadata>
     <files>

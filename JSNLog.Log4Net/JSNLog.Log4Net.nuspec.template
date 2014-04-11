@@ -13,8 +13,10 @@
     <copyright>Copyright 2014</copyright>
     <tags>JavaScript logging exceptions Log4Net</tags>
       <dependencies>
-          <dependency id="JSNLog" version="__Version__" />
+	      <!-- Common.Logging.Log4Net1211 does not work with Common.Logging versions lower than 2.2.0 -->
+          <dependency id="Common.Logging" version="2.2.0" />
           <dependency id="Common.Logging.Log4Net1211" />
+          <dependency id="JSNLog" version="__Version__" />
       </dependencies>
   </metadata>
     <files>
