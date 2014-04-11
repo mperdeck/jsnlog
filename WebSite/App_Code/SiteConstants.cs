@@ -8,9 +8,11 @@ namespace WebSite.App_Code
     public static class SiteConstants
     {
         public static string CurrentVersion = Generated.Version;
-        public const string JsnlogJsFileSize = "1.5kb";
+        public const string JsnlogJsFileSize = "2kb";
 
-        public const string NugetDownloadUrl = "http://www.nuget.org/packages/JSNLog/";
+        // This causes NuGet to search for all packages with "JSNLog" - so the user will see
+        // JSNLog.NLog, etc. as well.
+        public const string NugetDownloadUrl = "http://www.nuget.org/packages?q=jsnlog";
 
         public static string DownloadLinkJsnlogJs 
         {
