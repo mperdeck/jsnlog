@@ -1,0 +1,229 @@
+﻿@using ViewExtensions
+
+@{
+    ViewBag.Title = "Logging JavaScript Exceptions";
+    ViewBag.Key = "exceptionLogging";
+    ViewBag.Description = "Logging JavaScript exceptions with JSNLog.";
+    Layout = "~/Views/Shared/_DocumentationLayout.cshtml";
+
+    string currentVersion = "JsOnly"; // PageVersions.CurrentVersion();
+}
+
+<h1>Logging JavaScript Exceptions</h1>
+<p>
+    JSNLog makes it very easy to log JavaScript exceptions to your server side log. To do this, you can either use
+    the window.onerror handler or a try-catch block.
+</p>
+
+<h2>window.onerror</h2>
+<p>
+    The
+    <a target="_blank" href="http://www.whatwg.org/specs/web-apps/current-work/multipage/webappapis.html#errorevent">window.onerror</a>
+    handler lets you handle any exceptions that haven't been caught elsewhere in your code.
+    The JavaScript interpreter will pass your handler an error message, the url of the file where the javascript exception happened, and the line number.
+    On more modern browsers, you get the column number and exception as well.
+</p>
+<p>
+    You would set the window.onerror handler after your page has loaded. It would look like this:
+</p>
+
+<pre>window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
+
+    // Send object with all data to server side log, using severity fatal, 
+    // from logger "onerrorLogger"
+    JL("onerrorLogger").fatalException({
+        "msg": "Exception!", 
+        "errorMsg": errorMsg, "url": url, 
+        "line number": lineNumber, "column": column
+    }, errorObj);
+        
+    // Tell browser to run its own error handler as well   
+    return false;
+}</pre>
+<p>
+    Return true from the onerror handler to tell the browser you've handled the error yourself. Return false if you want
+    the browser to handle the error as well - so it will write a message to the console, etc.
+</p>
+
+<p>
+    Lets assume you have this line somewhere in your code:
+</p>
+<pre>// ReferenceError: xyz is not defined
+xyz;
+</pre>
+<p>
+    When the browser tries to execute this, it will throw a ReferenceError exception. Because you set the window.onerror, you'll see
+    an entry in your server side log such as the one below, so you can fix the problem:
+</p>
+
+<pre>2014-04-16 09:25:44,110 | FATAL | onerrorLogger | 
+    {"stack":"ReferenceError: xyz is not defined
+    at HTMLButtonElement.onThrowsExceptionClick 
+    (http://domain.com/Index.js:13:9)
+    at HTMLButtonElement.jQuery.event.dispatch 
+    (http://domain.com/jquery-1.11.0.js:4624:9)
+    at HTMLButtonElement.elemData.handle 
+    (http://domain.com/jquery-1.11.0.js:4292:46)",
+    "message":"xyz is not defined","name":"ReferenceError",
+    "logData":
+        "{\"msg\":\"Exception!\",
+          \"errorMsg\":\"Uncaught ReferenceError: xyz is not defined\",
+          \"url\":\"http://domain.com/Index.js\",
+          \"line number\":13,\"column\":9}"}
+</pre>
+<p>
+    Unfortunately, as of April 2014, only Chrome 32 and higher passes in all 5 parameters. IE 10 and 11 pass in everything except for the
+    errorObj parameter, while Firefox 28 doesn't pass in the column and errorObj parameters.
+</p>
+<p>
+    If there is an exception on a browser that doesn't support all 5 parameters, the missing parameters are left undefined.
+    In that case, JSNLog will simply only send the parameters that it did get. This way, when more browsers start supporting
+    the full set of parameters, you will get all the available information.
+</p>
+
+<h2>Try Catch</h2>
+<p>
+    As you saw, using a window.onerror handler is convenient, because you only need to set it once to catch all exceptions. But it doesn't always give you
+    the column number or stack trace of the exception, making it harder to fix the exception.
+</p>
+
+<p>
+    A solution to this is to put your code in try-catch blocks, like this:
+</p>
+
+<pre>function onButton2Click() {
+try {
+    ...
+    // ReferenceError: xyz is not defined
+    xyz;
+    ...
+} catch (e) {
+    // Log the exception
+    JL().fatalException("something went wrong!", e);
+    
+    // Rethrow the exception, so the browser 
+    // doesn't forget about this error situaion.
+    throw e
+}
+</pre>
+<p>
+    In
+    @Html.ViewLink("jsnlogjs-logger-fatalException", "most", null, "Remarks")
+    cases, JSNLog will log not only the message and basic exception details, but the stack trace as well.
+    So running the code above will result in a log item in your server log like this:
+</p>
+<pre>
+2014-04-15 10:30:01,858 | FATAL | ClientRoot | 
+    {"stack":"ReferenceError: xyz is not defined
+    at HTMLButtonElement.onButton2Click 
+    (domain.com/Index.js:19:13)
+    at HTMLButtonElement.jQuery.event.dispatch 
+    (http://domain.com/Scripts/jquery-1.11.0.js:4624:9)
+    at HTMLButtonElement.elemData.handle 
+    (http://domain.com/Scripts/jquery-1.11.0.js:4292:46)",
+    "message":"xyz is not defined","name":"ReferenceError",
+    "logData":"something went wrong!"}
+</pre>
+
+<h2>More information, but only when you need it</h2>
+<p>
+    Often you need more information than provided in the exception to track down the cause of the JavaScript exception.
+    You might wind up logging debug information in various places in your JavaScript:
+</p>
+
+<pre>
+function f1(a, b) {
+    JL("f1").debug({"a": a, "b": b});
+    ...
+}
+&nbsp;
+function f2(c, d) {
+    JL("f2").debug({"c": c, "d": d});
+    ...
+}
+&nbsp;
+function f3() {
+    try {
+        ...
+    } catch(e) {
+        JL().fatalException("message", e);
+        throw e;
+    }
+}
+</pre>
+<p>
+    The problem is that now you'll be receiving lots of debug messages, even if there is no exception.
+    You do want the debug messages, but only if there is a JavaScript exception.
+</p>
+<p>
+    The solution is to have JSNLog store the debug messages in browser memory, and only send them when there is a fatal message.
+</p>
+
+
+@if (currentVersion == "NetJs")
+{
+    <p>
+        To make that happen, you can configure your loggers in your web.config like so
+        <text>(</text>@Html.ViewLink("webconfig-ajaxappender", "details", null, "Remarks")<text>)</text>:
+    </p>
+
+<pre>&lt;ajaxAppender 
+    name="appender1" 
+    storeInBufferLevel="DEBUG" 
+    level="FATAL" 
+    sendWithBufferLevel="FATAL" 
+    bufferSize="20"/&gt;
+&lt;logger appenders="appender1"/&gt;</pre>
+
+    <p>
+        This creates an
+        @Html.ViewLink("webconfig-ajaxappender", "AJAX Appender")<text>,</text>
+        the component that actually sends log messages to the server. Here it is configured to
+        store the last 20 log messages with severity DEBUG or higher in browser memory. When there is a log message with severity FATAL,
+        both the fatal message itself and the stored messages are sent to the server. If there is no fatal message, nothing is sent to the server.
+    </p>
+}
+
+@if (currentVersion == "JsOnly")
+{
+    <p>
+        To make that happen, you can configure your loggers in your JavaScript like so
+        <text>(</text>@Html.ViewLink("jsnlogjs-ajaxappender-setOptions", "details", null, "Remarks")<text>)</text>:
+    </p>
+
+<pre>var appender = JL.createAjaxAppender("appender");
+appender.setOptions({
+    "bufferSize": 20,
+    "storeInBufferLevel": JL.getDebugLevel(),
+    "level": JL.getFatalLevel(),
+    "sendWithBufferLevel": JL.getFatalLevel()
+});
+JL().setOptions({ "appenders": [appender] });</pre>
+
+
+    <p>
+        This creates an
+        @Html.ViewLink("jsnlogjs-ajaxappender", "AJAX Appender")<text>,</text>
+        the component that actually sends log messages to the server. Here it is configured to
+        store the last 20 log messages with severity DEBUG or higher in browser memory. When there is a log message with severity FATAL,
+        both the fatal message itself and the stored messages are sent to the server. If there is no fatal message, nothing is sent to the server.
+    </p>
+}
+
+<p>
+    The last line associates the root logger with the new appender.
+    Because all loggers inherit from the root logger, they will now all send their messages through the new AJAX Appender.
+</p>
+
+
+
+<h2>More about logging JavaScript exceptions</h2>
+<ul>
+    <li>
+        @Html.ViewLink("jsnlogjs-logger-fatalException")
+    </li>
+    <li>
+        @Html.ViewLink("jsnlogjs-exception")
+    </li>
+</ul>
+

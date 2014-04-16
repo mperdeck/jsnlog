@@ -201,7 +201,7 @@
     <Content Include="Views\Shared\Partials\_MainMenu.cshtml" />
     <Content Include="Views\Shared\_DocumentationLayout.cshtml" />
     <Content Include="Views\Documentation\WebConfig\Index.cshtml" />
-    <Content Include="Views\Documentation\GetStartedLogging.cshtml" />
+    <Content Include="Views\Documentation\GetStartedLogging\Index.cshtml" />
     <Content Include="Views\Documentation\DownloadInstall.cshtml" />
     <Content Include="Views\Documentation\JSNLogJs\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -242,6 +242,7 @@
     <Content Include="Views\Documentation\JSNLogJs\Logger\FatalException.cshtml" />
     <Content Include="Views\Documentation\JSNLogJs\Exception\Index.cshtml" />
     <Content Include="Views\Documentation\JSNLogJs\JL\createConsoleAppender.cshtml" />
+    <Content Include="Views\Documentation\GetStartedLogging\ExceptionLogging.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -38,7 +38,7 @@
 
 @section Remarks {
     <p>
-        The fatalException function will log the stack trace of the exception, showing where in your code the exception occurred) under these circumstances:
+        The fatalException function will log the stack trace of the JavaScript exception, showing where in your code the exception occurred, under these circumstances:
     </p>
     <ul>
         <li>
@@ -87,7 +87,7 @@
 
 @section Examples {
     <p>
-        This code catches any exceptions and logs them.
+        This code catches any JavaScript exceptions and logs them.
     </p>
     <pre>try {
     ...
@@ -96,7 +96,7 @@ catch (e) {
     JL().fatalException("Exception was thrown!", e);
 }</pre>
     <p>
-        This code catches any exceptions and logs them along with the values of some variables to make debugging easier.
+        This code catches any JavaScript exceptions and logs them along with the values of some variables to make debugging easier.
     </p>
 <pre>function f1(i, j) {
     try {

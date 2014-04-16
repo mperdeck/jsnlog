@@ -10,7 +10,7 @@
     <p>
         Similar to the
         <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" target="_blank">standard Error object</a>,
-        the Exception object allows you to throw a custom exception when things go wrong:
+        the Exception object allows you to throw a custom JavaScript exception when things go wrong:
     </p>
 <pre>function f(i, j) {
     if (i &lt; 10) { 
@@ -68,7 +68,7 @@ try {
         index i. But that would be complicated, and we'd lose the stack trace of the original exception.
     </p>
     <p>
-        The easiest solution is to catch the exception in function f2, and then throw a new one that contains the original exception, plus any additional information.
+        The easiest solution is to catch the JavaScript exception in function f2, and then throw a new one that contains the original exception, plus any additional information.
         That way, we get to keep all the information stored in the original exception, including its stack trace.
         The changes are below in red:
     </p>
@@ -86,7 +86,7 @@ function f1(anArray) {
             f2(anArray[i]);
         }
     <span class="addedcode">} catch(e) {
-        // Throw new exception that contains the original one
+        // Throw new JavaScript exception that contains the original one
         throw new JL.Exception({ "i": i }, e);
     }</span>
 }<br />

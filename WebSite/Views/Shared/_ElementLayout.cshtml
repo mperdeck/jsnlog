@@ -40,7 +40,7 @@
     if (IsSectionDefined(sectionName))
     {
         <section class="@sectionName">
-            <h2>@sectionName</h2>
+            <a name="@sectionName"></a><h2>@sectionName</h2>
             @RenderSection(sectionName,false)
         </section>
     }
