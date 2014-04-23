@@ -24,6 +24,7 @@ namespace JSNLog
             string userHostAddress = context.Request.UserHostAddress;
             DateTime serverSideTimeUtc = DateTime.UtcNow;
             string url = context.Request.Url.AbsolutePath;
+            string requestId = JSNLog.Infrastructure.RequestId.GetFromRequest();
 
             string json;
             using (var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
@@ -32,7 +33,7 @@ namespace JSNLog
             }
 
             LoggerProcessor.ProcessLogRequest(json, userAgent, userHostAddress,
-                serverSideTimeUtc, url);
+                serverSideTimeUtc, url, requestId);
 
             // Send dummy response. That way, the log request will not remain "pending"
             // in eg. Chrome dev tools.

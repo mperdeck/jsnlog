@@ -36,12 +36,27 @@ namespace JSNLog
 
         /// <summary>
         /// Returns a request id that is unique to this request.
+        /// 
+        /// However, if the request is a log request from jsnlog.js, than this method returns the requestId travelling 
+        /// in the request.
+        /// 
         /// The site can call this method to get the request id for use in server side logging.
         /// </summary>
         /// <returns></returns>
         public static string RequestId()
         {
-            return JSNLog.Infrastructure.RequestId.Get();
+            string requestId = JSNLog.Infrastructure.RequestId.GetFromRequest();
+
+            // If requestId is empty string, regard that as a valid requestId.
+            // jsnlog.js will send such request ids when the request id has not been
+            // set. In that case, you don't want to generate a new request id for
+            // a log request, because that would be confusing.
+            if (requestId == null)
+            {
+                requestId = JSNLog.Infrastructure.RequestId.Get();
+            }
+
+            return requestId;
         }
     }
 }

@@ -6,6 +6,7 @@ using JSNLog.Infrastructure;
 using Common.Logging;
 using System.Web.Script.Serialization;
 using System.Xml;
+using System.Web;
 
 namespace JSNLog.LogHandling
 {
@@ -77,12 +78,12 @@ namespace JSNLog.LogHandling
         }
 
         public static void ProcessLogRequest(string json, string userAgent, string userHostAddress,
-            DateTime serverSideTimeUtc, string url)
+            DateTime serverSideTimeUtc, string url, string requestId)
         {
             XmlElement xe = XmlHelpers.RootElement();
 
             List<LogData> logDatas =
-                ProcessLogRequestExec(json, userAgent, userHostAddress, serverSideTimeUtc, url, xe);
+                ProcessLogRequestExec(json, userAgent, userHostAddress, serverSideTimeUtc, url, requestId, xe);
 
             // ---------------------------------
             // Pass log data to Common Logging
@@ -131,9 +132,10 @@ namespace JSNLog.LogHandling
         /// <param name="json">JSON sent from client by AjaxAppender</param>
         /// <param name="serverSideTimeUtc">Current time in UTC</param>
         /// <param name="url">Url of the log request</param>
+        /// <param name="requestId">requestId taken from the log request</param>
         /// <param name="xe">The JSNLog element in web.config</param>
         public static List<LogData> ProcessLogRequestExec(string json, string userAgent, string userHostAddress,
-            DateTime serverSideTimeUtc, string url, XmlElement xe)
+            DateTime serverSideTimeUtc, string url, string requestId, XmlElement xe)
         {
             List<LogData> logDatas = new List<LogData>();
 
@@ -141,10 +143,6 @@ namespace JSNLog.LogHandling
             {
                 JavaScriptSerializer js = new JavaScriptSerializer();
                 LogRequestData logRequestData = js.Deserialize<LogRequestData>(json);
-
-                // Request Id will be missing from the message if the user never set it. 
-                // This will be common when jsnlog.js is used stand alone.
-                string requestId = SafeGet(logRequestData, "r", "");
 
                 Object[] logItems = (Object[])(logRequestData["lg"]);
 
@@ -224,7 +222,7 @@ namespace JSNLog.LogHandling
                 .Replace("%newline", System.Environment.NewLine)
                 .Replace("%userAgent", userAgent)
                 .Replace("%userHostAddress", userHostAddress)
-                .Replace("%requestId", requestId)
+                .Replace("%requestId", requestId ?? "")
                 .Replace("%url", url)
                 .Replace("%logger", logger);
 

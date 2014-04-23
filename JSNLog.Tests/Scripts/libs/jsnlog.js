@@ -425,6 +425,7 @@ var JL;
                 xhr.open('POST', this.url);
 
                 xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader('JSNLog-RequestId', JL.requestId);
                 xhr.send(json);
             } catch (e) {
             }

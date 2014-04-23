@@ -251,7 +251,7 @@ dateFormat="""+dateFormat+@"""
 
             List<LoggerProcessor.LogData> actual =
                 LoggerProcessor.ProcessLogRequestExec(_json4, "my browser", "12.345.98.7",
-                    _dtServerUtc, "http://mydomain.com/main", xe);
+                    _dtServerUtc, "http://mydomain.com/main", "", xe);
 
             // Assert
 
@@ -268,7 +268,7 @@ dateFormat="""+dateFormat+@"""
 
             List<LoggerProcessor.LogData> actual =
                 LoggerProcessor.ProcessLogRequestExec(json, userAgent, userHostAddress,
-                    serverSideTimeUtc, url, xe);
+                    serverSideTimeUtc, url, "", xe);
 
             TestLogDatasEqual(expected, actual);
         }

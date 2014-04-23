@@ -52,5 +52,20 @@ namespace JSNLog.Infrastructure
 
             return requestId;
         }
+
+        /// <summary>
+        /// Gets the request id from an HTTP header in the request.
+        /// Every log request sent by jsnlog.js should have such a header.
+        /// However, requests not sent by jsnlog.js will not have this header obviously.
+        /// 
+        /// If the request id cannot be found, returns null.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetFromRequest()
+        {
+            var headers = HttpContext.Current.Request.Headers;
+            string requestId = headers[Constants.HttpHeaderRequestIdName];
+            return requestId;
+        }
     }
 }
