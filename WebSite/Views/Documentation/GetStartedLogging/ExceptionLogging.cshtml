@@ -2,11 +2,9 @@
 
 @{
     ViewBag.Title = "Logging JavaScript Exceptions";
-    ViewBag.Key = "exceptionLogging";
+    ViewBag.Key = "getstarted-exceptionLogging";
     ViewBag.Description = "Logging JavaScript exceptions with JSNLog.";
     Layout = "~/Views/Shared/_DocumentationLayout.cshtml";
-
-    string currentVersion = "JsOnly"; // PageVersions.CurrentVersion();
 }
 
 <h1>Logging JavaScript Exceptions</h1>
@@ -72,7 +70,7 @@ xyz;
           \"line number\":13,\"column\":9}"}
 </pre>
 <p>
-    Unfortunately, as of April 2014, only Chrome 32 and higher passes in all 5 parameters. IE 10 and 11 pass in everything except for the
+    Unfortunately, as of April 2014, only Chrome 32 and higher passes in all 5 parameters to the onerror handler. IE 10 and 11 pass in everything except for the
     errorObj parameter, while Firefox 28 doesn't pass in the column and errorObj parameters.
 </p>
 <p>

@@ -537,4 +537,33 @@ dd
     margin-bottom: 10px;
 }
 
+/* Code and log messages
+-----------------------------------------------------------*/
+
+.code-bg-soft1 
+{
+    background-color: #ECCACA;
+}
+
+.code-bg-soft2
+{
+    background-color: #FEFEDA;
+}
+
+.code-bg-soft3
+{
+    background-color: #D9FFFF;
+}
+
+/* bullet lists
+-----------------------------------------------------------*/
+
+ul.large-items li {
+    margin-bottom: 10px;
+}
+
+ul.large-items li:last-child {
+    margin-bottom: 0;
+}
+
 

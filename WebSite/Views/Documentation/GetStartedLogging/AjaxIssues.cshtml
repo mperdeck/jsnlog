@@ -1,0 +1,179 @@
+﻿@using ViewExtensions
+
+@{
+    ViewBag.Title = "Logging AJAX issues";
+    ViewBag.Key = "getstarted-ajaxissues";
+    ViewBag.Description = "Logging AJAX issues, including timeouts, errors and delays.";
+    Layout = "~/Views/Shared/_DocumentationLayout.cshtml";
+}
+
+<h1>Logging issues with AJAX requests</h1>
+
+<p>
+    Many pages send AJAX requests to a server. Because this relies on the cooperation of the server and the network between the client and the server,
+    AJAX requests potentially suffer from these problems:
+</p>
+<ul class="large-items">
+    <li>
+        Your JavaScript program receives an error response instead of data;
+    </li>
+    <li>
+        Your program has to wait too long for the response. You can't have the user wait indefinitely for some data to load.
+    </li>
+    <li>
+        Your program has to wait longer than expected for the response. You or your marketing department may decide to
+        time out after 5 seconds, and that if responses take over 2 seconds to arrive you want to know about it.
+    </li>
+</ul>
+
+<p>
+    This page shows how to implement JavaScript loggers that tell you about these issues.
+</p>
+
+<h2>Initial code without loggers</h2>
+
+<p>
+    Below is a fairly typical AJAX call implemented with jQuery's <a href="https://api.jquery.com/jQuery.ajax/">$.ajax</a>:
+</p>
+
+<pre>
+var requestData = <i>data to send to server</i>;
+var url = <i>Url to send request to</i>;
+// Show spinner image<br />
+$.ajax(url, {
+    "data": requestData,
+    "type": "POST"
+})
+.done(function (data, textStatus, jqXHR) {
+    // Process data, as received in data parameter
+})
+.fail(function (jqXHR, textStatus, errorThrown) {
+    // Request failed. Show error message to user. 
+    // errorThrown has error message.
+})
+.always(function(jqXHR, textStatus, errorThrown) {
+    // Hide spinner image
+}
+</pre>
+
+<h2>Step 1: Add timeout</h2>
+
+<p>
+    The $.ajax method lets you set a timeout in milli seconds. When a timeout happens,
+</p>
+<ul>
+    <li>
+        The fail callback is called, with errorThrown set to &quot;timeout&quot;.
+    </li>
+    <li>
+        The request is aborted, meaning that even if the response arrives later on, your done callback is not called by jQuery.
+    </li>
+</ul>
+
+<pre>
+var requestData = <i>data to send to server</i>;
+var url = <i>Url to send request to</i>;<br />
+// Show spinner image<br />
+$.ajax(url, {
+    "data": requestData,
+    "type": "POST",
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="addedcode">"timeout": 5000</span>
+})
+.done(function (data, textStatus, jqXHR) {
+    // Process data, as received in data parameter
+})
+.fail(function (jqXHR, textStatus, errorThrown) {
+    // Request failed. Show error message to user. 
+    // errorThrown has error message<span class="addedcode">, or "timeout" in case of timeout</span>.
+})
+.always(function(jqXHR, textStatus, errorThrown) {
+    // Hide spinner image
+}
+</pre>
+
+<h2>Step 2: Log fatal message in case of error or timeout</h2>
+
+<p>
+    When there is an error response or the request times out, you'll
+    want to log as much information as you have, including the error message that jQuery gives you,
+    the url and the request data.
+</p>
+
+<pre>
+var requestData = <i>data to send to server</i>;
+var url = <i>Url to send request to</i>;
+// Show spinner image<br />
+$.ajax(url, {
+    "data": requestData,
+    "type": "POST",
+    "timeout": 5000
+})
+.done(function (data, textStatus, jqXHR) {
+    // Process data, as received in data parameter
+})
+.fail(function (jqXHR, textStatus, errorThrown) {
+    // Request failed. Show error message to user. 
+    // errorThrown has error message, or "timeout" in case of timeout.<br />
+    <span class="addedcode">JL().fatal({
+                "msg": "AJAX error response",
+                "errorThrown": errorThrown,
+                "url": url,
+                "requestData": requestData
+            });</span>
+})
+.always(function(jqXHR, textStatus, errorThrown) {
+    // Hide spinner image
+}
+</pre>
+
+<h2>Step 3: Log warning message if response takes longer than expected</h2>
+<p>
+    Record the time before making the AJAX call and compare that with the time
+    when the response is received to find out how long the user had to wait for the response.
+    Log a warning message if it took longer than expected.
+</p>
+
+<pre>
+var requestData = <i>data to send to server</i>;
+var url = <i>Url to send request to</i>;
+// Show spinner image
+<span class="addedcode">var msBeforeAjaxCall = new Date().getTime();</span><br />
+$.ajax(url, {
+    "data": requestData,
+    "type": "POST",
+    "timeout": 5000
+})
+.done(function (data, textStatus, jqXHR) {
+    // Process data, as received in data parameter<br />
+    <span class="addedcode">// Send warning log message if response took longer than 2 seconds
+    var msAfterAjaxCall = new Date().getTime();
+    var timeTakenInMs = msAfterAjaxCall - msBeforeAjaxCall;
+    if (timeTakenInMs > 2000) {
+        JL().warn({
+            "msg": "AJAX response took long time",
+            "timeTakenInMs": timeTakenInMs,
+            "url": url,
+            "data": data,
+            "requestData": requestData
+        });
+    }</span>
+})
+.fail(function (jqXHR, textStatus, errorThrown) {
+    // Request failed. Show error message to user. 
+    // errorThrown has error message, or "timeout" in case of timeout.<br />
+    JL().fatal({
+                "msg": "AJAX error response",
+                "errorThrown": errorThrown,
+                "url": url,
+                "requestData": requestData
+            });
+})
+.always(function(jqXHR, textStatus, errorThrown) {
+    // Hide spinner image
+}
+</pre>
+
+
+
+
+

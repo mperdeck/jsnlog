@@ -9,6 +9,7 @@ namespace WebSite.App_Code
     {
         public static string CurrentVersion = Generated.Version;
         public const string JsnlogJsFileSize = "2kb";
+        public const string HttpHeaderRequestIdName = "JSNLog-RequestId";
 
         // This causes NuGet to search for all packages with "JSNLog" - so the user will see
         // JSNLog.NLog, etc. as well.
