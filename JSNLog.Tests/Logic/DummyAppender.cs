@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
-using JSNLog.Infrastructure;using JSNLog.Infrastructure;
+using JSNLog.Infrastructure;
 using JSNLog.Elements;
 using JSNLog;
 using System.Xml;

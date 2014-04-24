@@ -37,29 +37,21 @@ namespace JSNLog.Tests.UnitTests
             _dtServer = JSNLog.Infrastructure.Utils.UtcToLocalDateTime(_dtServerUtc);
 
             _json1 = @"{
-'r': 'therequestid1',
 'lg': [
 { 'm': 'first message', 'n': 'a.b.c', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
 ] }";
 
             _json1root = @"{
-'r': 'therequestid',
 'lg': [
 { 'm': 'first message', 'n': '', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
 ] }";
 
             _json2 = @"{
-'r': 'therequestid2',
 'lg': [
 { 'm': 'first message', 'n': 'a.b.c', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"},
 { 'm': 'second message', 'n': 'a2.b3.c4', 'l': 3000, 't': " + Utils.MsSince1970(_dtSecondLogUtc).ToString() + @"}
 ] }";
-            // Same as _json1, but without 'r' field
-            _json3 = @"{
-'lg': [
-{ 'm': 'first message', 'n': 'a.b.c', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
-] }";
-            // Same as _json3, but without 'm' field. This is invalid and should cause an internal error.
+            // Same as _json1, but without 'm' field. This is invalid and should cause an internal error.
             _json4 = @"{
 'lg': [
 { 'n': 'a.b.c', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
@@ -84,7 +76,7 @@ namespace JSNLog.Tests.UnitTests
 
             // Act and Assert
 
-            RunTest(configXml, _json1, "my browser", "12.345.98.7",
+            RunTest(configXml, _json1, "therequestid1", "my browser", "12.345.98.7",
                         _dtServerUtc, "http://mydomain.com/main", expected);
         }
 
@@ -106,7 +98,7 @@ namespace JSNLog.Tests.UnitTests
 
             // Act and Assert
 
-            RunTest(configXml, _json1root, "my browser", "12.345.98.7",
+            RunTest(configXml, _json1root, "therequestid", "my browser", "12.345.98.7",
                         _dtServerUtc, "http://mydomain.com/main", expected);
         }
 
@@ -136,7 +128,7 @@ namespace JSNLog.Tests.UnitTests
 
             // Act and Assert
 
-            RunTest(configXml, _json2, "my browser", "12.345.98.7",
+            RunTest(configXml, _json2, "therequestid2", "my browser", "12.345.98.7",
                         _dtServerUtc, "http://mydomain.com/main", expected);
         }
 
@@ -166,7 +158,7 @@ dateFormat="""+dateFormat+@"""
 
             // Act and Assert
 
-            RunTest(configXml, _json1, "my browser", "12.345.98.7",
+            RunTest(configXml, _json1, "therequestid1", "my browser", "12.345.98.7",
                         _dtServerUtc, "http://mydomain.com/main", expected);
         }
 
@@ -188,7 +180,7 @@ dateFormat="""+dateFormat+@"""
 
             // Act and Assert
 
-            RunTest(configXml, _json1, "my browser", "12.345.98.7",
+            RunTest(configXml, _json1, "therequestid1", "my browser", "12.345.98.7",
                         _dtServerUtc, "http://mydomain.com/main", expected);
         }
 
@@ -212,7 +204,7 @@ dateFormat="""+dateFormat+@"""
 
             // Act and Assert
 
-            RunTest(configXml, _json1, "my browser", "12.345.98.7",
+            RunTest(configXml, _json1, "therequestid1", "my browser", "12.345.98.7",
                         _dtServerUtc, "http://mydomain.com/main", expected);
         }
 
@@ -227,14 +219,14 @@ dateFormat="""+dateFormat+@"""
 
             var expected = new[] {
                 new LoggerProcessor.LogData("first message", "a.b.c",Constants.Level.DEBUG, 1500,
-                    "first message", 1500, "a.b.c", "", 
+                    "first message", 1500, "a.b.c", null, 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
             };
 
             // Act and Assert
 
-            RunTest(configXml, _json3, "my browser", "12.345.98.7",
+            RunTest(configXml, _json1, null, "my browser", "12.345.98.7",
                         _dtServerUtc, "http://mydomain.com/main", expected);
         }
 
@@ -259,7 +251,7 @@ dateFormat="""+dateFormat+@"""
             Assert.AreEqual(Constants.JSNLogInternalErrorLoggerName, actual.ElementAt(0).LoggerName);
         }
 
-        private void RunTest(string configXml, string json, string userAgent, string userHostAddress,
+        private void RunTest(string configXml, string json, string requestId, string userAgent, string userHostAddress,
             DateTime serverSideTimeUtc, string url, IEnumerable<LoggerProcessor.LogData> expected)
         {
             XmlElement xe = Utils.ConfigToXe(configXml);
@@ -268,7 +260,7 @@ dateFormat="""+dateFormat+@"""
 
             List<LoggerProcessor.LogData> actual =
                 LoggerProcessor.ProcessLogRequestExec(json, userAgent, userHostAddress,
-                    serverSideTimeUtc, url, "", xe);
+                    serverSideTimeUtc, url, requestId, xe);
 
             TestLogDatasEqual(expected, actual);
         }

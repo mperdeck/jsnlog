@@ -67,7 +67,16 @@ var JL;
     JL.enabled;
     JL.maxMessages;
     JL.clientIP;
-    JL.requestId;
+
+    // Initialise requestId to empty string. If you don't do this and the user
+    // does not set it via setOptions, then the JSNLog-RequestId header will
+    // have value "undefined", which doesn't look good in a log.
+    //
+    // Note that you always want to send a requestId as part of log requests,
+    // otherwise the server side component doesn't know this is a log request
+    // and may create a new request id for the log request, causing confusion
+    // in the log.
+    JL.requestId = '';
 
     /**
     Copies the value of a property from one object to the other.
