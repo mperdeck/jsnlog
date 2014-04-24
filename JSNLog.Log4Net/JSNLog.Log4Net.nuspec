@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>JSNLog.Log4Net</id>
-    <version>2.6.5</version>
+    <version>2.6.6</version>
     <title>JSNLog.Log4Net</title>
     <authors>Matt Perdeck</authors>
     <owners>Matt Perdeck</owners>
@@ -16,7 +16,7 @@
 	      <!-- Common.Logging.Log4Net1211 does not work with Common.Logging versions lower than 2.2.0 -->
           <dependency id="Common.Logging" version="2.2.0" />
           <dependency id="Common.Logging.Log4Net1211" />
-          <dependency id="JSNLog" version="2.6.5" />
+          <dependency id="JSNLog" version="2.6.6" />
       </dependencies>
   </metadata>
     <files>
