@@ -17,6 +17,8 @@
       </dependencies>
   </metadata>
     <files>
+        <file src="InstallationDummyFile.txt" target="content" />
+        <file src="install.ps1" target="tools" />
         <file src="..\readme.txt" target="" />
     </files>
 </package>

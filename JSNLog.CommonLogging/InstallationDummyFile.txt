@@ -1,0 +1,15 @@
+Dummy content, to prevent the NuGet error message
+"External packages cannot depend on packages that target projects"
+when someone installs this package. That error message occurs when intalling
+a package that has no content and the depends on some other package.
+
+This file will be deleted by the 
+install.ps1
+file in the 
+tools
+directory of the package.
+
+This solution courtesy of
+http://danlimerick.wordpress.com/2011/10/01/getting-around-nugets-external-package-dependency-problem/
+
+
