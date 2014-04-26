@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------------
 // Generated.cs gets copied from Generated.cs.template
-// During the copy, 2.6.6 is replaced by the actual version.
+// During the copy, 2.6.7 is replaced by the actual version.
 // ---------------------------------------------------------------------------
 
 using System.Reflection;
@@ -10,8 +10,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("JSNLog")]
-[assembly: AssemblyDescription("JavaScript logging package. Insert loggers in your client side JavaScript, configure them in your web.config, and store their messages in your server side logs - without any server side coding.")]
+[assembly: AssemblyTitle("JSNLog JavaScript Logging Package")]
+[assembly: AssemblyDescription("JavaScript log messages go to server side log (NLog, Log4Net, Elmah or Common.Logging) and/or browser console. Optionally configure loggers in your web.config. Log exceptions with stack traces, correlate messages with request ids, and much more.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Matt Perdeck")]
 [assembly: AssemblyProduct("JSNLog")]
@@ -37,5 +37,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.6.6")]
-[assembly: AssemblyFileVersion("2.6.6")]
+[assembly: AssemblyVersion("2.6.7")]
+[assembly: AssemblyFileVersion("2.6.7")]
