@@ -12,6 +12,7 @@ namespace JSNLog
         public const string PackageName = "JSNLog";
         public const string ContextItemRequestIdName = "__JSNLog_RequestId";
         public const string HttpHeaderRequestIdName = "JSNLog-RequestId";
+        public const string GlobalMethodCalledAfterJsnlogJsLoaded = "__jsnlog_configure";
         public const string ConfigRootName = "jsnlog";
         public const string RegexBool = "^(true|false)$";
         public const string RegexPositiveInteger = "^[0-9]+$";
