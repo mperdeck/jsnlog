@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Configure Method";
     ViewBag.Key = "javascriptlogging-configure";
-    ViewBag.Description = "Generates JavaScript code to configure client side loggers and appenders.";
+    ViewBag.Description = "Generates JavaScript code to configure JavaScript loggers and appenders.";
     ViewBag.VersionNameRegex = "NetJs";
 }
 
@@ -20,7 +20,7 @@
     
 <h3>Return Value</h3>
 <p>
-Script blocks with JavaScript that configure your client side loggers and appenders.
+Script blocks that configure your JavaScript loggers and appenders.
 </p>
 </section>
 }
@@ -28,7 +28,7 @@ Script blocks with JavaScript that configure your client side loggers and append
 
 @section Remarks {
     <p>
-        JSNLog lets you configure your client side loggers and appenders in your web.config, using the
+        JSNLog lets you configure your JavaScript loggers and appenders in your web.config, using the
                             @Html.ViewLink("webconfig-jsnlog")<text>.</text>
         However, having the configuration in the server side web.config leaves the problem of 
         communicating that configuration to the client side where it is needed.
@@ -38,7 +38,7 @@ Script blocks with JavaScript that configure your client side loggers and append
                             @Html.ViewLink("jsnlogjs"), such as the
                             @Html.ViewLink("jsnlogjs-logger-setOptions"), 
         and include that JavaScript on every page.
-This needs to be done before any JavaScript code that uses JSNLog loggers.
+This needs to be done before any JavaScript code that uses loggers.
     </p>
     <p>
         The <span class="term">Configure</span> method takes care of this by reading your web.config
@@ -73,11 +73,11 @@ In a WebForms application, you would want to put it in a master page:
 of the
          @Html.ViewLink("webconfig-jsnlog") in your web.config,
         <span class="term">Configure</span> generates a &lt;script&gt; tag
-        to load JSNLog.js along with the script block to configure your client side loggers and appenders.
+        to load JSNLog.js along with the script block to configure your JavaScript loggers and appenders.
     </p>
     <p>
         When you install the JSNLog NuGet package, this is done for you automatically. This way,
-        you don't have to remember to load JSNLog.js in order to get going with client side logging.
+        you don't have to remember to load JSNLog.js in order to get going with JavaScript logging.
     </p>
     <p>
         However, it does mean an additional file to load for the browser. To prevent this, you could 

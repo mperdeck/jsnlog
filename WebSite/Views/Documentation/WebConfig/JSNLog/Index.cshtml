@@ -125,7 +125,7 @@ You can choose to have this additional information logged on the server along wi
     <td>%requestId</td>
     <td>Identifies the request for which the log message was created. 
         <p />
-        If you configure your client side 
+        If you configure your JavaScript 
         loggers in web.config, this request id will be generated for you. Otherwise, set this request id
         using the
                     @Html.ViewLink("jsnlogjs-jl-setOptions", "JL.setOptions")
@@ -150,12 +150,12 @@ You can choose to have this additional information logged on the server along wi
     serverSideMessageFormat="Sent: %date, Brower: %userAgent - %message" &gt;</pre>
 
     <p>
-        This processes all client side log messages via the server side logger "jslogger".
+        This processes all client side JavaScript log messages via the server side logger "jslogger".
     </p>
     <pre>&lt;jsnlog serverSideLogger="jslogger"&gt;</pre>
 
     <p>
-        This disables all client side loggers.
+        This disables all JavaScript loggers.
     </p>
     <pre>&lt;jsnlog enabled="false"&gt;</pre>
 

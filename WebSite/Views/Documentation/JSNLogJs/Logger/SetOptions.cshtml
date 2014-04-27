@@ -46,7 +46,7 @@ rootlogger.setOptions({
 });</pre>
 
     <p>
-        This sets the level of logger &quot;a.b&quot; to INFO (which is the same as setting it to 3000).
+        This sets the level of JavaScript logger &quot;a.b&quot; to INFO (which is the same as setting it to 3000).
         This code shows you don't need to use the variable <span class="term">logger</span>.
     </p>
 
@@ -115,7 +115,7 @@ JL("mylogger").setOptions({"appenders": [ajaxAppender,consoleAppender]});
 });</pre>
 
     <p>
-        Loggers inherit
+        JavaScript loggers inherit
         <span class="term">onceOnly</span>
         from their parents.
         Assume you have a logger &quot;a.b&quot; whose parent &quot;a&quot; suppresses duplicates,

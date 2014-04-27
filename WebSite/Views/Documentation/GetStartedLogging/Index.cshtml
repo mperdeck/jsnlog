@@ -14,7 +14,7 @@
 <p>
     After you have 
                 @Html.ViewLink("downloadinstall", "installed JSNLog"),
-     add this to your client side code to send a log message to your server side log:
+     add this to your JavaScript code to send a log message to your server side log:
 </p>
 <pre>JL().fatal("log message");</pre>
 
@@ -25,12 +25,14 @@
     it will be called <span class="term">@Constants.RootLoggerNameServerSide</span>.
 </p>
 
+<a id="namedloggers"></a>
 <h2>Named loggers</h2>
 <p>
     You can give your loggers names, to make it easier to show where in your code the message was logged. For example:
 </p>
 <pre>JL("function1.logger1").fatal("log message");</pre>
 
+<a id="logginglevels"></a>
 <h2>Message severity</h2>
 <p>
     Each log message has one of these severities:
@@ -167,10 +169,10 @@ By default, the root logger has level <span class="term">DEBUG</span>.
 <ul>
     <li>@Html.ViewLink("getstarted-ajaxissues")</li>
     <li>@Html.ViewLink("getstarted-exceptionLogging")</li>
-<li>@Html.ViewLink("getstarted-loggingtoconsole")</li>
 @if (PageVersions.CurrentVersion() == "NetJs")
 {
 <li>@Html.ViewLink("getstarted-requestids")</li>
         <li>@Html.ViewLink("getstarted-loadingjsfile")</li>
+<li>@Html.ViewLink("getstarted-loggingtoconsole")</li>
 }
 </ul>

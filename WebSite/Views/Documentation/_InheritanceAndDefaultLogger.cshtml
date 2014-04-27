@@ -14,17 +14,17 @@
 <a name="inheritance"></a>
     <h3>Logger names and option inheritance</h3>
     <p>
-        Loggers not only get their options through the @thisTextHtml,
+        JavaScript loggers not only get their options through the @thisTextHtml,
         but also through inheritance. This is based on the name of each logger.
     </p>
 <p>
     Assume that you have a method &quot;method1&quot; in a namespace &quot;namespace1&quot;. Then it would 
-    make sense to use a naming scheme for you loggers like this: &quot;namespace1.method1.logger1&quot;,
+    make sense to use a naming scheme for your loggers like this: &quot;namespace1.method1.logger1&quot;,
      &quot;namespace1.method1.logger2&quot;, etc. This way, there are no name clashes and it makes keeping
     track of your loggers easy.
 </p>
     <p>
-        Just as a namespace may contain methods, and a method may contain loggers, so you can think of these logger names 
+        Just as a namespace may contain methods, and a method may contain JavaScript loggers, so you can think of these logger names 
         as making up a hierarchy:
     </p>
     <ul>
@@ -44,7 +44,7 @@
     <p>
         If you don't set an option using the @thisTextHtml<text>,</text>
         the logger inherits that option from its parent. If you do not use @thisTextHtml
-        at all, every logger will have the same options as the root logger.
+        at all, every JavaScript logger will have the same options as the root logger.
     </p>
 
 
