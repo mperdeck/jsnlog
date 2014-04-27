@@ -1,0 +1,143 @@
+﻿@using ViewExtensions
+
+@{
+    ViewBag.Title = "AMD And Bundles";
+    ViewBag.Key = "getstarted-loadingjsfile";
+    ViewBag.Description = "Discusses how to load the jsnlog.js library, including AMD and Bundles";
+    Layout = "~/Views/Shared/_DocumentationLayout.cshtml";
+    ViewBag.VersionNameRegex = "NetJs";
+}
+
+<h1>AMD And Bundles</h1>
+<p>
+    This page is about loading the jsnlog.js JavaScript file onto your pages, including as part of a
+    <a href="#bundle">bundle</a>
+    and as an
+    <a href="#amd">AMD module</a>.
+</p>
+
+<h2>How jsnlog.js is loaded by default</h2>
+<p>
+    As part of the
+    @Html.ViewLink("downloadinstall", "installation", null, "addtoyourpages")<text>,</text>
+    you will have included a call to the
+    @Html.ViewLink("javascriptlogging-configure", "Configure")
+    method in your pages, using the line <span class="term">&#64;Html.Raw(JSNLog.JavascriptLogging.Configure())</span> if you use MVC.
+    That method inserts a &lt;script&gt; tag that loads the jsnlog.js file. You can verify this by doing a View Source of the page.
+</p>
+
+<p>
+    The url of the jsnlog.js file to be used in the &lt;script&gt; tag is specified by the
+    <span class="term">productionLibraryPath</span>
+    attribute of the
+    @Html.ViewLink("webconfig-jsnlog")
+    in your web.config.
+</p>
+<h2>Stop automatic generation of script tag for jsnlog.js</h2>
+<p>
+    If you want to load the jsnlog.js file as part of a bundle or as an AMD module,
+    you don't want the generated &lt;script&gt; tag. You can make it go away by simply removing the
+    <span class="term">productionLibraryPath</span> attribute.
+</p>
+<p>
+    The line <span class="term">&#64;Html.Raw(JSNLog.JavascriptLogging.Configure())</span>
+    not only inserts the script tag (if there is a <span class="term">productionLibraryPath</span> attribute), but
+    also
+    takes the JSNLog configuration in your web.config and
+    generates a JavaScript block in your page with that information.
+</p>
+<p>
+    This should still happen. And it should happen before your JavaScript code executes.
+</p>
+<p>
+    Because it doesn't delay rendering the page, a good place for
+    <span class="term">&#64;Html.Raw(JSNLog.JavascriptLogging.Configure())</span>
+    would be in your _Layout.cshtml or _Layout.vbhtml file, in the head of the page near the top of the file.
+    That way you are sure it generates the JavaScript block before any JavaScript code runs.
+</p>
+
+
+<a id="amd"></a>
+<h2>Loading jsnlog.js as an AMD module</h2>
+<p>
+    jsnlog.js has the necessary code to function as an
+    <a href="http://requirejs.org/docs/why.html">AMD module</a>
+    and also as a
+    <a href="http://spinejs.com/docs/commonjs">CommonJS module</a>.
+    Because you would normally use AMD modules in client side code, this page only discusses loading jsnlog.js as an AMD module.
+</p>
+</p>
+<p>
+    Creating a dependency on JSNLog is no different than doing so on any other module. For example,
+    here is a file with dependencies on jQuery and JSNLog:
+</p>
+
+<pre>require([&quot;jquery&quot;, <span class="addedcode">&quot;jsnlog&quot;</span>], function ($, <span class="addedcode">JL</span>) {
+    $(function () {
+        JL().info('DOM loaded');
+    })
+});</pre>
+
+<p>
+    One problem with this page is that it loads <span class="term">jsnlog.js</span>, which is not minified.
+    If you'd rather load the minified version <span class="term">jsnlog.min.js</span>,
+    you could specify a dependency on that instead:
+</p>
+<pre>require([&quot;jquery&quot;, &quot;jsnlog<span class="addedcode">.min</span>&quot;], function ($, JL) {
+    $(function () {
+        JL().info('DOM loaded');
+    })
+});</pre>
+
+<p>
+    Alternatively, if you use
+    <a href="http://requirejs.org/docs/api.html">require.config</a> in your main module,
+    you can add a line to associate the <span class="term">jsnlog</span> module ID with the minified file:
+</p>
+
+<pre>require.config({
+    baseUrl: 'Scripts',
+    paths: {
+        jquery: 'jquery-1.11.0',
+        <span class="addedcode">jsnlog: 'jsnlog.min'</span>
+    }
+});
+require([&quot;jquery&quot;, &quot;jsnlog&quot;], function ($, JL) {
+    $(function () {
+        JL().info('DOM loaded');
+    })
+});</pre>
+
+
+<a id="bundle"></a>
+<h2>Loading jsnlog.js as part of a bundle</h2>
+
+<p>
+    ASP.NET's
+    <a href="http://www.asp.net/mvc/tutorials/mvc-4/bundling-and-minification">bundling feature</a>
+
+    optimizes loading of your CSS and JavaScripot files in Release mode.
+    It does this by using minified versions of the files and combining them in bundles.
+</p>
+
+<p>
+    You can add jsnlog.js to any bundle, or put it in its own bundle.
+    The NuGet package installs both <span class="term">jsnlog.js</span> and the minified <span class="term">jsnlog.min.js</span>.
+    That way, the bundling feature can pick the right version depending on whether the site runs in Debug mode or Release mode.
+</p>
+
+<p>
+    Assuming that you intend to load both jQuery and JSNLog in every page,
+    you could add jsnlog.js to the jquery bundle in your
+    <span class="term">BundleConfig</span> class:
+</p>
+
+<pre>bundles.Add(new ScriptBundle("~/bundles/jquery")
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.Include("~/Scripts/jquery-{version}.js")
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="addedcode">.Include("~/Scripts/jsnlog.js")</span>);
+</pre>
+
+
+
+
+
