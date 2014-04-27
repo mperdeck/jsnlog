@@ -186,7 +186,9 @@
     <Content Include="Scripts\knockout-3.0.0.debug.js" />
     <Content Include="Scripts\knockout-3.0.0.js" />
     <Content Include="Scripts\modernizr-2.7.1.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -245,6 +247,9 @@
     <Content Include="Views\Documentation\GetStartedLogging\ExceptionLogging.cshtml" />
     <Content Include="Views\Documentation\GetStartedLogging\RequestIds.cshtml" />
     <Content Include="Views\Documentation\GetStartedLogging\AjaxIssues.cshtml" />
+    <Content Include="Views\Documentation\JSNLogJs\ConfigureFunction\Index.cshtml" />
+    <Content Include="Views\Documentation\GetStartedLogging\LoadingJsFile.cshtml" />
+    <Content Include="Views\Documentation\GetStartedLogging\ConsoleLog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

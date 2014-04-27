@@ -1,0 +1,102 @@
+﻿@using ViewExtensions
+
+@{
+    ViewBag.Title = "Replacing console.log";
+    ViewBag.Key = "getstarted-loggingtoconsole";
+    ViewBag.Description = "Replacing console.log with JSNLog JavaScript loggers";
+    Layout = "~/Views/Shared/_DocumentationLayout.cshtml";
+}
+
+<h1>Replacing console.log with JavaScript loggers</h1>
+<p>
+    A popular tool during JavaScript development is
+    <a href="https://developers.google.com/chrome-developer-tools/docs/console-api">console.log</a>,
+    which lets you send messages to
+    <a href="https://developers.google.com/chrome-developer-tools/docs/console">your browser's console</a>.
+</p>
+<p>
+    This is quick and easy to add to your code. But once there, your console loggers get hard to manage because each
+    logger has to be updated on its own. And when you go live, you have to remember to modify your code to remove
+    all console loggers.
+</p>
+<p>
+    You can achieve the same benefits with JSNLog JavaScript loggers, without the drawbacks. Here is how.
+</p>
+
+<h2>Log to the console instead of to the server</h2>
+<p>
+    You can send log messages from your JavaScript loggers to the console instead of the server, using JSNLog's
+    @Html.ViewLink("webconfig-consoleappender")<text>.</text>
+    To make that happen, modify the debug version of your web.config:
+</p>
+<pre>&lt;!-- Debug version of web.config --&gt;
+&lt;jsnlog&gt;
+    &lt;!-- Create console appender --&gt;
+    &lt;consoleAppender name="consoleAppender" /&gt;<br />
+    &lt;!-- Send all log messages to console appender --&gt;
+    &lt;logger appenders="consoleAppender" /&gt;
+&lt;/jsnlog&gt;</pre>
+<p>
+    Then replace your console logs with JavaScript loggers:
+</p>
+<pre>
+<strike>console.log('debug message');</strike>
+JL().debug('debug message');
+</pre>
+
+<h2>Guaranteeing no live console loggers in live site</h2>
+
+<p>
+    To ensure your console loggers are disabled in your live site,
+    make sure that the Release version of your web.config
+    stops all debug messages and that it doesn't create the console appender:
+</p>
+<pre>&lt;!-- Release version of web.config --&gt;
+&lt;jsnlog&gt;
+    &lt;!-- Stop all message with severity lower than fatal --&gt;
+    &lt;logger level="FATAL" /&gt;
+&lt;/jsnlog&gt;</pre>
+<p>
+    That way, you and your team can be sure there will be no live console loggers in your live site.
+</p>
+
+<p>
+    Just in case, it is easy to maintain Debug and Release versions of your web.config using
+    <a href="http://msdn.microsoft.com/en-us/library/dd465318(v=vs.100).aspx">web.config transform files</a>.
+</p>
+
+<h2>Managing logging to console</h2>
+<p>
+    You can use
+    @Html.ViewLink("getstartedlogging", "named loggers", null, "namedloggers")
+    and
+    @Html.ViewLink("getstartedlogging", "logging levels", null, "logginglevels")
+    to determine what gets logged to the console.
+    Logging to the console is essentially the same as logging to the server - only the destination of the log messages is different.
+</p>
+
+<h2>Logging to both the console and the server</h2>
+
+<p>
+    To log to both the console and the server, create a
+    @Html.ViewLink("webconfig-consoleappender")
+    and a
+    @Html.ViewLink("webconfig-ajaxappender")<text>,</text>
+    and then send all log messages to both:
+</p>
+
+<pre>&lt;!-- Debug version of web.config --&gt;
+&lt;jsnlog&gt;
+    &lt;!-- Create console appender and AJAX appender--&gt;
+    &lt;consoleAppender name="consoleAppender" /&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="addedcode">&lt;ajaxAppender name="ajaxAppender" /&gt;</span><br />
+    &lt;!-- Send all log messages to both --&gt;
+    &lt;logger appenders="<span class="addedcode">ajaxAppender;</span>consoleAppender" /&gt;
+&lt;/jsnlog&gt;</pre>
+
+<p>
+    What about logging to the server only? Here there is no need for configuration.
+    When you do not create any appenders, JSNLog uses a default AJAX appender and tells all
+    JavaScript loggers to send their messages to that appender.
+</p>
+
