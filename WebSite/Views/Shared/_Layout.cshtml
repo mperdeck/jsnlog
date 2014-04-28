@@ -4,6 +4,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta name="msvalidate.01" content="39897E0BA1EF4A9A3854717FD144E265" />  @*Required to access Bing Webmaster Tools*@
     <title>@ViewBag.Title - JSNLog</title>
     <meta name="description" content="@ViewBag.Description" />
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
@@ -22,6 +23,18 @@
 </head>
 
 <body>
+    @*Required by Facebook. Loads their SDK. https://developers.facebook.com/docs/javascript/quickstart*@
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
     <header>
         <div class="container">
             @Html.Partial("Partials/_Logo")
@@ -29,6 +42,23 @@
         </div>
         <div class="versions container" style="margin-top: 10px;">
             @Html.VersionSwitcher()
+            <div class="social-media">
+                @*
+                    Twitter button. Generated at https://about.twitter.com/resources/buttons#tweet
+                    Evaluating #JSNLog. Integrates JavaScript logging with .Net server side logging. Thoughts?
+                *@
+
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-text="Evaluating #JSNLog. Integrates JavaScript logging and .Net server side logging. Thoughts?" data-count="none">Tweet</a>
+                    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+                </div>
+
+                @*Facebook share button. Generated at https://developers.facebook.com/docs/plugins/share-button/*@
+
+                <div class="facebook">
+                    <div class="fb-share-button" data-href="http://jsnlog.com" data-type="button"></div>
+                </div>
+            </div>
         </div>
     </header>
 

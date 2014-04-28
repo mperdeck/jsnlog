@@ -125,15 +125,27 @@ header a.logo
 
 .main-menu ul
 {
-    margin: 5px 5px 5px 208px;
-    padding: 0 10px 0 10px;
+    margin: 5px 0 5px 0;
+    padding: 0;
 }
 
 .main-menu li
 {
     list-style: none;
     display: inline-block;
-    padding: 0px 10px 0px 10px;
+    padding: 0 0 0 20px;
+}
+
+.social-media {
+    float: right;
+}
+
+.social-media .twitter {
+    float: right;
+}
+
+.social-media .facebook {
+    float: right;
 }
 
 footer
