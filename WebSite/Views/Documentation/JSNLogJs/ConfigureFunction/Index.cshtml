@@ -8,11 +8,31 @@
 }
 
 @*
-Note that you cannot use expressions in ViewBag.Title, because it is interpreted by ViewExtensions when it tries
-to build the menu. Also, ViewExtensions caches all this, so restart the app (eg. modify web.config) to get ViewExtensions
-to pick up a new title.
+    Note that you cannot use expressions in ViewBag.Title, because it is interpreted by ViewExtensions when it tries
+    to build the menu. Also, ViewExtensions caches all this, so restart the app (eg. modify web.config) to get ViewExtensions
+    to pick up a new title.
 *@
 
 @section Remarks {
+    <p>
+        This is an infrastructure related feature.
+    </p>
+    <p>
+        After the jsnlog.js library has loaded, it checks whether there is a global function with the name
+        <span class="term">@SiteConstants.GlobalMethodCalledAfterJsnlogJsLoaded</span>.
+        If there is, it executes that function.
+    </p>
+    <p>
+        This enables authors of server side components to generate a JavaScript block at the beginning of the page
+        that configures loggers, appenders, etc., based on a server side configuration file. By encapsulating this JavaScript in a function
+        @SiteConstants.GlobalMethodCalledAfterJsnlogJsLoaded<text>,</text> they can ensure that the JavaScript will be executed when jsnlog.js has
+        been loaded.
+    </p>
+    <p>
+        Without the function, they would have to make sure that jsnlog.js was already loaded before their configuration code. This
+        can be hard to do, especially if the jsnlog.js file is loaded as an
+        @Html.ViewLink("getstarted-loadingjsfile", "AMD module", null, "amd")<text>.</text>
+    </p>
+
 }
 
