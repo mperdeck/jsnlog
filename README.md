@@ -10,6 +10,9 @@ Visit [jsnlog.com](http://www.jsnlog.com) to:
 * Get started quickly with JSNLog;
 * Get full documentation.
 
+License:
+[Apache License, Version 2.0](https://raw.githubusercontent.com/mperdeck/jsnlog/master/License)
+
 ## Why JSNLog?
 
 JSNLog lets you log events in your client side JavaScript code, get that log data back to your web server and store it there.
