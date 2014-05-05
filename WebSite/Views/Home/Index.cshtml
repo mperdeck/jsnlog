@@ -11,27 +11,24 @@
 @section Hero {
     <section class="hero large-text">
         <section class="benefits" style="float: left; width: 650px; margin-top: 5px;">
-@if (currentVersion == "NetJs")
-{
-            <h1>JavaScript logging integrated with ASP.NET and MVC</h1>
-            <p>
-
-
-            JSNLog lets you insert loggers in your client side JavaScript,
-            configure them in your web.config, and store their messages
-            in your server side logs - without any server side coding.
-            </p>
-}
-@if (currentVersion == "JsOnly")
-{
-            <h1>JavaScript logging redone</h1>
-            <p>
-                JSNLog.js 
-                is a tiny JavaScript logging library, simple and well documented.
-                It has unique options to cut down on the amount of logging data you receive while 
-                still getting the information you actually need.
-            </p>
-}
+            @if (currentVersion == "NetJs")
+            {
+                <h1>Logs JavaScript client side events in your server side log</h1>
+                <p>
+                    This JavaScript logging package lets you insert loggers in your client side JavaScript,
+                    and store their messages in your server side logs. Supports Log4Net, NLog, Elmah, Common.Logging.
+                </p>
+            }
+            @if (currentVersion == "JsOnly")
+            {
+                <h1>JavaScript logging redone</h1>
+                <p>
+                    JSNLog.js
+                    is a tiny JavaScript logging library, simple and well documented.
+                    It has unique options to cut down on the amount of logging data you receive while
+                    still getting the information you actually need.
+                </p>
+            }
         </section>
 <div class="download" style="float: right; margin-bottom: 10px; margin-top: 12px;"> 
         @Html.Raw(Html.Partial("Partials/_DownloadButton").ToHtmlString())
@@ -192,7 +189,12 @@ when there is a fatal message.
         @*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*@
 
         @if (currentVersion == "NetJs")
-        {
+{
+    <section class="feature">
+        <h2 class="text">6 minute introduction</h2>
+        <iframe src="//player.vimeo.com/video/93994063?title=0&amp;byline=0&amp;portrait=0" width="430" height="242" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+    </section>
+
             @Feature(
         "",
         @"Limit total messages sent to server",
