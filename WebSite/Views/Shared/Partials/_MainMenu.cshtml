@@ -1,10 +1,13 @@
 ﻿@using ViewExtensions
 
 <div class="main-menu"> 
-        <ul>
-        <li>
-        @Html.ActionLink("Home", "Index", "Home")
-        </li>
+    <ul>
+        @if (PageVersions.CurrentVersion() == "JsOnly")
+        {
+            <li>
+                @Html.ActionLink("Home", "Index", "Home")
+            </li>
+        }
         <li>
             @Html.ViewLink("downloadinstall")
         </li>
@@ -21,6 +24,12 @@
                 @Html.ViewLink("jsnlogjs", "Documentation")
             }
         </li>
+        @if (PageVersions.CurrentVersion() == "NetJs")
+        {
+            <li>
+                <a href="https://vimeo.com/channels/jsnlog" target="_blank">Videos</a>
+            </li>
+        }
         <li>
             @if (PageVersions.CurrentVersion() == "NetJs")
             {
@@ -41,7 +50,7 @@
                 <a href="https://github.com/mperdeck/jsnlog.js/issues" target="_blank">Support</a>
             }
         </li>
-        </ul>
+    </ul>
 </div>
 
 

@@ -257,4 +257,24 @@
         JSNLog.JavascriptLogging.RequestId());
 }</pre>
 
+<h2>Why not use IP addresses instead of request ids?</h2>
+<p>
+    Simply logging the IP address of each request would be simpler than 
+    doing all this work to log request ids. However:
+</p>
+<ul>
+    <li>
+        Many users share the same IP address (<a href="http://stackoverflow.com/questions/6832724/is-it-reliable-to-use-the-ip-address-to-identify-a-user-on-your-website" target="_blank">why</a>).
+    </li>
+    <li>
+        A user could open the same page in two browser windows and interact with them at the same time.
+        The IP addresses would be the same, but the request ids would be different.
+    </li>
+</ul>
+
+
+
+
+
+
 
