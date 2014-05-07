@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("JSNLog JavaScript Logging Package")]
+[assembly: AssemblyTitle("JSNLog - JavaScript Logging Package")]
 [assembly: AssemblyDescription("Lets you insert loggers in your JavaScript, and automatically sends the log messages to a server side component that stores them in your existing server side logs. Interfaces with Log4Net, NLog, Elmah, Common.Logging.\n\nIdeal for logging JavaScript exceptions to the server, including a stack trace. Documentation and examples are at jsnlog.com.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Matt Perdeck")]
