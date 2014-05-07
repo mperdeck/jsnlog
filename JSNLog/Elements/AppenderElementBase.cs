@@ -49,11 +49,11 @@ namespace JSNLog.Elements
 
                 int level =
                     attributeValues.ContainsKey(Constants.AttributeNameLevel) ?
-                    int.Parse(attributeValues[Constants.AttributeNameLevel].Text) :
+                    LevelUtils.LevelNumber(attributeValues[Constants.AttributeNameLevel].Text) :
                     (int)Constants.DefaultAppenderLevel;
 
-                int storeInBufferLevel = int.Parse(attributeValues[Constants.AttributeNameStoreInBufferLevel].Text);
-                int sendWithBufferLevel = int.Parse(attributeValues[Constants.AttributeNameSendWithBufferLevel].Text);
+                int storeInBufferLevel = LevelUtils.LevelNumber(attributeValues[Constants.AttributeNameStoreInBufferLevel].Text);
+                int sendWithBufferLevel = LevelUtils.LevelNumber(attributeValues[Constants.AttributeNameSendWithBufferLevel].Text);
 
                 if ((storeInBufferLevel > level) || (level > sendWithBufferLevel))
                 {
