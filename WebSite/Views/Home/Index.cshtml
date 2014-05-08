@@ -40,23 +40,51 @@
 <section class="features">
     <div class="leftColumn">
 
+        @Feature(
+            "",
+            @"Vital Stats",
+                                                                 @"
+<ul class=""halfspaced noindent"">
+<li>
+Supports IE 8+, Firefox, Chrome, Opera, Safari (desktop/mobile).
+</li>
+<li>
+Free, open source (<a href=""https://raw.githubusercontent.com/mperdeck/jsnlog/master/License"" target=""_blank"">Apache License, Version 2.0</a>).
+</li>
+<li>
+Use stand alone, or as an
+<a href=""http://requirejs.org/docs/why.html"" target=""_blank"">AMD module</a>
+or
+<a href=""http://spinejs.com/docs/commonjs"" target=""_blank"">CommonJS module</a>,
+or as part of a
+<a href=""http://www.asp.net/mvc/tutorials/mvc-4/bundling-and-minification"" target=""_blank"">bundle</a>.
+</li>
+<li>
+No dependencies on other JavaScript libraries.
+</li>
+<li>
+Fully documented: API docs, examples, how to's, videos.
+</li>
+</ul>
+")
+
         @if (currentVersion == "NetJs")
         {
             @Feature(
         "",
-        @"Works with your server side loggers",
-        @"<ul class=""halfspaced noindent"">
+        @"Key concepts",
+                  @"<ul class=""halfspaced noindent"">
         <li>
-Sends log messages from the client to the server using AJAX.
+JSNLog contains a JavaScript logging library, jsnlog.js. It lets you insert loggers in your client side JavaScript.
+</li>
+        <li>
+Using AJAX, those loggers send your log messages to a JSNLog server side component.
         </li>
         <li>
-Hands the log messages to your server side logging package.
+This hands the log messages to your server side logging package, for inclusion in your server side log.
         </li>
         <li>
 Supports Log4Net, NLog, Elmah, Common.Logging.
-        </li>
-        <li>
-<a href='https://github.com/mperdeck/jsnlog#contributors-welcome'>Integrate JSNLog with Java</a>.
         </li>
         </ul>")
         }
@@ -69,57 +97,57 @@ Supports Log4Net, NLog, Elmah, Common.Logging.
         @Feature(
             "",
             @"Log JavaScript exceptions, with their stack traces",
-            @"<pre>try { 
-    ... 
-} catch(e) { 
-    JL().fatalException(""Exception info"", e); 
+            @"<pre>try {
+    ...
+} catch(e) {
+    JL().fatalException(""Exception info"", e);
 }</pre>")
 
         @if (currentVersion == "NetJs")
-{
+        {
             @Feature(
         "",
         @"Configure loggers in your web.config",
         @"<pre>&lt;logger name=""jslogger"" level=""FATAL"" /&gt;</pre>
 ")
-}
+        }
 
         @if (currentVersion == "NetJs")
-{
+        {
             @Feature(
         "",
         @"Or configure them in your JavaScript code",
         @"<pre>JL(""jsLogger"").setOptions({ ""level"": 4000 });</pre>
 ")
-}
+        }
         @if (currentVersion == "JsOnly")
-{
+        {
             @Feature(
         "",
         @"Configure loggers in your JavaScript code",
         @"<pre>JL(""jsLogger"").setOptions({ ""level"": 4000 });</pre>
 ")
-}
+        }
 
         @*===========================================================*@
 
         @if (currentVersion == "NetJs")
-{
+        {
             @Feature(
         "",
         @"Only log for certain user agents or IP addresses",
         @"<pre>&lt;logger userAgentRegex=&quot;MSIE 7|MSIE 8&quot; /&gt;</pre>
 ")
-}
+        }
         @if (currentVersion == "JsOnly")
-{
+        {
             @Feature(
         "",
         @"Only log for certain user agents or IP addresses",
         @"<pre>JL().setOptions(
     { ""userAgentRegex"": ""MSIE 7|MSIE 8"" });</pre>
 ")
-}
+        }
 
         @*===========================================================*@@if (currentVersion == "NetJs")
         {
@@ -139,9 +167,7 @@ Supports Log4Net, NLog, Elmah, Common.Logging.
 ")
         }
 
-        @*===========================================================*@
-
-        @Feature(
+        @*===========================================================*@@Feature(
         "",
         @"Log objects as well as strings",
         @"<pre>var obj = {""f1"": ""v1"", ""f2"": ""v2""};
@@ -189,11 +215,11 @@ when there is a fatal message.
         @*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*@
 
         @if (currentVersion == "NetJs")
-{
-    <section class="feature">
-        <h2 class="text">6 minute introduction</h2>
-        <iframe src="//player.vimeo.com/video/93994063?title=0&amp;byline=0&amp;portrait=0" width="430" height="242" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-    </section>
+        {
+            <section class="feature">
+                <h2 class="text">6 minute introduction</h2>
+                <iframe src="//player.vimeo.com/video/93994063?title=0&amp;byline=0&amp;portrait=0" width="430" height="242" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            </section>
 
             @Feature(
         "",
@@ -229,9 +255,7 @@ when there is a fatal message.
 ")
         }
 
-        @*===========================================================*@
-
-        @if (currentVersion == "JsOnly")
+        @*===========================================================*@@if (currentVersion == "JsOnly")
         {
             @Feature(
         "",
