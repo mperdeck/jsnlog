@@ -133,12 +133,12 @@ You can choose to have this additional information logged on the server along wi
     </td>
     </tr>
     <tr valign="top">
-    <td>%newline</td>
+    <td>%newline*</td>
     <td>Newline character</td>
     </tr>
         </tbody>
     </table>
-
+    *<small> If you use Elmah, %newline won't result in a newline in the elmah.axd page, because Elmah doesn't convert line breaks in log messages to HTML &lt;br /&gt; tags.</small>
 }
 
 @section Examples {
