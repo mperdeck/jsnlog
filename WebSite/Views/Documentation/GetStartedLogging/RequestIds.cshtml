@@ -11,7 +11,7 @@
 <h1>Using Request Ids to correlate JavaScript and server side log messages</h1>
 <p>
     This page first shows why you'd use request ids, and then how to implement them
-    for <a href="#log4net">Log4Net</a> and <a href="#nlog">NLog</a>.
+    for <a href="#log4net">Log4Net</a>, <a href="#nlog">NLog</a> and <a href="#elmah">Elmah</a>.
 </p>
 <h2>Concurrent accesses lead to intermingled log entries</h2>
 
@@ -50,7 +50,9 @@
     in a bit of JavaScript code, so the jsnlog.js library can send it back in each log request.
 </p>
 <p>
-    With request ids, the log that you saw above now looks like this (colors won't appear in your actual logs):
+    With request ids, the log that you saw above now looks like this.
+    To make things clearer, lines with the same request id have been given the same background color
+    (the colors won't appear in your actual logs):
 </p>
 <pre><span class="code-bg-soft1">00000000-0000-0000-ea00-0080000000fa | 2014-04-22 09:55:09,897 | info | 
     serverlogger | request for client page, id=5, city=Washington</span>
@@ -257,9 +259,53 @@
         JSNLog.JavascriptLogging.RequestId());
 }</pre>
 
+<a id="elmah"></a>
+<h2>Implementing request ids for Elmah</h2>
+<p>
+    Elmah is not as configurable as Log4Net and NLog. The only way to add the request id is to simply prepend it to the log message.
+</p>
+<p>
+    To do this for log messages from the client,
+    set the <span class="term">serverSideMessageFormat</span> attribute
+    of the
+    @Html.ViewLink("webconfig-jsnlog")
+    in your web.config:
+</p>
+<pre>&lt;jsnlog serverSideMessageFormat=&quot;<span class="addedcode">%requestId</span> | %logger | %level | %message&quot;&gt;
+    ...
+&lt;/jsnlog&gt;</pre>
+<p>
+    You will want to put the request id the very first field, so you can sort on it later.
+</p>
+<p>
+    If you use Elmah to log messages in your server side code, you could introduce a new method that always prepends
+    the request id to the log message:
+</p>
+<pre>
+using Elmah;<br />
+...<br />
+LogToElmah("The log message");<br />
+...<br />
+public void LogToElmah(string message)
+{
+    string requestId = JSNLog.JavascriptLogging.RequestId();
+    Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(
+        string.Format("{0} | {1}", requestId, message)));
+}
+</pre>
+<p>
+    Elmah lets you download the log messages from the elmah.axd page, and it also lets you store them in a file or database.
+    You can sort the log entries by message and then timestamp (stored by
+    Elmah in a separate field), to get the log messages grouped by user session in chronological order.
+</p>
+<p>
+    Keep in mind though that
+    if there is an uncaught exception and Elmah logs that exception, it won't have the request id.
+</p>
+
 <h2>Why not use IP addresses instead of request ids?</h2>
 <p>
-    Simply logging the IP address of each request would be simpler than 
+    Simply logging the IP address of each request would be simpler than
     doing all this work to log request ids. However:
 </p>
 <ul>
