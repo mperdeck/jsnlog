@@ -2,15 +2,29 @@
 @using WebSite.App_Code
 
 @{
-    ViewBag.Title = "Better JavaScript Logging";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     string currentVersion = PageVersions.CurrentVersion();
+
+    switch (currentVersion)
+    {
+        case "NetJs":
+            ViewBag.Title = "Better JavaScript Logging";
+            break;
+        case "JsOnly":
+            ViewBag.Title = "JavaScript logging redone";
+            break;
+        case "PhpJs":
+            ViewBag.Title = "JavaScript logging for PHP";
+            break;
+        default:
+            throw new Exception(string.Format("Unknown version {0}", currentVersion));
+    }
 }
 
 @section Hero {
     <section class="hero large-text">
-        <section class="benefits" style="float: left; width: 650px; margin-top: 5px;">
+        <section class="benefits" style="float: left; width: 650px;">
             @if (currentVersion == "NetJs")
             {
                 <h1>Logs JavaScript client side events in your server side log</h1>
@@ -29,6 +43,10 @@
                     still getting the information you actually need.
                 </p>
             }
+            @if (currentVersion == "PhpJs")
+            {
+                <h1>JavaScript logging for PHP</h1>
+            }
         </section>
 <div class="download" style="float: right; margin-bottom: 10px; margin-top: 12px;"> 
         @Html.Raw(Html.Partial("Partials/_DownloadButton").ToHtmlString())
@@ -38,282 +56,299 @@
 }
 
 <section class="features">
-    <div class="leftColumn">
+    @if (currentVersion == "PhpJs")
+    {
+        <p>
+            Third party library integrating jsnlog.js with PHP:
+        </p>
+        <ul>
+            <li><a target="_blank" href="https://github.com/pnellesen/JSPHPLog">JSPHPLog</a></li>
+        </ul>
 
-        @Feature(
-            "",
-            @"Vital Stats",
-                                                                 @"
-<ul class=""halfspaced noindent"">
-<li>
-Supports IE 8+, Firefox, Chrome, Opera, Safari (desktop/mobile).
-</li>
-<li>
-Free, open source (<a href=""https://raw.githubusercontent.com/mperdeck/jsnlog/master/License"" target=""_blank"">Apache License, Version 2.0</a>).
-</li>
-<li>
-Use stand alone, or as an
-<a href=""http://requirejs.org/docs/why.html"" target=""_blank"">AMD module</a>
-or
-<a href=""http://spinejs.com/docs/commonjs"" target=""_blank"">CommonJS module</a>,
-or as part of a
-<a href=""http://www.asp.net/mvc/tutorials/mvc-4/bundling-and-minification"" target=""_blank"">bundle</a>.
-</li>
-<li>
-No dependencies on other JavaScript libraries.
-</li>
-<li>
-Fully documented: API docs, examples, how to's, videos.
-</li>
-</ul>
-")
+        <p>
+            Use this library in your server side PHP. It uses the 
+            <a href="http://js.jsnlog.com">standard jsnlog.js JavaScript library</a> on the client.
+        </p>
+    }
+    else
+    {
+        <div class="leftColumn">
 
-        @if (currentVersion == "NetJs")
-        {
-            @Feature(
-        "",
-        @"Key concepts",
-                  @"<ul class=""halfspaced noindent"">
-        <li>
-JSNLog contains a JavaScript logging library, jsnlog.js. It lets you insert loggers in your client side JavaScript.
-</li>
-        <li>
-Using AJAX, those loggers send your log messages to a JSNLog server side component.
-        </li>
-        <li>
-This hands the log messages to your server side logging package, for inclusion in your server side log.
-        </li>
-        <li>
-Supports Log4Net, NLog, Elmah, Common.Logging.
-        </li>
-        </ul>")
-        }
-
-        @Feature(
-            "",
-            @"Insert loggers in your JavaScript",
-            @"<pre>JL(""jsLogger"").info(""log message"");</pre>")
-
-        @Feature(
-            "",
-            @"Log JavaScript exceptions, with their stack traces",
-            @"<pre>try {
-    ...
-} catch(e) {
-    JL().fatalException(""Exception info"", e);
-}</pre>")
-
-        @if (currentVersion == "NetJs")
-        {
-            @Feature(
-        "",
-        @"Configure loggers in your web.config",
-        @"<pre>&lt;logger name=""jslogger"" level=""FATAL"" /&gt;</pre>
-")
-        }
-
-        @if (currentVersion == "NetJs")
-        {
-            @Feature(
-        "",
-        @"Or configure them in your JavaScript code",
-        @"<pre>JL(""jsLogger"").setOptions({ ""level"": 4000 });</pre>
-")
-        }
-        @if (currentVersion == "JsOnly")
-        {
-            @Feature(
-        "",
-        @"Configure loggers in your JavaScript code",
-        @"<pre>JL(""jsLogger"").setOptions({ ""level"": 4000 });</pre>
-")
-        }
-
-        @*===========================================================*@
-
-        @if (currentVersion == "NetJs")
-        {
-            @Feature(
-        "",
-        @"Only log for certain user agents or IP addresses",
-        @"<pre>&lt;logger userAgentRegex=&quot;MSIE 7|MSIE 8&quot; /&gt;</pre>
-")
-        }
-        @if (currentVersion == "JsOnly")
-        {
-            @Feature(
-        "",
-        @"Only log for certain user agents or IP addresses",
-        @"<pre>JL().setOptions(
-    { ""userAgentRegex"": ""MSIE 7|MSIE 8"" });</pre>
-")
-        }
-
-        @*===========================================================*@@if (currentVersion == "NetJs")
-        {
-            @Feature(
-        "",
-        @"Suppress messages that match a regular expression",
-        @"<pre>&lt;logger disallow=""suppress me"" /&gt;</pre>
-")
-        }
-        @if (currentVersion == "JsOnly")
-        {
-            @Feature(
-        "",
-        @"Suppress messages that match a regular expression",
-        @"<pre>JL(""jsLogger"").setOptions(
-    { ""disallow"": ""suppress me"" });</pre>
-")
-        }
-
-        @*===========================================================*@@Feature(
-        "",
-        @"Log objects as well as strings",
-        @"<pre>var obj = {""f1"": ""v1"", ""f2"": ""v2""};
-JL().log(2500, obj);</pre>
-")
-
-        @Feature(
-        "",
-        @"Pass in function that returns log info",
-        @"<pre>JL().log(2500, function() {
-    // Only executed when log info
-    // will actually be logged.
-    var loginfo = expensiveOperation();
-    return loginfo;
-});</pre>
-")
-
-        @if (currentVersion == "JsOnly")
-        {
             @Feature(
                 "",
-                    @"Supports AMD and CommonJS loaders",
-                    @"As well as loading with a simple script tag.")
-        }
+                @"Vital Stats",
+                                                                     @"
+    <ul class=""halfspaced noindent"">
+    <li>
+    Supports IE 8+, Firefox, Chrome, Opera, Safari (desktop/mobile).
+    </li>
+    <li>
+    Free, open source (<a href=""https://raw.githubusercontent.com/mperdeck/jsnlog/master/License"" target=""_blank"">Apache License, Version 2.0</a>).
+    </li>
+    <li>
+    Use stand alone, or as an
+    <a href=""http://requirejs.org/docs/why.html"" target=""_blank"">AMD module</a>
+    or
+    <a href=""http://spinejs.com/docs/commonjs"" target=""_blank"">CommonJS module</a>,
+    or as part of a
+    <a href=""http://www.asp.net/mvc/tutorials/mvc-4/bundling-and-minification"" target=""_blank"">bundle</a>.
+    </li>
+    <li>
+    No dependencies on other JavaScript libraries.
+    </li>
+    <li>
+    Fully documented: API docs, examples, how to's, videos.
+    </li>
+    </ul>
+    ")
 
-        @Feature(
-        "",
-        @"Get the info you need, but only <u>when</u> you need it",
-        @"<ul class=""spaced noindent"">
-        <li>
-        To solve JavaScript exceptions, you often need to know what happened before they happened.
-        </li>
-        <li>
-        But you don't want to send trace messages with that context unless there actually is an exception.
-        </li>
-        <li>
-        Solution: JSNLog lets you buffer log messages on the client, and only send them
-when there is a fatal message.
-        </li>
-        </ul>")
-
-    </div>
-    <div class="rightColumn">
-
-        @*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*@
-
-        @if (currentVersion == "NetJs")
-        {
-            <section class="feature">
-                <h2 class="text">6 minute introduction</h2>
-                <iframe src="//player.vimeo.com/video/93994063?title=0&amp;byline=0&amp;portrait=0" width="430" height="242" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-            </section>
+            @if (currentVersion == "NetJs")
+            {
+                @Feature(
+            "",
+            @"Key concepts",
+                      @"<ul class=""halfspaced noindent"">
+            <li>
+    JSNLog contains a JavaScript logging library, jsnlog.js. It lets you insert loggers in your client side JavaScript.
+    </li>
+            <li>
+    Using AJAX, those loggers send your log messages to a JSNLog server side component.
+            </li>
+            <li>
+    This hands the log messages to your server side logging package, for inclusion in your server side log.
+            </li>
+            <li>
+    Supports Log4Net, NLog, Elmah, Common.Logging.
+            </li>
+            </ul>")
+            }
 
             @Feature(
-        "",
-        @"Limit total messages sent to server",
-        @"<pre>&lt;jsnlog maxMessages=""3""&gt;</pre>
-")
-        }
-        @if (currentVersion == "JsOnly")
-        {
+                "",
+                @"Insert loggers in your JavaScript",
+                @"<pre>JL(""jsLogger"").info(""log message"");</pre>")
+
             @Feature(
-        "",
-        @"Limit total messages sent to server",
-        @"<pre>JL.setOptions({""maxMessages"": 3});</pre>")
-        }
+                "",
+                @"Log JavaScript exceptions, with their stack traces",
+                @"<pre>try {
+        ...
+    } catch(e) {
+        JL().fatalException(""Exception info"", e);
+    }</pre>")
 
-        @*===========================================================*@
+            @if (currentVersion == "NetJs")
+            {
+                @Feature(
+            "",
+            @"Configure loggers in your web.config",
+            @"<pre>&lt;logger name=""jslogger"" level=""FATAL"" /&gt;</pre>
+    ")
+            }
 
-        @if (currentVersion == "NetJs")
-        {
+            @if (currentVersion == "NetJs")
+            {
+                @Feature(
+            "",
+            @"Or configure them in your JavaScript code",
+            @"<pre>JL(""jsLogger"").setOptions({ ""level"": 4000 });</pre>
+    ")
+            }
+            @if (currentVersion == "JsOnly")
+            {
+                @Feature(
+            "",
+            @"Configure loggers in your JavaScript code",
+            @"<pre>JL(""jsLogger"").setOptions({ ""level"": 4000 });</pre>
+    ")
+            }
+
+            @*===========================================================*@
+
+            @if (currentVersion == "NetJs")
+            {
+                @Feature(
+            "",
+            @"Only log for certain user agents or IP addresses",
+            @"<pre>&lt;logger userAgentRegex=&quot;MSIE 7|MSIE 8&quot; /&gt;</pre>
+    ")
+            }
+            @if (currentVersion == "JsOnly")
+            {
+                @Feature(
+            "",
+            @"Only log for certain user agents or IP addresses",
+            @"<pre>JL().setOptions(
+        { ""userAgentRegex"": ""MSIE 7|MSIE 8"" });</pre>
+    ")
+            }
+
+            @*===========================================================*@@if (currentVersion == "NetJs")
+            {
+                @Feature(
+            "",
+            @"Suppress messages that match a regular expression",
+            @"<pre>&lt;logger disallow=""suppress me"" /&gt;</pre>
+    ")
+            }
+            @if (currentVersion == "JsOnly")
+            {
+                @Feature(
+            "",
+            @"Suppress messages that match a regular expression",
+            @"<pre>JL(""jsLogger"").setOptions(
+        { ""disallow"": ""suppress me"" });</pre>
+    ")
+            }
+
+            @*===========================================================*@@Feature(
+            "",
+            @"Log objects as well as strings",
+            @"<pre>var obj = {""f1"": ""v1"", ""f2"": ""v2""};
+    JL().log(2500, obj);</pre>
+    ")
+
             @Feature(
-        "",
-        @"Reduce AJAX requests by batching log messages",
-        @"<pre>&lt;ajaxAppender name=""appender1"" batchSize=""3""/&gt;</pre>
-")
-        }
-        @if (currentVersion == "JsOnly")
-        {
+            "",
+            @"Pass in function that returns log info",
+            @"<pre>JL().log(2500, function() {
+        // Only executed when log info
+        // will actually be logged.
+        var loginfo = expensiveOperation();
+        return loginfo;
+    });</pre>
+    ")
+
+            @if (currentVersion == "JsOnly")
+            {
+                @Feature(
+                    "",
+                        @"Supports AMD and CommonJS loaders",
+                        @"As well as loading with a simple script tag.")
+            }
+
             @Feature(
-        "",
-        @"Reduce AJAX requests by batching log messages",
-        @"<pre>appender.setOptions(
-    { ""batchSize"": 3 });</pre>
-")
-        }
+            "",
+            @"Get the info you need, but only <u>when</u> you need it",
+            @"<ul class=""spaced noindent"">
+            <li>
+            To solve JavaScript exceptions, you often need to know what happened before they happened.
+            </li>
+            <li>
+            But you don't want to send trace messages with that context unless there actually is an exception.
+            </li>
+            <li>
+            Solution: JSNLog lets you buffer log messages on the client, and only send them
+    when there is a fatal message.
+            </li>
+            </ul>")
 
-        @*===========================================================*@@if (currentVersion == "JsOnly")
-        {
+        </div>
+        <div class="rightColumn">
+
+            @*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*@
+
+            @if (currentVersion == "NetJs")
+            {
+                <section class="feature">
+                    <h2 class="text">6 minute introduction</h2>
+                    <iframe src="//player.vimeo.com/video/93994063?title=0&amp;byline=0&amp;portrait=0" width="430" height="242" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                </section>
+
+                @Feature(
+            "",
+            @"Limit total messages sent to server",
+            @"<pre>&lt;jsnlog maxMessages=""3""&gt;</pre>
+    ")
+            }
+            @if (currentVersion == "JsOnly")
+            {
+                @Feature(
+            "",
+            @"Limit total messages sent to server",
+            @"<pre>JL.setOptions({""maxMessages"": 3});</pre>")
+            }
+
+            @*===========================================================*@
+
+            @if (currentVersion == "NetJs")
+            {
+                @Feature(
+            "",
+            @"Reduce AJAX requests by batching log messages",
+            @"<pre>&lt;ajaxAppender name=""appender1"" batchSize=""3""/&gt;</pre>
+    ")
+            }
+            @if (currentVersion == "JsOnly")
+            {
+                @Feature(
+            "",
+            @"Reduce AJAX requests by batching log messages",
+            @"<pre>appender.setOptions(
+        { ""batchSize"": 3 });</pre>
+    ")
+            }
+
+            @*===========================================================*@@if (currentVersion == "JsOnly")
+            {
+                @Feature(
+            "",
+            @"Easily send logging data to the server",
+            @"Built in AjaxAppender uses simple, well documented message format.
+    ")
+            }
+
+            @*===========================================================*@@if (currentVersion == "NetJs")
+            {
+                @Feature(
+            "",
+            @"Automatically store client side log data in server side logs",
+            @"
+    <table class=""log"">
+    <tr><th style=""width: 120px"">Logger</th><th>Message</th></tr>
+    <tr><td>csLogger</td><td>Server side error message</td></tr>
+    <tr><td>jsLogger</td><td>Client side fatal message</td></tr>
+    <tr><td>csLogger2</td><td>Server side info message</td></tr>
+    <tr><td colspan=""2"">...</td></tr>
+    </table>
+    ")
+            }
+
             @Feature(
-        "",
-        @"Easily send logging data to the server",
-        @"Built in AjaxAppender uses simple, well documented message format.
-")
-        }
+            "",
+            @"Suppress duplicate messages",
+            @"
+    <table class=""log"">
+    <tr><th style=""width: 120px"">Logger</th><th>Message</th></tr>
+    <tr><td>jsLogger</td><td>x too high (x = 5)</td></tr>
+    <tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 6)</td></tr>
+    <tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 7)</td></tr>
+    <tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 8)</td></tr>
+    <tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 9)</td></tr>
+    </table>
+    ")
 
-        @*===========================================================*@@if (currentVersion == "NetJs")
-        {
             @Feature(
-        "",
-        @"Automatically store client side log data in server side logs",
-        @"
-<table class=""log"">
-<tr><th style=""width: 120px"">Logger</th><th>Message</th></tr>
-<tr><td>csLogger</td><td>Server side error message</td></tr>
-<tr><td>jsLogger</td><td>Client side fatal message</td></tr>
-<tr><td>csLogger2</td><td>Server side info message</td></tr>
-<tr><td colspan=""2"">...</td></tr>
-</table>
-")
-        }
-
-        @Feature(
-        "",
-        @"Suppress duplicate messages",
-        @"
-<table class=""log"">
-<tr><th style=""width: 120px"">Logger</th><th>Message</th></tr>
-<tr><td>jsLogger</td><td>x too high (x = 5)</td></tr>
-<tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 6)</td></tr>
-<tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 7)</td></tr>
-<tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 8)</td></tr>
-<tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 9)</td></tr>
-</table>
-")
-
-        @Feature(
-        "",
-        @"See which messages belong to the same request",
-        @"
-<table class=""log"">
-<tr><th style=""width: 120px"">Request ID</th><th>Message</th></tr>
-<tr><td class=""highlight""><span>D623A22B-3454....</span></td><td>An error message</td></tr>
-<tr><td>CB0734CE-4C99....</td><td>A fatal message</td></tr>
-<tr><td class=""highlight""><span>D623A22B-3454....</span></td><td>Some other message</td></tr>
-<tr><td colspan=""2"">...</td></tr>
-</table>
-")
-        @Feature(
-        "",
-        @"Show log data in the console",
-        @"Switch console logging on or off " +
-((currentVersion == "NetJs") ? "in your web.config." : "with one line of code.") +
-        @"<img src=""/Images/console.png"" alt=""screenshot of browser console with log generated by JSNLog"" width=""306"" height=""214"" />
-        ")
-    </div>
+            "",
+            @"See which messages belong to the same request",
+            @"
+    <table class=""log"">
+    <tr><th style=""width: 120px"">Request ID</th><th>Message</th></tr>
+    <tr><td class=""highlight""><span>D623A22B-3454....</span></td><td>An error message</td></tr>
+    <tr><td>CB0734CE-4C99....</td><td>A fatal message</td></tr>
+    <tr><td class=""highlight""><span>D623A22B-3454....</span></td><td>Some other message</td></tr>
+    <tr><td colspan=""2"">...</td></tr>
+    </table>
+    ")
+            @Feature(
+            "",
+            @"Show log data in the console",
+            @"Switch console logging on or off " +
+    ((currentVersion == "NetJs") ? "in your web.config." : "with one line of code.") +
+            @"<img src=""/Images/console.png"" alt=""screenshot of browser console with log generated by JSNLog"" width=""306"" height=""214"" />
+            ")
+        </div>
+    }
 </section>
 
 @helper Feature(string title, string text, string code)
