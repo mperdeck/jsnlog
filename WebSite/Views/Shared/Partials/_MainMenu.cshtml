@@ -1,56 +1,64 @@
 ﻿@using ViewExtensions
 
-<div class="main-menu"> 
-    <ul>
-        @if (PageVersions.CurrentVersion() == "JsOnly")
-        {
-            <li>
-                @Html.ActionLink("Home", "Index", "Home")
-            </li>
-        }
-        <li>
-            @Html.ViewLink("downloadinstall")
-        </li>
-        <li>
-            @Html.ViewLink("getstartedlogging")
-        </li>
-        <li>
-            @if (PageVersions.CurrentVersion() == "NetJs")
-            {
-                @Html.ViewLink("webconfig", "Documentation")
-            }
-            @if (PageVersions.CurrentVersion() == "JsOnly")
-            {
-                @Html.ViewLink("jsnlogjs", "Documentation")
-            }
-        </li>
-        @if (PageVersions.CurrentVersion() == "NetJs")
-        {
-            <li>
-                <a href="https://vimeo.com/channels/jsnlog/videos" target="_blank">Videos</a>
-            </li>
-        }
-        <li>
-            @if (PageVersions.CurrentVersion() == "NetJs")
-            {
-                <a href="https://github.com/mperdeck/jsnlog" target="_blank">Source</a>
-            }
-            @if (PageVersions.CurrentVersion() == "JsOnly")
-            {
-                <a href="https://github.com/mperdeck/jsnlog.js" target="_blank">Source</a>
-            }
-        </li>
-        <li>
-            @if (PageVersions.CurrentVersion() == "NetJs")
-            {
-                <a href="https://github.com/mperdeck/jsnlog/issues" target="_blank">Support</a>
-            }
-            @if (PageVersions.CurrentVersion() == "JsOnly")
-            {
-                <a href="https://github.com/mperdeck/jsnlog.js/issues" target="_blank">Support</a>
-            }
-        </li>
-    </ul>
-</div>
+@{
+    string currentVersion = PageVersions.CurrentVersion();
+    bool showMenu = (currentVersion == "JsOnly") || (currentVersion == "NetJs");
+}
 
+@if (showMenu)
+{
+    <div class="main-menu"> 
+        <ul>
+            @if (currentVersion == "JsOnly")
+            {
+                <li>
+                    @Html.ActionLink("Home", "Index", "Home")
+                </li>
+            }
+            <li>
+                @Html.ViewLink("downloadinstall")
+            </li>
+            <li>
+                @Html.ViewLink("getstartedlogging")
+            </li>
+            <li>
+                @if (currentVersion == "NetJs")
+                {
+                    @Html.ViewLink("webconfig", "Documentation")
+                }
+                @if (currentVersion == "JsOnly")
+                {
+                    @Html.ViewLink("jsnlogjs", "Documentation")
+                }
+            </li>
+            @if (currentVersion == "NetJs")
+            {
+                <li>
+                    <a href="https://vimeo.com/channels/jsnlog/videos" target="_blank">Videos</a>
+                </li>
+            }
+            <li>
+                @if (currentVersion == "NetJs")
+                {
+                    <a href="https://github.com/mperdeck/jsnlog" target="_blank">Source</a>
+                }
+                @if (currentVersion == "JsOnly")
+                {
+                    <a href="https://github.com/mperdeck/jsnlog.js" target="_blank">Source</a>
+                }
+            </li>
+            <li>
+                @if (currentVersion == "NetJs")
+                {
+                    <a href="https://github.com/mperdeck/jsnlog/issues" target="_blank">Support</a>
+                }
+                @if (currentVersion == "JsOnly")
+                {
+                    <a href="https://github.com/mperdeck/jsnlog.js/issues" target="_blank">Support</a>
+                }
+            </li>
+        </ul>
+    </div>
+}
+    
 

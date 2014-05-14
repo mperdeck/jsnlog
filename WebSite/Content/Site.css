@@ -61,6 +61,12 @@ header
     padding: 20px 0 20px 0;
 }
 
+.headertop
+{
+    height: 40px;
+}
+
+
 header .main-menu
 {
     float: right;   
@@ -173,7 +179,7 @@ footer .container
     background-color: #FFF;
     background-color: #F8FAFC;
     background-color: #f0f0f0;
-    padding: 5px 0 0px 0;
+    padding: 5px 0 0 0;
     margin-bottom: 30px;
 }
 
@@ -184,11 +190,13 @@ footer .container
 .large-text .benefits
 {
     max-width: 650px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .large-text .benefits h1
 {
-    margin: 0;
+    margin: 0 0 10px 0;
     padding: 0;
     font-size: 1.8em;
 }
@@ -197,6 +205,11 @@ footer .container
 {
     margin: 0;
     font-size: 1em;
+}
+
+.large-text .benefits p
+{
+    margin: 0;
 }
 
 a.download-button,

@@ -1,5 +1,10 @@
 ﻿@using ViewExtensions
 
+@{
+    string currentVersion = PageVersions.CurrentVersion();
+    bool showSocialMedia = (currentVersion == "JsOnly") || (currentVersion == "NetJs");
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,29 +41,33 @@
 
 
     <header>
-        <div class="container">
+        <div class="container headertop">
             @Html.Partial("Partials/_Logo")
             @Html.Partial("Partials/_MainMenu")
         </div>
-        <div class="versions container" style="margin-top: 10px;">
+        <div class="versions container">
             @Html.VersionSwitcher()
-            <div class="social-media">
-                @*
-                    Twitter button. Generated at https://about.twitter.com/resources/buttons#tweet
-                    Evaluating #JSNLog. Integrates JavaScript logging with .Net server side logging. Thoughts?
-                *@
 
-                <div class="twitter">
-                    <a href="https://twitter.com/share" class="twitter-share-button" data-text="Evaluating #JSNLog. JavaScript logging package that stores events in server side log. Thoughts?" data-count="none">Tweet</a>
-                    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+            @if (showSocialMedia)
+            {
+                <div class="social-media">
+                    @*
+                        Twitter button. Generated at https://about.twitter.com/resources/buttons#tweet
+                        Evaluating #JSNLog. Integrates JavaScript logging with .Net server side logging. Thoughts?
+                    *@
+
+                    <div class="twitter">
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-text="Evaluating #JSNLog. JavaScript logging package that stores events in server side log. Thoughts?" data-count="none">Tweet</a>
+                        <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+                    </div>
+
+                    @*Facebook share button. Generated at https://developers.facebook.com/docs/plugins/share-button/*@
+
+                    <div class="facebook">
+                        <div class="fb-share-button" data-href="http://jsnlog.com" data-type="button"></div>
+                    </div>
                 </div>
-
-                @*Facebook share button. Generated at https://developers.facebook.com/docs/plugins/share-button/*@
-
-                <div class="facebook">
-                    <div class="fb-share-button" data-href="http://jsnlog.com" data-type="button"></div>
-                </div>
-            </div>
+            }
         </div>
     </header>
 
