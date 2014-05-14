@@ -275,10 +275,10 @@
     ...
 &lt;/jsnlog&gt;</pre>
 <p>
-    You will want to put the request id the very first field, so you can sort on it later.
+    You will want to make the request id the very first field, so you can sort on it later.
 </p>
 <p>
-    If you use Elmah to log messages in your server side code, you could introduce a new method that always prepends
+    If you use Elmah to log messages in your server side code, you could add request ids to those messages by introducing a new method that always prepends
     the request id to the log message:
 </p>
 <pre>
