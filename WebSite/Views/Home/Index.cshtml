@@ -27,10 +27,11 @@
         <section class="benefits" style="float: left; width: 650px;">
             @if (currentVersion == "NetJs")
             {
-                <h1>Logs JavaScript client side events in your server side log</h1>
+                <h1>Log JavaScript <i>client side</i> events in your <i>server side</i> logs</h1>
                 <p>
-                    This JavaScript logging package lets you insert loggers in your client side JavaScript,
-                    and store their messages in your server side logs. Supports Log4Net, NLog, Elmah, Common.Logging.
+                    Log JavaScript exceptions, AJAX timeouts and other client side events
+                    in your server side logs with this integrated JavaScript logging package.
+Supports Log4Net, NLog, Elmah, Common.Logging.
                 </p>
             }
             @if (currentVersion == "JsOnly")
@@ -107,9 +108,9 @@
                 @Feature(
             "",
             @"Key concepts",
-                      @"<ul class=""halfspaced noindent"">
+                           @"<ul class=""halfspaced noindent"">
             <li>
-    JSNLog contains a JavaScript logging library, jsnlog.js. It lets you insert loggers in your client side JavaScript.
+    JSNLog contains a JavaScript logging library, jsnlog.js (" + SiteConstants.JsnlogJsFileSize + @" min+gz). It lets you insert loggers in your client side JavaScript.
     </li>
             <li>
     Using AJAX, those loggers send your log messages to a JSNLog server side component.
