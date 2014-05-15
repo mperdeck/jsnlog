@@ -227,13 +227,23 @@ a.download-button:hover
     text-decoration: none;
 }
 
-.download-button span.download-button-caption
+.download-button span.download-button-caption,
+.download-button span.install-button-caption
 {
     text-decoration: none;
     color: #fff;    
     font-weight: bold;
-    font-size: 150%;
     margin: 0;
+}
+
+.download-button span.download-button-caption
+{
+    font-size: 150%;
+}
+
+.download-button span.install-button-caption
+{
+    font-size: 200%;
 }
 
 .download-button p

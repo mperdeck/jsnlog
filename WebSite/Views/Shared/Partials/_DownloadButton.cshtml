@@ -3,7 +3,7 @@
 
 @{
     string url = null;
-    
+
     if (PageVersions.CurrentVersion() == "NetJs")
     {
         url = SiteConstants.NugetDownloadUrl;
@@ -14,10 +14,36 @@
     }
 }
 
+@* Function that tracks a click on a download link in Google Analytics.
+    This function takes a valid URL string as an argument, and uses that URL string
+    as the event label.
+*@
+
 @if (url != null)
 {
-    <a href="@url" class="download-button" target="_blank"><span class="download-button-caption">Download</span>
-        <p>v@(SiteConstants.CurrentVersion) - @SiteConstants.JsnlogJsFileSize min+gz</p></a>
+    <script>
+        var trackOutboundLink = function (url) {
+            ga('send', 'event', 'downloadLink', 'click', url, {
+                'hitCallback':
+                  function () {
+                      document.location = url;
+                  }
+            });
+        }
+    </script>
+
+    <a href="@url" class="download-button" target="_blank" onclick="trackOutboundLink('@url'); return false;">
+        @if (PageVersions.CurrentVersion() == "NetJs")
+        {
+            <span class="install-button-caption">Install</span>
+            <p>NuGet Package @(SiteConstants.CurrentVersion)</p>
+        }
+        @if (PageVersions.CurrentVersion() == "JsOnly")
+        {
+            <span class="download-button-caption">Download</span>
+            <p>v@(SiteConstants.CurrentVersion) - @SiteConstants.JsnlogJsFileSize min+gz</p>
+        }
+    </a>
 }
 
 
