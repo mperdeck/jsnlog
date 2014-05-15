@@ -124,7 +124,12 @@
     @if (currentVersion == "JsOnly")
     {
         <p>
-            <small>If you use .Net, <a href="@PageVersions.UrlWithVersionUrlName("netjs")">click here</a>.</small>
+            @{
+                Uri url = HttpContext.Current.Request.Url;
+                string netJsUrl = PageVersions.UrlWithVersionUrlName(url, "netjs");
+            }
+
+            <small>If you use .Net, <a href="@netJsUrl">click here</a>.</small>
         </p>
 
         <p>
