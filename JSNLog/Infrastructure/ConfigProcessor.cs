@@ -53,6 +53,7 @@ namespace JSNLog.Infrastructure
             string loggerProductionLibraryPath = null;
             if (!string.IsNullOrEmpty(loggerProductionLibraryVirtualPath))
             {
+                // Every hard coded path must be resolved. See the declaration of DefaultDefaultAjaxUrl
                 loggerProductionLibraryPath = virtualToAbsoluteFunc(loggerProductionLibraryVirtualPath);
             }
 
@@ -82,6 +83,10 @@ namespace JSNLog.Infrastructure
 
             attributeValues[Constants.JsLogObjectClientIpOption] = new Value(userIp, new StringValue());
             attributeValues[Constants.JsLogObjectRequestIdOption] = new Value(requestId, new StringValue());
+
+            // Set default value for defaultAjaxUrl attribute
+            attributeValues[Constants.JsLogObjectDefaultAjaxUrlOption] = 
+                new Value(virtualToAbsoluteFunc(Constants.DefaultDefaultAjaxUrl), new StringValue());
 
             Utils.ProcessOptionAttributes(Constants.JsLogObjectName, xe, Constants.JSNLogAttributes,
                 attributeValues, sb);
