@@ -15,7 +15,6 @@ namespace JSNLog.Tests.UnitTests
         private string _json1 = null;
         private string _json1root = null;
         private string _json2 = null;
-        private string _json3 = null;
         private string _json4 = null;
 
         private DateTime _dtFirstLogUtc;
