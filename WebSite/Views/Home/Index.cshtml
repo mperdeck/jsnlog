@@ -9,7 +9,7 @@
     switch (currentVersion)
     {
         case "NetJs":
-            ViewBag.Title = "Better JavaScript Logging";
+            ViewBag.Title = "Log JavaScript errors and other events to your server";
             break;
         case "JsOnly":
             ViewBag.Title = "JavaScript logging redone";
@@ -29,9 +29,8 @@
             {
                 <h1>Log JavaScript <i>client side</i> events in your <i>server side</i> logs</h1>
                 <p>
-                    Log JavaScript exceptions, AJAX timeouts and other client side events
-                    in your server side logs with this integrated JavaScript logging package.
-Supports Log4Net, NLog, Elmah, Common.Logging.
+                    Use this JavaScript logging package to log JavaScript errors, AJAX timeouts, etc. in your server side logs.
+                    Supports Log4Net, NLog, Elmah, Common.Logging.
                 </p>
             }
             @if (currentVersion == "JsOnly")
