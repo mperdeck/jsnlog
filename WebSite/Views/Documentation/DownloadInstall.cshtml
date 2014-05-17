@@ -125,8 +125,8 @@
     {
         <p>
             @{
-                Uri url = HttpContext.Current.Request.Url;
-                string netJsUrl = PageVersions.UrlWithVersionUrlName(url, "netjs");
+        Uri url = HttpContext.Current.Request.Url;
+        string netJsUrl = PageVersions.UrlWithVersionUrlName(url, "netjs");
             }
 
             <small>If you use .Net, <a href="@netJsUrl">click here</a>.</small>
@@ -149,11 +149,14 @@
         <p>
             The built in AJAX appender by default sends all log messages to this url:
         </p>
-        <pre>jsnlog.logger</pre>
+        <pre>@SiteConstants.DefaultDefaultAjaxUrl</pre>
 
         <p>
             You can change this using the
-            @Html.ViewLink("jsnlogjs-ajaxappender-setOptions")<text>.</text>
+            <span class="term">defaultAjaxUrl</span>
+            field in the 
+JL
+            @Html.ViewLink("jsnlogjs-jl-setOptions")<text>.</text>
         </p>
 
         <h2>Format of the log messages</h2>

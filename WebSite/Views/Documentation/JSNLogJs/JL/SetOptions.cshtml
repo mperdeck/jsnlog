@@ -23,6 +23,7 @@
         <tbody>
         @Html.TableRowHtml("enabled", "optional", "bool", "true", "If false, all loggers are disabled.")
         @Html.TableRowHtml("maxMessages", "optional", "number", "no maximum", "Limits total number of messages sent to the server. See remarks below.")
+        @Html.TableRowHtml("defaultAjaxUrl", "optional", "string", "see remarks", "Default url used by appenders when no url is set. See remarks below.")
         @Html.TableRowHtml("clientIP", "optional", "string", "(empty)", 
                 @"The IP address of the browser. Used with the ipRegex option of " +
                 Html.ViewLink("jsnlogjs-logger-setOptions", "loggers") +
@@ -38,6 +39,10 @@
                 ".")
         </tbody>
     </table>
+
+    @Html.Partial("_DefaultAjaxUrlRemarks", new ViewDataDictionary { 
+        { "configSource", "jsnlog.js"}, 
+    })
 
     @Html.Partial("_MaxMessagesRemarks",new ViewDataDictionary { 
         { "configSource", "jsnlog.js"}, 

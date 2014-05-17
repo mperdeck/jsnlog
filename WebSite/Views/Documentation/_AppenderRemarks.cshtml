@@ -1,4 +1,5 @@
 ﻿@using ViewExtensions
+@using WebSite.App_Code
 
 @{
     bool showNameAttribute =
@@ -48,7 +49,7 @@
                 rather than one by one.")
             @if (showUrlTableRow)
             { 
-        @Html.TableRowHtml("url", "optional", (showTypeColumn ? "string" : null), "jsnlog.logger",
+        @Html.TableRowHtml("url", "optional", (showTypeColumn ? "string" : null), Utils.DefaultAjaxUrlLink((string)ViewData["configSource"]),
                 @"All log messages will be sent to this URL.
 The default url is as expected by the server side code of JSNLog.")
             }

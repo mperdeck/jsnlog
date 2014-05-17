@@ -254,6 +254,7 @@
     <Content Include="Views\Documentation\JSNLogJs\ConfigureFunction\Index.cshtml" />
     <Content Include="Views\Documentation\GetStartedLogging\LoadingJsFile.cshtml" />
     <Content Include="Views\Documentation\GetStartedLogging\ConsoleLog.cshtml" />
+    <Content Include="Views\Documentation\_DefaultAjaxUrlRemarks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

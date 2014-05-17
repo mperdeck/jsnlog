@@ -1,4 +1,5 @@
 ﻿@using ViewExtensions
+@using WebSite.App_Code
 
 @{
     string referenceToThis =
@@ -47,7 +48,7 @@
         at all, every JavaScript logger will have the same options as the root logger.
     </p>
 
-
+<a name="rootlogger-and-defaultappender"></a>
     <h3>Root logger and default appender</h3>
     <p>
         When the library loads, it creates the root logger. It also creates a default appender for use by the root logger.
@@ -105,6 +106,6 @@
         @Html.TableRowHtml("sendWithBufferLevel", "", "OFF")
         @Html.TableRowHtml("bufferSize", "", "0")
         @Html.TableRowHtml("batchSize", "", "1")
-        @Html.TableRowHtml("url", "", "jsnlog.logger")
+        @Html.TableRowHtml("url", "", Utils.DefaultAjaxUrlLink((string)ViewData["configSource"]))
         </tbody>
     </table>
