@@ -12,6 +12,8 @@ namespace WebSite.App_Code
         public const string HttpHeaderRequestIdName = "JSNLog-RequestId";
         public const string GlobalMethodCalledAfterJsnlogJsLoaded = "__jsnlog_configure";
         public const string DefaultDefaultAjaxUrl = "/jsnlog.logger";
+        public const string LicenceUrl = "https://github.com/mperdeck/jsnlog/blob/master/LICENSE";
+        public const string LicenceName = "Apache License, Version 2.0";
 
         // This causes NuGet to search for all packages with "JSNLog" - so the user will see
         // JSNLog.NLog, etc. as well.
