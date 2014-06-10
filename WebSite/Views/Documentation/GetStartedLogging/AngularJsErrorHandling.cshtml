@@ -1,0 +1,194 @@
+﻿@using ViewExtensions
+
+@{
+    ViewBag.Title = "AngularJS Error Handling";
+    ViewBag.Key = "getstarted-angularerrorhandling";
+    ViewBag.Description = "Logging JavaScript exceptions and AJAX issues to the server in AngularJS applications.";
+    Layout = "~/Views/Shared/_DocumentationLayout.cshtml";
+}
+
+<h1>AngularJS Error Handling</h1>
+<p>
+    <a href="https://angularjs.org/" target="_blank">AngularJS</a>
+    has built in support for logging, exception handling and AJAX calls.
+</p>
+<p>
+    This page shows how to:
+</p>
+<ul>
+    <li>
+        <a href="#angularjslogmessages">Store AngularJS log messages in your server side log</a>;
+    </li>
+    <li>
+        <a href="#javascriptexceptions">Log JavaScript exceptions</a>;
+    </li>
+    <li>
+        <a href="#logajaxissues">Log AJAX issues</a>, such as timeouts, slow responses and error responses.
+    </li>
+</ul>
+
+<a id="angularjslogmessages"></a>
+<h2>AngularJS log messages</h2>
+<p>
+    AngularJS' standard
+    <a href="https://docs.angularjs.org/api/ng/service/$log">$log</a> service
+    simply logs to the browser console, which is not much good when your app goes live.
+</p>
+<p>
+    To make AngularJS do JavaScript logging through JSNLog so you can log to the server,
+    simply replace the $log service:
+</p>
+<pre>
+// Create new module logToServer with new $log service
+angular.module('logToServer', [])
+.service('$log', function () {
+    this.log = function (msg) {
+        JL('Angular').trace(msg);
+    }
+    this.debug = function (msg) {
+        JL('Angular').debug(msg);
+    }
+    this.info = function (msg) {
+        JL('Angular').info(msg);
+    }
+    this.warn = function (msg) {
+        JL('Angular').warn(msg);
+    }
+    this.error = function (msg) {
+        JL('Angular').error(msg);
+    }
+});
+// When creating your main module, import module logToServer
+var app = angular.module('main', ['logToServer']);
+</pre>
+
+<a id="javascriptexceptions"></a>
+<h2>Log JavaScript exceptions</h2>
+
+<p>
+    To ensure that exceptions are logged with severity FATAL,
+    replace the factory that creates the standard
+    <a href="https://docs.angularjs.org/api/ng/service/$exceptionHandler">$exceptionHandler</a>
+    service:
+</p>
+
+<pre>
+angular.module('logToServer', [])
+.service('$log', function () {
+    ...
+})<span class="addedcode">
+.factory('$exceptionHandler', function () {
+    return function (exception, cause) {
+        JL('Angular').fatalException(cause, exception);
+        throw exception;
+    };
+});</span>
+var app = angular.module('main', ['logToServer']);
+</pre>
+
+
+<a id="logajaxissues"></a>
+<h2>Log AJAX issues</h2>
+<p>
+    To add JavaScript error handling for AJAX calls, it makes sense to use
+    an AngularJS <a href="https://docs.angularjs.org/api/ng/service/$http#interceptors">Interceptor</a>.
+    This allows you to run your own code when the
+    <a href="https://docs.angularjs.org/api/ng/service/$http">$http</a> service is about to send
+    an AJAX request, after it has received a response, and after detecting an error.
+</p>
+<p>
+    Add a factory to create the interceptor to your <span class="term">logToServer</span>
+    module:
+</p>
+
+<pre>
+angular.module('logToServer', [])
+...<span class="addedcode">
+.factory('logToServerInterceptor', ['$q', function ($q) {
+    var myInterceptor = {
+        'request': function (config) {
+            config.msBeforeAjaxCall = new Date().getTime();
+            return config;
+        },
+        'response': function (response) {
+            if (response.config.warningAfter) {
+                var msAfterAjaxCall = new Date().getTime();
+                var timeTakenInMs = 
+                      msAfterAjaxCall - response.config.msBeforeAjaxCall;
+                if (timeTakenInMs > response.config.warningAfter) {
+                    JL('Angular.Ajax').warn({ 
+                      timeTakenInMs: timeTakenInMs, 
+                      config: response.config, 
+                      data: response.data });
+                }
+            }
+            return response;
+        },
+        'responseError': function (rejection) {
+            var errorMessage = "timeout";
+            if (rejection.status != 0) {
+                errorMessage = rejection.data.ExceptionMessage;
+            }
+            JL('Angular.Ajax').fatalException({ 
+                      errorMessage: errorMessage, 
+                      status: rejection.status, 
+                      config: rejection.config }, rejection.data);
+            return $q.reject(rejection);
+        }
+    };
+    return myInterceptor;
+}]);</span>
+var app = angular.module('main', ['logToServer']);
+</pre>
+
+<p>
+    The <span class="term">request</span> function is called before
+    the AJAX request is sent. It gives you access to the <span class="term">config</span>
+    object, which is shared throughout the interceptor. Here it is used to store the current time,
+    so after the response is received it can calculate whether it was too late.
+</p>
+<p>
+    The <span class="term">response</span> function is called
+    after receiving a good response from the server (that is, it has an HTTP code in the 200 range).
+    This is the right place to calculate how long the user had to wait for the response, and to
+    log a warning message if it took too long.
+</p>
+<p>
+    The <span class="term">responseError</span> function is called
+    when an error response was received, or when a timeout happened.
+    You can distinguish between timeout and bad response by looking at <span class="term">rejection.status</span> -
+    it will contain 0 for a timeout, and the HTTP response code in case of an error response.
+</p>
+
+<p>
+    Don't forget to add the new interceptor to the interceptor pipeline of your main module:
+</p>
+
+<pre>
+app.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.interceptors.push('logToServerInterceptor');
+}]);
+</pre>
+
+<p>
+    When you call $http to send an AJAX message, set the timeout and the delay after which a warning log message is sent in
+    milliseconds in the config object, using <span class="term">timeout</span> and <span class="term">warningAfter</span>:
+</p>
+<pre>
+$http({ method: '...', url: '...', data: ..., 
+        timeout: 5000, warningAfter: 2000 })
+.success(function (data, status, headers, config) {
+	...
+})
+.error(function (data, status, headers, config) {
+	...
+});
+</pre>
+
+
+
+
+
+
+
+
