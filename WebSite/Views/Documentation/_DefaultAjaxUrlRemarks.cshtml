@@ -1,0 +1,52 @@
+﻿@using ViewExtensions
+@using WebSite.App_Code
+
+@{
+    bool showWebConfigRelated =
+        ((string)(ViewData["configSource"]) == "web.config");
+}
+
+<a id="defaultAjaxUrl"></a>
+<h3>defaultAjaxUrl</h3>
+<p>
+    Provides the default url
+    if no url is set on the
+    @if (showWebConfigRelated)
+    {
+        @Html.ViewLink("webconfig-ajaxappender")<text>.</text>
+    }
+    else
+    {
+         <text>AjaxAppender</text>
+        @Html.ViewLink("jsnlogjs-ajaxappender-setOptions")<text>.</text>
+    }
+
+    Also sets the url for the
+    @if (showWebConfigRelated)
+    {
+        @Html.ViewLink("webconfig-logger", "default appender", null, "rootlogger-and-defaultappender")<text>.</text>
+    }
+    else
+    {
+        @Html.ViewLink("jsnlogjs-logger-setOptions", "default appender", null, "rootlogger-and-defaultappender")<text>.</text>
+    }
+</p>
+<p>
+    If <span class="term">defaultAjaxUrl</span>
+    is not set,
+    the url <span class="term">@SiteConstants.DefaultDefaultAjaxUrl</span> is used.
+</p>
+
+@if (showWebConfigRelated)
+{
+    <p>
+        However, if your site sits in an application below the
+        <a href="http://www.iis.net/learn/get-started/planning-your-iis-architecture/understanding-sites-applications-and-virtual-directories-on-iis">root application</a>, then
+        it will have a url like <span class="term">http://domain.com/site</span> rather than
+        <span class="term">http://domain.com</span>. JSNLog caters for this situation by adding the application path
+        to the default url, resulting in a default url like
+        <span class="term"><text>/site</text>@SiteConstants.DefaultDefaultAjaxUrl</span>.
+    </p>
+}
+
+
