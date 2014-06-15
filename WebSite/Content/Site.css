@@ -1,30 +1,37 @@
-body
-{
-    font-size: .85em;
-    font-family:  "Segoe UI", "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
-    color: #232323;
-    background-color: #fff;
-    line-height: 1.5em;
-}
 
-header,
-footer,
-nav,
-section {
-    display: block;
-}
+/* Required if you use a fixed top menu. 90px is minimum when screen is 640px wide (iphone) */
+body { padding-top: 90px; }
 
-a:visited,
-a
+/* --------------------------------------- */
+
+a.logo:visited,
+a.logo
 {
     text-decoration:none;
     color: #0566C9;
+    font-weight: bold;
+    font-size: 30pt;
 }
 
-a:hover
-{
-    text-decoration:underline;
+/* --------------------------------------- */
+/* We're using a boostrap button group for the version, plus the custom versions class */
+.versions span,
+.versions a {
+    width:70px; 
 }
+
+.versions span
+{
+    cursor:default;
+}
+
+/* Adding to boostrap class*/
+.navbar-fixed-top
+{
+    padding-bottom: 10px;
+}
+
+/* --------------------------------------- */
 
 .term 
 {
@@ -37,194 +44,54 @@ a:hover
     color: #AD0101;
 }
 
-/* Block level
------------------------------------------------------------*/
-
-.container
-{
-    max-width: 900px;
-    min-width: 430px;
-    margin: 0 auto;
-}
-
-.container:after
-{ 
- content: ".";  
- display: block; 
- height: 0; 
- clear: both; 
- visibility: hidden; 
-}
-
-header
-{
-    padding: 20px 0 20px 0;
-}
-
-.headertop
-{
-    height: 40px;
-}
-
-
-header .main-menu
-{
-    float: right;   
-}
-
-header .main-menu ul
-{
-    margin-left: 0px;
-}
-
-header:after
-{
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
-
-header a.logo:visited,
-header a.logo
-{
-    text-decoration:none;
-    color: #0566C9;
-    font-weight: bold;
-    font-size: 30pt;
-    float: left;
-}
-
-.versions span,
-.versions a {
-    width:50px; 
-    text-align: center; 
-    font-size: 80%; 
-    padding: 0 2px 0 2px; 
-    display: inline-block;
-    margin-right: 10px;
-}
-
-.versions span {
-    background-color: #0566C9; 
-    color: #ffffff; 
-}
-
-.versions a {
-    color: #0566C9; 
-    border: 1px solid #0566C9; 
-    background-color: #ffffff; 
-}
-
-.main-menu
-{
-    background-color: #fff;
-}
-
-.main-menu a:visited,
-.main-menu a
-{
-    font-weight: bold;
-    font-size: 1.2em;
-}
-
-.main-menu ul
-{
-    margin: 5px 0 5px 0;
-    padding: 0;
-}
-
-.main-menu li
-{
-    list-style: none;
-    display: inline-block;
-    padding: 0 0 0 20px;
-}
+/* --------------------------------------- */
 
 .social-media {
     float: right;
+    width: 150px;
 }
 
 .social-media .twitter {
     float: right;
+    margin-left: 10px;
 }
 
 .social-media .facebook {
     float: right;
 }
 
-footer
-{
-    margin-top: 10px;
-}
+/* --------------------------------------- */
 
-footer .container 
+.hero 
 {
-    border-top: 1px solid #e0e0e0; 
-}
-
-.subfooter
-{
-    margin-top: 10px;
-    font-size: 80%;
-}
-
-/* Home page
------------------------------------------------------------*/
-
-.hero
-{
-    background-color: #FFFFC0;
-    background-color: #FFF;
-    background-color: #F8FAFC;
     background-color: #f0f0f0;
-    padding: 5px 0 0 0;
-    margin-bottom: 30px;
 }
 
-.large-text
+.hero h1 
 {
+    font-size: 27px;
+    font-weight: bold;
 }
 
-.large-text .benefits
-{
-    max-width: 650px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
 
-.large-text .benefits h1
-{
-    margin: 0 0 10px 0;
-    padding: 0;
-    font-size: 1.8em;
-}
-
-.large-text .benefits h2
-{
-    margin: 0;
-    font-size: 1em;
-}
-
-.large-text .benefits p
-{
-    margin: 0;
-}
 
 a.download-button,
 a.download-button:visited,
 a.download-button:hover
 {
     background: #AD0101 url("/Images/download.png") no-repeat 85% 50%;
-    padding: 7px;
+    padding: 0 7px 7px 7px;
     border-radius: 5px 5px;
     width: 200px;
-    height: 50px;
+    height: 65px;
     cursor:pointer;
     margin-top: -4px;
     display: block;
     text-decoration: none;
+
+    /* push the download button, to align it with rest of text in hero */
+    position: relative;
+    top: 30px;
 }
 
 .download-button span.download-button-caption,
@@ -268,337 +135,3 @@ a.download-button:hover
     padding: 0 7px 0 7px;
     margin-top: -4px;
 }
-
-/* --- feature --- */
-
-.features:after
-{
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
-
-.features .rightColumn,
-.features .leftColumn
-{
-    background-color: #fff;
-    padding: 0px;
-    width: 45%;
-    min-width: 430px;
-}
-
-.features .leftColumn
-{
-    float: left;
-    margin-right: 30px;
-}
-
-.features .rightColumn
-{
-    float: left;
-}
-
-.feature
-{
-    margin-bottom: 30px;
-}
-
-.feature .text
-{
-}
-
-.feature  h2.text
-{
-    margin: 0 0 10px 0;
-    font-size: 1.2em;
-}
-
-.feature .code
-{
-}
-
-.feature .code .download-button
-{
-    margin: 0 auto;
-    position: relative;
-    top: 0px;
-}
-
-.feature .code pre
-{
-    margin: 0;
-    font-size: 1em;
-    font-family: "Courier New", monospace;
-}
-
-.feature table.log {
-    border-top: 1px solid #888888;
-    border-left: 1px solid #888888;
-    border-right: 1px solid #888888;
-    border-spacing:0;
-    border-collapse:collapse;
-    width: 310px;
-    font-size: 80%;
-}
-
-.feature th {
-    text-align: left;
-    background-color: #ffffff;
-    border-bottom: 1px solid #888888;
-
-    font-weight: normal;
-}
-
-.feature th,
-.feature td {
-    padding: 1px 0 1px 5px;
-    margin: 0px;
-}
-
-.feature td.highlight span {
-    background-color: #eeeeee;
-}
-
-.feature ul.noindent {
-    margin-left: -20px;
-}
-
-.feature ul.spaced li {
-    margin-top: 10px;
-}
-
-.feature ul.halfspaced li {
-    margin-top: 5px;
-}
-
-
-/* Documentation
------------------------------------------------------------*/
-
-.documentation:after
-{
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
-
-.documentation
-{
-    position: relative;
-}
-
-.documentation-menu
-{
-    float: left;
-    background-color: #fff;
-    padding-right: 20px;
-}
-
-.documentation-menu .selected
-{
-    color: #AD0101;
-}
-
-.documentation-menu a.level3
-{
-    font-size: 140%;
-    margin: 15px 0 0 0;
-    display: block;
-}
-
-.documentation-menu a.level4
-{
-    font-size: 120%;
-    margin: 10px 0 0 20px;    
-    display: block;
-}
-
-.documentation-menu a.level5
-{
-    margin: 0 0 0 40px;    
-    display: block;
-}
-
-.documentation-body
-{
-    float: left;
-    width: 620px;
-    min-height: 600px;
-    background-color: #fff;
-    padding-left: 20px;
-    border-left: 1px solid #e0e0e0; 
-}
-
-.documentation-body h1
-{
-    font-size: 1.8em;
-    font-weight: bold;
-    margin: 0;
-}
-
-.documentation-body h2
-{
-    border-top: 1px solid #e0e0e0;
-    font-weight: bold;
-    font-size: 1.5em;
-    margin-top: 10px;
-    padding-top: 5px;
-}
-
-.documentation-body h3
-{
-    color: #000000;
-    font-weight: bold;
-    font-size: 1.2em;
-}
-
-.documentation-body h4
-{
-    color: #000000;
-    font-style: italic;
-    font-size: 1.2em;
-    font-weight: normal;
-}
-
-.documentation pre
-{
-    font-size: 1em;
-    background-color: #f0f0f0;
-    padding: 5px;
-    border-radius:3px;
-    font-family: "Courier New", monospace;
-}
-
-
-/* Styles for basic forms
------------------------------------------------------------*/
-
-fieldset 
-{
-    border:1px solid #ddd;
-    padding:0 1.4em 1.4em 1.4em;
-    margin:0 0 1.5em 0;
-}
-
-legend 
-{
-    font-size:1.2em;
-    font-weight: bold;
-}
-
-textarea 
-{
-    min-height: 75px;
-}
-
-.editor-label 
-{
-    margin: 1em 0 0 0;
-}
-
-.editor-field 
-{
-    margin:0.5em 0 0 0;
-}
-
-
-/* Styles for validation helpers
------------------------------------------------------------*/
-.field-validation-error
-{
-    color: #ff0000;
-}
-
-.field-validation-valid
-{
-    display: none;
-}
-
-.input-validation-error
-{
-    border: 1px solid #ff0000;
-    background-color: #ffeeee;
-}
-
-.validation-summary-errors
-{
-    font-weight: bold;
-    color: #ff0000;
-}
-
-.validation-summary-valid
-{
-    display: none;
-}
-
-/* Tables
------------------------------------------------------------*/
-
-table.border
-{
-    border-collapse: collapse;
-}
-
-table.border td, 
-table.border th
-{
-    padding: 5px;
-    margin: 0;
-    border: 1px solid #808080;
-}
-
-table.border th
-{
-    font-weight: normal;
-    background-color: #f0f0f0;
-    text-align: left;
-}
-
-/* DL, DT
------------------------------------------------------------*/
-
-dt 
-{
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-dd
-{
-    margin-bottom: 10px;
-}
-
-/* Code and log messages
------------------------------------------------------------*/
-
-.code-bg-soft1 
-{
-    background-color: #ECCACA;
-}
-
-.code-bg-soft2
-{
-    background-color: #FEFEDA;
-}
-
-.code-bg-soft3
-{
-    background-color: #D9FFFF;
-}
-
-/* bullet lists
------------------------------------------------------------*/
-
-ul.large-items li {
-    margin-bottom: 10px;
-}
-
-ul.large-items li:last-child {
-    margin-bottom: 0;
-}
-
-

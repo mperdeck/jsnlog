@@ -1,0 +1,9 @@
+﻿<configuration>
+	<jsEngineSwitcher xmlns="http://tempuri.org/JavaScriptEngineSwitcher.Configuration.xsd">
+		<core>
+			<engines>
+				<add name="V8JsEngine" type="JavaScriptEngineSwitcher.V8.V8JsEngine, JavaScriptEngineSwitcher.V8" />
+			</engines>
+		</core>
+	</jsEngineSwitcher>
+</configuration>

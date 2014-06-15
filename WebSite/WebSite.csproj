@@ -51,6 +51,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="BundleTransformer.Core">
+      <HintPath>..\packages\BundleTransformer.Core.1.8.32\lib\net40\BundleTransformer.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="BundleTransformer.Less, Version=1.8.33.0, Culture=neutral, PublicKeyToken=973c344c93aac60d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\BundleTransformer.Less.1.8.33\lib\net40\BundleTransformer.Less.dll</HintPath>
+    </Reference>
+    <Reference Include="ClearScript">
+      <HintPath>..\packages\JavaScriptEngineSwitcher.V8.1.1.9\lib\net40\ClearScript.dll</HintPath>
+    </Reference>
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
     </Reference>
@@ -61,13 +71,19 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="JavaScriptEngineSwitcher.Core">
+      <HintPath>..\packages\JavaScriptEngineSwitcher.Core.1.1.3\lib\net40\JavaScriptEngineSwitcher.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="JavaScriptEngineSwitcher.V8">
+      <HintPath>..\packages\JavaScriptEngineSwitcher.V8.1.1.9\lib\net40\JavaScriptEngineSwitcher.V8.dll</HintPath>
+    </Reference>
     <Reference Include="JSNLog">
       <HintPath>Dependencies\JSNLog.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -151,6 +167,7 @@
     <Content Include="App_Code\Utils.cs" />
     <Content Include="App_Code\SiteConstants.cs" />
     <Content Include="App_Code\Generated.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\ViewExtensionsConfig.cs" />
     <Compile Include="Areas\Version1\Controllers\DocumentationController.cs" />
@@ -167,6 +184,18 @@
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Areas\Version1\Content\Site.css" />
     <Content Include="Areas\Version1\Images\messageflow.png" />
+    <None Include="ClearScript.V8\ClearScriptV8-32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ClearScript.V8\ClearScriptV8-64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ClearScript.V8\v8-ia32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ClearScript.V8\v8-x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -174,22 +203,10 @@
     <Content Include="Images\download.png" />
     <Content Include="Nuget\icon.png" />
     <Content Include="App_Code\Generated.cs.template" />
-    <None Include="Scripts\jquery-2.1.0.intellisense.js" />
-    <Content Include="Scripts\jquery-2.1.0.js" />
-    <Content Include="Scripts\jquery-2.1.0.min.js" />
-    <Content Include="Scripts\jquery-ui-1.10.4.js" />
-    <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Scripts\jquery-2.1.0.min.map" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\knockout-3.0.0.debug.js" />
-    <Content Include="Scripts\knockout-3.0.0.js" />
-    <Content Include="Scripts\modernizr-2.7.1.js" />
+    <Content Include="Scripts\bootstrap-3.1.1\bootstrap.js" />
+    <Content Include="Scripts\bootstrap-3.1.1\bootstrap.min.js" />
+    <Content Include="Scripts\jquery\jquery-1.11.1.js" />
+    <Content Include="Scripts\jquery\jquery-1.11.1.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -335,6 +352,49 @@
     <Content Include="Views\Documentation\JavascriptLogging\RequestId.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-3.1.1\alerts.less" />
+    <Content Include="Content\bootstrap-3.1.1\badges.less" />
+    <Content Include="Content\bootstrap-3.1.1\bootstrap.less" />
+    <Content Include="Content\bootstrap-3.1.1\breadcrumbs.less" />
+    <Content Include="Content\bootstrap-3.1.1\button-groups.less" />
+    <Content Include="Content\bootstrap-3.1.1\buttons.less" />
+    <Content Include="Content\bootstrap-3.1.1\carousel.less" />
+    <Content Include="Content\bootstrap-3.1.1\close.less" />
+    <Content Include="Content\bootstrap-3.1.1\code.less" />
+    <Content Include="Content\bootstrap-3.1.1\component-animations.less" />
+    <Content Include="Content\bootstrap-3.1.1\dropdowns.less" />
+    <Content Include="Content\bootstrap-3.1.1\forms.less" />
+    <Content Include="Content\bootstrap-3.1.1\glyphicons.less" />
+    <Content Include="Content\bootstrap-3.1.1\grid.less" />
+    <Content Include="Content\bootstrap-3.1.1\input-groups.less" />
+    <Content Include="Content\bootstrap-3.1.1\jumbotron.less" />
+    <Content Include="Content\bootstrap-3.1.1\labels.less" />
+    <Content Include="Content\bootstrap-3.1.1\list-group.less" />
+    <Content Include="Content\bootstrap-3.1.1\media.less" />
+    <Content Include="Content\bootstrap-3.1.1\mixins.less" />
+    <Content Include="Content\bootstrap-3.1.1\modals.less" />
+    <Content Include="Content\bootstrap-3.1.1\navbar.less" />
+    <Content Include="Content\bootstrap-3.1.1\navs.less" />
+    <Content Include="Content\bootstrap-3.1.1\normalize.less" />
+    <Content Include="Content\bootstrap-3.1.1\pager.less" />
+    <Content Include="Content\bootstrap-3.1.1\pagination.less" />
+    <Content Include="Content\bootstrap-3.1.1\panels.less" />
+    <Content Include="Content\bootstrap-3.1.1\popovers.less" />
+    <Content Include="Content\bootstrap-3.1.1\print.less" />
+    <Content Include="Content\bootstrap-3.1.1\progress-bars.less" />
+    <Content Include="Content\bootstrap-3.1.1\responsive-utilities.less" />
+    <Content Include="Content\bootstrap-3.1.1\scaffolding.less" />
+    <Content Include="Content\bootstrap-3.1.1\tables.less" />
+    <Content Include="Content\bootstrap-3.1.1\theme.less" />
+    <Content Include="Content\bootstrap-3.1.1\thumbnails.less" />
+    <Content Include="Content\bootstrap-3.1.1\tooltip.less" />
+    <Content Include="Content\bootstrap-3.1.1\type.less" />
+    <Content Include="Content\bootstrap-3.1.1\utilities.less" />
+    <Content Include="Content\bootstrap-3.1.1\variables.less" />
+    <Content Include="Content\bootstrap-3.1.1\wells.less" />
+    <None Include="BundleTransformer.Configuration.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\jsnlog.pubxml" />
     <Content Include="Views\Documentation\_MaxMessagesRemarks.cshtml" />
     <Content Include="Views\Home\PhpJs.cshtml" />

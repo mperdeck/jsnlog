@@ -1,0 +1,21 @@
+<configuration>
+	<configSections>
+		<sectionGroup name="bundleTransformer">
+			<section name="less" type="BundleTransformer.Less.Configuration.LessSettings, BundleTransformer.Less" />
+		</sectionGroup>
+	</configSections>
+	<bundleTransformer xmlns="http://tempuri.org/BundleTransformer.Configuration.xsd">
+		<core>
+			<css>
+				<translators>
+					<add name="LessTranslator" type="BundleTransformer.Less.Translators.LessTranslator, BundleTransformer.Less" />
+				</translators>
+			</css>
+		</core>
+	</bundleTransformer>
+	<system.webServer>
+		<handlers>
+			<add name="LessAssetHandler" path="*.less" verb="GET" type="BundleTransformer.Less.HttpHandlers.LessAssetHandler, BundleTransformer.Less" resourceType="File" preCondition="" />
+		</handlers>
+	</system.webServer>
+</configuration>

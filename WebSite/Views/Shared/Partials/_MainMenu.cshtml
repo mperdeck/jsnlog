@@ -7,11 +7,10 @@
 
 @if (showMenu)
 {
-    <div class="main-menu"> 
-        <ul>
+        <ul class="nav navbar-nav navbar-right">
             @if (currentVersion == "JsOnly")
             {
-                <li>
+                <li class="hidden-xs">
                     @Html.ActionLink("Home", "Index", "Home")
                 </li>
             }
@@ -37,7 +36,7 @@
                     <a href="https://vimeo.com/channels/jsnlog/videos" target="_blank">Videos</a>
                 </li>
             }
-            <li>
+            <li class="hidden-xs">
                 @if (currentVersion == "NetJs")
                 {
                     <a href="https://github.com/mperdeck/jsnlog" target="_blank">Source</a>
@@ -47,7 +46,7 @@
                     <a href="https://github.com/mperdeck/jsnlog.js" target="_blank">Source</a>
                 }
             </li>
-            <li>
+            <li class="hidden-xs">
                 @if (currentVersion == "NetJs")
                 {
                     <a href="https://github.com/mperdeck/jsnlog/issues" target="_blank">Support</a>
@@ -58,7 +57,6 @@
                 }
             </li>
         </ul>
-    </div>
 }
     
 

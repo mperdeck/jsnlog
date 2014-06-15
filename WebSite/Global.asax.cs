@@ -18,6 +18,7 @@ namespace WebSite
         {
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             AreaRegistration.RegisterAllAreas();
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             ViewExtensionsConfig.RegisterViews();
             ViewExtensionsConfig.RegisterPageVersions();

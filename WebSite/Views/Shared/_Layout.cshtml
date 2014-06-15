@@ -13,8 +13,12 @@
     <meta name="msvalidate.01" content="39897E0BA1EF4A9A3854717FD144E265" />  @*Required to access Bing Webmaster Tools*@
     <title>@ViewBag.Title - JSNLog</title>
     <meta name="description" content="@ViewBag.Description" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    @Styles.Render("~/Content/bootstrap")
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
     <link rel="shortcut icon" href="/favicon.ico">
+
     <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
@@ -34,66 +38,112 @@
 
     <div id="fb-root"></div>
     <script>
-(function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
 
 
     <header>
-        <div class="container headertop">
-            @Html.Partial("Partials/_Logo")
-            @Html.Partial("Partials/_MainMenu")
-        </div>
-        <div class="versions container">
-            @Html.VersionSwitcher()
-
-            @if (showSocialMedia)
-            {
-                <div class="social-media">
-                    @*
-                        Twitter button. Generated at https://about.twitter.com/resources/buttons#tweet
-                        Evaluating #JSNLog. Integrates JavaScript logging with .Net server side logging. Thoughts?
-                    *@
-
-                    <div class="twitter">
-                        <a href="https://twitter.com/share" class="twitter-share-button" data-text="Evaluating #JSNLog. JavaScript logging package that stores events in server side log. Thoughts?" data-count="none">Tweet</a>
-                        <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+                <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                  <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainmenu">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                      </button>
+                      @Html.Partial("Partials/_Logo")
                     </div>
 
-                    @*Facebook share button. Generated at https://developers.facebook.com/docs/plugins/share-button/*@
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="mainmenu">
+                        @Html.Partial("Partials/_MainMenu")
+                    </div> @*.navbar-collapse*@ 
+                  </div> @*.container*@
 
-                    <div class="facebook">
-                        <div class="fb-share-button" data-href="http://jsnlog.com" data-type="button"></div>
+                  <div class="container">
+
+
+
+
+            <div class="row">
+                      <div class="col-sm-12">
+                @*<div class="col-sm-4">*@
+                    <div class="btn-group btn-group-xs versions">
+                        @Html.VersionSwitcher()
                     </div>
+                @*</div>
+                <div class="col-sm-3 pull-right">*@
+                    @if (showSocialMedia)
+                    {
+                        <div class="social-media">
+                            @*
+                                Twitter button. Generated at https://about.twitter.com/resources/buttons#tweet
+                                Evaluating #JSNLog. Integrates JavaScript logging with .Net server side logging. Thoughts?
+                            *@
+
+                            <div class="twitter">
+                                <a href="https://twitter.com/share" class="twitter-share-button" data-text="Evaluating #JSNLog. JavaScript logging package that stores events in server side log. Thoughts?" data-count="none">Tweet</a>
+                                <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+                            </div>
+
+                            @*Facebook share button. Generated at https://developers.facebook.com/docs/plugins/share-button/*@
+
+                            <div class="facebook">
+                                <div class="fb-share-button" data-href="http://jsnlog.com" data-type="button"></div>
+                            </div>
+                        </div>
+                    }
                 </div>
-            }
-        </div>
+            </div> @*row*@
+
+
+
+
+                  </div> @*.container*@
+
+
+
+                </nav>
     </header>
 
     <section class="hero">
         <div class="container">
-            @RenderSection("Hero", false)
+            <div class="row">
+                @RenderSection("Hero", false)
+            </div>
         </div>
     </section>
 
-    <section class="page-body">
+    <section>
         <div class="container">
-            @RenderBody()
+            <div class="row">
+                @RenderBody()
+            </div>
         </div>
     </section>
 
     <footer>
         <div class="container">
-            <div class="subfooter">
-                &copy; 2012-2014 <a href="http://mattperdeck.com/page/About-Matt-Perdeck.aspx" target="_blank">Mattijs Perdeck</a> |
-                License: <a href="@SiteConstants.LicenceUrl" target="_blank">@SiteConstants.LicenceName</a> |
-                <a href="/Version1/Home" target="_blank">Documentation for version 1.1</a>
+            <div class="row">
+                <div class="col-sm-12">
+                    &copy; 2012-2014 <a href="http://mattperdeck.com/page/About-Matt-Perdeck.aspx" target="_blank">Mattijs Perdeck</a> |
+                    License: <a href="@SiteConstants.LicenceUrl" target="_blank">@SiteConstants.LicenceName</a> |
+                    <a href="/Version1/Home" target="_blank">Documentation for version 1.1</a>
+                </div>
             </div>
         </div>
     </footer>
+
+    @*Must load jQuery before bootstrap*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
 </body>
 </html>

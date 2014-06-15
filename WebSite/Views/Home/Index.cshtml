@@ -23,56 +23,57 @@
 }
 
 @section Hero {
-    <section class="hero large-text">
-        <section class="benefits" style="float: left; width: 650px;">
-            @if (currentVersion == "NetJs")
-            {
-                <h1>Log JavaScript <i>client side</i> events in your <i>server side</i> logs</h1>
-                <p>
-                    Use this JavaScript logging package to log JavaScript errors, AJAX timeouts and other client side events in your server side log.
-                    Supports Elmah, Log4Net, NLog, Common.Logging.
-                </p>
-            }
-            @if (currentVersion == "JsOnly")
-            {
-                <h1>JavaScript logging redone</h1>
-                <p>
-                    JSNLog.js
-                    is a tiny JavaScript logging library, simple and well documented.
-                    It has unique options to cut down on the amount of logging data you receive while
-                    still getting the information you actually need.
-                </p>
-            }
-            @if (currentVersion == "PhpJs")
-            {
-                <h1>JavaScript logging for PHP</h1>
-            }
-        </section>
-<div class="download" style="float: right; margin-bottom: 10px; margin-top: 12px;"> 
-        @Html.Raw(Html.Partial("Partials/_DownloadButton").ToHtmlString())
+    <div class="col-sm-8">
+        @if (currentVersion == "NetJs")
+        {
+            <h1>Log JavaScript <i>client side</i> events in your <i>server side</i> logs</h1>
+            <p>
+                Use this JavaScript logging package to log JavaScript errors, AJAX timeouts and other client side events in your server side log.
+                Supports Elmah, Log4Net, NLog, Common.Logging.
+            </p>
+        }
+        @if (currentVersion == "JsOnly")
+        {
+            <h1>JavaScript logging redone</h1>
+            <p>
+                JSNLog.js
+                is a tiny JavaScript logging library, simple and well documented.
+                It has unique options to cut down on the amount of logging data you receive while
+                still getting the information you actually need.
+            </p>
+        }
+        @if (currentVersion == "PhpJs")
+        {
+            <h1>JavaScript logging for PHP</h1>
+        }
+    </div>
+    <div class="col-sm-4 hidden-xs">
+        <div class="pull-right"> 
+            @Html.Raw(Html.Partial("Partials/_DownloadButton").ToHtmlString())
         </div>
-
-    </section>
+    </div>
 }
 
 <section class="features">
     @if (currentVersion == "PhpJs")
     {
-        <p>
-            Third party library integrating jsnlog.js with PHP:
-        </p>
-        <ul>
-            <li><a target="_blank" href="https://github.com/pnellesen/JSPHPLog">JSPHPLog</a></li>
-        </ul>
+        <div class="col-sm-12">
+            <p>
+                Third party library integrating jsnlog.js with PHP:
+            </p>
+            <ul>
+                <li><a target="_blank" href="https://github.com/pnellesen/JSPHPLog">JSPHPLog</a></li>
+            </ul>
 
-        <p>
-            Use this library in your server side PHP. It uses the 
-            <a href="http://js.jsnlog.com">standard jsnlog.js JavaScript library</a> on the client.
-        </p>
+            <p>
+                Use this library in your server side PHP. It uses the 
+                <a href="http://js.jsnlog.com">standard jsnlog.js JavaScript library</a> on the client.
+            </p>
+        </div>
     }
     else
     {
-        <div class="leftColumn">
+        <div class="col-sm-6">
 
             @Feature(
                 "",
@@ -244,7 +245,7 @@
             </ul>")
 
         </div>
-        <div class="rightColumn">
+        <div class="col-sm-6">
 
             @*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*@
 

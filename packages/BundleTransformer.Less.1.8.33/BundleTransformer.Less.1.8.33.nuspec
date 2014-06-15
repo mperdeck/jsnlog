@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>BundleTransformer.Less</id>
+    <version>1.8.33</version>
+    <title>Bundle Transformer: LESS</title>
+    <authors>Andrey Taritsyn</authors>
+    <owners>Andrey Taritsyn</owners>
+    <licenseUrl>http://bundletransformer.codeplex.com/license</licenseUrl>
+    <projectUrl>http://bundletransformer.codeplex.com/</projectUrl>
+    <iconUrl>http://download-codeplex.sec.s-msft.com/Download?ProjectName=bundletransformer&amp;DownloadId=476845</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>BundleTransformer.Less contains translator-adapter `LessTranslator` (supports LESS (http://lesscss.org) version 1.7.0). This adapter makes translation of LESS-code to CSS-code. Also contains debugging HTTP-handler `LessAssetHandler`, which is responsible for text output of translated LESS-asset.
+
+BundleTransformer.Less does not support the string interpolation in file paths. 
+	
+As a JS-engine is used the JavaScript Engine Switcher library (http://github.com/Taritsyn/JavaScriptEngineSwitcher). For correct working of this module is recommended to install one of the following NuGet packages: JavaScriptEngineSwitcher.Msie or JavaScriptEngineSwitcher.V8.</description>
+    <summary>BundleTransformer.Less contains translator-adapter `LessTranslator` (supports LESS version 1.7.0). This adapter makes translation of LESS-code to CSS-code. Also contains debugging HTTP-handler `LessAssetHandler`, which is responsible for text output of translated LESS-asset.</summary>
+    <releaseNotes>LESS was updated to commit fab1401fc0.</releaseNotes>
+    <copyright>Copyright 2014 Andrey Taritsyn - http://www.taritsyn.ru</copyright>
+    <language>en-US</language>
+    <tags>System.Web.Optimization IBundleTransform ASP.NET CSS Bundling LESS Translation Translator Compilation Compiler</tags>
+    <dependencies>
+      <dependency id="BundleTransformer.Core" version="1.8.32" />
+      <dependency id="JavaScriptEngineSwitcher.Core" version="1.1.3" />
+      <dependency id="Newtonsoft.Json" version="6.0.3" />
+    </dependencies>
+    <references>
+      <reference file="BundleTransformer.Less.dll" />
+    </references>
+  </metadata>
+</package>

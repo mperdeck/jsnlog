@@ -1,0 +1,27 @@
+﻿<configuration>
+	<configSections>
+		<sectionGroup name="bundleTransformer">
+			<section name="core" type="BundleTransformer.Core.Configuration.CoreSettings, BundleTransformer.Core" />
+		</sectionGroup>
+	</configSections>
+	<bundleTransformer xmlns="http://tempuri.org/BundleTransformer.Configuration.xsd">
+		<core>
+			<css>
+				<minifiers>
+					<add name="NullMinifier" type="BundleTransformer.Core.Minifiers.NullMinifier, BundleTransformer.Core" />
+				</minifiers>
+				<translators>
+					<add name="NullTranslator" type="BundleTransformer.Core.Translators.NullTranslator, BundleTransformer.Core" enabled="false" />
+				</translators>
+			</css>
+			<js>
+				<minifiers>
+					<add name="NullMinifier" type="BundleTransformer.Core.Minifiers.NullMinifier, BundleTransformer.Core" />
+				</minifiers>
+				<translators>
+					<add name="NullTranslator" type="BundleTransformer.Core.Translators.NullTranslator, BundleTransformer.Core" enabled="false" />
+				</translators>
+			</js>
+		</core>
+	</bundleTransformer>
+</configuration>
