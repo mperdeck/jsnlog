@@ -121,7 +121,7 @@
         </div>
     </section>
 
-    <section>
+    <section class="main">
         <div class="container">
             <div class="row">
                 @RenderBody()
@@ -130,15 +130,13 @@
     </section>
 
     <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    &copy; 2012-2014 <a href="http://mattperdeck.com/page/About-Matt-Perdeck.aspx" target="_blank">Mattijs Perdeck</a> |
-                    License: <a href="@SiteConstants.LicenceUrl" target="_blank">@SiteConstants.LicenceName</a> |
-                    <a href="/Version1/Home" target="_blank">Documentation for version 1.1</a>
-                </div>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+                &copy; 2012-2014 <a href="http://mattperdeck.com/page/About-Matt-Perdeck.aspx" target="_blank">Mattijs Perdeck</a> |
+                License: <a href="@SiteConstants.LicenceUrl" target="_blank">@SiteConstants.LicenceName</a> |
+                <a href="/Version1/Home" target="_blank">Documentation for version 1.1</a>
             </div>
-        </div>
+        </nav>
     </footer>
 
     @*Must load jQuery before bootstrap*@

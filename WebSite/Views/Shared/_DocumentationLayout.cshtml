@@ -4,12 +4,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <div class="col-sm-4">
-        <a id="menustart"></a>
-        @Html.ViewMenu()
+    <div class="col-sm-3">
+        <div class="documentation-menu">
+            <a id="menustart"></a>
+            @Html.ViewMenu()
+        </div>
     </div>
 
-    <div class="col-sm-8">
+    <div class="col-sm-9">
         <a id="contentstart"></a>
         @if (string.IsNullOrWhiteSpace(ViewBag.H1))
         {
