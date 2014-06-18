@@ -1,9 +1,4 @@
 
-/* Required if you use a fixed top menu. 90px is minimum when screen is 640px wide (iphone) */
-body { padding-top: 90px; }
-
-/* --------------------------------------- */
-
 a.logo:visited,
 a.logo
 {
@@ -33,6 +28,12 @@ a.logo
 
 .navbar-default {
     background-color: #c0c0c0;
+}
+
+header .navbar 
+{
+    margin-bottom: 0;
+    padding: 10px 0 15px 0;
 }
 
 header .navbar-default .navbar-nav li a {
@@ -159,7 +160,7 @@ a.download-button:hover
 
 .documentation-menu
 {
-    margin-top: 30px;
+    margin-top: 25px;
 }
 
 .documentation-menu a
@@ -220,6 +221,53 @@ footer .navbar
     padding: 5px 0 5px 0;
 }
 
+/* -------------------------------------- */
 
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+border-bottom: 1px solid #dddddd;
+}
 
+.table.no-borders > thead > tr > th, 
+.table.no-borders > tbody > tr > th, 
+.table.no-borders > tfoot > tr > th, 
+.table.no-borders > thead > tr > td, 
+.table.no-borders > tbody > tr > td, 
+.table.no-borders > tfoot > tr > td {
+border: none;
+}
 
+table.wide
+{
+    margin-left: 50px;
+}
+
+table.medium
+{
+    max-width: 500px;
+    margin-left: 50px;
+}
+
+table.narrow
+{
+    max-width: 300px;
+    margin-left: 50px;
+}
+
+/* -------------------------------------- */
+
+ul.large-items li+li
+{
+    margin-top: 15px;
+}
+
+h2, .h2 {
+font-size: 25px;
+}
+
+h3, .h3 {
+    font-size: 18px;
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+margin-bottom: 20px;
+}

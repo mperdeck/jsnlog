@@ -4,15 +4,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <div class="col-sm-3">
-        <div class="documentation-menu">
-            <a id="menustart"></a>
-            @Html.ViewMenu()
-        </div>
-    </div>
+@*
+    Place the menu physically after the main content,
+    and use col-sm-push-3 and col-sm-pull-9 to push it to the
+    left of the main content.
 
-    <div class="col-sm-9">
+    This way, on screen size narrower than 768px,
+    the menu is moved below the main content,
+    rather than above the main content.
+*@
+
+    <div class="col-sm-9 col-sm-push-3">
         <a id="contentstart"></a>
+        <a href="#menustart" class="visible-xs">Documentation Menu</a>
+
         @if (string.IsNullOrWhiteSpace(ViewBag.H1))
         {
             <h1>@ViewBag.Title</h1>
@@ -24,3 +29,12 @@
 
         @RenderBody()
     </div>
+
+    <div class="col-sm-3 col-sm-pull-9">
+        <div class="documentation-menu">
+            <a id="menustart"></a>
+            <h2 class="visible-xs">Documentation Menu</h2>
+            @Html.ViewMenu()
+        </div>
+    </div>
+

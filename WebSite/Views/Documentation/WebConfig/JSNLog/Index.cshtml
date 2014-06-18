@@ -29,7 +29,7 @@
     The &lt;jsnlog&gt; element can have the following attributes: 
         </p>
 
-    <table class="border">
+    <table class="table wide" >
         @Html.Partial("_OptionsTableHeading",new ViewDataDictionary { 
             { "configSource", "web.config"} 
         })
@@ -78,7 +78,7 @@ You can choose to have this additional information logged on the server along wi
         one or more place holders:
         </p>
 
-        <table class="border">
+        <table class="table wide">
         <thead>
             <tr>
                 <th>Place holder</th>
@@ -152,8 +152,7 @@ You can choose to have this additional information logged on the server along wi
     This shows the date and time that the log message was created on the client as well as the user agent
     in each log message.
 </p>
-<pre>&lt;jsnlog 
-    serverSideMessageFormat="Sent: %date, Brower: %userAgent - %message" &gt;</pre>
+<pre>&lt;jsnlog serverSideMessageFormat="Sent: %date, Brower: %userAgent - %message" &gt;</pre>
 
     <p>
         This processes all client side JavaScript log messages via the server side logger "jslogger".

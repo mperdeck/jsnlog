@@ -15,19 +15,23 @@
     <section class="parameters">
         <h3>Parameters</h3>
 
-        <dl>
-            <dt>logObject</dt>
-            <dd>
+            <table class="table medium no-borders">
+        <tr>
+            <th>logObject</th>
+            <td>
                 String or object to be logged, or a function that returns the string or object to be logged
                 (@Html.ViewLink("jsnlogjs-logger-log", "details", fragment: "Remarks")).
-            </dd>
-            <dt>e</dt>
-            <dd>
+            </td>
+        </tr>
+        <tr>
+            <th>e</th>
+            <td>
                 <a href="http://www.w3schools.com/js/js_errors.asp" target="_blank">Exception</a>
                  that will be logged along with the logObject. On Chrome, Firefox and IE10 and higher,
                 a stack trace will be logged as well. However, see the Remarks below.
-            </dd>
-        </dl>
+            </td>
+        </tr>
+    </table>
 
         <h3>Return Value</h3>
         <p>
