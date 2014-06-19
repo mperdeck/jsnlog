@@ -81,7 +81,9 @@
     }
     else
     {
-        <div class="col-sm-6">
+    <div class="container">
+        <div class="row">
+        <div class="col-sm-6 left-column">
 
             @Feature(
                 "",
@@ -95,12 +97,12 @@
     Free, open source (<a href=""" + SiteConstants.LicenceUrl + @""" target=""_blank"">" + SiteConstants.LicenceName + @"</a>).
     </li>
     <li>
-    Use stand alone, or as an
+    Use stand alone, as an
     <a href=""http://requirejs.org/docs/why.html"" target=""_blank"">AMD module</a>
     or
     <a href=""http://spinejs.com/docs/commonjs"" target=""_blank"">CommonJS module</a>,
-    or as part of a
-    <a href=""http://www.asp.net/mvc/tutorials/mvc-4/bundling-and-minification"" target=""_blank"">bundle</a>.
+    or with
+    <a href=""http://www.asp.net/mvc/tutorials/mvc-4/bundling-and-minification"" target=""_blank"">bundles</a>.
     </li>
     <li>
     No dependencies on other JavaScript libraries.
@@ -118,20 +120,51 @@
             @"Key concepts",
                            @"<ul class=""halfspaced noindent"">
             <li>
-    JSNLog contains a JavaScript logging library, jsnlog.js (" + SiteConstants.JsnlogJsFileSize + @" min+gz). It lets you insert loggers in your client side JavaScript.
+Insert loggers in your client side JavaScript, using jsnlog.js (" + SiteConstants.JsnlogJsFileSize + @" min+gz).
     </li>
             <li>
-    Using AJAX, those loggers send your log messages to a JSNLog server side component.
+    Those loggers send your log messages to the JSNLog server side component.
             </li>
             <li>
-    This hands the log messages to your server side logging package, for inclusion in your server side log.
-            </li>
-            <li>
+    This logs the messages in your server side log, using your server side logging package.
     Supports Log4Net, NLog, Elmah, Common.Logging.
             </li>
             </ul>")
             }
 
+                @*@if (currentVersion == "NetJs")
+                {*@
+            </div>
+            <div class="col-sm-6 right-column">
+@*}*@
+
+
+                @if (currentVersion == "NetJs")
+{
+    <section class="feature">
+        <h3 class="text">6 minute introduction</h3>
+        <iframe src="//player.vimeo.com/video/93994063?title=0&amp;byline=0&amp;portrait=0" width="430" height="242" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+    </section>
+}
+
+                @*@if (currentVersion == "NetJs")
+                {*@
+            </div>
+            </div>
+            </div>
+
+                <div class="container">
+        <div class="row row-divider">
+
+
+            <div class="col-sm-6 left-column">
+@*}*@
+
+                @if (currentVersion == "NetJs")
+                { 
+                <h2>Log important JavaScript events</h2>
+                }
+                
             @Feature(
                 "",
                 @"Insert loggers in your JavaScript",
@@ -172,41 +205,13 @@
     ")
             }
 
-            @*===========================================================*@
-
-            @if (currentVersion == "NetJs")
-            {
-                @Feature(
-            "",
-            @"Only log for certain user agents or IP addresses",
-            @"<pre>&lt;logger userAgentRegex=&quot;MSIE 7|MSIE 8&quot; /&gt;</pre>
-    ")
-            }
-            @if (currentVersion == "JsOnly")
+            @*===========================================================*@@if (currentVersion == "JsOnly")
             {
                 @Feature(
             "",
             @"Only log for certain user agents or IP addresses",
             @"<pre>JL().setOptions(
         { ""userAgentRegex"": ""MSIE 7|MSIE 8"" });</pre>
-    ")
-            }
-
-            @*===========================================================*@@if (currentVersion == "NetJs")
-            {
-                @Feature(
-            "",
-            @"Suppress messages that match a regular expression",
-            @"<pre>&lt;logger disallow=""suppress me"" /&gt;</pre>
-    ")
-            }
-            @if (currentVersion == "JsOnly")
-            {
-                @Feature(
-            "",
-            @"Suppress messages that match a regular expression",
-            @"<pre>JL(""jsLogger"").setOptions(
-        { ""disallow"": ""suppress me"" });</pre>
     ")
             }
 
@@ -217,7 +222,7 @@
     JL().log(2500, obj);</pre>
     ")
 
-            @Feature(
+@Feature(
             "",
             @"Pass in function that returns log info",
             @"<pre>JL().log(2500, function() {
@@ -228,15 +233,124 @@
     });</pre>
     ")
 
-            @if (currentVersion == "JsOnly")
-            {
-                @Feature(
+@if (currentVersion == "JsOnly")
+{
+    @Feature(
                     "",
                         @"Supports AMD and CommonJS loaders",
                         @"As well as loading with a simple script tag.")
-            }
+}
 
             @Feature(
+            "",
+            @"See which messages belong to the same request",
+                     @"
+    <table class=""log"">
+    <tr><th style=""width: 120px"">Request ID</th><th>Message</th></tr>
+    <tr><td class=""bgcolor2"">CB0734CE....</td><td>A debug message</td></tr>
+    <tr><td class=""bgcolor1""><span>D623A22B....</span></td><td>An error message</td></tr>
+    <tr><td  class=""bgcolor2"">CB0734CE....</td><td>Some other message</td></tr>
+    <tr><td  class=""bgcolor1""><span>D623A22B....</span></td><td>Yet another message</td></tr>
+    <tr><td  class=""bgcolor1"">D623A22B....</td><td>A fatal message</td></tr>
+    <tr><td colspan=""2"">...</td></tr>
+    </table>
+    ")
+
+</div>
+        <div class="col-sm-6 right-column">
+
+            @*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*@
+
+                @if (currentVersion == "NetJs")
+                {
+                                <h2>Filter out what you don't need</h2>
+                }
+
+    @*===========================================================*@@if (currentVersion == "NetJs")
+{
+    @Feature(
+            "",
+            @"Suppress messages that match a regular expression",
+            @"<pre>&lt;logger disallow=""suppress me"" /&gt;</pre>
+    ")
+}
+@if (currentVersion == "JsOnly")
+{
+    @Feature(
+            "",
+            @"Suppress messages that match a regular expression",
+            @"<pre>JL(""jsLogger"").setOptions(
+        { ""disallow"": ""suppress me"" });</pre>
+    ")
+}
+
+@if (currentVersion == "NetJs")
+{
+    @Feature(
+            "",
+            @"Only log for certain user agents or IP addresses",
+            @"<pre>&lt;logger userAgentRegex=&quot;MSIE 7|MSIE 8&quot; /&gt;</pre>
+    ")
+}
+
+@if (currentVersion == "NetJs")
+{
+    @Feature(
+            "",
+            @"Limit total messages sent to server",
+            @"<pre>&lt;jsnlog maxMessages=""3""&gt;</pre>
+    ")
+}
+@if (currentVersion == "JsOnly")
+{
+    @Feature(
+            "",
+            @"Limit total messages sent to server",
+            @"<pre>JL.setOptions({""maxMessages"": 3});</pre>")
+}
+
+@*===========================================================*@@if (currentVersion == "NetJs")
+{
+    @Feature(
+            "",
+            @"Reduce AJAX requests by batching log messages",
+            @"<pre>&lt;ajaxAppender name=""appender1"" batchSize=""3""/&gt;</pre>
+    ")
+}
+@if (currentVersion == "JsOnly")
+{
+    @Feature(
+            "",
+            @"Reduce AJAX requests by batching log messages",
+            @"<pre>appender.setOptions(
+        { ""batchSize"": 3 });</pre>
+    ")
+}
+
+@*===========================================================*@@if (currentVersion == "JsOnly")
+{
+    @Feature(
+            "",
+            @"Easily send logging data to the server",
+            @"Built in AjaxAppender uses simple, well documented message format.
+    ")
+}
+
+@Feature(
+            "",
+            @"Suppress duplicate messages",
+            @"
+    <table class=""log"">
+    <tr><th style=""width: 120px"">Logger</th><th>Message</th></tr>
+    <tr><td>jsLogger</td><td>x too high (x = 5)</td></tr>
+    <tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 6)</td></tr>
+    <tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 7)</td></tr>
+    <tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 8)</td></tr>
+    <tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 9)</td></tr>
+    </table>
+    ")
+
+@Feature(
             "",
             @"Get the info you need, but only <u>when</u> you need it",
             @"<ul class=""spaced noindent"">
@@ -252,119 +366,26 @@
             </li>
             </ul>")
 
-        </div>
-        <div class="col-sm-6">
-
-            @*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*@
-
-            @if (currentVersion == "NetJs")
-            {
-                <section class="feature">
-                    <h2 class="text">6 minute introduction</h2>
-                    <iframe src="//player.vimeo.com/video/93994063?title=0&amp;byline=0&amp;portrait=0" width="430" height="242" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                </section>
-
-                @Feature(
-            "",
-            @"Limit total messages sent to server",
-            @"<pre>&lt;jsnlog maxMessages=""3""&gt;</pre>
-    ")
-            }
-            @if (currentVersion == "JsOnly")
-            {
-                @Feature(
-            "",
-            @"Limit total messages sent to server",
-            @"<pre>JL.setOptions({""maxMessages"": 3});</pre>")
-            }
-
-            @*===========================================================*@
-
-            @if (currentVersion == "NetJs")
-            {
-                @Feature(
-            "",
-            @"Reduce AJAX requests by batching log messages",
-            @"<pre>&lt;ajaxAppender name=""appender1"" batchSize=""3""/&gt;</pre>
-    ")
-            }
-            @if (currentVersion == "JsOnly")
-            {
-                @Feature(
-            "",
-            @"Reduce AJAX requests by batching log messages",
-            @"<pre>appender.setOptions(
-        { ""batchSize"": 3 });</pre>
-    ")
-            }
-
-            @*===========================================================*@@if (currentVersion == "JsOnly")
-            {
-                @Feature(
-            "",
-            @"Easily send logging data to the server",
-            @"Built in AjaxAppender uses simple, well documented message format.
-    ")
-            }
-
-            @*===========================================================*@@if (currentVersion == "NetJs")
-            {
-                @Feature(
-            "",
-            @"Automatically store client side log data in server side logs",
-            @"
-    <table class=""log"">
-    <tr><th style=""width: 120px"">Logger</th><th>Message</th></tr>
-    <tr><td>csLogger</td><td>Server side error message</td></tr>
-    <tr><td>jsLogger</td><td>Client side fatal message</td></tr>
-    <tr><td>csLogger2</td><td>Server side info message</td></tr>
-    <tr><td colspan=""2"">...</td></tr>
-    </table>
-    ")
-            }
-
-            @Feature(
-            "",
-            @"Suppress duplicate messages",
-            @"
-    <table class=""log"">
-    <tr><th style=""width: 120px"">Logger</th><th>Message</th></tr>
-    <tr><td>jsLogger</td><td>x too high (x = 5)</td></tr>
-    <tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 6)</td></tr>
-    <tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 7)</td></tr>
-    <tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 8)</td></tr>
-    <tr style=""text-decoration: line-through;""><td>jsLogger</td><td>x too high (x = 9)</td></tr>
-    </table>
-    ")
-
-            @Feature(
-            "",
-            @"See which messages belong to the same request",
-            @"
-    <table class=""log"">
-    <tr><th style=""width: 120px"">Request ID</th><th>Message</th></tr>
-    <tr><td class=""highlight""><span>D623A22B-3454....</span></td><td>An error message</td></tr>
-    <tr><td>CB0734CE-4C99....</td><td>A fatal message</td></tr>
-    <tr><td class=""highlight""><span>D623A22B-3454....</span></td><td>Some other message</td></tr>
-    <tr><td colspan=""2"">...</td></tr>
-    </table>
-    ")
-            @Feature(
+@Feature(
             "",
             @"Show log data in the console",
             @"Switch console logging on or off " +
     ((currentVersion == "NetJs") ? "in your web.config." : "with one line of code.") +
-            @"<img src=""/Images/console.png"" alt=""screenshot of browser console with log generated by JSNLog"" width=""306"" height=""214"" />
+                    @"<p /><img src=""/Images/console.png"" alt=""screenshot of browser console with log generated by JSNLog"" width=""306"" height=""214"" />
             ")
-        </div>
+            </div>
+            </div>
+</div>
     }
 </section>
+
+
 
 @helper Feature(string title, string text, string code)
 {
     @Html.Raw(@"<section class=""feature"">" +
             //"<h2>" + title + "</h2>" +
-        @"<h2 class=""text"">" + text + "</h2>" +
+        @"<h3 class=""text"">" + text + "</h3>" +
         (string.IsNullOrEmpty(code) ? "" : @"<section class=""code"">" + code + "</section>") +
     "</section>")
 }

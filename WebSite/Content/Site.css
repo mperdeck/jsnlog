@@ -45,6 +45,45 @@ header .navbar-default .navbar-nav li a:hover {
     color: #f0f0f0;
 }
 
+/* 
+    Create wider gutter between the 2 columns on the home page, but only if the screen is wider than 768px. If it is narrower, the right column
+    is moved below the left column.
+*/
+@media (min-width: 768px) 
+{
+    .left-column
+    {
+        padding-right: 50px;
+    }
+
+    .right-column
+    {
+        padding-left: 50px;
+    }
+}
+
+.features h2
+{
+    color: #428bca;
+}
+
+.features .bgcolor1
+{
+    color: #0566C9;
+}
+
+.features .bgcolor2
+{
+    color: #5cb85c;
+}
+
+.row-divider
+{
+    border-top: 1px solid #cccccc;
+    margin-top: 30px;
+}
+
+
 /* --------------------------------------- */
 
 .term 
@@ -236,21 +275,24 @@ border-bottom: 1px solid #dddddd;
 border: none;
 }
 
+/* Do not apply more than 20px left margin on tables. Otherwise, when the window gets narrower, sometimes the left
+    of the table is obscured by the vertical scroll bar.
+    */
 table.wide
 {
-    margin-left: 50px;
+    margin-left: 20px;
 }
 
 table.medium
 {
     max-width: 500px;
-    margin-left: 50px;
+    margin-left: 20px;
 }
 
 table.narrow
 {
     max-width: 300px;
-    margin-left: 50px;
+    margin-left: 20px;
 }
 
 /* -------------------------------------- */
