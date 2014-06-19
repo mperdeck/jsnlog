@@ -196,6 +196,10 @@
     <None Include="ClearScript.V8\v8-x64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="Content\bootstrap-3.1.1\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-3.1.1\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-3.1.1\bootstrap.css" />
+    <Content Include="Content\bootstrap-3.1.1\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -352,49 +356,11 @@
     <Content Include="Views\Documentation\JavascriptLogging\RequestId.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-3.1.1\alerts.less" />
-    <Content Include="Content\bootstrap-3.1.1\badges.less" />
-    <Content Include="Content\bootstrap-3.1.1\bootstrap.less" />
-    <Content Include="Content\bootstrap-3.1.1\breadcrumbs.less" />
-    <Content Include="Content\bootstrap-3.1.1\button-groups.less" />
-    <Content Include="Content\bootstrap-3.1.1\buttons.less" />
-    <Content Include="Content\bootstrap-3.1.1\carousel.less" />
-    <Content Include="Content\bootstrap-3.1.1\close.less" />
-    <Content Include="Content\bootstrap-3.1.1\code.less" />
-    <Content Include="Content\bootstrap-3.1.1\component-animations.less" />
-    <Content Include="Content\bootstrap-3.1.1\dropdowns.less" />
-    <Content Include="Content\bootstrap-3.1.1\forms.less" />
-    <Content Include="Content\bootstrap-3.1.1\glyphicons.less" />
-    <Content Include="Content\bootstrap-3.1.1\grid.less" />
-    <Content Include="Content\bootstrap-3.1.1\input-groups.less" />
-    <Content Include="Content\bootstrap-3.1.1\jumbotron.less" />
-    <Content Include="Content\bootstrap-3.1.1\labels.less" />
-    <Content Include="Content\bootstrap-3.1.1\list-group.less" />
-    <Content Include="Content\bootstrap-3.1.1\media.less" />
-    <Content Include="Content\bootstrap-3.1.1\mixins.less" />
-    <Content Include="Content\bootstrap-3.1.1\modals.less" />
-    <Content Include="Content\bootstrap-3.1.1\navbar.less" />
-    <Content Include="Content\bootstrap-3.1.1\navs.less" />
-    <Content Include="Content\bootstrap-3.1.1\normalize.less" />
-    <Content Include="Content\bootstrap-3.1.1\pager.less" />
-    <Content Include="Content\bootstrap-3.1.1\pagination.less" />
-    <Content Include="Content\bootstrap-3.1.1\panels.less" />
-    <Content Include="Content\bootstrap-3.1.1\popovers.less" />
-    <Content Include="Content\bootstrap-3.1.1\print.less" />
-    <Content Include="Content\bootstrap-3.1.1\progress-bars.less" />
-    <Content Include="Content\bootstrap-3.1.1\responsive-utilities.less" />
-    <Content Include="Content\bootstrap-3.1.1\scaffolding.less" />
-    <Content Include="Content\bootstrap-3.1.1\tables.less" />
-    <Content Include="Content\bootstrap-3.1.1\theme.less" />
-    <Content Include="Content\bootstrap-3.1.1\thumbnails.less" />
-    <Content Include="Content\bootstrap-3.1.1\tooltip.less" />
-    <Content Include="Content\bootstrap-3.1.1\type.less" />
-    <Content Include="Content\bootstrap-3.1.1\utilities.less" />
-    <Content Include="Content\bootstrap-3.1.1\variables.less" />
-    <Content Include="Content\bootstrap-3.1.1\wells.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Content\bootstrap-3.1.1\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-3.1.1\bootstrap.css.map" />
     <None Include="Properties\PublishProfiles\jsnlog.pubxml" />
     <Content Include="Views\Documentation\_MaxMessagesRemarks.cshtml" />
     <Content Include="Views\Home\PhpJs.cshtml" />
