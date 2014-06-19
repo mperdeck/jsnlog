@@ -196,8 +196,6 @@
     <None Include="ClearScript.V8\v8-x64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="Content\bootstrap-3.1.1\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-3.1.1\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap-3.1.1\bootstrap.css" />
     <Content Include="Content\bootstrap-3.1.1\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -359,7 +357,6 @@
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Content\bootstrap-3.1.1\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap-3.1.1\bootstrap.css.map" />
     <None Include="Properties\PublishProfiles\jsnlog.pubxml" />
     <Content Include="Views\Documentation\_MaxMessagesRemarks.cshtml" />
