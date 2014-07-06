@@ -61,6 +61,10 @@
             <td>Install-Package JSNLog.Elmah</td>
         </tr>
         <tr>
+            <td><a href="http://serilog.net/">Serilog</a></td>
+            <td>Install-Package JSNLog.Serilog</td>
+        </tr>
+        <tr>
             <td><a href="http://netcommon.sourceforge.net/">Common.Logging</a></td>
             <td>Install-Package JSNLog.CommonLogging</td>
         </tr>
@@ -77,8 +81,30 @@
         The hash "addtoyourpages" is used in the Nuget readme file
         ---------------------------------------------------------
     *@
+    <a name="serilog"></a>
+    <h2>2. Serilog only</h2>
+    <p>
+        If you do not use Serilog, skip this step.
+    </p>
+    <p>
+        This package assumes that you have created a
+        <a href="https://github.com/serilog/serilog/wiki/Getting-Started" target="_blank">global logger</a>.
+        For example:
+    </p>
+<pre>
+var log = new LoggerConfiguration()
+    .WriteTo.File("log.txt")
+    .CreateLogger();<br />
+// Set global logger, so JSNLog can access it.
+Log.Logger = log;
+</pre>
+    <p>
+        A good place for this would be the <span class="term">Application_Start</span>
+        handler in your <span class="term">Global.asax.cs</span>.
+    </p>
+
     <a name="addtoyourpages"></a>
-    <h2>2. Add JSNLog to your pages</h2>
+    <h2>3. Add JSNLog to your pages</h2>
 
     <p>
         Call JSNLog's
@@ -154,8 +180,8 @@
         <p>
             You can change this using the
             <span class="term">defaultAjaxUrl</span>
-            field in the 
-JL
+            field in the
+            JL
             @Html.ViewLink("jsnlogjs-jl-setOptions")<text>.</text>
         </p>
 
