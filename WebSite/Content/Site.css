@@ -67,12 +67,12 @@ header .navbar-default .navbar-nav li a:hover {
     color: #428bca;
 }
 
-.features .bgcolor1
+.bgcolor1, pre .code-bg-soft1
 {
     color: #0566C9;
 }
 
-.features .bgcolor2
+.bgcolor2, pre .code-bg-soft2
 {
     color: #5cb85c;
 }
@@ -297,7 +297,7 @@ table.narrow
 
 /* -------------------------------------- */
 
-ul.large-items li+li
+.large-items li+li
 {
     margin-top: 15px;
 }

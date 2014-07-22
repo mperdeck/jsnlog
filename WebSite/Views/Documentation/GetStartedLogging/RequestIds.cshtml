@@ -11,7 +11,7 @@
 
 <p>
     This page first shows why you'd use request ids, and then how to implement them
-    for <a href="#log4net">Log4Net</a>, <a href="#nlog">NLog</a> and <a href="#elmah">Elmah</a>.
+    for <a href="#log4net">Log4Net</a>, <a href="#nlog">NLog</a>, <a href="#elmah">Elmah</a> and <a href="#serilog">Serilog</a>.
 </p>
 <h2>Concurrent accesses lead to intermingled log entries</h2>
 
@@ -79,6 +79,7 @@
     <a href="http://www.computerhope.com/sorthlp.htm">sort command</a>:
 </p>
 <pre>sort log.txt >sortedlog.txt</pre>
+
 
 <p>
     You will wind up with something like this. You should now be able to
@@ -303,6 +304,52 @@ public void LogToElmah(string message)
     Keep in mind though that
     if there is an uncaught exception and Elmah logs that exception, it won't have the request id.
 </p>
+
+
+<a id="serilog"></a>
+<h2>Implementing request ids for Serilog</h2>
+<p>
+    Similar to Elmah, Serilog is not as configurable as Log4Net and NLog. The only way to add the request id is to add it to the log message
+    as it is being stored in the server side log.
+</p>
+<p>
+    To make that happen,
+    set the <span class="term">serverSideMessageFormat</span> attribute
+    of the
+    @Html.ViewLink("webconfig-jsnlog")
+    in your web.config:
+</p>
+<pre>&lt;jsnlog ...  serverSideMessageFormat=
+    &quot;{ 'requestId': '<span class="addedcode">%requestId</span>', 'clientdate': '%date', 'url': '%url', 'logmessage': %message }&quot;&gt;
+    ...
+&lt;/jsnlog&gt;</pre>
+<p>
+    Note that by writing this as a JSON object (with the { and } at beginning and end), you allow the log information to be logged as separate fields, making it easier to
+    search and order log messages.
+</p>
+
+<p>
+    If you use Serilog's
+    <a href="https://github.com/serilog/serilog/wiki/Provided-Sinks" target="_blank">MongoDB sink</a> to log to a MongoDB database, you would use the following command in the mongo shell to
+    sort your log entries by request id and then by date/time. That way, you get a history of each page request
+    and the JavaScript events on that page after it reached the client.
+</p>
+<pre>db.log.find(undefined, {Properties: 1, _id: 0})
+      .sort( { 'Properties.message.requestId': -1, 'Properties.message.clientdate': 1 } )
+</pre>
+<p>More about logging to Serilog and MongoDB:</p>
+<ul>
+    <li>
+        @Html.ViewLink("getstarted-structuredloggingids")
+    </li>
+    <li>
+        <a href="http://docs.mongodb.org/manual/reference/method/cursor.sort/" target="_blank">Sorting results with the mongo shell</a>
+    </li>
+    <li>
+        <a href="http://docs.mongodb.org/manual/tutorial/query-documents/" target="_blank">Filtering results with the mongo shell</a>
+    </li>
+</ul>
+
 
 <h2>Why not use IP addresses instead of request ids?</h2>
 <p>

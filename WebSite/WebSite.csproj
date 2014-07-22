@@ -275,6 +275,7 @@
     <Content Include="Views\Documentation\GetStartedLogging\ConsoleLog.cshtml" />
     <Content Include="Views\Documentation\_DefaultAjaxUrlRemarks.cshtml" />
     <Content Include="Views\Documentation\GetStartedLogging\AngularJsErrorHandling.cshtml" />
+    <Content Include="Views\Documentation\GetStartedLogging\StructuredLogging.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
