@@ -18,7 +18,6 @@
         serverSideLevel="number|TRACE|DEBUG|INFO|WARN|ERROR|FATAL" 
         serverSideMessageFormat="string"
         productionLibraryPath="string" &gt;
-
     &lt;/jsnlog&gt;
 &lt;/configuration&gt; 
 </pre>
@@ -26,59 +25,59 @@
 
 @section Remarks {
     <p>
-    The &lt;jsnlog&gt; element can have the following attributes: 
-        </p>
+        The &lt;jsnlog&gt; element can have the following attributes:
+    </p>
 
-    <table class="table wide" >
-        @Html.Partial("_OptionsTableHeading",new ViewDataDictionary { 
-            { "configSource", "web.config"} 
+    <table class="table wide">
+        @Html.Partial("_OptionsTableHeading", new ViewDataDictionary {
+            { "configSource", "web.config"}
         })
         <tbody>
-        @Html.TableRowHtml("enabled", "optional", "true",
+            @Html.TableRowHtml("enabled", "optional", "true",
             @"If false, all loggers are disabled.")
-        @Html.TableRowHtml("maxMessages", "optional", "no maximum", "Limits total number of messages sent to the server. See remarks below.")
-        @Html.TableRowHtml("defaultAjaxUrl", "optional", "see remarks", "Default url used by appenders when no url is set. See remarks below.")
-        @Html.TableRowHtml("serverSideLogger", "optional", "(empty)",
-            @"By default, all log messages from your JavaScript code are passed on to your server side logging package 
+            @Html.TableRowHtml("maxMessages", "optional", "no maximum", "Limits total number of messages sent to the server. See remarks below.")
+            @Html.TableRowHtml("defaultAjaxUrl", "optional", "see remarks", "Default url used by appenders when no url is set. See remarks below.")
+            @Html.TableRowHtml("serverSideLogger", "optional", "(empty)",
+            @"By default, all log messages from your JavaScript code are passed on to your server side logging package
 with the name of the JavaScript logger.
 <p/>
 However, if you want to use a specific logger name for all your JavaScript log messages, you can specify that with this attribute.")
-        @Html.TableRowHtml("serverSideLevel", "optional", "(empty)",
+            @Html.TableRowHtml("serverSideLevel", "optional", "(empty)",
             @"By default, all log messages from your JavaScript code are passed on to your server side logging package with the same level as the original JavaScript log message.
 <p/>
 However, if you want to use a specific level, you can specify that with this attribute.")
-        @Html.TableRowHtml("serverSideMessageFormat", "optional", "%message",
+            @Html.TableRowHtml("serverSideMessageFormat", "optional", "%message",
             @"See remarks.")
-        @Html.TableRowHtml("productionLibraryPath", "optional", "(empty)",
+            @Html.TableRowHtml("productionLibraryPath", "optional", "(empty)",
             @"Path to the jsnlog.js file. JSNLog generates a &lt;script&gt; tag with this url.
 <p/>
-If you do not specify this, JSNLog will not generate the &lt;script&gt; tag. 
-This makes sense if you for example combine jsnlog.js with your other 
+If you do not specify this, JSNLog will not generate the &lt;script&gt; tag.
+This makes sense if you for example combine jsnlog.js with your other
 JavaScript files and you use your own &lt;script&gt; tag to load this combined file.")
         </tbody>
     </table>
 
-    @Html.Partial("_DefaultAjaxUrlRemarks", new ViewDataDictionary { 
-        { "configSource", "web.config"}, 
+    @Html.Partial("_DefaultAjaxUrlRemarks", new ViewDataDictionary {
+        { "configSource", "web.config"},
     })
 
-    @Html.Partial("_MaxMessagesRemarks",new ViewDataDictionary { 
-        { "configSource", "web.config"}, 
+    @Html.Partial("_MaxMessagesRemarks", new ViewDataDictionary {
+        { "configSource", "web.config"},
     })
 
     <h3>serverSideMessageFormat</h3>
 
-        <p>
-    Your server not only receives the the original message passed into the JavaScript logger, 
-        but also the logger, the level, a timestamp, etc.
-        </p>
     <p>
-You can choose to have this additional information logged on the server along with 
+        Your server not only receives the the original message passed into the JavaScript logger,
+        but also the logger, the level, a timestamp, etc.
+    </p>
+    <p>
+        You can choose to have this additional information logged on the server along with
         the original message, by setting <span class="term">serverSideMessageFormat</span> to a format string with
         one or more place holders:
-        </p>
+    </p>
 
-        <table class="table wide">
+    <table class="table wide">
         <thead>
             <tr>
                 <th>Place holder</th>
@@ -86,72 +85,123 @@ You can choose to have this additional information logged on the server along wi
             </tr>
         </thead>
         <tbody>
-    <tr valign="top">
-    <td>%message</td>
-    <td>Original message given to the JavaScript logger</td>
-    </tr>
-    <tr valign="top">
-    <td>%utcDate</td>
-    <td>Date and time in UTC when the message was generated, according to the client's clock</td>
-    </tr>
-    <tr valign="top">
-    <td>%utcDateServer</td>
-    <td>Date and time in UTC when the message was received by the server, according to the server's clock</td>
-    </tr>
-    <tr valign="top">
-    <td>%date</td>
-    <td>Date and time when the message was generated, according to the client's clock. 
-        This equals %utcDate converted to the server's local time.</td>
-    </tr>
-    <tr valign="top">
-    <td>%dateServer</td>
-    <td>Date and time in the server's local time when the message was received by the server, according to the server's clock</td>
-    </tr>
-    <tr valign="top">
-    <td>%level</td>
-    <td>Level of the message, as provided by the JavaScript code</td>
-    </tr>
-    <tr valign="top">
-    <td>%userAgent</td>
-    <td>Identifies the make of the browser</td>
-    </tr>
-    <tr valign="top">
-    <td>%userHostAddress</td>
-    <td>IP address of the sender</td>
-    </tr>
-    <tr valign="top">
-    <td>%url</td>
-    <td>Url of the page on which the message was generated</td>
-    </tr>
-    <tr valign="top">
-    <td>%logger</td>
-    <td>JavaScript logger that generated the message</td>
-    </tr>
-    <tr valign="top">
-    <td>%requestId</td>
-    <td>Identifies the request for which the log message was created. 
-        <p />
-        If you configure your JavaScript 
-        loggers in web.config, this request id will be generated for you. Otherwise, set this request id
-        using the
+            <tr valign="top">
+                <td>%message</td>
+                <td>Original message given to the JavaScript logger</td>
+            </tr>
+            <tr valign="top">
+                <td>%utcDate</td>
+                <td>Date and time in UTC when the message was generated, according to the client's clock</td>
+            </tr>
+            <tr valign="top">
+                <td>%utcDateServer</td>
+                <td>Date and time in UTC when the message was received by the server, according to the server's clock</td>
+            </tr>
+            <tr valign="top">
+                <td>%date</td>
+                <td>
+                    Date and time when the message was generated, according to the client's clock.
+                    This equals %utcDate converted to the server's local time.
+                </td>
+            </tr>
+            <tr valign="top">
+                <td>%dateServer</td>
+                <td>Date and time in the server's local time when the message was received by the server, according to the server's clock</td>
+            </tr>
+            <tr valign="top">
+                <td>%level</td>
+                <td>Level of the message, as provided by the JavaScript code</td>
+            </tr>
+            <tr valign="top">
+                <td>%userAgent</td>
+                <td>Identifies the make of the browser</td>
+            </tr>
+            <tr valign="top">
+                <td>%userHostAddress</td>
+                <td>IP address of the sender</td>
+            </tr>
+            <tr valign="top">
+                <td>%url</td>
+                <td>Url of the page on which the message was generated</td>
+            </tr>
+            <tr valign="top">
+                <td>%logger</td>
+                <td>JavaScript logger that generated the message</td>
+            </tr>
+            <tr valign="top">
+                <td>%requestId</td>
+                <td>
+                    Identifies the request for which the log message was created.
+                    <p />
+                    If you configure your JavaScript
+                    loggers in web.config, this request id will be generated for you. Otherwise, set this request id
+                    using the
                     @Html.ViewLink("jsnlogjs-jl-setOptions", "JL.setOptions")
- method.
-    </td>
-    </tr>
-    <tr valign="top">
-    <td>%newline*</td>
-    <td>Newline character</td>
-    </tr>
+                    method.
+                </td>
+            </tr>
+            <tr valign="top">
+                <td>%newline*</td>
+                <td>Newline character</td>
+            </tr>
         </tbody>
     </table>
     *<small> If you use Elmah, %newline won't result in a newline in the elmah.axd page, because Elmah doesn't convert line breaks in log messages to HTML &lt;br /&gt; tags.</small>
+
+    <h4>serverSideMessageFormat and structured logging</h4>
+    <p>
+        If you create structured logs using
+        <a href="http://serilog.net/" target="_blank">Serilog</a>,
+        make sure that your format string results in a valid JSON string. Otherwise it will be logged as a string rather than an object.
+    </p>
+    <p>
+        Take for example:
+    </p>
+<pre>serverSideMessageFormat=&quot;Sent: %date, Browser: %userAgent, Message: %message&quot;</pre>
+    <p>
+        This will result in a string such as this in your log:
+    </p>
+    <pre>"{ 'Sent': 2014-08-19 21:02:42,603, 'Browser': 'Mozilla/5.0 ...', 'Message': {\"x\":5,\"y\":88} }"</pre>
+    <p>
+        To get a structured object instead, make sure that the result of your format string is a valid JSON string. For example:
+    </p>
+    <pre>serverSideMessageFormat=&quot;<span class="addedcode">{ '</span>Sent<span class="addedcode">'</span>: <span class="addedcode">'</span>%date<span class="addedcode">'</span>, <span class="addedcode">'</span>Browser<span class="addedcode">'</span>: <span class="addedcode">'</span>%userAgent<span class="addedcode">'</span>, <span class="addedcode">'</span>Message<span class="addedcode">'</span>: %message <span class="addedcode">}</span>&quot;</pre>
+    <p>
+        Note:
+    </p>
+    <ul>
+        <li>
+            The curly braces;
+        </li>
+        <li>
+            Field names have been quoted.
+        </li>
+        <li>
+            <span class="term">%date</span> and <span class="term">%userAgent</span> have been quoted as well, to make them strings.
+        </li>
+        <li>
+            <span class="term">%message</span> has not been quoted. That way, the object you logged will be stored as an object rather than a string.
+        </li>
+    </ul>
+    <p>
+        This will result in an object such as this in your log:
+    </p>
+    <pre>{ "Sent" : "2014-08-19 21:02:42,603", "Browser" : "Mozilla/5.0 ...", "Message" : { "x" : 5, "y" : 88 } }</pre>
+
+    <p>
+        Finally, the default value of
+        <span class="term">serverSideMessageFormat</span>
+        gives you structured logging out of the box.
+        This default is <span class="term">%message</span>, which returns
+        a logged object as-is, and logged objects are valid JSON strings in themselves.
+    </p>
 }
 
 @section Examples {
-<p>
-    This shows the date and time that the log message was created on the client as well as the user agent
-    in each log message.
-</p>
+    <p>
+        This shows the date and time that the log message was created on the client as well as the user agent
+        in each log message.
+    </p>
 <pre>&lt;jsnlog serverSideMessageFormat="Sent: %date, Brower: %userAgent - %message" &gt;</pre>
 
     <p>
