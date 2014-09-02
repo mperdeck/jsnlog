@@ -10,53 +10,76 @@
     var thisTextHtml = new MvcHtmlString(referenceToThis);
 
     string appenderDescriptionKey = (string)ViewData["appenderDescriptionKey"];
+    string currentVersion = PageVersions.CurrentVersion();
 }
 
 <a name="inheritance"></a>
-    <h3>Logger names and option inheritance</h3>
-    <p>
-        JavaScript loggers not only get their options through the @thisTextHtml,
-        but also through inheritance. This is based on the name of each logger.
-    </p>
+<h3>Logger names and option inheritance</h3>
 <p>
-    Assume that you have a method &quot;method1&quot; in a namespace &quot;namespace1&quot;. Then it would 
+    JavaScript loggers not only get their options through the @thisTextHtml,
+    but also through inheritance. This is based on the name of each logger.
+</p>
+<p>
+    Assume that you have a method &quot;method1&quot; in a namespace &quot;namespace1&quot;. Then it would
     make sense to use a naming scheme for your loggers like this: &quot;namespace1.method1.logger1&quot;,
-     &quot;namespace1.method1.logger2&quot;, etc. This way, there are no name clashes and it makes keeping
+    &quot;namespace1.method1.logger2&quot;, etc. This way, there are no name clashes and it makes keeping
     track of your loggers easy.
 </p>
-    <p>
-        Just as a namespace may contain methods, and a method may contain JavaScript loggers, so you can think of these logger names 
-        as making up a hierarchy:
-    </p>
-    <ul>
-        <li>
-            The parent of &quot;namespace1.method1.logger1&quot; is &quot;namespace1.method1&quot;;
-        </li>
-        <li>
-            The parent of &quot;namespace1.method1&quot; is &quot;namespace1&quot;;
-        </li>
-        <li>
-            The parent of &quot;namespace1&quot; is the root logger (the logger without a name).
-        </li>
-    </ul>
+<p>
+    Just as a namespace may contain methods, and a method may contain JavaScript loggers, so you can think of these logger names
+    as making up a hierarchy:
+</p>
+<ul>
+    <li>
+        The parent of &quot;namespace1.method1.logger1&quot; is &quot;namespace1.method1&quot;;
+    </li>
+    <li>
+        The parent of &quot;namespace1.method1&quot; is &quot;namespace1&quot;;
+    </li>
+    <li>
+        The parent of &quot;namespace1&quot; is the root logger (the logger without a name).
+    </li>
+</ul>
 <p>
     You're not limited to just 3 levels, you can have as many as want.
 </p>
-    <p>
-        If you don't set an option using the @thisTextHtml<text>,</text>
-        the logger inherits that option from its parent. If you do not use @thisTextHtml
-        at all, every JavaScript logger will have the same options as the root logger.
-    </p>
+<p>
+    If you don't set an option using the @thisTextHtml<text>,</text>
+    the logger inherits that option from its parent. If you do not use @thisTextHtml
+    at all, every JavaScript logger will have the same options as the root logger.
+</p>
 
 <a name="rootlogger-and-defaultappender"></a>
-    <h3>Root logger and default appender</h3>
+<h3>Root logger and default appender</h3>
+<p>
+    When the library loads, it creates the root logger. It also creates a default
+    @if (currentVersion == "NodeJs")
+    {
+        <text>appender</text>
+    }
+    else
+    {
+        @Html.ViewLink("jsnlogjs-ajaxappender", "AjaxAppender")
+    }
+
+    for use by the root logger.
+    @if (currentVersion == "NodeJs")
+    {
     <p>
-        When the library loads, it creates the root logger. It also creates a default appender for use by the root logger.
-</p>
+        On the server, the default appender is a
+        @Html.ViewLink("jsnlogjs-consoleappender", "ConsoleAppender")
+        that logs to the console.
+        On the client, the default appender is an
+        @Html.ViewLink("jsnlogjs-ajaxappender", "AjaxAppender")
+        that sends log messages to the server.
+    </p>
+    }
+
+    </p>
     <p>
         Because every logger inherits from the root logger (unless you override this with
         the @thisTextHtml),
-        you can start logging right away without having to create an appender. 
+        you can start logging right away without having to create an appender.
     </p>
     <p>
         The root logger is created with these options:
@@ -69,26 +92,34 @@
             </tr>
         </thead>
         <tbody>
-        @Html.TableRowHtml("level", "", "DEBUG")
-        @Html.TableRowHtml("userAgentRegex", "", "(empty)")
-        @Html.TableRowHtml("ipRegex", "", "(empty)")
-        @Html.TableRowHtml("disallow", "", "(empty)")
-        @Html.TableRowHtml("appenders", "", "(default appender)")
+            @Html.TableRowHtml("level", "", "DEBUG")
+            @Html.TableRowHtml("userAgentRegex", "", "(empty)")
+            @Html.TableRowHtml("ipRegex", "", "(empty)")
+            @Html.TableRowHtml("disallow", "", "(empty)")
+            @Html.TableRowHtml("appenders", "", "(default appender)")
         </tbody>
     </table>
-    
+
     <p>
         Note that because the default <span class="term">level</span> for root logger is DEBUG,
         by default only log messages with severity DEBUG or higher get processed.
     </p>
-<p>
-    You can change the options used with the root logger in the same way
-    as any other logger, using the @thisTextHtml. See the examples below.
-</p>
+    <p>
+        You can change the options used with the root logger in the same way
+        as any other logger, using the @thisTextHtml. See the examples below.
+    </p>
 
-        <p>
-        The default appender is created with these options
-            (@Html.ViewLink(appenderDescriptionKey, "description of options")):
+    <p>
+        The default appender is created with these
+        @if (currentVersion == "NodeJs")
+        {
+            <text>options:</text>
+        }
+        else
+        {
+            <text>options (</text>@(Html.ViewLink(appenderDescriptionKey, "description of options"))<text>):</text>
+        }
+
     </p>
     <table class="table narrow">
         <thead>
@@ -98,14 +129,14 @@
             </tr>
         </thead>
         <tbody>
-        @Html.TableRowHtml("level", "", "TRACE")
-        @Html.TableRowHtml("userAgentRegex", "", "(empty)")
-        @Html.TableRowHtml("ipRegex", "", "(empty)")
-        @Html.TableRowHtml("disallow", "", "(empty)")
-        @Html.TableRowHtml("storeInBufferLevel", "", "ALL")
-        @Html.TableRowHtml("sendWithBufferLevel", "", "OFF")
-        @Html.TableRowHtml("bufferSize", "", "0")
-        @Html.TableRowHtml("batchSize", "", "1")
-        @Html.TableRowHtml("url", "", Utils.DefaultAjaxUrlLink((string)ViewData["configSource"]))
+            @Html.TableRowHtml("level", "", "TRACE")
+            @Html.TableRowHtml("userAgentRegex", "", "(empty)")
+            @Html.TableRowHtml("ipRegex", "", "(empty)")
+            @Html.TableRowHtml("disallow", "", "(empty)")
+            @Html.TableRowHtml("storeInBufferLevel", "", "ALL")
+            @Html.TableRowHtml("sendWithBufferLevel", "", "OFF")
+            @Html.TableRowHtml("bufferSize", "", "0")
+            @Html.TableRowHtml("batchSize", "", "1")
+            @Html.TableRowHtml("url", "", Utils.DefaultAjaxUrlLink((string)ViewData["configSource"]) + ((currentVersion == "NodeJs") ? " <br/><small>(only on the client)</small>" : ""))
         </tbody>
     </table>

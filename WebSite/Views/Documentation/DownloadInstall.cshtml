@@ -212,24 +212,10 @@ Log.Logger = log;
 }</pre>
 
         <p>
-            Please note that:
+            Please note that a single JSON message to the server can contain multiple log messages.
+            This is because the AJAX appender can be configured
+            to batch messages, for example 2 log messages per JSON message to the server.
         </p>
-        <ul>
-            <li class="large-items">
-                The "r" field (containing the request id) will only contain a request id if the request id has been set
-                (using the JL
-                @Html.ViewLink("jsnlogjs-jl-setOptions")<text>).</text>
-                Otherwise it contains the empty string.
-                <p />
-                As of version 2.6.6, this field is obsolete, and only present for backward compatability. Use the
-                <a href="#requestheader">@SiteConstants.HttpHeaderRequestIdName request header</a>
-                instead.
-            </li>
-            <li>
-                A single JSON message to the server can contain multiple log messages. This is because the AJAX appender can be configured
-                to batch messages, for example 2 log messages per JSON message to the server.
-            </li>
-        </ul>
         <p>
             About the individual fields:
         </p>
@@ -243,7 +229,12 @@ Log.Logger = log;
                     request id
                 </td>
                 <td>
-                    Identifies the current request. You can set this on the server while generating the page using the JL
+                    Identifies the current request.
+                    <p />
+                    This is a simple copy of the request id in
+                    the <a href="#requestheader">@SiteConstants.HttpHeaderRequestIdName request header</a>.
+                    <p />
+                    You can set this on the server while generating the page using the JL
                     @Html.ViewLink("jsnlogjs-jl-setOptions")<text>.</text>
                     <p />
                     Use this feature to see which log message belong to the same request.
@@ -370,3 +361,129 @@ Log.Logger = log;
         </p>
     }
 
+    @*====================================================================================================*@
+        @* NodeJs *@
+        @*====================================================================================================*@
+
+        @if (currentVersion == "NodeJs")
+        {
+            <p>
+                <a href="https://github.com/mperdeck/jsnlog.NodeJsWorkingDemos" target="_blank">Working sample code</a>
+            </p>
+
+    <ol>
+        <li>
+            Install jsnlog.js from NPM:
+            <pre>npm install jsnlog</pre>
+        </li>
+        <li>
+            Load jsnlog into your code:
+            <pre>var JL = require('jsnlog').JL;</pre>
+        </li>
+        <li>
+            By default, jsnlog.js logs to the console. To make it easy to log to a database or a logging service,
+            you can use
+            <a href="https://github.com/flatiron/winston#working-with-transports" target="_blank">Winston transports</a>
+            as well
+            (@Html.ViewLink("getstarted-loggingtodb", "see how")).
+        </li>
+    </ol>
+
+            <p>
+                If you will only be logging from a NodeJs program, that's the installation done.
+                Head on to the @Html.ViewLink("getstartedlogging")
+                page.
+            </p>
+            <p>
+                If you have a web site, you'll want to log exceptions and other interesting events in the client
+                and store the log messages on the server. Continue on.
+            </p>
+
+            <h2>Logging client side</h2>
+            <p>
+                Two things
+                need to be done:
+            </p>
+            <ul>
+                <li>Load jsnlog.js on the client. This will send log messages via AJAX to the server.</li>
+                <li>
+                    Receive the log messages on the server and log them server side.
+                </li>
+            </ul>
+
+            <h3>Load jsnlog.js on the client</h3>
+            <ol class="large-items">
+                <li>
+                    If necessary, copy jsnlog.js from the
+                    <span class="term">node_modules/jsnlog</span> directory
+                    to the directory where you keep your client side JavaScript files.
+                </li>
+                <li>
+                    Load jsnlog.js into your pages. It supports CommonJs (for server side NodeJs), AMD (for client side RequireJs)
+                    and can also be loaded with a script tag.
+                </li>
+            </ol>
+            <p>
+                Note that the same jsnlog.js file happily works on both the client and server.
+                On the client, by default it automatically sends log messages via AJAX to the server.
+                On the server, by default it sends log messages to the console.
+            </p>
+
+            <h3>Receive and store log messages on the server</h3>
+            <p>
+                The jsnlog.js running on the client by default sends log messages to:
+            </p>
+            <pre>@SiteConstants.DefaultDefaultAjaxUrl</pre>
+
+            <p>
+                (@Html.ViewLink("jsnlogjs-jl-setOptions", "how to change", fragment: "defaultAjaxUrl"))
+            </p>
+            <p>
+                These log messages are POSTs, and the log messages sit in the body as
+                a JSON object. You will want to receive those messages on the server, and pass them on to
+                the server side jsnlog.js, for server side logging.
+            </p>
+
+            <p>
+                To make this easier, the <span class="term">jsnlog-nodejs</span>
+                exposes a function that takes the JSON object and logs all the messages:
+            </p>
+
+            <pre>npm install jsnlog-nodejs</pre>
+
+            <pre>var JL = require('jsnlog').JL;
+var jsnlog_nodejs = require('jsnlog-nodejs').jsnlog_nodejs;<br />
+// Read JSON object from message body
+var jsonBody = ....;<br />
+// Pass the log messages to the server side jsnlog.js
+jsnlog_nodejs(JL, jsonBody);
+</pre>
+            <p>
+                For example, if you use
+                <a href="http://expressjs.com/" target="_blank">Express</a>, you could
+                add a route to receive the log messages:
+            </p>
+            <pre>npm install express
+npm install body-parser
+</pre>
+
+            <pre>
+var express = require('express');
+var bodyParser = require('body-parser'); 
+var app = express();<br />
+// Ensure that the JSON objects received from the client get parsed correctly.
+app.use(bodyParser.json())<br />
+// jsnlog.js on the client by default sends log messages to @SiteConstants.DefaultDefaultAjaxUrl, using POST.
+app.post('*.logger', function (req, res) { 
+    jsnlog_nodejs(JL, req.body);<br />
+    // Send empty response. This is ok, because client side jsnlog does not use response from server.
+    res.send(''); 
+});
+</pre>
+
+            <p>
+                Now that the installation is done, 
+                visit the @Html.ViewLink("getstartedlogging")
+                page.
+            </p>
+        }

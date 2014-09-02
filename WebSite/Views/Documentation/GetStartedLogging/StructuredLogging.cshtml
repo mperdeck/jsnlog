@@ -1,0 +1,226 @@
+﻿@using ViewExtensions
+
+@{
+    ViewBag.Title = "Structured JavaScript Logging";
+    ViewBag.H1 = "Structured JavaScript Logging with Serilog and MongoDB";
+    ViewBag.Key = "getstarted-structuredloggingids";
+    ViewBag.Description = "Making it easier to search and sort JavaScript events.";
+    Layout = "~/Views/Shared/_DocumentationLayout.cshtml";
+    ViewBag.VersionNameRegex = "NetJs";
+}
+
+<p>
+    This page describes structured logging, and how to use it with your JavaScript logs.
+</p>
+
+<h2>About structured logging</h2>
+<p>
+    When logging an event, often you not only want to log a string, but also the values of some variables, or even an entire object.
+    However, in most cases the log entries are stored as simple strings, such as in a text file or in a column in a relational database.
+</p>
+<p>
+    This leads to code like this:
+</p>
+<pre>log.Fatal(string.Format("Something happened! x={0}, y={1}", x, y))</pre>
+<p>
+    This is fine until you want to search or order log entries based on those variable values. If you want to find all log entries
+    with x &lt; 34, sorted descending by the values of y, you'll have to somehow parse your log entries.
+</p>
+<p>
+    Instead of destroying the structure of your log entries by converting them to strings, and then resurrecting that structure
+    by parsing them, why not leave the structure in place? This is where structured logging comes in.
+</p>
+<h3>Structured logging from your server side application</h3>
+<p>
+    Whereas logging packages such as
+    <a href="http://logging.apache.org/log4net/" target="_blank">Log4Net</a>
+    and
+    <a href="http://nlog-project.org/" target="_blank">NLog</a>
+    store your log entries as flat strings,
+    structured logging packages such as
+    <a href="http://serilog.net/" target="_blank">Serilog</a>
+    allow you to preserve the structure of your log entries.
+</p>
+<p>
+    For example, Serilog allows you to write this C# code:
+</p>
+<pre>
+var position = new { Latitude = 25, Longitude = 134 };
+var elapsedMs = 34;
+log.Information("Processed {@@Position} in {Elapsed} ms.", position, elapsedMs);
+</pre>
+
+<p>
+    It will then not only log the string <span class="term">Processed { Latitude: 25, Longitude: 134 } in 034 ms.</span>,
+    but also the individual values of <span class="term">position</span> and
+    <span class="term">elapsedMs</span>.
+</p>
+
+<h3>Storing structured logs</h3>
+<p>
+    How would you store a structured log? Text files are out, because you don't want to destructure log entries into flat text anymore.
+    Relational databases are not practicle, because you would have to define columns for each variable you would ever want to log.
+</p>
+<p>
+    However,
+    <a href="http://en.wikipedia.org/wiki/Document-oriented_database" target="_blank">NoSQL document databases</a> are ideal for this task.
+    Unlike relational databases, these allow you to store objects of any shape, without having to pre-define a schema.
+    However, they offer the same ability as relational databases to search and order objects based on their properties.
+</p>
+<p>
+    <a href="http://www.mongodb.org/" target="_blank">MongoDB</a> is a popular document databases that is supported by Serilog.
+    In the remainder of this page you'll see how to use it to store your structured JavaScript logs.
+</p>
+
+<h2>Set up structured JavaScript logging</h2>
+<p>
+    Now that you've seen what structured logging is, you'll see
+    how to use JSNLog and Serilog to log JavaScript events in a structured way in a server side MongoDB database
+    (<a href="https://github.com/mperdeck/jsnlogSimpleWorkingDemos" target="_blank">download working sample</a>).
+</p>
+
+<h3>Step 1: Install MongoDB</h3>
+<ol class="large-items">
+    <li>
+        <a href="http://www.mongodb.org/downloads" target="_blank">Download and install MongoDB</a>;
+    </li>
+    <li>
+        Add the installation directory to your Path system variable (on Windows 7:
+        right click Computer | Properties | Advanced System Settings | Environment Variables | Under "System Variables" select Path | Edit).
+        <p>
+            At the time of writing, the installation directory was
+            <span class="term">C:\Program Files\MongoDB 2.6 Standard\bin</span>
+        </p>
+    </li>
+    <li>
+        Restart your computer so it loads your new path;
+    </li>
+    <li>
+        Create directory for your MongoDB database:
+        <pre>C:\data\db</pre>
+    </li>
+    <li>
+        Open a command prompt and start MongoDB:
+        <pre>mongod.exe</pre>
+    </li>
+</ol>
+
+<h3>Step 2: Install Serilog</h3>
+<p>
+    First install Serilog and the Serilog sink for MongoDB with the
+    <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console" target="_blank">Package Manager Console</a>:
+    <pre>Install-Package Serilog.Sinks.MongoDB</pre>
+</p>
+<p>
+    Then configure Serilog. Serilog doesn't support configuration in your web.config, it has to be done in code before you do any logging.
+    A good place to do this would be in your <span class="term">Global.asax.cs</span> file,
+    in the <span class="term">Application_Start</span> handler:
+</p>
+
+<pre>using Serilog;
+...
+protected void Application_Start()
+{
+    ...<br />
+    // Write to database logs of the MongoDB instance running on localhost 
+    var log = new LoggerConfiguration()
+                    .WriteTo.MongoDB("mongodb://localhost/logs", period: TimeSpan.Zero)
+                    .CreateLogger();
+    Log.Logger = log;
+}</pre>
+<p>
+    You can now log events from your C# (or Visual Basic) code using Serilog
+    (<a href="https://github.com/serilog/serilog/wiki/Writing-Log-Events" target="_blank">how</a>).
+</p>
+<p>
+    Note that unlike SQL Server, there is no need to create a database. It is created on the fly when you write your first log entry.
+</p>
+<p>
+        Serilog is very configurable.
+    The
+    <a href="https://github.com/serilog/serilog/wiki/Configuration-Basics" target="_blank">documentation</a> gives you some pointers but
+    for more details you have to read
+    <a href="https://github.com/serilog/serilog/blob/master/src/Serilog.Sinks.MongoDB/Sinks/MongoDB/MongoDBSink.cs" target="_blank">code comments</a>.
+</p>
+
+<h3>Step 3: Install JSNLog</h3>
+<p>
+    Install JSNLog and the adapter to Serilog with the
+    <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console" target="_blank">Package Manager Console</a>:
+    <pre>Install-Package JSNLog.Serilog</pre>
+</p>
+
+<h2>Access your structured logs</h2>
+
+<p>
+    Once you have
+    @Html.ViewLink("downloadinstall", "done some logging", fragment: "addtoyourpages")<text>,</text>
+    access the MongoDB database to access the log entries:
+</p>
+<ol class="large-items">
+    <li>
+        Open a second command prompt and start a MongoDB shell:
+        <pre>mongo</pre>
+        <p>
+            (do not close the command prompt running MongoDB itself that you opened earlier)
+        </p>
+    </li>
+    <li>
+        Switch to the <span class="term">logs</span> database:
+        <pre>use logs</pre>
+    </li>
+    <li>
+        The records in a database are organized in collections. Your log entries will have been written to the
+        <span class="term">log</span> collection. To list all records in that collection:
+        <pre>db.log.find()</pre>
+    </li>
+    <li>
+        <span class="term">db.log.find()</span> doesn't show you all records in one go, but breaks the output into pages. To go to the next page, type:
+        <pre>it</pre>
+    </li>
+    <li>
+        To only see the actual log information, filter out all properties except for the property called <span class="term">Properties</span>:
+        <pre>db.log.find( undefined, {Properties: 1, _id: 0})</pre>
+    </li>
+    <li>
+        Visit the pages below to see how to filter and sort records.
+    </li>
+</ol>
+
+<p>
+    Find out more:
+</p>
+
+<ul>
+    <li>
+        <a href="http://docs.mongodb.org/manual/tutorial/getting-started/" target="_blank">Getting Started with MongoDB</a>
+    </li>
+    <li>
+        <a href="http://docs.mongodb.org/manual/reference/method/cursor.sort/" target="_blank">Sorting results with the mongo shell</a>
+    </li>
+    <li>
+        <a href="http://docs.mongodb.org/manual/tutorial/query-documents/" target="_blank">Filtering results with the mongo shell</a>
+    </li>
+    <li>
+        @Html.ViewLink("getstarted-requestids")
+    </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

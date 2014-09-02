@@ -5,14 +5,17 @@
     ViewBag.H1 = "Replacing console.log with JavaScript loggers";
     ViewBag.Key = "getstarted-loggingtoconsole";
     ViewBag.Description = "Replacing console.log with JSNLog JavaScript loggers";
+    ViewBag.VersionNameRegex = "NetJs";
+
     Layout = "~/Views/Shared/_DocumentationLayout.cshtml";
+    var currentVersion = PageVersions.CurrentVersion();
 }
 
 <p>
     A popular tool during JavaScript development is
     <a href="https://developers.google.com/chrome-developer-tools/docs/console-api">console.log</a>,
     which lets you send messages to
-    <a href="https://developers.google.com/chrome-developer-tools/docs/console">your browser's console</a>.
+        <a href="https://developers.google.com/chrome-developer-tools/docs/console">your browser's console</a><text>.</text>
 </p>
 <p>
     This is quick and easy to add to your code. But once there, your console loggers get hard to manage because each

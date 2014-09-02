@@ -6,24 +6,29 @@
 
     bool showTypeColumn =
         ((string)(ViewData["configSource"]) != "web.config");
+
+    string currentVersion = PageVersions.CurrentVersion();
 }
 
     <table class="table wide">
         @Html.Partial("_OptionsTableHeading",ViewData)
         <tbody>
-       @if (showNameAttribute)
+            @if (showNameAttribute)
        {
-            @Html.TableRowHtml("name", "optional", 
+                @Html.TableRowHtml("name", "optional",
             "(empty)",
-            @"Name of the logger you want to configure. To configure the root logger, 
+            @"Name of the logger you want to configure. To configure the root logger,
               simply omit the <span class=""term"">name</span> attribute.<p/>" +
              Html.Partial("_LoggerRootNameOnServer"))
        }
-        @Html.Partial("_SharedFilterTableRows",ViewData)
-        @Html.TableRowHtml("appenders", "optional", (showTypeColumn ? "array of appenders" : null), 
+            @Html.Partial("_SharedFilterTableRows",ViewData)
+                        @Html.TableRowHtml("appenders", "optional", (showTypeColumn ? "array of appenders" : null),
             "(inherited from parent logger)",
-            @"One or more appenders for the logger to send its log messages to. See the examples.")
-        @Html.TableRowHtml("onceOnly", "optional", (showTypeColumn ? "array of strings" : null), 
+            @"One or more appenders for the logger to send its log messages to. " +
+            ((currentVersion == "NodeJs") ? "On the server, you can also use Winston transports (" +
+                Html.ViewLink("getstarted-loggingtodb", "how") + "). " : "" ) +
+            @"See the examples.")
+            @Html.TableRowHtml("onceOnly", "optional", (showTypeColumn ? "array of strings" : null),
             "(inherited from parent logger)",
             @"One or more regular expressions. When a message matches a regular expression, then
               any subsequent messages matching that same regular expression will be suppressed. See the remarks and examples.")

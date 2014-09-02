@@ -22,6 +22,7 @@ namespace WebSite
             {
                 new PageVersions.VersionInfo { VersionUrlName = "netjs", VersionName = "NetJs", Caption = ".Net + JS", IsDefault = true },
                 new PageVersions.VersionInfo { VersionUrlName = "php", VersionName = "PhpJs", Caption = "PHP + JS" },
+                new PageVersions.VersionInfo { VersionUrlName = "nodejs", VersionName = "NodeJs", Caption = "Node + JS" },
                 new PageVersions.VersionInfo { VersionUrlName = "js", VersionName = "JsOnly", Caption = "JS Only" }
             };
 

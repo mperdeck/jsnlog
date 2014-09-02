@@ -3,12 +3,13 @@
 
 @{
     string url = null;
+    var pageVersion = PageVersions.CurrentVersion();
 
-    if (PageVersions.CurrentVersion() == "NetJs")
+    if (pageVersion == "NetJs")
     {
         url = SiteConstants.NugetDownloadUrl;
     }
-    if (PageVersions.CurrentVersion() == "JsOnly")
+    if (pageVersion == "JsOnly")
     {
         url = SiteConstants.DownloadLinkJsnlogJs;
     }
@@ -33,17 +34,28 @@
     </script>
 
     <a href="@url" class="download-button" target="_blank" onclick="trackOutboundLink('@url'); return false;">
-        @if (PageVersions.CurrentVersion() == "NetJs")
+        @if (pageVersion == "NetJs")
         {
             <span class="install-button-caption">Install</span>
             <p>NuGet Package @(SiteConstants.CurrentVersion)</p>
         }
-        @if (PageVersions.CurrentVersion() == "JsOnly")
+        @if (pageVersion == "JsOnly")
         {
             <span class="download-button-caption">Download</span>
             <p>v@(SiteConstants.CurrentVersion) - @SiteConstants.JsnlogJsFileSize min+gz</p>
         }
     </a>
+}
+else if (pageVersion == "NodeJs")
+{
+    <div class="download-button" style="height: 90px; cursor: auto; background-position: 95% 50%; margin-top: -10px;">
+        <span class="install-button-caption">Install</span>
+            <div class="version">version @(SiteConstants.CurrentVersion)</div>
+        <p>
+npm install jsnlog<br />
+npm install jsnlog-nodejs
+        </p>
+    </div>
 }
 
 

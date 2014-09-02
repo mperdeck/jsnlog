@@ -10,7 +10,13 @@
 }
 
 <p>
-    JSNLog makes it very easy to log JavaScript exceptions to your server side log. To do this, you can either use
+    JSNLog makes it very easy to log
+    @if (currentVersion == "NodeJs")
+    {
+        <text>client side</text>
+    }
+
+    JavaScript exceptions to your server side log. To do this, you can either use
     the window.onerror handler or a try-catch block.
 </p>
 
@@ -27,7 +33,6 @@
 </p>
 
 <pre>window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
-
     // Send object with all data to server side log, using severity fatal, 
     // from logger "onerrorLogger"
     JL("onerrorLogger").fatalException({
@@ -183,7 +188,7 @@ function f3() {
     </p>
 }
 
-@if (currentVersion == "JsOnly")
+@if ((currentVersion == "JsOnly") || (currentVersion == "NodeJs"))
 {
     <p>
         To make that happen, you can configure your loggers in your JavaScript like so

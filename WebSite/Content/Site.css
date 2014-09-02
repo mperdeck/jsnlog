@@ -127,6 +127,7 @@ header .navbar-default .navbar-nav li a:hover {
     font-weight: bold;
 }
 
+div.download-button,
 a.download-button,
 a.download-button:visited,
 a.download-button:hover
@@ -153,6 +154,14 @@ a.download-button:hover
     color: #fff;    
     font-weight: bold;
     margin: 0;
+}
+
+.download-button div.version
+{
+    font-size: 80%;
+    text-decoration: none;
+    color: #fff;    
+    margin: -8px 0 8px 0;
 }
 
 .download-button span.download-button-caption

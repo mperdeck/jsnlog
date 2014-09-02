@@ -1,14 +1,13 @@
 ﻿@{
     string returnedObjectName = (string)(ViewData["returnType"]);
-    if (returnedObjectName == "void") { returnedObjectName = ""; }
 }
 
-<pre>setOptions(options: any): @((string)(ViewData["returnType"]))</pre>
+<pre>setOptions(options: any): @(returnedObjectName)</pre>
 
 <section class="parameters">
-<h3>Parameters</h3>
+    <h3>Parameters</h3>
 
-        <table class="table medium no-borders">
+    <table class="table medium no-borders">
         <tr>
             <th>options</th>
             <td>A JSON object with options. See the Remarks sections below.</td>
@@ -16,10 +15,12 @@
     </table>
 
 
-
-<h3>Return Value</h3>
-<p>
-The 
-    @returnedObjectName itself.
-</p>
-
+    @if (returnedObjectName != "void")
+    {
+    <h3>Return Value</h3>
+    <p>
+        The
+        @returnedObjectName itself.
+    </p>
+    }
+   </section>

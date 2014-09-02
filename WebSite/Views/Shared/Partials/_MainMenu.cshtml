@@ -2,6 +2,7 @@
 
 @{
     string currentVersion = PageVersions.CurrentVersion();
+    if (currentVersion == "NodeJs") { currentVersion = "JsOnly"; }
     bool showMenu = (currentVersion == "JsOnly") || (currentVersion == "NetJs");
 }
 

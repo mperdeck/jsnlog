@@ -7,6 +7,9 @@
     ViewBag.Key = "getstartedlogging";
     ViewBag.Description = "Start logging with JSNLog.";
     Layout = "~/Views/Shared/_DocumentationLayout.cshtml";
+    
+    string currentVersion = PageVersions.CurrentVersion();
+    if (currentVersion == "NodeJs") { currentVersion = "JsOnly"; }
 }
 
 <h2>The Basics</h2>
@@ -51,7 +54,7 @@
 
 <h2>Filtering out low priority messages using the level attribute</h2>
 
-@if (PageVersions.CurrentVersion() == "NetJs")
+@if (currentVersion == "NetJs")
 {
 
 <p>
@@ -64,7 +67,7 @@
     
 }
 
-@if (PageVersions.CurrentVersion() == "JsOnly")
+@if (currentVersion == "JsOnly")
 {
     <p>
     In your JavaScript, you can 
@@ -96,11 +99,11 @@
 <p>
     To make it easier to manage your loggers, they are organized in a 
     
-@if (PageVersions.CurrentVersion() == "NetJs")
+@if (currentVersion == "NetJs")
 {
                     @Html.ViewLink("webconfig-logger", "hierarchy", fragment: "inheritance")
 }
-@if (PageVersions.CurrentVersion() == "JsOnly")
+@if (currentVersion == "JsOnly")
 {
                     @Html.ViewLink("jsnlogjs-logger-setOptions", "hierarchy", fragment: "inheritance")
 }
@@ -121,7 +124,7 @@
     Loggers inherit their attributes from their parents, unless you override them.
     Ultimately, they all inherit from the root logger.
 </p>
-@if (PageVersions.CurrentVersion() == "NetJs")
+@if (currentVersion == "NetJs")
 {
 <p>
     To set the level of the root logger, simply leave out the
@@ -131,7 +134,7 @@
 <pre>&lt;!-- set level on root logger --&gt;
 &lt;logger level="ERROR" /&gt;</pre>
 }
-@if (PageVersions.CurrentVersion() == "JsOnly")
+@if (currentVersion == "JsOnly")
 {
 <p>
     To set the level of the root logger, simply leave out the name:
@@ -169,7 +172,7 @@ By default, the root logger has level <span class="term">DEBUG</span>.
     <li>@Html.ViewLink("getstarted-ajaxissues")</li>
     <li>@Html.ViewLink("getstarted-angularerrorhandling")</li>
     <li>@Html.ViewLink("getstarted-exceptionLogging")</li>
-@if (PageVersions.CurrentVersion() == "NetJs")
+@if (currentVersion == "NetJs")
 {
 <li>@Html.ViewLink("getstarted-requestids")</li>
         <li>@Html.ViewLink("getstarted-loadingjsfile")</li>

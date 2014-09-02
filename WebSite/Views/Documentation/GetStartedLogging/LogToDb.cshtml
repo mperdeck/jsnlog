@@ -1,0 +1,51 @@
+﻿@using ViewExtensions
+
+@{
+    ViewBag.Title = "Logging to databases and services";
+    ViewBag.H1 = "Logging to databases and services using Winston transports";
+    ViewBag.Key = "getstarted-loggingtodb";
+    ViewBag.Description = "Logging to databases and services";
+    ViewBag.VersionNameRegex = "NodeJs";
+
+    Layout = "~/Views/Shared/_DocumentationLayout.cshtml";
+}
+
+<p>
+    By default, jsnlog.js on the server sends all log messages to the console (on the client it sends
+    log messages to the server via AJAX). However, you might want to log to a database,
+    such as <a href="https://www.mongodb.org/" target="_blank">MongoDB</a>,
+    or a logging service, such as
+    <a href="https://www.loggly.com/" target="_blank">Loggly</a>.
+</p>
+
+<p>
+    To make this easy, jsnlog.js lets you plug in
+    <a href="https://github.com/flatiron/winston#working-with-transports" target="_blank">Winston transports</a>.
+    There are transports not only for MongoDB and Loggly, but also
+    SimpleDB, email, Cassandra and lots more.
+</p>
+<p>
+    The code below shows how to plug in the Winston transport for MongoDB.
+    Using other Winston transports goes along the same lines.
+</p>
+
+<pre>
+npm install winston
+npm install winston-mongodb
+</pre>
+
+<pre>
+var JL = require('jsnlog').JL;
+var winston = require('winston');
+require('winston-mongodb').MongoDB;<br />
+// The JSON object passed to the MongoDB function below contains options for the 
+// MongoDB transport. See the documentation for your chosen transport for its options.
+// The options given here are just examples.
+var mongo_appender = new winston.transports.MongoDB({ db: 'logs', collection: 'log' });
+JL().setOptions({ "appenders": [mongo_appender] });
+</pre>
+
+
+
+
+

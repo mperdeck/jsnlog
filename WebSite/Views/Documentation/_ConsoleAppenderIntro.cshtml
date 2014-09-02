@@ -3,23 +3,46 @@
 @{
     bool showWebConfigCode =
         ((string)(ViewData["configSource"]) == "web.config");
+
+    string currentVersion = PageVersions.CurrentVersion();
 }
 
 <p>
-    JSNLog is based on the idea of integrating client side and server side logging - using the
-    @if (showWebConfigCode)
-    {
-        @Html.ViewLink("webconfig-ajaxappender")
-    }
-    else
-    {
-        @Html.ViewLink("jsnlogjs-ajaxappender")
-    }
-    to send log items to the server.
+    The ConsoleAppender sends log messages to <span class="term">console.log</span>.
 </p>
+
+@if (currentVersion == "NodeJs")
+{
+    <p>
+        On the server, jsnlog.js by default logs via the ConsoleAppender.
+        And on the client, by default it uses the
+        @Html.ViewLink("jsnlogjs-ajaxappender")<text>.</text>
+    </p>
+}
+else
+{
+    <p>
+        JSNLog is based on the idea of integrating client side and server side logging - using the
+        @if (showWebConfigCode)
+        {
+            @Html.ViewLink("webconfig-ajaxappender")
+        }
+        else
+        {
+            @Html.ViewLink("jsnlogjs-ajaxappender")
+        }
+        to send log items to the server.
+    </p>
+}
 <p>
-    However, during development it can be useful to simply send log items to the
-    console provided by the F12 developer tools in
+    However, during development
+    @if (currentVersion == "NodeJs")
+    {
+        <text>on the client</text>
+    }
+
+    it can be useful to simply send log items to the
+    browser console provided by the F12 developer tools in
     <a href="https://developers.google.com/chrome-developer-tools/docs/console" target="_blank">Chrome</a>,
     <a href="http://getfirebug.com/" target="_blank">Firefox</a>
     and
