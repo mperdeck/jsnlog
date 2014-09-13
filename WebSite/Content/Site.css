@@ -101,17 +101,22 @@ header .navbar-default .navbar-nav li a:hover {
 
 .social-media {
     float: right;
-    width: 150px;
+    width: 250px;
 }
 
-.social-media .twitter {
+.social-media div {
+    float: right;
+    margin-left: 10px;
+}
+
+/*.social-media .twitter {
     float: right;
     margin-left: 10px;
 }
 
 .social-media .facebook {
     float: right;
-}
+}*/
 
 /* --------------------------------------- */
 
