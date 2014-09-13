@@ -11,6 +11,19 @@ function JL(loggerName) {
         return JL.__;
     }
 
+    // Implements Array.reduce. JSNLog supports IE8+ and reduce is not supported in that browser.
+    // Same interface as the standard reduce, except that
+    if (!Array.prototype.reduce) {
+        Array.prototype.reduce = function (callback, initialValue) {
+            var previousValue = initialValue;
+            for (var i = 0; i < this.length; i++) {
+                previousValue = callback(previousValue, this[i], i, this);
+            }
+
+            return previousValue;
+        };
+    }
+
     var accumulatedLoggerName = '';
     var logger = ('.' + loggerName).split('.').reduce(function (prev, curr, idx, arr) {
         // if loggername is a.b.c, than currentLogger will be set to the loggers
@@ -173,30 +186,73 @@ var JL;
         return true;
     }
 
+    // If logObject is a function, the function is evaluated (without parameters)
+    // and the result returned.
+    // Otherwise, logObject itself is returned.
+    function stringifyLogObjectFunction(logObject) {
+        if (typeof logObject == "function") {
+            if (logObject instanceof RegExp) {
+                return logObject.toString();
+            } else {
+                return logObject();
+            }
+        }
+
+        return logObject;
+    }
+
+    var StringifiedLogObject = (function () {
+        // * msg -
+        //      if the logObject is a scalar (after possible function evaluation), this is set to
+        //      string representing the scalar. Otherwise it is left undefined.
+        // * meta -
+        //      if the logObject is an object (after possible function evaluation), this is set to
+        //      that object. Otherwise it is left undefined.
+        // * finalString -
+        //      This is set to the string representation of logObject (after possible function evaluation),
+        //      regardless of whether it is an scalar or an object. An object is stringified to a JSON string.
+        //      Note that you can't call this field "final", because as some point this was a reserved
+        //      JavaScript keyword and using final trips up some minifiers.
+        function StringifiedLogObject(msg, meta, finalString) {
+            this.msg = msg;
+            this.meta = meta;
+            this.finalString = finalString;
+        }
+        return StringifiedLogObject;
+    })();
+
+    // Takes a logObject, which can be
+    // * a scalar
+    // * an object
+    // * a parameterless function, which returns the scalar or object to log.
+    // Returns a stringifiedLogObject
     function stringifyLogObject(logObject) {
-        switch (typeof logObject) {
+        // Note that this works if logObject is null.
+        // typeof null is object.
+        // JSON.stringify(null) returns "null".
+        var actualLogObject = stringifyLogObjectFunction(logObject);
+        var finalString;
+
+        switch (typeof actualLogObject) {
             case "string":
-                return logObject;
+                return new StringifiedLogObject(actualLogObject, null, actualLogObject);
             case "number":
-                return logObject.toString();
+                finalString = actualLogObject.toString();
+                return new StringifiedLogObject(finalString, null, finalString);
             case "boolean":
-                return logObject.toString();
+                finalString = actualLogObject.toString();
+                return new StringifiedLogObject(finalString, null, finalString);
             case "undefined":
-                return "undefined";
-            case "function":
-                if (logObject instanceof RegExp) {
-                    return logObject.toString();
-                } else {
-                    return stringifyLogObject(logObject());
-                }
+                return new StringifiedLogObject("undefined");
             case "object":
-                if ((logObject instanceof RegExp) || (logObject instanceof String) || (logObject instanceof Number) || (logObject instanceof Boolean)) {
-                    return logObject.toString();
+                if ((actualLogObject instanceof RegExp) || (actualLogObject instanceof String) || (actualLogObject instanceof Number) || (actualLogObject instanceof Boolean)) {
+                    finalString = actualLogObject.toString();
+                    return new StringifiedLogObject(finalString, null, finalString);
                 } else {
-                    return JSON.stringify(logObject);
+                    return new StringifiedLogObject(null, actualLogObject, JSON.stringify(actualLogObject));
                 }
             default:
-                return "unknown";
+                return new StringifiedLogObject("unknown", null, "unknown");
         }
     }
 
@@ -243,6 +299,25 @@ var JL;
     }
     JL.getOffLevel = getOffLevel;
 
+    function levelToString(level) {
+        if (level <= 1000) {
+            return "trace";
+        }
+        if (level <= 2000) {
+            return "debug";
+        }
+        if (level <= 3000) {
+            return "info";
+        }
+        if (level <= 4000) {
+            return "warn";
+        }
+        if (level <= 5000) {
+            return "error";
+        }
+        return "fatal";
+    }
+
     // ---------------------
     var Exception = (function () {
         // data replaces message. It takes not just strings, but also objects and functions, just like the log function.
@@ -252,7 +327,7 @@ var JL;
         function Exception(data, inner) {
             this.inner = inner;
             this.name = "JL.Exception";
-            this.message = stringifyLogObject(data);
+            this.message = stringifyLogObject(data).finalString;
         }
         return Exception;
     })();
@@ -332,8 +407,20 @@ var JL;
         If in response to this call one or more log items need to be processed
         (eg., sent to the server), this method calls this.sendLogItems
         with an array with all items to be processed.
+        
+        Note that the name and parameters of this function must match those of the log function of
+        a Winston transport object, so that users can use these transports as appenders.
+        That is why there are many parameters that are not actually used by this function.
+        
+        level - string with the level ("trace", "debug", etc.) Only used by Winston transports.
+        msg - human readable message. Undefined if the log item is an object. Only used by Winston transports.
+        meta - log object. Always defined, because at least it contains the logger name. Only used by Winston transports.
+        callback - function that is called when the log item has been logged. Only used by Winston transports.
+        levelNbr - level as a number. Not used by Winston transports.
+        message - log item. If the user logged an object, this is the JSON string.  Not used by Winston transports.
+        loggerName: name of the logger.  Not used by Winston transports.
         */
-        Appender.prototype.log = function (level, message, loggerName) {
+        Appender.prototype.log = function (level, msg, meta, callback, levelNbr, message, loggerName) {
             var logItem;
 
             if (!allow(this)) {
@@ -343,14 +430,14 @@ var JL;
                 return;
             }
 
-            if (level < this.storeInBufferLevel) {
+            if (levelNbr < this.storeInBufferLevel) {
                 // Ignore the log item completely
                 return;
             }
 
-            logItem = new LogItem(level, message, loggerName, (new Date).getTime());
+            logItem = new LogItem(levelNbr, message, loggerName, (new Date).getTime());
 
-            if (level < this.level) {
+            if (levelNbr < this.level) {
                 // Store in the hold buffer. Do not send.
                 if (this.bufferSize > 0) {
                     this.buffer.push(logItem);
@@ -364,7 +451,7 @@ var JL;
                 return;
             }
 
-            if (level < this.sendWithBufferLevel) {
+            if (levelNbr < this.sendWithBufferLevel) {
                 // Want to send the item, but not the contents of the buffer
                 this.batchBuffer.push(logItem);
             } else {
@@ -521,6 +608,14 @@ var JL;
                     var li = logItems[i];
                     var msg = li.n + ": " + li.m;
 
+                    // Only log the timestamp if we're on the server
+                    // (window is undefined). On the browser, the user
+                    // sees the log entry probably immediately, so in that case
+                    // the timestamp is clutter.
+                    if (typeof window === 'undefined') {
+                        msg = new Date(li.t) + " | " + msg;
+                    }
+
                     if (li.l <= JL.getDebugLevel()) {
                         this.cdebug(msg);
                     } else if (li.l <= JL.getInfoLevel()) {
@@ -600,7 +695,7 @@ var JL;
         // If there is no exception, logObject itself is worked into the message to the server.
         Logger.prototype.log = function (level, logObject, e) {
             var i = 0;
-            var message;
+            var compositeMessage;
             var excObject;
 
             // If we can't find any appenders, do nothing
@@ -609,22 +704,21 @@ var JL;
             }
 
             if (((level >= this.level)) && allow(this)) {
-                // logObject could be a function, so process independently from the exception.
-                message = stringifyLogObject(logObject);
-
                 if (e) {
                     excObject = this.buildExceptionObject(e);
-                    excObject.logData = message;
-
-                    message = JSON.stringify(excObject);
+                    excObject.logData = stringifyLogObjectFunction(logObject);
+                } else {
+                    excObject = logObject;
                 }
 
-                if (allowMessage(this, message)) {
+                compositeMessage = stringifyLogObject(excObject);
+
+                if (allowMessage(this, compositeMessage.finalString)) {
                     // See whether message is a duplicate
                     if (this.onceOnly) {
                         i = this.onceOnly.length - 1;
                         while (i >= 0) {
-                            if (new RegExp(this.onceOnly[i]).test(message)) {
+                            if (new RegExp(this.onceOnly[i]).test(compositeMessage.finalString)) {
                                 if (this.seenRegexes[i]) {
                                     return this;
                                 }
@@ -637,9 +731,19 @@ var JL;
                     }
 
                     // Pass message to all appenders
+                    // Note that these appenders could be Winston transports
+                    // https://github.com/flatiron/winston
+                    //
+                    // These transports do not take the logger name as a parameter.
+                    // So add it to the meta information, so even Winston transports will
+                    // store this info.
+                    compositeMessage.meta = compositeMessage.meta || {};
+                    compositeMessage.meta.loggerName = this.loggerName;
+
                     i = this.appenders.length - 1;
                     while (i >= 0) {
-                        this.appenders[i].log(level, message, this.loggerName);
+                        this.appenders[i].log(levelToString(level), compositeMessage.msg, compositeMessage.meta, function () {
+                        }, level, compositeMessage.finalString, this.loggerName);
                         i--;
                     }
                 }
@@ -684,7 +788,12 @@ var JL;
     JL.createConsoleAppender = createConsoleAppender;
 
     // -----------------------
+    // In the browser, the default appender is the AjaxAppender.
+    // Under nodejs (where there is no "window"), use the ConsoleAppender instead.
     var defaultAppender = new AjaxAppender("");
+    if (typeof window === 'undefined') {
+        defaultAppender = new ConsoleAppender("");
+    }
 
     // Create root logger
     //
@@ -709,7 +818,7 @@ if (typeof exports !== 'undefined') {
 // Support AMD module format
 var define;
 if (typeof define == 'function' && define.amd) {
-    define(function () {
+    define('jsnlog', [], function () {
         return JL;
     });
 }
