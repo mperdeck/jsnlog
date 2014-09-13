@@ -4,6 +4,18 @@
 @{
     string currentVersion = PageVersions.CurrentVersion();
     bool showSocialMedia = (currentVersion == "JsOnly") || (currentVersion == "NetJs") || (currentVersion == "NodeJs");
+
+    string platformHashtag = "";
+    switch (currentVersion)
+    {
+        case "NetJs":
+            platformHashtag = "#dotnet ";
+            break;
+
+        case "NodeJs":
+            platformHashtag = " #nodejs ";
+            break;
+    }
 }
 
 <!DOCTYPE html>
@@ -50,73 +62,80 @@
 
 
     <header>
-                <nav class="navbar navbar-default navbar-static-top" role="navigation">
-                  <div class="container">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainmenu">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainmenu">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
-                      </button>
-                      @Html.Partial("Partials/_Logo")
-                    </div>
-
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="mainmenu">
-                        @Html.Partial("Partials/_MainMenu")
-                    </div> @*.navbar-collapse*@ 
-                  </div> @*.container*@
-
-                  <div class="container">
-
-
-
-
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="btn-group btn-group-xs versions">
-                        @Html.VersionSwitcher()
-                    </div>
-                    @if (showSocialMedia)
-                    {
-                        <div class="social-media">
-                            @*
-                                Twitter button. Generated at https://about.twitter.com/resources/buttons#tweet
-                                Evaluating #JSNLog. Integrates JavaScript logging with .Net server side logging. Thoughts?
-                            *@
-
-                            <div class="twitter">
-                                <a href="https://twitter.com/share" class="twitter-share-button" data-text="Evaluating #JSNLog. #JavaScript #logging package. Stores client side events in server logs. Thoughts?" data-count="none">Tweet</a>
-                                <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
-                            </div>
-
-                            @*Reddit share button. Generated at http://www.reddit.com/buttons/*@
-
-                            <div class="reddit">
-                                <a href="//www.reddit.com/submit" onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="//www.reddit.com/static/spreddit7.gif" alt="submit to reddit" border="0" /> </a>
-                            </div>
-
-                            @*Facebook share button. Generated at https://developers.facebook.com/docs/plugins/share-button/*@
-
-                            <div class="facebook">
-                                <div class="fb-share-button" data-href="http://jsnlog.com" data-type="button"></div>
-                            </div>
-                        </div>
-                    }
+                    </button>
+                    @Html.Partial("Partials/_Logo")
                 </div>
-            </div> @*row*@
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="mainmenu">
+                    @Html.Partial("Partials/_MainMenu")
+                </div> @*.navbar-collapse*@
+            </div> @*.container*@
+
+            <div class="container">
 
 
 
 
-                  </div> @*.container*@
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="btn-group btn-group-xs versions">
+                            @Html.VersionSwitcher()
+                        </div>
+                        @if (showSocialMedia)
+                        {
+                            <div class="social-media">
+                                @*
+                                    Twitter button. Generated at https://about.twitter.com/resources/buttons#tweet
+                                    Evaluating #JSNLog. Integrates JavaScript logging with .Net server side logging. Thoughts?
+                                *@
+
+                                <div class="twitter">
+                                    @{
+                                        string twitterText = "#JSNLog #JavaScript #logging package. Stores client side events in " +
+                                            platformHashtag + "server logs.";
+                                    }
+
+                                    <a href="https://twitter.com/share" class="twitter-share-button" data-text="@twitterText" data-count="none">Tweet</a>
+                                    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+                                </div>
+
+                                @*Reddit share button. Generated at http://www.reddit.com/buttons/*@
+
+                                <div class="reddit">
+                                    <a href="//www.reddit.com/submit" onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false"> <img src="//www.reddit.com/static/spreddit7.gif" alt="submit to reddit" border="0" /> </a>
+                                </div>
+
+                                @*Facebook share button. Generated at https://developers.facebook.com/docs/plugins/share-button/*@
+
+                                <div class="facebook">
+                                    <div class="fb-share-button" data-href="http://jsnlog.com" data-type="button"></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div> @*row*@
 
 
 
-                </nav>
+
+            </div> @*.container*@
+
+
+
+        </nav>
     </header>
+
+
 
      @RenderSection("Hero", false)
 
