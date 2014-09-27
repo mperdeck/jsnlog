@@ -80,6 +80,7 @@
     <Compile Include="Infrastructure\JavaScriptHelpers.cs" />
     <Compile Include="Infrastructure\LevelUtils.cs" />
     <Compile Include="Infrastructure\AttributeValueCollection.cs" />
+    <Compile Include="Infrastructure\LogMessageHelpers.cs" />
     <Compile Include="Infrastructure\RequestId.cs" />
     <Compile Include="Infrastructure\Sequence.cs" />
     <Compile Include="Infrastructure\Utils.cs" />

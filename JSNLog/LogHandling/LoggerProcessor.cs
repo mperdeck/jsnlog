@@ -212,8 +212,17 @@ namespace JSNLog.LogHandling
 
             // ----------------
 
+            string jsonmessage = "";
+            if (messageFormat.Contains("%jsonmessage"))
+            {
+                jsonmessage = LogMessageHelpers.EnsureValidJson(message);
+            }
+
+            // ----------------
+
             string finalMessage = messageFormat
                 .Replace("%message", message)
+                .Replace("%jsonmessage", jsonmessage)
                 .Replace("%utcDateServer", serverSideTimeUtc.ToString(dateFormat))
                 .Replace("%utcDate", utcTimestamp.ToString(dateFormat))
                 .Replace("%dateServer", Utils.UtcToLocalDateTime(serverSideTimeUtc).ToString(dateFormat))

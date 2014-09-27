@@ -16,6 +16,7 @@ namespace JSNLog.Tests.UnitTests
         private string _json1root = null;
         private string _json2 = null;
         private string _json4 = null;
+        private string _json5 = null;
 
         private DateTime _dtFirstLogUtc;
         private DateTime _dtSecondLogUtc;
@@ -37,7 +38,7 @@ namespace JSNLog.Tests.UnitTests
 
             _json1 = @"{
 'lg': [
-{ 'm': 'first message', 'n': 'a.b.c', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
+{ 'm': 'first ""message""', 'n': 'a.b.c', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
 ] }";
 
             _json1root = @"{
@@ -55,6 +56,11 @@ namespace JSNLog.Tests.UnitTests
 'lg': [
 { 'n': 'a.b.c', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
 ] }";
+
+            _json5 = @"{
+""lg"": [
+{ ""m"": ""{\""x\"":5,\""y\"":88}"", ""n"": ""a.b.c"", ""l"": 1500, ""t"": " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
+] }";
         }
 
         [TestMethod]
@@ -67,8 +73,8 @@ namespace JSNLog.Tests.UnitTests
 ";
 
             var expected = new [] {
-                new LoggerProcessor.LogData("first message", "a.b.c",Constants.Level.DEBUG, 1500,
-                    "first message", 1500, "a.b.c", "therequestid1", 
+                new LoggerProcessor.LogData(@"first ""message""", "a.b.c",Constants.Level.DEBUG, 1500,
+                    @"first ""message""", 1500, "a.b.c", "therequestid1", 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
             };
@@ -76,6 +82,28 @@ namespace JSNLog.Tests.UnitTests
             // Act and Assert
 
             RunTest(configXml, _json1, "therequestid1", "my browser", "12.345.98.7",
+                        _dtServerUtc, "http://mydomain.com/main", expected);
+        }
+
+        [TestMethod]
+        public void DefaultFormatOneObjectLogItem()
+        {
+            // Arrange
+
+            string configXml = @"
+                <jsnlog></jsnlog>
+";
+
+            var expected = new[] {
+                new LoggerProcessor.LogData(@"{""x"":5,""y"":88}", "a.b.c",Constants.Level.DEBUG, 1500,
+                    @"{""x"":5,""y"":88}", 1500, "a.b.c", "therequestid1", 
+                    _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
+                    "my browser", "12.345.98.7", "http://mydomain.com/main")
+            };
+
+            // Act and Assert
+
+            RunTest(configXml, _json5, "therequestid1", "my browser", "12.345.98.7",
                         _dtServerUtc, "http://mydomain.com/main", expected);
         }
 
@@ -140,17 +168,18 @@ namespace JSNLog.Tests.UnitTests
 
             string configXml = @"
                 <jsnlog 
-serverSideMessageFormat=""msg: %message, utcDate: %utcDate, utcDateServer: %utcDateServer, date: %date, dateServer: %dateServer, level: %level, userAgent: %userAgent, userHostAddress: %userHostAddress, requestId: %requestId, url: %url, logger: %logger""
+serverSideMessageFormat=""msg: %message, json: %jsonmessage, utcDate: %utcDate, utcDateServer: %utcDateServer, date: %date, dateServer: %dateServer, level: %level, userAgent: %userAgent, userHostAddress: %userHostAddress, requestId: %requestId, url: %url, logger: %logger""
 dateFormat="""+dateFormat+@"""
 ></jsnlog>
 ";
             var expected = new[] {
                 new LoggerProcessor.LogData(
-                    string.Format("msg: first message, utcDate: {0}, utcDateServer: {1}, date: {2}, dateServer: {3}, level: 1500, userAgent: my browser, userHostAddress: 12.345.98.7, requestId: therequestid1, url: http://mydomain.com/main, logger: a.b.c",
+                    string.Format(
+                    @"msg: first ""message"", json: ""first \""message\"""", utcDate: {0}, utcDateServer: {1}, date: {2}, dateServer: {3}, level: 1500, userAgent: my browser, userHostAddress: 12.345.98.7, requestId: therequestid1, url: http://mydomain.com/main, logger: a.b.c",
                             _dtFirstLogUtc.ToString(dateFormat), _dtServerUtc.ToString(dateFormat), 
                             _dtFirstLog.ToString(dateFormat), _dtServer.ToString(dateFormat)),
                     "a.b.c",Constants.Level.DEBUG, 1500,
-                    "first message", 1500, "a.b.c", "therequestid1", 
+                    @"first ""message""", 1500, "a.b.c", "therequestid1", 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
             };
@@ -158,6 +187,37 @@ dateFormat="""+dateFormat+@"""
             // Act and Assert
 
             RunTest(configXml, _json1, "therequestid1", "my browser", "12.345.98.7",
+                        _dtServerUtc, "http://mydomain.com/main", expected);
+        }
+
+        [TestMethod]
+        public void FullFormatOneObjectLogItem()
+        {
+            // Arrange
+
+            string dateFormat = "dd-MM-yyyy HH:mm:ss";
+
+            string configXml = @"
+                <jsnlog 
+serverSideMessageFormat=""msg: %message, json: %jsonmessage, utcDate: %utcDate, utcDateServer: %utcDateServer, date: %date, dateServer: %dateServer, level: %level, userAgent: %userAgent, userHostAddress: %userHostAddress, requestId: %requestId, url: %url, logger: %logger""
+dateFormat=""" + dateFormat + @"""
+></jsnlog>
+";
+            var expected = new[] {
+                new LoggerProcessor.LogData(
+                    string.Format(
+                    @"msg: {{""x"":5,""y"":88}}, json: {{""x"":5,""y"":88}}, utcDate: {0}, utcDateServer: {1}, date: {2}, dateServer: {3}, level: 1500, userAgent: my browser, userHostAddress: 12.345.98.7, requestId: therequestid1, url: http://mydomain.com/main, logger: a.b.c",
+                            _dtFirstLogUtc.ToString(dateFormat), _dtServerUtc.ToString(dateFormat), 
+                            _dtFirstLog.ToString(dateFormat), _dtServer.ToString(dateFormat)),
+                    "a.b.c",Constants.Level.DEBUG, 1500,
+                    @"{""x"":5,""y"":88}", 1500, "a.b.c", "therequestid1", 
+                    _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
+                    "my browser", "12.345.98.7", "http://mydomain.com/main")
+            };
+
+            // Act and Assert
+
+            RunTest(configXml, _json5, "therequestid1", "my browser", "12.345.98.7",
                         _dtServerUtc, "http://mydomain.com/main", expected);
         }
 
@@ -171,8 +231,8 @@ dateFormat="""+dateFormat+@"""
 ";
 
             var expected = new[] {
-                new LoggerProcessor.LogData("first message", "server.logger",Constants.Level.FATAL, 6000,
-                    "first message", 1500, "a.b.c", "therequestid1", 
+                new LoggerProcessor.LogData(@"first ""message""", "server.logger",Constants.Level.FATAL, 6000,
+                    @"first ""message""", 1500, "a.b.c", "therequestid1", 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
             };
@@ -194,9 +254,9 @@ dateFormat="""+dateFormat+@"""
 
             var expected = new[] {
                 new LoggerProcessor.LogData(
-                    string.Format("first message | {0}", _dtFirstLogUtc.ToString("yyyy-MM-dd HH:mm:ss,fff")), 
+                    string.Format(@"first ""message"" | {0}", _dtFirstLogUtc.ToString("yyyy-MM-dd HH:mm:ss,fff")), 
                     "a.b.c",Constants.Level.DEBUG, 1500,
-                    "first message", 1500, "a.b.c", "therequestid1", 
+                    @"first ""message""", 1500, "a.b.c", "therequestid1", 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
             };
@@ -217,8 +277,8 @@ dateFormat="""+dateFormat+@"""
 ";
 
             var expected = new[] {
-                new LoggerProcessor.LogData("first message", "a.b.c",Constants.Level.DEBUG, 1500,
-                    "first message", 1500, "a.b.c", null, 
+                new LoggerProcessor.LogData(@"first ""message""", "a.b.c",Constants.Level.DEBUG, 1500,
+                    @"first ""message""", 1500, "a.b.c", null, 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
             };
