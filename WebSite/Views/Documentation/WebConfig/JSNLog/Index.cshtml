@@ -90,6 +90,10 @@ JavaScript files and you use your own &lt;script&gt; tag to load this combined f
                 <td>Original message given to the JavaScript logger</td>
             </tr>
             <tr valign="top">
+                <td>%jsonmessage</td>
+                <td>Original message given to the JavaScript logger, as a valid JSON value. See below.</td>
+            </tr>
+            <tr valign="top">
                 <td>%utcDate</td>
                 <td>Date and time in UTC when the message was generated, according to the client's clock</td>
             </tr>
@@ -148,6 +152,72 @@ JavaScript files and you use your own &lt;script&gt; tag to load this combined f
     </table>
     *<small> If you use Elmah, %newline won't result in a newline in the elmah.axd page, because Elmah doesn't convert line breaks in log messages to HTML &lt;br /&gt; tags.</small>
 
+    <h4>%message and %jsonmessage</h4>
+
+    <p>
+        Most people store log messages as unstructured strings of text. If that is you, you can skip this section.
+        However, if you store log messages as valid JSON objects, read on.
+    </p>
+
+    <p>
+        Both <span class="term">%message</span> and <span class="term">%jsonmessage</span> are replaced by a string that represents the message that was logged.
+        The difference is that whereas <span class="term">%message</span> is replaced the log message as-is, 
+        <span class="term">%jsonmessage</span> is replaced by a string that can be used in a JSON message.
+    </p>
+    <p>
+        To clarify the issue, see the table below:
+    </p>
+    <table class="table">
+        <tr valign="top">
+            <th>JavaScript</th>
+            <th>%message</th>
+            <th>%jsonmessage</th>
+        </tr>
+        <tr valign="top">
+            <td>
+                JL().error("O'Connell");
+            </td>
+            <td>
+                O'Connell
+            </td>
+            <td>
+                "O\u0027Connell"
+            </td>
+        </tr>
+        <tr valign="top">
+            <td>
+                JL().error({"f1": "v1", "f2": "v2"});
+            </td>
+            <td>
+                {"f1": "v1", "f2": "v2"}
+            </td>
+            <td>
+                {"f1": "v1", "f2": "v2"}
+            </td>
+        </tr>
+    </table>
+    <p>
+        As you see, there is no difference when logging an object (in the second row). But when logging a simple string,
+        <span class="term">%message</span> is replaced by the string, while
+        for <span class="term">%jsonmessage</span> the string is escaped and quoted.
+    </p>
+    <p>
+        This is important if you want to write valid JSON strings to your log. Suppose you attempted to do that using:
+    </p>
+    <pre>serverSideMessageFormat=&quot;{ 'Message': %message }&quot;</pre>
+    <p>
+        That would work well if you only logged objects. But if you logged the string <span class="term">O'Connell</span>, that would result in:
+    </p>
+    <pre>{ 'Message': O'Connell }</pre>
+    <p>
+        Which is not a valid JSON string. However, if you'd use:
+    </p>
+    <pre>serverSideMessageFormat=&quot;{ 'Message': <span class="addedcode">%jsonmessage</span> }&quot;</pre>
+    <p>
+        The result would be a valid JSON string:
+    </p>
+    <pre>{ 'Message': "O\u0027Connell" }</pre>
+
     <h4>serverSideMessageFormat and structured logging</h4>
     <p>
         If you create structured logs using
@@ -165,7 +235,7 @@ JavaScript files and you use your own &lt;script&gt; tag to load this combined f
     <p>
         To get a structured object instead, make sure that the result of your format string is a valid JSON string. For example:
     </p>
-    <pre>serverSideMessageFormat=&quot;<span class="addedcode">{ '</span>Sent<span class="addedcode">'</span>: <span class="addedcode">'</span>%date<span class="addedcode">'</span>, <span class="addedcode">'</span>Browser<span class="addedcode">'</span>: <span class="addedcode">'</span>%userAgent<span class="addedcode">'</span>, <span class="addedcode">'</span>Message<span class="addedcode">'</span>: %message <span class="addedcode">}</span>&quot;</pre>
+    <pre>serverSideMessageFormat=&quot;<span class="addedcode">{ '</span>Sent<span class="addedcode">'</span>: <span class="addedcode">'</span>%date<span class="addedcode">'</span>, <span class="addedcode">'</span>Browser<span class="addedcode">'</span>: <span class="addedcode">'</span>%userAgent<span class="addedcode">'</span>, <span class="addedcode">'</span>Message<span class="addedcode">'</span>: <span class="addedcode">%jsonmessage</span> <span class="addedcode">}</span>&quot;</pre>
     <p>
         Note:
     </p>
@@ -180,7 +250,8 @@ JavaScript files and you use your own &lt;script&gt; tag to load this combined f
             <span class="term">%date</span> and <span class="term">%userAgent</span> have been quoted as well, to make them strings.
         </li>
         <li>
-            <span class="term">%message</span> has not been quoted. That way, the object you logged will be stored as an object rather than a string.
+            <span class="term">%message</span> has been replaced by <span class="term">%jsonmessage</span>, which has not been quoted. 
+            That way, when you log objects, they will be logged as objects rather than strings.
         </li>
     </ul>
     <p>
@@ -191,9 +262,10 @@ JavaScript files and you use your own &lt;script&gt; tag to load this combined f
     <p>
         Finally, the default value of
         <span class="term">serverSideMessageFormat</span>
-        gives you structured logging out of the box.
-        This default is <span class="term">%message</span>, which returns
-        a logged object as-is, and logged objects are valid JSON strings in themselves.
+        gives you structured logging out of the box, 
+        even though the default is <span class="term">%message</span>. 
+        The reason is that the Serilog adapter that is used by JSNLog to log to Serilog
+        regards all strings that are not valid JSON strings as simple strings that are to be logged as-is.
     </p>
 }
 

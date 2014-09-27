@@ -320,7 +320,7 @@ public void LogToElmah(string message)
     in your web.config:
 </p>
 <pre>&lt;jsnlog ...  serverSideMessageFormat=
-    &quot;{ 'requestId': '<span class="addedcode">%requestId</span>', 'clientdate': '%date', 'url': '%url', 'logmessage': %message }&quot;&gt;
+    &quot;{ 'requestId': '<span class="addedcode">%requestId</span>', 'clientdate': '%date', 'url': '%url', 'logmessage': %jsonmessage }&quot;&gt;
     ...
 &lt;/jsnlog&gt;</pre>
 <p>
