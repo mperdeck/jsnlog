@@ -154,20 +154,6 @@ Insert loggers in your client side JavaScript, using jsnlog.js (" + SiteConstant
             </ul>")
                     }
 
-                    @*@if (currentVersion == "NetJs")
-                        {*@
-                </div>
-                <div class="col-sm-6 right-column">
-                    @*}*@
-
-
-                    @if (currentVersion == "NetJs")
-                    {
-                        <section class="feature">
-                            <h3 class="text">6 minute introduction</h3>
-                            <iframe src="//player.vimeo.com/video/93994063?title=0&amp;byline=0&amp;portrait=0" width="430" height="242" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                        </section>
-                    }
                     @if (currentVersion == "NodeJs")
                     {
                         @Feature(
@@ -185,6 +171,20 @@ Use jsnlog.js (" + SiteConstants.JsnlogJsFileSize + @" min+gz) to log JavaScript
 Plug in <a href=""https://github.com/flatiron/winston#working-with-transports"" target=""_blank"">Winston transports</a> to log to MongoDB, Loggly, etc.
             </li>
             </ul>")
+                    }
+                    @*@if (currentVersion == "NetJs")
+                        {*@
+                </div>
+                <div class="col-sm-6 right-column">
+                    @*}*@
+
+
+                    @if ((currentVersion == "NetJs") || (currentVersion == "NodeJs"))
+                    {
+                        <section class="feature">
+                            <h3 class="text">1 minute introduction</h3>
+                            <iframe width="430" height="242" src="//www.youtube.com/embed/fKhF_FtxNJ0" frameborder="0" allowfullscreen></iframe>
+                        </section>
                     }
 
                     @*@if (currentVersion == "NetJs")
