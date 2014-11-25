@@ -37,7 +37,17 @@ namespace JSNLog
 
             // Send dummy response. That way, the log request will not remain "pending"
             // in eg. Chrome dev tools.
+            //
+            // This must be given a MIME type of "text/plain"
+            // Otherwise, the browser may try to interpret the empty string as XML.
+            // When the user uses Firefox, and right clicks on the page and chooses "Inspect Element",
+            // then in that debugger's console it will say "no element found".
+            // See
+            // http://www.acnenomor.com/307387p1/how-do-i-setup-my-ajax-post-request-to-prevent-no-element-found-on-empty-response
+            // http://stackoverflow.com/questions/975929/firefox-error-no-element-found/976200#976200
+
             HttpResponse Response = context.Response;
+            Response.ContentType = "text/plain";
             Response.Write("");
         }
     }
