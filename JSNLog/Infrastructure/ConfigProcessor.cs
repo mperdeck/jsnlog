@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -74,7 +74,7 @@ namespace JSNLog.Infrastructure
             JavaScriptHelpers.WriteJavaScriptBeginTag(sb);
             if (generateClosure) 
             {
-                JavaScriptHelpers.WriteLine(string.Format("var {0} = function () {{", Constants.GlobalMethodCalledAfterJsnlogJsLoaded), sb); 
+                JavaScriptHelpers.WriteLine(string.Format("var {0} = function ({1}) {{", Constants.GlobalMethodCalledAfterJsnlogJsLoaded, Constants.JsLogObjectName), sb); 
             }
 
             // Generate setOptions for JSNLog object itself
@@ -132,7 +132,7 @@ namespace JSNLog.Infrastructure
             {
                 // Generate code to execute the function, in case jsnlog.js has already been loaded.
                 // Wrap in try catch, so if jsnlog.js hasn't been loaded, the resulting exception will be swallowed.
-                JavaScriptHelpers.WriteLine(string.Format("}}; try {{ {0}(); }} catch(e) {{}};", Constants.GlobalMethodCalledAfterJsnlogJsLoaded), sb); 
+                JavaScriptHelpers.WriteLine(string.Format("}}; try {{ {0}({1}); }} catch(e) {{}};", Constants.GlobalMethodCalledAfterJsnlogJsLoaded, Constants.JsLogObjectName), sb); 
             }
             JavaScriptHelpers.WriteJavaScriptEndTag(sb);
 
