@@ -378,7 +378,7 @@ new [] {
     new T(3000, "", 91, logObject: "null", expectedMsg: "null"),
     new T(3000, "", 91, logObject: "function() { return \"funcreturn\"; }", expectedMsg: "funcreturn"),
     new T(3000, "", 91, logObject: "function() { return {\"f1\": \"v1a\", \"f2\": \"v2a\"}; }", expectedMsg: "{\"f1\":\"v1a\",\"f2\":\"v2a\"}"),
-    new T(3000, "", 91, logObject: "function() { return function() { return {\"f1\": \"v1b\", \"f2\": \"v2b\"}; }; }", expectedMsg: "{\"f1\":\"v1b\",\"f2\":\"v2b\"}"),
+    new T(3000, "", 91, logObject: "function() { return function() { return {\"f1\": \"v1b\", \"f2\": \"v2b\"}; }; }", expectedMsg: "unknown"),
     
     new T(checkNbr: 91, checkAppender: "a0"),
     

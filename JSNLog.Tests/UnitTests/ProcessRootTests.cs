@@ -20,6 +20,22 @@ namespace JSNLog.Tests.UnitTests
     public class ProcessRootTests
     {
         [TestMethod]
+        public void CorrectXml()
+        {
+            // Use this test to adhoc debug config processor
+
+            // Arrange
+
+            string configXml = @"
+                <jsnlog>
+</jsnlog>
+";
+
+            // Act and Assert
+            RunTest(configXml);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(InvalidAttributeException))]
         public void InvalidLevel()
         {

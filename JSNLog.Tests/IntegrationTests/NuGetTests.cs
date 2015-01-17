@@ -37,6 +37,7 @@ namespace JSNLog.Tests.IntegrationTests
         }
 
         [TestCategory("NuGetTest"), TestMethod]
+        [Ignore]
         public void zNuGetTestCommon()
         {
             RunTest("EmptyTestSiteLog4Net");
