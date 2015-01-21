@@ -22,7 +22,7 @@
 
                If you change the dependencies or files in one of these nuspecs, change them
                in the other as well. --> 
-          <dependency id="Common.Logging" />
+          <dependency id="Common.Logging" version="3.0.0" />
           <dependency id="WebActivatorEx" version="2.0.0" />
       </dependencies>
   </metadata>

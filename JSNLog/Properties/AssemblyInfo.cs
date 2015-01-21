@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------------
 // Generated.cs gets copied from Generated.cs.template
-// During the copy, 2.7.9 is replaced by the actual version.
+// During the copy, 2.7.10 is replaced by the actual version.
 // ---------------------------------------------------------------------------
 
 using System.Reflection;
@@ -37,5 +37,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.7.9")]
-[assembly: AssemblyFileVersion("2.7.9")]
+[assembly: AssemblyVersion("2.7.10")]
+[assembly: AssemblyFileVersion("2.7.10")]
