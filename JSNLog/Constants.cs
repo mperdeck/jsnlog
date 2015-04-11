@@ -81,6 +81,7 @@ namespace JSNLog
                 new AttributeInfo("enabled", new BoolValue(), AttributeInfo.AttributeValidityEnum.OptionalOption),
                 new AttributeInfo("maxMessages", new PositiveIntegerValue(), AttributeInfo.AttributeValidityEnum.OptionalOption),
                 new AttributeInfo("defaultAjaxUrl", null, AttributeInfo.AttributeValidityEnum.OptionalOption),
+                new AttributeInfo("corsAllowedOriginsRegex", null, AttributeInfo.AttributeValidityEnum.NoOption),
                 new AttributeInfo("serverSideLogger", null, AttributeInfo.AttributeValidityEnum.NoOption),
                 new AttributeInfo("serverSideLevel", new LevelValue(), AttributeInfo.AttributeValidityEnum.NoOption),
                 new AttributeInfo("serverSideMessageFormat", null, AttributeInfo.AttributeValidityEnum.NoOption),

@@ -8,11 +8,11 @@ namespace JSNLog.LogHandling
 {
     public class Logger: ILogger
     {
-        public void Log(Constants.Level logLevel, string loggerName, string message)
+        public void Log(Constants.Level level, string loggerName, string message)
         {
             ILog log = LogManager.GetLogger(loggerName);
 
-            switch (logLevel)
+            switch (level)
             {
                 case Constants.Level.TRACE:
                     log.Trace(message);
@@ -39,7 +39,7 @@ namespace JSNLog.LogHandling
                     break;
 
                 default:
-                    throw new Exception(string.Format("Logger.Log - unknown level={0}", logLevel));
+                    throw new Exception(string.Format("Logger.Log - unknown level={0}", level));
             }
         }
     }

@@ -8,6 +8,6 @@ namespace JSNLog.LogHandling
 {
     public interface ILogger
     {
-        void Log(Constants.Level logLevel, string loggerName, string message);
+        void Log(Constants.Level level, string loggerName, string message);
     }
 }

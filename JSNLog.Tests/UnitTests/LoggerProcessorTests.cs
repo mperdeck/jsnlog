@@ -10,7 +10,7 @@ using System.Xml;
 namespace JSNLog.Tests.UnitTests
 {
     [TestClass]
-    public class LoggerProcessorTests
+    public partial class LoggerProcessorTests
     {
         private string _json1 = null;
         private string _json1root = null;
