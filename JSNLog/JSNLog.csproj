@@ -89,6 +89,8 @@
     <Compile Include="Infrastructure\Value.cs" />
     <Compile Include="Infrastructure\XmlHelpers.cs" />
     <Compile Include="JavascriptLogging.cs" />
+    <Compile Include="LogHandling\ILogger.cs" />
+    <Compile Include="LogHandling\Logger.cs" />
     <Compile Include="LogHandling\LoggerProcessor.cs" />
     <None Include="Properties\AssemblyInfo.cs.template" />
     <Compile Include="ValueInfos\AppendersValue.cs" />

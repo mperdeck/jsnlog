@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JSNLog.Infrastructure;
-using Common.Logging;
 using System.Web.Script.Serialization;
 using System.Xml;
 using System.Web;
@@ -77,8 +76,29 @@ namespace JSNLog.LogHandling
             }
         }
 
+        /// <summary>
+        /// Processes the incoming request. This method is not depended on the environment and so can be unit tested.
+        /// Note that the incoming request may not be the POST request with log data.
+        /// </summary>
+        /// <param name="json">
+        /// JSON payload in the incoming request
+        /// </param>
+        /// <param name="userAgent">Type of browser that sent the request</param>
+        /// <param name="userHostAddress">IP address that sent the address</param>
+        /// <param name="serverSideTimeUtc">Current time in UTC</param>
+        /// <param name="url">Url that the request was sent to</param>
+        /// <param name="requestId">Request Id sent as part of the request</param>
+        /// <param name="httpMethod">HTTP method of the request</param>
+        /// <param name="origin">Value of the Origin request header</param>
+        /// <param name="response">
+        /// Empty response object. The caller may use this to create the HTTP response. This method can add headers, etc.
+        /// </param>
+        /// <param name="logger">
+        /// Logger object, used to do the actual logging.
+        /// </param>
         public static void ProcessLogRequest(string json, string userAgent, string userHostAddress,
-            DateTime serverSideTimeUtc, string url, string requestId)
+            DateTime serverSideTimeUtc, string url, string requestId, 
+            string httpMethod, string origin, HttpResponse response, ILogger logger)
         {
             XmlElement xe = XmlHelpers.RootElement();
 
@@ -90,37 +110,7 @@ namespace JSNLog.LogHandling
 
             foreach (LogData logData in logDatas)
             {
-                ILog log = LogManager.GetLogger(logData.LoggerName);
-
-                switch (logData.Level)
-                {
-                    case Constants.Level.TRACE:
-                        log.Trace(logData.Message);
-                        break;
-
-                    case Constants.Level.DEBUG:
-                        log.Debug(logData.Message);
-                        break;
-
-                    case Constants.Level.INFO:
-                        log.Info(logData.Message);
-                        break;
-
-                    case Constants.Level.WARN:
-                        log.Warn(logData.Message);
-                        break;
-
-                    case Constants.Level.ERROR:
-                        log.Error(logData.Message);
-                        break;
-
-                    case Constants.Level.FATAL:
-                        log.Fatal(logData.Message);
-                        break;
-
-                    default:
-                        throw new Exception(string.Format("ProcessLogRequest - finalLevel={0}", logData.Level));
-                }
+                logger.Log(logData.Level, logData.LoggerName, logData.Message);
             }
         }
 
@@ -156,8 +146,6 @@ namespace JSNLog.LogHandling
             {
                 try
                 {
-                    ILog log = LogManager.GetLogger(Constants.JSNLogInternalErrorLoggerName);
-
                     string message =
                         string.Format(
                             "json: {0}, userAgent: {1}, userHostAddress: {2}, serverSideTimeUtc: {3}, url: {4}, exception: {5}",

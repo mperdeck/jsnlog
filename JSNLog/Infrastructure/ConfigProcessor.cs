@@ -54,7 +54,7 @@ namespace JSNLog.Infrastructure
             if (!string.IsNullOrEmpty(loggerProductionLibraryVirtualPath))
             {
                 // Every hard coded path must be resolved. See the declaration of DefaultDefaultAjaxUrl
-                loggerProductionLibraryPath = virtualToAbsoluteFunc(loggerProductionLibraryVirtualPath);
+                loggerProductionLibraryPath = AbsoluteUrl(loggerProductionLibraryVirtualPath, virtualToAbsoluteFunc);
             }
 
             if (!loggerEnabled)
@@ -85,8 +85,8 @@ namespace JSNLog.Infrastructure
             attributeValues[Constants.JsLogObjectRequestIdOption] = new Value(requestId, new StringValue());
 
             // Set default value for defaultAjaxUrl attribute
-            attributeValues[Constants.JsLogObjectDefaultAjaxUrlOption] = 
-                new Value(virtualToAbsoluteFunc(Constants.DefaultDefaultAjaxUrl), new StringValue());
+            attributeValues[Constants.JsLogObjectDefaultAjaxUrlOption] =
+                new Value(AbsoluteUrl(Constants.DefaultDefaultAjaxUrl, virtualToAbsoluteFunc), new StringValue());
 
             Utils.ProcessOptionAttributes(Constants.JsLogObjectName, xe, Constants.JSNLogAttributes,
                 attributeValues, sb);
@@ -144,6 +144,23 @@ namespace JSNLog.Infrastructure
             {
                 JavaScriptHelpers.WriteScriptTag(loggerProductionLibraryPath, sb);
             }
+        }
+
+        /// <summary>
+        /// The given url may be virtual (starts with ~). This method returns a version of the url that is not virtual.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        private string AbsoluteUrl(string url, Func<string, string> virtualToAbsoluteFunc)
+        {
+            string urlLc = url.ToLower();
+            if (urlLc.StartsWith("//") || urlLc.StartsWith("http://") || urlLc.StartsWith("https://"))
+            {
+                return url;
+            }
+            
+            string absoluteUrl = virtualToAbsoluteFunc(url);
+            return absoluteUrl;
         }
 
         private void ProcessAssembly(XmlElement xe, string parentName, Dictionary<string, string> appenderNames, Sequence sequence,
