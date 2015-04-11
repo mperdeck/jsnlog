@@ -13,78 +13,150 @@ namespace JSNLog.Tests.UnitTests
 {
     public partial class LoggerProcessorTests
     {
-        private class LogEntry
+        [TestMethod]
+        public void PutRequest()
         {
-            public Constants.Level Level {get;set;}
-            public string LoggerName  {get;set;}
-            public string Message { get; set; }
+            string configXml = @"
+                <jsnlog corsAllowedOriginsRegex=""abc""></jsnlog>
+";
+
+            NameValueCollection expectedResponseHeaders = new NameValueCollection();
+            List<LogEntry> expectedLogEntries = new List<LogEntry>();
+            string expectedResponseCode = "405";
+
+            RunTestHttp(
+                "PUT", "http://abc.com",
+                configXml, "", "", "", "230.45.1.8",
+                _dtServerUtc, "http://mydomain.com/main",
+                expectedResponseCode, expectedResponseHeaders, expectedLogEntries);
         }
 
-        private class TestLogger : ILogger
+        [TestMethod]
+        public void GetRequest()
         {
-            public List<LogEntry> LogEntries { get; set; }
+            string configXml = @"
+                <jsnlog corsAllowedOriginsRegex=""abc""></jsnlog>
+";
 
-            public TestLogger()
-            {
-                LogEntries = new List<LogEntry>();
-            }
+            NameValueCollection expectedResponseHeaders = new NameValueCollection();
+            List<LogEntry> expectedLogEntries = new List<LogEntry>();
+            string expectedResponseCode = "405";
 
-            public void Log(Constants.Level level, string loggerName, string message)
-            {
-                LogEntries.Add(new LogEntry
-                {
-                    Level = level,
-                    LoggerName = loggerName,
-                    Message = message
-                });
-            }
+            RunTestHttp(
+                "GET", "http://abc.com",
+                configXml, "", "", "", "230.45.1.8",
+                _dtServerUtc, "http://mydomain.com/main",
+                expectedResponseCode, expectedResponseHeaders, expectedLogEntries);
         }
 
-        private void RunTestHttp(
-            string httpMethod, string origin,
-            string configXml, string json, string requestId, string userAgent, string userHostAddress,
-            DateTime serverSideTimeUtc, string url,
-            string expectedResponseCode, NameValueCollection expectedResponseHeaders, List<LogEntry> expectedLogEntries)
+        [TestMethod]
+        public void OptionsRequest_NotAcceptedOrigin()
         {
-            // Arrange
+            string configXml = @"
+                <jsnlog corsAllowedOriginsRegex=""def""></jsnlog>
+";
 
-            HttpResponse response = new HttpResponse(new StringWriter());
-            TestLogger logger = new TestLogger();
-            XmlElement xe = Utils.ConfigToXe(configXml);
+            string origin = "http://abc.com";
 
-            // Act
+            NameValueCollection expectedResponseHeaders = new NameValueCollection { 
+            };
 
-            LoggerProcessor.ProcessLogRequest(json, userAgent, userHostAddress,
-                serverSideTimeUtc, url, requestId,
-                httpMethod, origin, response, logger, xe);
+            List<LogEntry> expectedLogEntries = new List<LogEntry>();
+            string expectedResponseCode = "200";
 
-            // Assert
-
-            Assert.AreEqual(expectedResponseCode, response.StatusCode);
-            TestLogEntries(expectedLogEntries, logger.LogEntries);
-            TestResponseHeaders(expectedResponseHeaders, response.Headers);
+            RunTestHttp(
+                "OPTIONS", origin,
+                configXml, "", "", "", "230.45.1.8",
+                _dtServerUtc, "http://mydomain.com/main",
+                expectedResponseCode, expectedResponseHeaders, expectedLogEntries);
         }
 
-        private void TestLogEntries(List<LogEntry> expectedLogEntries, List<LogEntry> actualLogEntries)
+        [TestMethod]
+        public void OptionsRequest_AcceptedOrigin()
         {
-            Assert.AreEqual(expectedLogEntries.Count(), actualLogEntries.Count(), "Log counts not equal");
+            string configXml = @"
+                <jsnlog corsAllowedOriginsRegex=""abc""></jsnlog>
+";
 
-            for (int i = 0; i < expectedLogEntries.Count(); i++)
-            {
-                Assert.AreEqual(expectedLogEntries.ElementAt(i).Message, actualLogEntries.ElementAt(i).Message);
-                Assert.AreEqual(expectedLogEntries.ElementAt(i).LoggerName, actualLogEntries.ElementAt(i).LoggerName);
-                Assert.AreEqual(expectedLogEntries.ElementAt(i).Level, actualLogEntries.ElementAt(i).Level);
-            }
+            string origin = "http://abc.com";
+
+            NameValueCollection expectedResponseHeaders = new NameValueCollection { 
+                {"Access-Control-Allow-Origin", origin}, 
+                {"Access-Control-Allow-Methods", "POST"}, 
+                {"Access-Control-Allow-Headers", "jsnlog-requestid, content-type"}
+            };
+
+            List<LogEntry> expectedLogEntries = new List<LogEntry>();
+            string expectedResponseCode = "200";
+
+            RunTestHttp(
+                "OPTIONS", origin,
+                configXml, "", "", "", "230.45.1.8",
+                _dtServerUtc, "http://mydomain.com/main",
+                expectedResponseCode, expectedResponseHeaders, expectedLogEntries);
         }
 
-        private void TestResponseHeaders(NameValueCollection expectedHeaders, NameValueCollection actualHeaders)
+        [TestMethod]
+        public void PostRequest_NotAcceptedOrigin()
         {
-            Assert.IsTrue(expectedHeaders.Count <= actualHeaders.Count);
+            string configXml = @"
+                <jsnlog corsAllowedOriginsRegex=""def""></jsnlog>
+";
 
-            foreach(string key in expectedHeaders.Keys)
+            string origin = "http://abc.com";
+
+            NameValueCollection expectedResponseHeaders = new NameValueCollection
             {
-                Assert.AreEqual(expectedHeaders[key], actualHeaders[key]);
-            }
+            };
+
+            // Note that JSNLog doesn't reliably know whether a given request is cross origin or not.
+            // So on POST, it always logs the data. It relies on the browser to not send the POST
+            // if previously it sent a response to a CORS OPTIONS request without CORS headers.
+
+            List<LogEntry> expectedLogEntries = new List<LogEntry>
+            {
+                new LogEntry(Constants.Level.DEBUG, "a.b.c", @"first ""message""")
+            };
+
+            string expectedResponseCode = "200";
+
+            RunTestHttp(
+                "POST", origin,
+                configXml, _json1, "", "", "230.45.1.8",
+                _dtServerUtc, "http://mydomain.com/main",
+                expectedResponseCode, expectedResponseHeaders, expectedLogEntries);
+        }
+
+        [TestMethod]
+        public void PostRequest_AcceptedOrigin()
+        {
+            string configXml = @"
+                <jsnlog corsAllowedOriginsRegex=""abc""></jsnlog>
+";
+
+            string origin = "http://abc.com";
+
+            NameValueCollection expectedResponseHeaders = new NameValueCollection
+            {
+                {"Access-Control-Allow-Origin", origin}
+            };
+
+            // Note that JSNLog doesn't reliably know whether a given request is cross origin or not.
+            // So on POST, it always logs the data. It relies on the browser to not send the POST
+            // if previously it sent a response to a CORS OPTIONS request without CORS headers.
+
+            List<LogEntry> expectedLogEntries = new List<LogEntry>
+            {
+                new LogEntry(Constants.Level.DEBUG, "a.b.c", @"first ""message""")
+            };
+
+            string expectedResponseCode = "200";
+
+            RunTestHttp(
+                "POST", origin,
+                configXml, _json1, "", "", "230.45.1.8",
+                _dtServerUtc, "http://mydomain.com/main",
+                expectedResponseCode, expectedResponseHeaders, expectedLogEntries);
         }
     }
 }
