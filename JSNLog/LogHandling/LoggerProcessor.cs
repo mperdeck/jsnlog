@@ -96,12 +96,11 @@ namespace JSNLog.LogHandling
         /// <param name="logger">
         /// Logger object, used to do the actual logging.
         /// </param>
+        /// <param name="xe">The JSNLog element in web.config</param>
         public static void ProcessLogRequest(string json, string userAgent, string userHostAddress,
-            DateTime serverSideTimeUtc, string url, string requestId, 
-            string httpMethod, string origin, HttpResponse response, ILogger logger)
+            DateTime serverSideTimeUtc, string url, string requestId,
+            string httpMethod, string origin, HttpResponse response, ILogger logger, XmlElement xe)
         {
-            XmlElement xe = XmlHelpers.RootElement();
-
             List<LogData> logDatas =
                 ProcessLogRequestExec(json, userAgent, userHostAddress, serverSideTimeUtc, url, requestId, xe);
 

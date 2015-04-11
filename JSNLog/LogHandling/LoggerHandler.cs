@@ -7,6 +7,7 @@ using System.Collections.Specialized;
 using System.Xml;
 using JSNLog.LogHandling;
 using System.IO;
+using JSNLog.Infrastructure;
 
 // Be sure to leave the namespace at JSNLog. Web.config relies on this.
 namespace JSNLog
@@ -37,10 +38,11 @@ namespace JSNLog
 
             HttpResponse response = context.Response;
             ILogger logger = new Logger();
+            XmlElement xe = XmlHelpers.RootElement();
 
             LoggerProcessor.ProcessLogRequest(json, userAgent, userHostAddress,
                 serverSideTimeUtc, url, requestId,
-                httpMethod, origin, response, logger);
+                httpMethod, origin, response, logger, xe);
 
             // Send dummy response. That way, the log request will not remain "pending"
             // in eg. Chrome dev tools.
