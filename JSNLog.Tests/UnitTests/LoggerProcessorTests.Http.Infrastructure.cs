@@ -42,15 +42,32 @@ namespace JSNLog.Tests.UnitTests
             }
         }
 
+        private class TestHttpResponse : HttpResponseBase
+        {
+            public override int StatusCode { get; set; }
+
+            private NameValueCollection _headers = new NameValueCollection();
+            public override NameValueCollection Headers { get { return _headers; } }
+
+            public override void AppendHeader(string name, string value)
+            {
+                _headers.Add(name, value);
+            }
+
+            public TestHttpResponse()
+            {
+            }
+        }
+
         private void RunTestHttp(
             string httpMethod, string origin,
             string configXml, string json, string requestId, string userAgent, string userHostAddress,
             DateTime serverSideTimeUtc, string url,
-            string expectedResponseCode, NameValueCollection expectedResponseHeaders, List<LogEntry> expectedLogEntries)
+            int expectedResponseCode, NameValueCollection expectedResponseHeaders, List<LogEntry> expectedLogEntries)
         {
             // Arrange
 
-            HttpResponse response = new HttpResponse(new StringWriter());
+            TestHttpResponse response = new TestHttpResponse();
             TestLogger logger = new TestLogger();
             XmlElement xe = Utils.ConfigToXe(configXml);
 

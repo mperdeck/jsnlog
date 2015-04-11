@@ -21,6 +21,7 @@ namespace JSNLog
         public const char AppenderNameSeparator = ';';
         public const string RootLoggerNameServerSide = "ClientRoot"; // Cannot use empty logger name server side, so use this instead.
         public const string JSNLogInternalErrorLoggerName = "JSNLogInternalError"; // Used when logging internal errors to Common.Logging
+        public const int CorsAccessControlMaxAgeInSeconds = 3600; // Note that many browsers enforce their own max age, so you may not get 3600 seconds.
 
         // The default for the defaultAjaxUrl attribute.
         // It starts with a ~, which must be resolved. Issue is that in most sites, the home page is at

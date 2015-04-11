@@ -6,6 +6,8 @@ using JSNLog.Infrastructure;
 using System.Web.Script.Serialization;
 using System.Xml;
 using System.Web;
+using System.Net;
+using System.Text.RegularExpressions;
 
 namespace JSNLog.LogHandling
 {
@@ -79,6 +81,11 @@ namespace JSNLog.LogHandling
         /// <summary>
         /// Processes the incoming request. This method is not depended on the environment and so can be unit tested.
         /// Note that the incoming request may not be the POST request with log data.
+        /// 
+        /// Effect of this method:
+        /// * setting StatusCode on the response parameter
+        /// * adding headers to the response parameter
+        /// * logging contents of log request
         /// </summary>
         /// <param name="json">
         /// JSON payload in the incoming request
@@ -91,7 +98,7 @@ namespace JSNLog.LogHandling
         /// <param name="httpMethod">HTTP method of the request</param>
         /// <param name="origin">Value of the Origin request header</param>
         /// <param name="response">
-        /// Empty response object. The caller may use this to create the HTTP response. This method can add headers, etc.
+        /// Empty response object. This method can add headers, etc.
         /// </param>
         /// <param name="logger">
         /// Logger object, used to do the actual logging.
@@ -99,8 +106,42 @@ namespace JSNLog.LogHandling
         /// <param name="xe">The JSNLog element in web.config</param>
         public static void ProcessLogRequest(string json, string userAgent, string userHostAddress,
             DateTime serverSideTimeUtc, string url, string requestId,
-            string httpMethod, string origin, HttpResponse response, ILogger logger, XmlElement xe)
+            string httpMethod, string origin, HttpResponseBase response, ILogger logger, XmlElement xe)
         {
+            if ((httpMethod != "POST") && (httpMethod != "OPTIONS"))
+            {
+                response.StatusCode = (int)HttpStatusCode.MethodNotAllowed;
+                return;
+            }
+
+            string corsAllowedOriginsRegex = XmlHelpers.OptionalAttribute(xe, "corsAllowedOriginsRegex", null);
+            bool originIsAllowed = ((!string.IsNullOrEmpty(corsAllowedOriginsRegex)) && (!string.IsNullOrEmpty(origin)) && Regex.IsMatch(origin, corsAllowedOriginsRegex));
+
+            if (originIsAllowed)
+            {
+                response.AppendHeader("Access-Control-Allow-Origin", origin);
+            }
+
+            response.StatusCode = (int)HttpStatusCode.OK;
+
+            if (httpMethod == "OPTIONS")
+            {
+                // Standard HTTP response (not related to CORS)
+                response.AppendHeader("Allow", "POST");
+
+                // Only if the origin is allow send CORS headers
+                if (originIsAllowed)
+                {
+                    response.AppendHeader("Access-Control-Max-Age", Constants.CorsAccessControlMaxAgeInSeconds.ToString());
+                    response.AppendHeader("Access-Control-Allow-Methods", "POST");
+                    response.AppendHeader("Access-Control-Allow-Headers", "jsnlog-requestid, content-type");
+                }
+
+                return;
+            }
+
+            // httpMethod must be POST
+
             List<LogData> logDatas =
                 ProcessLogRequestExec(json, userAgent, userHostAddress, serverSideTimeUtc, url, requestId, xe);
 

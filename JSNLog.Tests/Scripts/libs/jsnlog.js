@@ -73,6 +73,7 @@ var JL;
     JL.maxMessages;
     JL.defaultAjaxUrl;
     JL.clientIP;
+    JL.defaultBeforeSend;
     // Initialise requestId to empty string. If you don't do this and the user
     // does not set it via setOptions, then the JSNLog-RequestId header will
     // have value "undefined", which doesn't look good in a log.
@@ -246,6 +247,7 @@ var JL;
         copyProperty("defaultAjaxUrl", options, this);
         copyProperty("clientIP", options, this);
         copyProperty("requestId", options, this);
+        copyProperty("defaultBeforeSend", options, this);
         return this;
     }
     JL.setOptions = setOptions;
@@ -467,6 +469,7 @@ var JL;
         }
         AjaxAppender.prototype.setOptions = function (options) {
             copyProperty("url", options, this);
+            copyProperty("beforeSend", options, this);
             _super.prototype.setOptions.call(this, options);
             return this;
         };
@@ -493,14 +496,46 @@ var JL;
                 // Send the json to the server. 
                 // Note that there is no event handling here. If the send is not
                 // successful, nothing can be done about it.
-                var xhr = new XMLHttpRequest();
+                var xhr = getXhr();
                 xhr.open('POST', ajaxUrl);
+                // call beforeSend callback
+                // first try the callback on the appender
+                // then the global defaultBeforeSend callback
+                if (typeof this.beforeSend === 'function') {
+                    this.beforeSend(xhr);
+                }
+                else if (typeof JL.defaultBeforeSend === 'function') {
+                    JL.defaultBeforeSend(xhr);
+                }
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.setRequestHeader('JSNLog-RequestId', JL.requestId);
                 xhr.send(json);
             }
             catch (e) {
             }
+        };
+        // Creates the Xhr object to use to send the log request.
+        // Sets out to create an Xhr object that can be used for CORS.
+        // However, if there seems to be no CORS support on the browser,
+        // returns a non-CORS capable Xhr.
+        AjaxAppender.prototype.getXhr = function () {
+            var xhr = new XMLHttpRequest();
+            // Check whether this xhr is CORS capable by checking whether it has
+            // withCredentials. 
+            // "withCredentials" only exists on XMLHTTPRequest2 objects.
+            if ("withCredentials" in xhr) {
+                return xhr;
+            }
+            // Just found that no XMLHttpRequest2 available.
+            // Check if XDomainRequest is available.
+            // This only exists in IE, and is IE's way of making CORS requests.
+            if (typeof XDomainRequest != "undefined") {
+                xhr = new XDomainRequest();
+                return xhr;
+            }
+            // Nothing CORS capable is available. Just return the XMLHttpRequest
+            // we originally created, so at least non-CORS request will still go through.
+            return xhr;
         };
         return AjaxAppender;
     })(Appender);

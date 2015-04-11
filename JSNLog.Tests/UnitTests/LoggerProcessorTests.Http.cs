@@ -22,7 +22,7 @@ namespace JSNLog.Tests.UnitTests
 
             NameValueCollection expectedResponseHeaders = new NameValueCollection();
             List<LogEntry> expectedLogEntries = new List<LogEntry>();
-            string expectedResponseCode = "405";
+            int expectedResponseCode = 405;
 
             RunTestHttp(
                 "PUT", "http://abc.com",
@@ -40,7 +40,7 @@ namespace JSNLog.Tests.UnitTests
 
             NameValueCollection expectedResponseHeaders = new NameValueCollection();
             List<LogEntry> expectedLogEntries = new List<LogEntry>();
-            string expectedResponseCode = "405";
+            int expectedResponseCode = 405;
 
             RunTestHttp(
                 "GET", "http://abc.com",
@@ -59,10 +59,11 @@ namespace JSNLog.Tests.UnitTests
             string origin = "http://abc.com";
 
             NameValueCollection expectedResponseHeaders = new NameValueCollection { 
+                {"Allow", "POST"}
             };
 
             List<LogEntry> expectedLogEntries = new List<LogEntry>();
-            string expectedResponseCode = "200";
+            int expectedResponseCode = 200;
 
             RunTestHttp(
                 "OPTIONS", origin,
@@ -81,13 +82,15 @@ namespace JSNLog.Tests.UnitTests
             string origin = "http://abc.com";
 
             NameValueCollection expectedResponseHeaders = new NameValueCollection { 
+                {"Allow", "POST"}, 
                 {"Access-Control-Allow-Origin", origin}, 
+                {"Access-Control-Max-Age", "3600"},  
                 {"Access-Control-Allow-Methods", "POST"}, 
                 {"Access-Control-Allow-Headers", "jsnlog-requestid, content-type"}
             };
-
+            
             List<LogEntry> expectedLogEntries = new List<LogEntry>();
-            string expectedResponseCode = "200";
+            int expectedResponseCode = 200;
 
             RunTestHttp(
                 "OPTIONS", origin,
@@ -118,7 +121,7 @@ namespace JSNLog.Tests.UnitTests
                 new LogEntry(Constants.Level.DEBUG, "a.b.c", @"first ""message""")
             };
 
-            string expectedResponseCode = "200";
+            int expectedResponseCode = 200;
 
             RunTestHttp(
                 "POST", origin,
@@ -150,7 +153,7 @@ namespace JSNLog.Tests.UnitTests
                 new LogEntry(Constants.Level.DEBUG, "a.b.c", @"first ""message""")
             };
 
-            string expectedResponseCode = "200";
+            int expectedResponseCode = 200;
 
             RunTestHttp(
                 "POST", origin,

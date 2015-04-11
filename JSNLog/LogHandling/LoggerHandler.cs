@@ -42,7 +42,7 @@ namespace JSNLog
 
             LoggerProcessor.ProcessLogRequest(json, userAgent, userHostAddress,
                 serverSideTimeUtc, url, requestId,
-                httpMethod, origin, response, logger, xe);
+                httpMethod, origin, new HttpResponseWrapper(response), logger, xe);
 
             // Send dummy response. That way, the log request will not remain "pending"
             // in eg. Chrome dev tools.
@@ -56,6 +56,7 @@ namespace JSNLog
             // http://stackoverflow.com/questions/975929/firefox-error-no-element-found/976200#976200
 
             response.ContentType = "text/plain";
+            response.ClearContent();
             response.Write("");
         }
     }
