@@ -24,7 +24,7 @@ namespace JSNLog
             string userAgent = context.Request.UserAgent;
             string userHostAddress = context.Request.UserHostAddress;
             DateTime serverSideTimeUtc = DateTime.UtcNow;
-            string url = context.Request.Url.AbsolutePath;
+            string url = (context.Request.UrlReferrer ?? context.Request.Url).ToString();
             string requestId = JSNLog.Infrastructure.RequestId.GetFromRequest();
 
             string httpMethod = context.Request.HttpMethod;
