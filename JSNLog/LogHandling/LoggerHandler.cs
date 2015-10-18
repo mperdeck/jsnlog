@@ -8,11 +8,22 @@ using System.Xml;
 using JSNLog.LogHandling;
 using System.IO;
 using JSNLog.Infrastructure;
+using System.Web.SessionState;
 
 // Be sure to leave the namespace at JSNLog. Web.config relies on this.
 namespace JSNLog
 {
-    public class LoggerHandler : IHttpHandler
+    // Implementing IReadOnlySessionState on the handler enables it to access session state.
+    // This interface is just a marker, no need to implement anything.
+    // Without this interface, the framework doesn't retrieve the session state to save CPU cycles
+    // and possibly database accesses.
+    // Note that this could also have used IRequiresSessionState, but that places an exclusive lock
+    // on the session state because the interface allows the handler to update the session state.
+    // See 
+    // http://stackoverflow.com/questions/7247409/regarding-the-usage-of-irequiressessionstate
+    // http://stackoverflow.com/questions/8039014/irequiressessionstate-vs-ireadonlysessionstate
+
+    public class LoggerHandler : IHttpHandler, IReadOnlySessionState
     {
         public bool IsReusable
         {
