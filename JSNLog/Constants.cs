@@ -86,6 +86,7 @@ namespace JSNLog
                 new AttributeInfo("serverSideLogger", null, AttributeInfo.AttributeValidityEnum.NoOption),
                 new AttributeInfo("serverSideLevel", new LevelValue(), AttributeInfo.AttributeValidityEnum.NoOption),
                 new AttributeInfo("serverSideMessageFormat", null, AttributeInfo.AttributeValidityEnum.NoOption),
+                new AttributeInfo("dateFormat", null, AttributeInfo.AttributeValidityEnum.NoOption),
                 new AttributeInfo("productionLibraryPath", null, AttributeInfo.AttributeValidityEnum.NoOption)
             };
 
