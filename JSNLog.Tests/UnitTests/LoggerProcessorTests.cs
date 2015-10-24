@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using JSNLog.LogHandling;
 using JSNLog.Tests.Logic;
 using System.Xml;
+using System.Web.Script.Serialization;
 
 namespace JSNLog.Tests.UnitTests
 {
@@ -254,7 +255,7 @@ dateFormat=""" + dateFormat + @"""
 
             var expected = new[] {
                 new LoggerProcessor.LogData(
-                    string.Format(@"first ""message"" | {0}", _dtFirstLogUtc.ToString("yyyy-MM-dd HH:mm:ss,fff")), 
+                    string.Format(@"first ""message"" | {0}", _dtFirstLogUtc.ToString("o")), 
                     "a.b.c",Constants.Level.DEBUG, 1500,
                     @"first ""message""", 1500, "a.b.c", "therequestid1", 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
@@ -287,6 +288,48 @@ dateFormat=""" + dateFormat + @"""
 
             RunTest(configXml, _json1, null, "my browser", "12.345.98.7",
                         _dtServerUtc, "http://mydomain.com/main", expected);
+        }
+
+        private class DatesBag
+        {
+            public DateTime utcDate { get; set; }
+            public DateTime utcDateServer { get; set; }
+            public DateTime date { get; set; }
+            public DateTime dateServer { get; set; }
+        }
+
+        [TestMethod]
+        public void EnsureDefaultDateFormatAllowsJsonDeserialization()
+        {
+            // Arrange
+
+            string configXml = @"
+                <jsnlog serverSideMessageFormat=""{ 
+                    'utcDate': '%utcDate', 'utcDateServer': '%utcDateServer', 'date': '%date', 'dateServer': '%dateServer' 
+                    }""></jsnlog>";
+
+            XmlElement xe = Utils.ConfigToXe(configXml);
+
+            // Act
+
+            List<LoggerProcessor.LogData> actual =
+                LoggerProcessor.ProcessLogRequestExec(_json1, "my browser", "12.345.98.7",
+                    _dtServerUtc, "http://mydomain.com/main", "", xe);
+
+            string messageToBeLogged = actual.FirstOrDefault().Message;
+
+            var javaScriptSerializer = new JavaScriptSerializer();
+            var datesBag1 = javaScriptSerializer.Deserialize<DatesBag>(messageToBeLogged);
+            TestDatesEqual(datesBag1.utcDate, _dtFirstLogUtc);
+            TestDatesEqual(datesBag1.utcDateServer, _dtServerUtc);
+            TestDatesEqual(datesBag1.date, _dtFirstLog);
+            TestDatesEqual(datesBag1.dateServer, _dtServer);
+
+            var datesBag2 = Newtonsoft.Json.JsonConvert.DeserializeObject<DatesBag>(messageToBeLogged);
+            TestDatesEqual(datesBag2.utcDate, _dtFirstLogUtc);
+            TestDatesEqual(datesBag2.utcDateServer, _dtServerUtc);
+            TestDatesEqual(datesBag2.date, _dtFirstLog);
+            TestDatesEqual(datesBag2.dateServer, _dtServer);
         }
 
         [TestMethod]
@@ -322,6 +365,11 @@ dateFormat=""" + dateFormat + @"""
                     serverSideTimeUtc, url, requestId, xe);
 
             TestLogDatasEqual(expected, actual);
+        }
+
+        private void TestDatesEqual(DateTime dt1, DateTime dt2)
+        {
+            Assert.IsTrue(new DateTimeOffset(dt1) == new DateTimeOffset(dt2));
         }
 
         private void TestLogDatasEqual(IEnumerable<LoggerProcessor.LogData> expected, IEnumerable<LoggerProcessor.LogData> actual)

@@ -212,7 +212,7 @@ namespace JSNLog.LogHandling
             string serversideLoggerNameOverride = XmlHelpers.OptionalAttribute(xe, "serverSideLogger", null);
             string messageFormat = XmlHelpers.OptionalAttribute(xe, "serverSideMessageFormat", "%message");
             string levelOverride = XmlHelpers.OptionalAttribute(xe, "serverSideLevel", null, LevelUtils.LevelRegex());
-            string dateFormat = XmlHelpers.OptionalAttribute(xe, "dateFormat", "yyyy-MM-dd HH:mm:ss,fff");
+            string dateFormat = XmlHelpers.OptionalAttribute(xe, "dateFormat", "o");
 
             // ----------------
 
@@ -225,7 +225,7 @@ namespace JSNLog.LogHandling
             try
             {
                 double ms = double.Parse(timestampMs);
-                utcTimestamp = (new DateTime(1970, 1, 1)).AddMilliseconds(ms);
+                utcTimestamp = DateTime.SpecifyKind((new DateTime(1970, 1, 1)).AddMilliseconds(ms), DateTimeKind.Utc);
             }
             catch
             {
