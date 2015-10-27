@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
-using JSNLog.Infrastructure;
+using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.Script.Serialization;
 using System.Xml;
-using System.Web;
-using System.Net;
-using System.Text.RegularExpressions;
+using JSNLog.Infrastructure;
 
 namespace JSNLog.LogHandling
 {
     public class LoggerProcessor
     {
+        /// <summary>
+        /// Event that fires during processing of LogData but before logging.
+        /// </summary>
+        public static event Action<LogData> OnLogRecieved;
+
         /// <summary>
         /// The log data sent in a single log request from the client.
         /// It is expected that this list has 2 items:
@@ -27,12 +32,15 @@ namespace JSNLog.LogHandling
         {
             // ----- Processed data -----
 
-            public string Message { get; private set; }
+            public string Message { get; set; }
 
             // Client LoggerName and Level may have been overridden by JSNLog config in web.config.
-            // Final result of this is stored in properties below. 
+            // Final result of this is stored in properties below.
             public string LoggerName { get; private set; }
-            public Constants.Level Level { get; private set; }
+
+            public Constants.Level Level { get; set; }
+
+            public bool ShouldLog { get; set; }
 
             // The level number. May not correspond directly with Level
             // To get Level from LevelInt, first Level at or above LevelInt is used.
@@ -57,7 +65,7 @@ namespace JSNLog.LogHandling
             public LogData(string message, string loggerName, Constants.Level level, int levelInt,
                     string clientLogMessage, int clientLogLevel, string clientLogLoggerName, string clientLogRequestId,
                     DateTime logDateUtc, DateTime logDateServerUtc, DateTime logDate, DateTime logDateServer,
-                    string userAgent, string userHostAddress, string logRequestUrl)
+                    string userAgent, string userHostAddress, string logRequestUrl, bool shouldLog = true)
             {
                 Message = message;
                 LoggerName = loggerName;
@@ -75,13 +83,14 @@ namespace JSNLog.LogHandling
                 UserAgent = userAgent;
                 UserHostAddress = userHostAddress;
                 LogRequestUrl = logRequestUrl;
+                ShouldLog = shouldLog;
             }
         }
 
         /// <summary>
         /// Processes the incoming request. This method is not depended on the environment and so can be unit tested.
         /// Note that the incoming request may not be the POST request with log data.
-        /// 
+        ///
         /// Effect of this method:
         /// * setting StatusCode on the response parameter
         /// * adding headers to the response parameter
@@ -148,7 +157,7 @@ namespace JSNLog.LogHandling
             // ---------------------------------
             // Pass log data to Common Logging
 
-            foreach (LogData logData in logDatas)
+            foreach (LogData logData in logDatas.Where(a => a.ShouldLog))
             {
                 logger.Log(logData.Level, logData.LoggerName, logData.Message);
             }
@@ -156,7 +165,7 @@ namespace JSNLog.LogHandling
 
         /// <summary>
         /// Processes a request with logging info. Unit testable.
-        /// 
+        ///
         /// Returns log info in easily digestable format.
         /// </summary>
         /// <param name="json">JSON sent from client by AjaxAppender</param>
@@ -193,7 +202,7 @@ namespace JSNLog.LogHandling
 
                     var logData = new LogData(message, Constants.JSNLogInternalErrorLoggerName, Constants.Level.ERROR,
                         5000, "", 5000, "", "", serverSideTimeUtc, serverSideTimeUtc,
-                        Utils.UtcToLocalDateTime(serverSideTimeUtc), Utils.UtcToLocalDateTime(serverSideTimeUtc), 
+                        Utils.UtcToLocalDateTime(serverSideTimeUtc), Utils.UtcToLocalDateTime(serverSideTimeUtc),
                         userAgent, userHostAddress, url);
 
                     logDatas.Add(logData);
@@ -203,7 +212,7 @@ namespace JSNLog.LogHandling
                 }
             }
 
-            return logDatas;
+            return logDatas.Where(a => a.ShouldLog).ToList();
         }
 
         private static LogData ProcessLogItem(Dictionary<string, Object> logItem, string userAgent, string userHostAddress,
@@ -270,6 +279,10 @@ namespace JSNLog.LogHandling
                 message, int.Parse(level), logger, requestId,
                 utcTimestamp, serverSideTimeUtc, Utils.UtcToLocalDateTime(utcTimestamp), Utils.UtcToLocalDateTime(serverSideTimeUtc),
                 userAgent, userHostAddress, url);
+            if (OnLogRecieved != null)
+            {
+                OnLogRecieved(logData);
+            }
 
             return logData;
         }
