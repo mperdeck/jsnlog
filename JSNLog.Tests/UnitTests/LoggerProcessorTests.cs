@@ -289,6 +289,58 @@ dateFormat=""" + dateFormat + @"""
             RunTest(configXml, _json1, null, "my browser", "12.345.98.7",
                         _dtServerUtc, "http://mydomain.com/main", expected);
         }
+        [TestMethod]
+        public void OverrideMessageDataWithHandler ()
+        {
+            string configXml = @"
+                <jsnlog></jsnlog>
+";
+            string appendedMsg = "RecieverTest";
+            var expected = new[] {
+                new LoggerProcessor.LogData(@"first ""message""" + appendedMsg , "a.b.c",Constants.Level.DEBUG, 1500,
+                    @"first ""message""", 1500, "a.b.c",  "therequestid1",
+                    _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
+                    "my browser", "12.345.98.7", "http://mydomain.com/main")
+            };
+
+            // Act and Assert
+            JSNLog.LogHandling.LoggerProcessor.OnLogRecieved += (logdata) =>
+            {
+                logdata.Message = logdata.Message + appendedMsg;
+            };
+            RunTest(configXml, _json1, "therequestid1", "my browser", "12.345.98.7",
+                        _dtServerUtc, "http://mydomain.com/main", expected);
+        }
+
+        [TestMethod]
+        public void FilterOutLogMessages ()
+        {
+            // Arrange
+
+            string configXml = @"
+                <jsnlog></jsnlog>
+";
+
+            var expected = new[] {
+                new LoggerProcessor.LogData(
+                    "first message",
+                    "a.b.c",Constants.Level.DEBUG, 1500,
+                    "first message", 1500, "a.b.c", "therequestid2",
+                    _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
+                    "my browser", "12.345.98.7", "http://mydomain.com/main")
+            };
+            JSNLog.LogHandling.LoggerProcessor.OnLogRecieved += (logdata) =>
+            {
+                if(logdata.Message.Contains("second message"))
+                {
+                    logdata.ShouldLog = false;
+                }
+            };
+            // Act and Assert
+
+            RunTest(configXml, _json2, "therequestid2", "my browser", "12.345.98.7",
+                        _dtServerUtc, "http://mydomain.com/main", expected);
+        }
 
         private class DatesBag
         {
