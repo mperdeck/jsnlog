@@ -9,7 +9,7 @@ using System.Web.Configuration;
 
 namespace JSNLog.Infrastructure
 {
-    public class XmlHelpers
+    internal class XmlHelpers
     {
         /// <summary>
         /// A method that processes an actual xml element.
@@ -53,7 +53,7 @@ namespace JSNLog.Infrastructure
         /// <summary>
         /// Associates a tag name (such as "logger") with the processor that handles a "logger" xml element.
         /// </summary>
-        public class TagInfo
+        internal class TagInfo
         {
             // Name of the tag
             public string Tag { get; private set; }

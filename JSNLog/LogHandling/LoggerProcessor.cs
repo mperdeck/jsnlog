@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace JSNLog.LogHandling
 {
-    public class LoggerProcessor
+    internal class LoggerProcessor
     {
         /// <summary>
         /// The log data sent in a single log request from the client.
@@ -23,7 +23,7 @@ namespace JSNLog.LogHandling
         {
         }
 
-        public class LogData
+        internal class LogData
         {
             // ----- Processed data -----
 
@@ -107,7 +107,7 @@ namespace JSNLog.LogHandling
         /// Logger object, used to do the actual logging.
         /// </param>
         /// <param name="xe">The JSNLog element in web.config</param>
-        public static void ProcessLogRequest(string json, LogRequestBase logRequestBase,
+        internal static void ProcessLogRequest(string json, LogRequestBase logRequestBase,
             DateTime serverSideTimeUtc,
             string httpMethod, string origin, HttpResponseBase response, ILogger logger, XmlElement xe)
         {
@@ -165,7 +165,7 @@ namespace JSNLog.LogHandling
         /// <param name="json">JSON sent from client by AjaxAppender</param>
         /// <param name="serverSideTimeUtc">Current time in UTC</param>
         /// <param name="xe">The JSNLog element in web.config</param>
-        public static List<LogData> ProcessLogRequestExec(string json, LogRequestBase logRequestBase,
+        internal static List<LogData> ProcessLogRequestExec(string json, LogRequestBase logRequestBase,
             DateTime serverSideTimeUtc, XmlElement xe)
         {
             List<LogData> logDatas = new List<LogData>();
@@ -257,14 +257,14 @@ namespace JSNLog.LogHandling
             // ----------------
 
             if (string.IsNullOrWhiteSpace(logger)) { logger = Constants.RootLoggerNameServerSide; }
-            loggingEventArgs.finalLogger = serversideLoggerNameOverride ?? logger;
+            loggingEventArgs.FinalLogger = serversideLoggerNameOverride ?? logger;
 
             string consolidatedLevel = levelOverride ?? level;
-            loggingEventArgs.finalLevel = LevelUtils.ParseLevel(consolidatedLevel).Value;
+            loggingEventArgs.FinalLevel = LevelUtils.ParseLevel(consolidatedLevel).Value;
 
             // ----------------
 
-            loggingEventArgs.finalMessage = messageFormat
+            loggingEventArgs.FinalMessage = messageFormat
                 .Replace("%message", message)
                 .Replace("%jsonmessage", jsonmessage)
                 .Replace("%utcDateServer", serverSideTimeUtc.ToString(dateFormat))
@@ -289,7 +289,7 @@ namespace JSNLog.LogHandling
             // ---------------
 
             LogData logData = new LogData(
-                loggingEventArgs.finalMessage, loggingEventArgs.finalLogger, loggingEventArgs.finalLevel, 
+                loggingEventArgs.FinalMessage, loggingEventArgs.FinalLogger, loggingEventArgs.FinalLevel, 
                 LevelUtils.LevelNumber(consolidatedLevel),
                 message, int.Parse(level), logger, logRequestBase.RequestId,
                 utcDate, serverSideTimeUtc, Utils.UtcToLocalDateTime(utcDate), Utils.UtcToLocalDateTime(serverSideTimeUtc),

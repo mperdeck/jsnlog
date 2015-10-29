@@ -91,8 +91,8 @@
     <Compile Include="PublicFacing\ILogRequest.cs" />
     <Compile Include="PublicFacing\Level.cs" />
     <Compile Include="PublicFacing\LoggingEventArgs.cs" />
-    <Compile Include="PublicFacing\LogRequest.cs" />
-    <Compile Include="PublicFacing\LogRequestBase.cs" />
+    <Compile Include="LogHandling\LogRequest.cs" />
+    <Compile Include="LogHandling\LogRequestBase.cs" />
     <Compile Include="PublicFacing\JavascriptLogging.cs" />
     <Compile Include="LogHandling\ILogger.cs" />
     <Compile Include="LogHandling\Logger.cs" />
@@ -106,7 +106,7 @@
     <Compile Include="ValueInfos\LevelValue.cs" />
     <Compile Include="ValueInfos\IValueInfo.cs" />
     <Compile Include="ValueInfos\StringValue.cs" />
-    <Compile Include="LogHandling\LoggerHandler.cs" />
+    <Compile Include="PublicFacing\LoggerHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

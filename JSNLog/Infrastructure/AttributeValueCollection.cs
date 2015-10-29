@@ -8,7 +8,7 @@ namespace JSNLog.Infrastructure
     /// <summary>
     /// A collection of Values, each identified by a key (that is, its name)
     /// </summary>
-    public class AttributeValueCollection : Dictionary<string, Value>
+    internal class AttributeValueCollection : Dictionary<string, Value>
     {
     }
 }

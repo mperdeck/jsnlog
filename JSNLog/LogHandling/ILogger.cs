@@ -6,7 +6,7 @@ using JSNLog;
 
 namespace JSNLog.LogHandling
 {
-    public interface ILogger
+    internal interface ILogger
     {
         void Log(Level level, string loggerName, string message);
     }

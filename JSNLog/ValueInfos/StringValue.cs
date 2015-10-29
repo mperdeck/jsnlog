@@ -6,7 +6,7 @@ using System.Web;
 
 namespace JSNLog.ValueInfos
 {
-    public class StringValue: IValueInfo
+    internal class StringValue : IValueInfo
     {
         public string ValidValueRegex
         {

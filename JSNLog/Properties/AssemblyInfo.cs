@@ -39,3 +39,7 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("2.10.1")]
 [assembly: AssemblyFileVersion("2.10.1")]
+
+// Allow JSNLog.Tests to access internal definitions inside JSNLog
+// See https://msdn.microsoft.com/en-us/library/bb384966.aspx
+[assembly: InternalsVisibleTo("JSNLog.Tests")]

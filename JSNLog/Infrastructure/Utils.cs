@@ -7,7 +7,7 @@ using System.Collections.Specialized;
 
 namespace JSNLog.Infrastructure
 {
-    public class Utils
+    internal class Utils
     {
         /// <summary>
         /// Generates the JavaScript for the call to setOptions to set the options for an object

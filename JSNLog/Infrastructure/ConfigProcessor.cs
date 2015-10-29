@@ -13,7 +13,7 @@ using JSNLog.ValueInfos;
 
 namespace JSNLog.Infrastructure
 {
-    public class ConfigProcessor
+    internal class ConfigProcessor
     {
         private List<XmlHelpers.TagInfo> topLeveltagInfos = null;
 

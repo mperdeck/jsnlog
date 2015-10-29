@@ -8,7 +8,7 @@ using JSNLog.Exceptions;
 
 namespace JSNLog.Elements
 {
-    public class AjaxAppenderElement : AppenderElementBase, IElement 
+    internal class AjaxAppenderElement : AppenderElementBase, IElement 
     {
         public void Init(out XmlHelpers.TagInfo tagInfo)
         {

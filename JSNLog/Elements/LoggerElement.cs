@@ -9,7 +9,7 @@ using JSNLog.ValueInfos;
 
 namespace JSNLog.Elements
 {
-    public class LoggerElement : ElementBase, IElement 
+    internal class LoggerElement : ElementBase, IElement 
     {
         public void Init(out XmlHelpers.TagInfo tagInfo)
         {

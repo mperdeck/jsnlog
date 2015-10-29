@@ -8,7 +8,7 @@ namespace JSNLog.ValueInfos
     /// <summary>
     /// This describes a class that describes how to handle values.
     /// </summary>
-    public interface IValueInfo
+    internal interface IValueInfo
     {
         /// <summary>
         /// The value (without escaping) must match this regex.

@@ -7,7 +7,7 @@ using System.Web;
 
 namespace JSNLog.Infrastructure
 {
-    public class LogMessageHelpers
+    internal class LogMessageHelpers
     {
         /// <summary>
         /// Returns true if the msg contains a valid JSON string.

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JSNLog.Infrastructure
 {
-    public class LevelUtils
+    internal class LevelUtils
     {
         /// <summary>
         /// Converts a number to a level.

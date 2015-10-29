@@ -17,7 +17,7 @@ namespace JSNLog.Infrastructure
     /// 3) Add assembly tags within the jsnlog tag. Set their name attribute to the name of the new assembly. 
     /// JSNLog will read the assemblies and read the new elements.
     /// </summary>
-    public interface IElement
+    internal interface IElement
     {
         /// <summary>
         /// When an assembly element is processed, all classes in that assembly implementing this interface

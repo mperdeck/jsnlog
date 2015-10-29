@@ -10,7 +10,7 @@ using System.Text;
 
 namespace JSNLog.Tests.Logic
 {
-    public class DummyAppender : AppenderElementBase, IElement 
+    internal class DummyAppender : AppenderElementBase, IElement 
     {
         public void Init(out XmlHelpers.TagInfo tagInfo)
         {

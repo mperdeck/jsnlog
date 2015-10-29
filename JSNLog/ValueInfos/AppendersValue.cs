@@ -9,7 +9,7 @@ using JSNLog.Infrastructure;
 
 namespace JSNLog.ValueInfos
 {
-    public class AppendersValue : IValueInfo
+    internal class AppendersValue : IValueInfo
     {
         private Dictionary<string, string> _appenderNames = null;
 

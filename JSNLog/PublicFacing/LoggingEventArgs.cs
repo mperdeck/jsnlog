@@ -11,9 +11,9 @@ namespace JSNLog
 
         public bool Cancel { get; set; }
 
-        public string finalLogger { get; set; }
-        public Level finalLevel { get; set; }
-        public string finalMessage { get; set; }
+        public string FinalLogger { get; set; }
+        public Level FinalLevel { get; set; }
+        public string FinalMessage { get; set; }
 
         public LoggingEventArgs(ILogRequest logRequest)
         {

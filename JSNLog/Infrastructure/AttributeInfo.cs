@@ -9,7 +9,7 @@ namespace JSNLog.Infrastructure
     /// <summary>
     /// Describes a tag attribute
     /// </summary>
-    public class AttributeInfo
+    internal class AttributeInfo
     {
         public enum AttributeValidityEnum
         {

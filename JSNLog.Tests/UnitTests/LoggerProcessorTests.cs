@@ -290,6 +290,80 @@ dateFormat=""" + dateFormat + @"""
                         _dtServerUtc, "http://mydomain.com/main", expected);
         }
 
+        [TestMethod]
+        public void OverrideMessageDataWithHandler()
+        {
+            string configXml = @"
+                <jsnlog></jsnlog>
+";
+            string appendedMsg = "Extra Message";
+
+            var expected = new[] {
+                new LoggerProcessor.LogData(@"first ""message""" + appendedMsg , "d.e.f", Level.FATAL, 1500,
+                    @"first ""message""", 1500, "a.b.c",  "therequestid1",
+                    _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
+                    "my browser", "12.345.98.7", "http://mydomain.com/main")
+            };
+
+            JSNLog.JavascriptLogging.LoggingHandler loggingHandler = (LoggingEventArgs loggingEventArgs) =>
+            {
+                loggingEventArgs.FinalMessage += appendedMsg;
+                loggingEventArgs.FinalLevel = Level.FATAL;
+                loggingEventArgs.FinalLogger = "d.e.f";
+            };
+
+            JSNLog.JavascriptLogging.OnLogging += loggingHandler;
+
+            // Act and Assert
+
+            RunTest(configXml, _json1, "therequestid1", "my browser", "12.345.98.7",
+                        _dtServerUtc, "http://mydomain.com/main", expected);
+
+            // Clean up
+
+            JSNLog.JavascriptLogging.OnLogging -= loggingHandler;
+        }
+
+        [TestMethod]
+        public void FilterOutLogMessages()
+        {
+            // Arrange
+
+            string configXml = @"
+                <jsnlog></jsnlog>
+";
+
+            var expected = new[] {
+                new LoggerProcessor.LogData(
+                    "first message",
+                    "a.b.c",Level.DEBUG, 1500,
+                    "first message", 1500, "a.b.c", "therequestid2",
+                    _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
+                    "my browser", "12.345.98.7", "http://mydomain.com/main")
+            };
+
+
+            JSNLog.JavascriptLogging.LoggingHandler loggingHandler = (LoggingEventArgs loggingEventArgs) =>
+            {
+                if (loggingEventArgs.FinalMessage.Contains("second message"))
+                {
+                    loggingEventArgs.Cancel = true;
+                }
+            };
+
+
+            JSNLog.JavascriptLogging.OnLogging += loggingHandler;
+
+            // Act and Assert
+
+            RunTest(configXml, _json2, "therequestid2", "my browser", "12.345.98.7",
+                        _dtServerUtc, "http://mydomain.com/main", expected);
+
+            // Clean up
+
+            JSNLog.JavascriptLogging.OnLogging -= loggingHandler;
+        }
+        
         private class DatesBag
         {
             public DateTime utcDate { get; set; }
@@ -367,7 +441,7 @@ dateFormat=""" + dateFormat + @"""
             List<LoggerProcessor.LogData> actual =
                 LoggerProcessor.ProcessLogRequestExec(
                     json,
-                    new LogRequestBase(userAgent, userHostAddress, url, requestId, null, null, null),
+                    new LogRequestBase(userAgent, userHostAddress, requestId, url, null, null, null),
                     serverSideTimeUtc, xe);
 
             TestLogDatasEqual(expected, actual);

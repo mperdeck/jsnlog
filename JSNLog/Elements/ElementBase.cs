@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace JSNLog.Elements
 {
-    public abstract class ElementBase
+    internal abstract class ElementBase
     {
     }
 }

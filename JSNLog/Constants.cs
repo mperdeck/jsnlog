@@ -7,7 +7,7 @@ using JSNLog.ValueInfos;
 
 namespace JSNLog
 {
-    public class Constants
+    internal class Constants
     {
         public const string PackageName = "JSNLog";
         public const string ContextItemRequestIdName = "__JSNLog_RequestId";

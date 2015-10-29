@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace JSNLog.Infrastructure
 {
-    public class JavaScriptHelpers
+    internal class JavaScriptHelpers
     {
         public static void WriteScriptTag(string url, StringBuilder sb)
         {

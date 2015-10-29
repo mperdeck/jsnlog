@@ -8,7 +8,7 @@ using JSNLog.Exceptions;
 
 namespace JSNLog.Elements
 {
-    public abstract class AppenderElementBase: ElementBase
+    internal abstract class AppenderElementBase: ElementBase
     {
         protected void ProcessAppender(XmlElement xe, string parentName, Dictionary<string, string> appenderNames, Sequence sequence,
             IEnumerable<AttributeInfo> appenderAttributes, string jsCreateMethodName, List<XmlHelpers.TagInfo> childTagInfos, StringBuilder sb)

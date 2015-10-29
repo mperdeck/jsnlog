@@ -13,7 +13,7 @@ namespace JSNLog.Infrastructure
     /// 
     /// Also holds a ValueInfo object describing how to process each string.
     /// </summary>
-    public class Value
+    internal class Value
     {
         /// <summary>
         /// The (unescaped) text representing the value

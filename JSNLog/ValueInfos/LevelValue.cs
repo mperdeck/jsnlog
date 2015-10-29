@@ -7,7 +7,7 @@ using JSNLog.Infrastructure;
 
 namespace JSNLog.ValueInfos
 {
-    public class LevelValue : IValueInfo
+    internal class LevelValue : IValueInfo
     {
         private static string _regexLevels = null;
 
