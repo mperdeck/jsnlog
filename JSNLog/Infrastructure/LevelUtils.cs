@@ -25,13 +25,13 @@ namespace JSNLog.Infrastructure
         /// If the number is greater than FATAL (highest level), than FATAL is returned.
         /// If the number is lower than TRACE, than TRACE is returned.
         /// 
-        /// This method assumes that the Constants.Level enum is sorted by value!
+        /// This method assumes that the Level enum is sorted by value!
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
-        public static Constants.Level IntToLevel(int i)
+        public static Level IntToLevel(int i)
         {
-            Array values = Enum.GetValues(typeof(Constants.Level));
+            Array values = Enum.GetValues(typeof(Level));
             int nbrItems = values.Length;
 
             for(int j = 0; j < nbrItems; j++)
@@ -39,7 +39,7 @@ namespace JSNLog.Infrastructure
                 int value = (int)values.GetValue(j);
                 if (value >= i) 
                 {
-                    Constants.Level level = (Constants.Level)Enum.Parse(typeof(Constants.Level), value.ToString()); 
+                    Level level = (Level)Enum.Parse(typeof(Level), value.ToString()); 
                     return level;
                 }
             }
@@ -50,15 +50,15 @@ namespace JSNLog.Infrastructure
 
         /// <summary>
         /// Returns the highest level
-        /// as given in Constants.Level enum.
+        /// as given in Level enum.
         /// </summary>
         /// <returns></returns>
-        public static Constants.Level HighestLevel()
+        public static Level HighestLevel()
         {
-            Array values = Enum.GetValues(typeof(Constants.Level));
+            Array values = Enum.GetValues(typeof(Level));
             int value = (int)values.GetValue(values.Length - 1);
 
-            Constants.Level level = (Constants.Level)Enum.Parse(typeof(Constants.Level), value.ToString()); 
+            Level level = (Level)Enum.Parse(typeof(Level), value.ToString()); 
             return level;
         }
 
@@ -70,7 +70,7 @@ namespace JSNLog.Infrastructure
         /// null if levelString is null.
         /// Otherwise, the actual level.
         /// </returns>
-        public static Constants.Level? ParseLevel(string levelString)
+        public static Level? ParseLevel(string levelString)
         {
             if (levelString == null)
             {
@@ -78,9 +78,9 @@ namespace JSNLog.Infrastructure
             }
 
             // See if levelString contains the name of a level. If so, Enum.Parse it.
-           if (Enum.IsDefined(typeof(Constants.Level), levelString))  
+           if (Enum.IsDefined(typeof(Level), levelString))  
            {
-                Constants.Level level = (Constants.Level)Enum.Parse(typeof(Constants.Level), levelString); 
+                Level level = (Level)Enum.Parse(typeof(Level), levelString); 
                 return level;
            }
 
@@ -112,8 +112,8 @@ namespace JSNLog.Infrastructure
                 return level;
             }
 
-            Array values = Enum.GetValues(typeof(Constants.Level));
-            Array names = Enum.GetNames(typeof(Constants.Level));
+            Array values = Enum.GetValues(typeof(Level));
+            Array names = Enum.GetNames(typeof(Level));
             int nbrItems = values.Length;
 
             for (int j = 0; j < nbrItems; j++)
@@ -145,9 +145,9 @@ namespace JSNLog.Infrastructure
             }
 
             // See if levelString contains the name of a level. If so, Enum.Parse it and returns its number.
-            if (Enum.IsDefined(typeof(Constants.Level), level))
+            if (Enum.IsDefined(typeof(Level), level))
             {
-                Constants.Level levelEnum = (Constants.Level)Enum.Parse(typeof(Constants.Level), level);
+                Level levelEnum = (Level)Enum.Parse(typeof(Level), level);
                 return (int)levelEnum;
             }
 
@@ -170,7 +170,7 @@ namespace JSNLog.Infrastructure
         /// <returns></returns>
         public static string NamedLevels()
         {
-            string[] names = Enum.GetNames(typeof(Constants.Level));
+            string[] names = Enum.GetNames(typeof(Level));
             string namedLevels = string.Join("|", names);
             return namedLevels;
         }

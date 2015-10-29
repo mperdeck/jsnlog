@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Collections.Specialized;
 
 namespace JSNLog.Infrastructure
 {
@@ -60,6 +61,18 @@ namespace JSNLog.Infrastructure
             TimeZoneInfo localZone = TimeZoneInfo.Local;
             DateTime localTime = TimeZoneInfo.ConvertTimeFromUtc(utcTime, localZone);
             return localTime;
+        }
+
+        public static Dictionary<string, string> ToDictionary(NameValueCollection nameValueCollection)
+        {
+            var result = new Dictionary<string, string>();
+
+            foreach (string key in nameValueCollection.AllKeys)
+            {
+                result[key] = nameValueCollection[key];
+            }
+
+            return result;
         }
     }
 }

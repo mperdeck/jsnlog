@@ -32,12 +32,16 @@ namespace JSNLog
 
         public void ProcessRequest(HttpContext context)
         {
-            string userAgent = context.Request.UserAgent;
-            string userHostAddress = context.Request.UserHostAddress;
-            DateTime serverSideTimeUtc = DateTime.UtcNow;
-            string url = (context.Request.UrlReferrer ?? context.Request.Url).ToString();
-            string requestId = JSNLog.Infrastructure.RequestId.GetFromRequest();
+            var logRequestBase = new LogRequestBase(
+                userAgent: context.Request.UserAgent,
+                userHostAddress: context.Request.UserHostAddress,
+                requestId: JSNLog.Infrastructure.RequestId.GetFromRequest(),
+                url: (context.Request.UrlReferrer ?? context.Request.Url).ToString(),
+                queryParameters: Utils.ToDictionary(context.Request.QueryString),
+                cookies: ToDictionary(context.Request.Cookies),
+                headers: Utils.ToDictionary(context.Request.Headers));
 
+            DateTime serverSideTimeUtc = DateTime.UtcNow;
             string httpMethod = context.Request.HttpMethod;
             string origin = context.Request.Headers["Origin"];
 
@@ -51,8 +55,8 @@ namespace JSNLog
             ILogger logger = new Logger();
             XmlElement xe = XmlHelpers.RootElement();
 
-            LoggerProcessor.ProcessLogRequest(json, userAgent, userHostAddress,
-                serverSideTimeUtc, url, requestId,
+            LoggerProcessor.ProcessLogRequest(json, logRequestBase,
+                serverSideTimeUtc,
                 httpMethod, origin, new HttpResponseWrapper(response), logger, xe);
 
             // Send dummy response. That way, the log request will not remain "pending"
@@ -69,6 +73,20 @@ namespace JSNLog
             response.ContentType = "text/plain";
             response.ClearContent();
             response.Write("");
+        }
+
+        private Dictionary<string, string> ToDictionary(HttpCookieCollection httpCookieCollection)
+        {
+            // HttpCookieCollection requires System.Web, so has been kept in this file.
+
+            var result = new Dictionary<string, string>();
+
+            foreach (string key in httpCookieCollection.AllKeys)
+            {
+                result[key] = httpCookieCollection[key].Value;
+            }
+
+            return result;
         }
     }
 }

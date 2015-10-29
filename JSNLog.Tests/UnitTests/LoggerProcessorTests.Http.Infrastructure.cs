@@ -15,11 +15,11 @@ namespace JSNLog.Tests.UnitTests
     {
         private class LogEntry
         {
-            public Constants.Level Level {get;set;}
+            public Level Level {get;set;}
             public string LoggerName  {get;set;}
             public string Message { get; set; }
 
-            public LogEntry(Constants.Level level, string loggerName, string message)
+            public LogEntry(Level level, string loggerName, string message)
             {
                 Level = level;
                 LoggerName = loggerName;
@@ -36,7 +36,7 @@ namespace JSNLog.Tests.UnitTests
                 LogEntries = new List<LogEntry>();
             }
 
-            public void Log(Constants.Level level, string loggerName, string message)
+            public void Log(Level level, string loggerName, string message)
             {
                 LogEntries.Add(new LogEntry(level,loggerName, message));
             }
@@ -73,8 +73,10 @@ namespace JSNLog.Tests.UnitTests
 
             // Act
 
-            LoggerProcessor.ProcessLogRequest(json, userAgent, userHostAddress,
-                serverSideTimeUtc, url, requestId,
+            LoggerProcessor.ProcessLogRequest(
+                json, 
+                new LogRequestBase(userAgent, userHostAddress, requestId,url, null, null, null),
+                serverSideTimeUtc, 
                 httpMethod, origin, response, logger, xe);
 
             // Assert

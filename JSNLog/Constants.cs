@@ -45,18 +45,6 @@ namespace JSNLog
         public const string JsLoggerVariable = "logger";
         public const string JsAppenderVariablePrefix = "a";
 
-        public enum Level
-        {
-            ALL = -2147483648,
-            TRACE = 1000,
-            DEBUG = 2000,
-            INFO = 3000,
-            WARN = 4000,
-            ERROR = 5000,
-            FATAL = 6000,
-            OFF = 2147483647
-        }
-
         public enum OrderNbr
         {
             Assembly,

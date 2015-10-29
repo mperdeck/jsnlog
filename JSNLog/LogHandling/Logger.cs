@@ -8,33 +8,33 @@ namespace JSNLog.LogHandling
 {
     public class Logger: ILogger
     {
-        public void Log(Constants.Level level, string loggerName, string message)
+        public void Log(Level level, string loggerName, string message)
         {
             ILog log = LogManager.GetLogger(loggerName);
 
             switch (level)
             {
-                case Constants.Level.TRACE:
+                case Level.TRACE:
                     log.Trace(message);
                     break;
 
-                case Constants.Level.DEBUG:
+                case Level.DEBUG:
                     log.Debug(message);
                     break;
 
-                case Constants.Level.INFO:
+                case Level.INFO:
                     log.Info(message);
                     break;
 
-                case Constants.Level.WARN:
+                case Level.WARN:
                     log.Warn(message);
                     break;
 
-                case Constants.Level.ERROR:
+                case Level.ERROR:
                     log.Error(message);
                     break;
 
-                case Constants.Level.FATAL:
+                case Level.FATAL:
                     log.Fatal(message);
                     break;
 

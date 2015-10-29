@@ -88,7 +88,12 @@
     <Compile Include="Infrastructure\Utils.cs" />
     <Compile Include="Infrastructure\Value.cs" />
     <Compile Include="Infrastructure\XmlHelpers.cs" />
-    <Compile Include="JavascriptLogging.cs" />
+    <Compile Include="PublicFacing\ILogRequest.cs" />
+    <Compile Include="PublicFacing\Level.cs" />
+    <Compile Include="PublicFacing\LoggingEventArgs.cs" />
+    <Compile Include="PublicFacing\LogRequest.cs" />
+    <Compile Include="PublicFacing\LogRequestBase.cs" />
+    <Compile Include="PublicFacing\JavascriptLogging.cs" />
     <Compile Include="LogHandling\ILogger.cs" />
     <Compile Include="LogHandling\Logger.cs" />
     <Compile Include="LogHandling\LoggerProcessor.cs" />

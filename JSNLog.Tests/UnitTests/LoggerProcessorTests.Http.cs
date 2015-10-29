@@ -118,7 +118,7 @@ namespace JSNLog.Tests.UnitTests
 
             List<LogEntry> expectedLogEntries = new List<LogEntry>
             {
-                new LogEntry(Constants.Level.DEBUG, "a.b.c", @"first ""message""")
+                new LogEntry(Level.DEBUG, "a.b.c", @"first ""message""")
             };
 
             int expectedResponseCode = 200;
@@ -150,7 +150,7 @@ namespace JSNLog.Tests.UnitTests
 
             List<LogEntry> expectedLogEntries = new List<LogEntry>
             {
-                new LogEntry(Constants.Level.DEBUG, "a.b.c", @"first ""message""")
+                new LogEntry(Level.DEBUG, "a.b.c", @"first ""message""")
             };
 
             int expectedResponseCode = 200;
