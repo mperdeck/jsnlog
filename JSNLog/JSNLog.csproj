@@ -64,18 +64,18 @@
     <Compile Include="Elements\AppenderElementBase.cs" />
     <Compile Include="Elements\ElementBase.cs" />
     <Compile Include="Elements\LoggerElement.cs" />
-    <Compile Include="Exceptions\BaseException.cs" />
-    <Compile Include="Exceptions\MissingSubTagException.cs" />
-    <Compile Include="Exceptions\SubTagHasTooManyAttributesException.cs" />
-    <Compile Include="Exceptions\GeneralAppenderException.cs" />
-    <Compile Include="Exceptions\MissingRootTagException.cs" />
-    <Compile Include="Exceptions\UnknownAttributeException.cs" />
-    <Compile Include="Exceptions\UnknownAppenderException.cs" />
-    <Compile Include="Exceptions\TooManyTagsException.cs" />
-    <Compile Include="Exceptions\InvalidAttributeException.cs" />
-    <Compile Include="Exceptions\MissingAttributeException.cs" />
-    <Compile Include="Exceptions\UnknownRootTagException.cs" />
-    <Compile Include="Exceptions\UnknownTagException.cs" />
+    <Compile Include="PublicFacing\Exceptions\BaseException.cs" />
+    <Compile Include="PublicFacing\Exceptions\MissingSubTagException.cs" />
+    <Compile Include="PublicFacing\Exceptions\SubTagHasTooManyAttributesException.cs" />
+    <Compile Include="PublicFacing\Exceptions\GeneralAppenderException.cs" />
+    <Compile Include="PublicFacing\Exceptions\MissingRootTagException.cs" />
+    <Compile Include="PublicFacing\Exceptions\UnknownAttributeException.cs" />
+    <Compile Include="PublicFacing\Exceptions\UnknownAppenderException.cs" />
+    <Compile Include="PublicFacing\Exceptions\TooManyTagsException.cs" />
+    <Compile Include="PublicFacing\Exceptions\InvalidAttributeException.cs" />
+    <Compile Include="PublicFacing\Exceptions\MissingAttributeException.cs" />
+    <Compile Include="PublicFacing\Exceptions\UnknownRootTagException.cs" />
+    <Compile Include="PublicFacing\Exceptions\UnknownTagException.cs" />
     <Compile Include="Infrastructure\AttributeInfo.cs" />
     <Compile Include="Infrastructure\ConfigProcessor.cs" />
     <Compile Include="Infrastructure\IElement.cs" />
@@ -88,12 +88,12 @@
     <Compile Include="Infrastructure\Utils.cs" />
     <Compile Include="Infrastructure\Value.cs" />
     <Compile Include="Infrastructure\XmlHelpers.cs" />
-    <Compile Include="PublicFacing\ILogRequest.cs" />
+    <Compile Include="PublicFacing\Configuration\ILogRequest.cs" />
     <Compile Include="PublicFacing\Level.cs" />
-    <Compile Include="PublicFacing\LoggingEventArgs.cs" />
+    <Compile Include="PublicFacing\Configuration\LoggingEventArgs.cs" />
     <Compile Include="LogHandling\LogRequest.cs" />
     <Compile Include="LogHandling\LogRequestBase.cs" />
-    <Compile Include="PublicFacing\JavascriptLogging.cs" />
+    <Compile Include="PublicFacing\Configuration\JavascriptLogging.cs" />
     <Compile Include="LogHandling\ILogger.cs" />
     <Compile Include="LogHandling\Logger.cs" />
     <Compile Include="LogHandling\LoggerProcessor.cs" />
@@ -106,7 +106,7 @@
     <Compile Include="ValueInfos\LevelValue.cs" />
     <Compile Include="ValueInfos\IValueInfo.cs" />
     <Compile Include="ValueInfos\StringValue.cs" />
-    <Compile Include="PublicFacing\LoggerHandler.cs" />
+    <Compile Include="PublicFacing\LogRequestHandling\LoggerHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
