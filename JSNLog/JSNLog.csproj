@@ -64,6 +64,7 @@
     <Compile Include="Elements\AppenderElementBase.cs" />
     <Compile Include="Elements\ElementBase.cs" />
     <Compile Include="Elements\LoggerElement.cs" />
+    <Compile Include="PublicFacing\Configuration\LoggingHandler.cs" />
     <Compile Include="PublicFacing\Exceptions\BaseException.cs" />
     <Compile Include="PublicFacing\Exceptions\MissingSubTagException.cs" />
     <Compile Include="PublicFacing\Exceptions\SubTagHasTooManyAttributesException.cs" />

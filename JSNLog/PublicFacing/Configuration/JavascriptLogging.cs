@@ -60,7 +60,6 @@ namespace JSNLog
         }
 
         // Definitions for the OnLogging event. Search for OnLogging to see how it is used.
-        public delegate void LoggingHandler(LoggingEventArgs e);
         public static event LoggingHandler OnLogging;
 
         internal static void RaiseLoggingEvent(LoggingEventArgs loggingEventArgs)

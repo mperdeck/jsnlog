@@ -305,7 +305,7 @@ dateFormat=""" + dateFormat + @"""
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
             };
 
-            JSNLog.JavascriptLogging.LoggingHandler loggingHandler = (LoggingEventArgs loggingEventArgs) =>
+            JSNLog.LoggingHandler loggingHandler = (LoggingEventArgs loggingEventArgs) =>
             {
                 loggingEventArgs.FinalMessage += appendedMsg;
                 loggingEventArgs.FinalLevel = Level.FATAL;
@@ -343,7 +343,7 @@ dateFormat=""" + dateFormat + @"""
             };
 
 
-            JSNLog.JavascriptLogging.LoggingHandler loggingHandler = (LoggingEventArgs loggingEventArgs) =>
+            JSNLog.LoggingHandler loggingHandler = (LoggingEventArgs loggingEventArgs) =>
             {
                 if (loggingEventArgs.FinalMessage.Contains("second message"))
                 {
