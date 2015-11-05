@@ -27,6 +27,7 @@ namespace JSNLog
             _next = next;
             _loggerUrlRegex = new Regex(loggerUrlRegex);
         }
+
         public async Task Invoke(IDictionary<string, object> environment)
         {
             IOwinContext context = new OwinContext(environment);
@@ -62,8 +63,10 @@ namespace JSNLog
             string httpMethod = context.Request.Method;
             string origin = headers.SafeGet("Origin");
 
+            Encoding encoding = HttpHelpers.GetEncoding(headers.SafeGet("Content-Type"));
+
             string json;
-            using (var reader = new StreamReader(context.Request.Body, context.Request.ContentEncoding))
+            using (var reader = new StreamReader(context.Request.Body, encoding))
             {
                 json = reader.ReadToEnd();
             }
@@ -76,6 +79,30 @@ namespace JSNLog
                 serverSideTimeUtc,
                 httpMethod, origin, response, logger, xe);
 
+            // Send dummy response. That way, the log request will not remain "pending"
+            // in eg. Chrome dev tools.
+            //
+            // This must be given a MIME type of "text/plain"
+            // Otherwise, the browser may try to interpret the empty string as XML.
+            // When the user uses Firefox, and right clicks on the page and chooses "Inspect Element",
+            // then in that debugger's console it will say "no element found".
+            // See
+            // http://www.acnenomor.com/307387p1/how-do-i-setup-my-ajax-post-request-to-prevent-no-element-found-on-empty-response
+            // http://stackoverflow.com/questions/975929/firefox-error-no-element-found/976200#976200
+
+            ToOwinResponse(response, context.Response);
+            context.Response.ContentType = "text/plain";
+            context.Response.ContentLength = 0;
+        }
+
+        private void ToOwinResponse(LogResponse logResponse, IOwinResponse owinResponse)
+        {
+            owinResponse.StatusCode = logResponse.StatusCode;
+
+            foreach (KeyValuePair<string, string> kvp in logResponse.Headers)
+            {
+                owinResponse.Headers[kvp.Key] = kvp.Value;
+            }
         }
 
         private Dictionary<string, string> ToDictionary(IReadableStringCollection nameValueCollection)
@@ -89,66 +116,5 @@ namespace JSNLog
 
             return result;
         }
-
-
-
-        //public void ProcessRequest(HttpContext context)
-        //{
-        //    var logRequestBase = new LogRequestBase(
-        //        userAgent: context.Request.UserAgent,
-        //        userHostAddress: context.Request.UserHostAddress,
-        //        requestId: JSNLog.Infrastructure.RequestId.GetFromRequest(),
-        //        url: (context.Request.UrlReferrer ?? context.Request.Url).ToString(),
-        //        queryParameters: Utils.ToDictionary(context.Request.QueryString),
-        //        cookies: ToDictionary(context.Request.Cookies),
-        //        headers: Utils.ToDictionary(context.Request.Headers));
-
-        //    DateTime serverSideTimeUtc = DateTime.UtcNow;
-        //    string httpMethod = context.Request.HttpMethod;
-        //    string origin = context.Request.Headers["Origin"];
-
-        //    string json;
-        //    using (var reader = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding))
-        //    {
-        //        json = reader.ReadToEnd();
-        //    }
-
-        //    HttpResponse response = context.Response;
-        //    ILogger logger = new Logger();
-        //    XmlElement xe = XmlHelpers.RootElement();
-
-        //    LoggerProcessor.ProcessLogRequest(json, logRequestBase,
-        //        serverSideTimeUtc,
-        //        httpMethod, origin, new HttpResponseWrapper(response), logger, xe);
-
-        //    // Send dummy response. That way, the log request will not remain "pending"
-        //    // in eg. Chrome dev tools.
-        //    //
-        //    // This must be given a MIME type of "text/plain"
-        //    // Otherwise, the browser may try to interpret the empty string as XML.
-        //    // When the user uses Firefox, and right clicks on the page and chooses "Inspect Element",
-        //    // then in that debugger's console it will say "no element found".
-        //    // See
-        //    // http://www.acnenomor.com/307387p1/how-do-i-setup-my-ajax-post-request-to-prevent-no-element-found-on-empty-response
-        //    // http://stackoverflow.com/questions/975929/firefox-error-no-element-found/976200#976200
-
-        //    response.ContentType = "text/plain";
-        //    response.ClearContent();
-        //    response.Write("");
-        //}
-
-        //private Dictionary<string, string> ToDictionary(HttpCookieCollection httpCookieCollection)
-        //{
-        //    // HttpCookieCollection requires System.Web, so has been kept in this file.
-
-        //    var result = new Dictionary<string, string>();
-
-        //    foreach (string key in httpCookieCollection.AllKeys)
-        //    {
-        //        result[key] = httpCookieCollection[key].Value;
-        //    }
-
-        //    return result;
-        //}
     }
 }
