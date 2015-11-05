@@ -109,7 +109,7 @@ namespace JSNLog.LogHandling
         /// <param name="xe">The JSNLog element in web.config</param>
         internal static void ProcessLogRequest(string json, LogRequestBase logRequestBase,
             DateTime serverSideTimeUtc,
-            string httpMethod, string origin, HttpResponseBase response, ILogger logger, XmlElement xe)
+            string httpMethod, string origin, LogResponse response, ILogger logger, XmlElement xe)
         {
             if ((httpMethod != "POST") && (httpMethod != "OPTIONS"))
             {

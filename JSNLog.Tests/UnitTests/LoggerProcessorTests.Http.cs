@@ -20,7 +20,7 @@ namespace JSNLog.Tests.UnitTests
                 <jsnlog corsAllowedOriginsRegex=""abc""></jsnlog>
 ";
 
-            NameValueCollection expectedResponseHeaders = new NameValueCollection();
+            var expectedResponseHeaders = new Dictionary<string, string>();
             List<LogEntry> expectedLogEntries = new List<LogEntry>();
             int expectedResponseCode = 405;
 
@@ -38,7 +38,7 @@ namespace JSNLog.Tests.UnitTests
                 <jsnlog corsAllowedOriginsRegex=""abc""></jsnlog>
 ";
 
-            NameValueCollection expectedResponseHeaders = new NameValueCollection();
+            var expectedResponseHeaders = new Dictionary<string, string>();
             List<LogEntry> expectedLogEntries = new List<LogEntry>();
             int expectedResponseCode = 405;
 
@@ -58,7 +58,7 @@ namespace JSNLog.Tests.UnitTests
 
             string origin = "http://abc.com";
 
-            NameValueCollection expectedResponseHeaders = new NameValueCollection { 
+            var expectedResponseHeaders = new Dictionary<string, string> { 
                 {"Allow", "POST"}
             };
 
@@ -81,7 +81,7 @@ namespace JSNLog.Tests.UnitTests
 
             string origin = "http://abc.com";
 
-            NameValueCollection expectedResponseHeaders = new NameValueCollection { 
+            var expectedResponseHeaders = new Dictionary<string, string> { 
                 {"Allow", "POST"}, 
                 {"Access-Control-Allow-Origin", origin}, 
                 {"Access-Control-Max-Age", "3600"},  
@@ -108,7 +108,7 @@ namespace JSNLog.Tests.UnitTests
 
             string origin = "http://abc.com";
 
-            NameValueCollection expectedResponseHeaders = new NameValueCollection
+            var expectedResponseHeaders = new Dictionary<string, string>
             {
             };
 
@@ -139,7 +139,7 @@ namespace JSNLog.Tests.UnitTests
 
             string origin = "http://abc.com";
 
-            NameValueCollection expectedResponseHeaders = new NameValueCollection
+            var expectedResponseHeaders = new Dictionary<string, string>
             {
                 {"Access-Control-Allow-Origin", origin}
             };

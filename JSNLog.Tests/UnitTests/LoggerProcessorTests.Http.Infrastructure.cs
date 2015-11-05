@@ -42,32 +42,15 @@ namespace JSNLog.Tests.UnitTests
             }
         }
 
-        private class TestHttpResponse : HttpResponseBase
-        {
-            public override int StatusCode { get; set; }
-
-            private NameValueCollection _headers = new NameValueCollection();
-            public override NameValueCollection Headers { get { return _headers; } }
-
-            public override void AppendHeader(string name, string value)
-            {
-                _headers.Add(name, value);
-            }
-
-            public TestHttpResponse()
-            {
-            }
-        }
-
         private void RunTestHttp(
             string httpMethod, string origin,
             string configXml, string json, string requestId, string userAgent, string userHostAddress,
             DateTime serverSideTimeUtc, string url,
-            int expectedResponseCode, NameValueCollection expectedResponseHeaders, List<LogEntry> expectedLogEntries)
+            int expectedResponseCode, Dictionary<string, string> expectedResponseHeaders, List<LogEntry> expectedLogEntries)
         {
             // Arrange
 
-            TestHttpResponse response = new TestHttpResponse();
+            LogResponse response = new LogResponse();
             TestLogger logger = new TestLogger();
             XmlElement xe = Utils.ConfigToXe(configXml);
 
@@ -98,7 +81,8 @@ namespace JSNLog.Tests.UnitTests
             }
         }
 
-        private void TestResponseHeaders(NameValueCollection expectedHeaders, NameValueCollection actualHeaders)
+        private void TestResponseHeaders(Dictionary<string, string> expectedHeaders, 
+            Dictionary<string, string> actualHeaders)
         {
             Assert.IsTrue(expectedHeaders.Count == actualHeaders.Count);
 

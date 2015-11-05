@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using System.Web.Configuration;
 using JSNLog.Exceptions;
 using JSNLog.Infrastructure;
 using System.Text.RegularExpressions;
-using System.Web;
 
 namespace JSNLog
 {

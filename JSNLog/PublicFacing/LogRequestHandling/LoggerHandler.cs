@@ -51,13 +51,13 @@ namespace JSNLog
                 json = reader.ReadToEnd();
             }
 
-            HttpResponse response = context.Response;
             ILogger logger = new Logger();
             XmlElement xe = XmlHelpers.RootElement();
+            var logResponse = new LogResponse();
 
             LoggerProcessor.ProcessLogRequest(json, logRequestBase,
                 serverSideTimeUtc,
-                httpMethod, origin, new HttpResponseWrapper(response), logger, xe);
+                httpMethod, origin, logResponse, logger, xe);
 
             // Send dummy response. That way, the log request will not remain "pending"
             // in eg. Chrome dev tools.
@@ -70,9 +70,21 @@ namespace JSNLog
             // http://www.acnenomor.com/307387p1/how-do-i-setup-my-ajax-post-request-to-prevent-no-element-found-on-empty-response
             // http://stackoverflow.com/questions/975929/firefox-error-no-element-found/976200#976200
 
-            response.ContentType = "text/plain";
-            response.ClearContent();
-            response.Write("");
+            HttpResponse httpResponse = context.Response;
+            ToHttpResponse(logResponse, httpResponse);
+            httpResponse.ContentType = "text/plain";
+            httpResponse.ClearContent();
+            httpResponse.Write("");
+        }
+
+        private void ToHttpResponse(LogResponse logResponse, HttpResponse httpResponse)
+        {
+            httpResponse.StatusCode = logResponse.StatusCode;
+
+            foreach (KeyValuePair<string, string> kvp in logResponse.Headers)
+            {
+                httpResponse.AddHeader(kvp.Key, kvp.Value);
+            }
         }
 
         private Dictionary<string, string> ToDictionary(HttpCookieCollection httpCookieCollection)

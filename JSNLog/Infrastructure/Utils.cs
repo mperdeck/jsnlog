@@ -7,7 +7,7 @@ using System.Collections.Specialized;
 
 namespace JSNLog.Infrastructure
 {
-    internal class Utils
+    internal static class Utils
     {
         /// <summary>
         /// Generates the JavaScript for the call to setOptions to set the options for an object
@@ -73,6 +73,25 @@ namespace JSNLog.Infrastructure
             }
 
             return result;
+        }
+
+        public static Dictionary<string, string> ToDictionary(IEnumerable<KeyValuePair<string, string>> nameValueCollection)
+        {
+            var result = new Dictionary<string, string>();
+
+            foreach (var kvp in nameValueCollection)
+            {
+                result[kvp.Key] = kvp.Value;
+            }
+
+            return result;
+        }
+
+        public static T SafeGet<K, T>(this IDictionary<K, T> dictionary, K key)
+        {
+            T value;
+            dictionary.TryGetValue(key, out value);
+            return value;
         }
     }
 }

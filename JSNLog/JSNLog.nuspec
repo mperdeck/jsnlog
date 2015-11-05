@@ -10,7 +10,7 @@
     <iconUrl>http://jsnlog.com/Nuget/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <copyright>Copyright 2014</copyright>
+    <copyright>Copyright 2015</copyright>
     <tags>JavaScript logging exceptions log4net nlog elmah</tags>
       <dependencies>
           <!-- IMPORTANT
@@ -24,6 +24,12 @@
                in the other as well. --> 
           <dependency id="Common.Logging" version="3.0.0" />
           <dependency id="WebActivatorEx" version="2.0.0" />
+
+          <!-- IMPORTANT
+			Versions past 2.1.0 no longer support .Net 4.0
+          --> 
+          <dependency id="Microsoft.Owin" version="(,2.1.0]" />
+          <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
       </dependencies>
   </metadata>
     <files>
