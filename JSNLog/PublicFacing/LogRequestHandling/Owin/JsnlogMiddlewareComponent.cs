@@ -25,7 +25,7 @@ namespace JSNLog
         public JsnlogMiddlewareComponent(AppFunc next, string loggerUrlRegex)
         {
             _next = next;
-            _loggerUrlRegex = new Regex(loggerUrlRegex);
+            _loggerUrlRegex = new Regex(loggerUrlRegex ?? @"\.logger$");
         }
 
         public async Task Invoke(IDictionary<string, object> environment)
