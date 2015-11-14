@@ -11,7 +11,7 @@ Visit [jsnlog.com](http://www.jsnlog.com) to:
 * Get full documentation.
 
 License:
-[Apache License, Version 2.0](https://raw.githubusercontent.com/mperdeck/jsnlog/master/License)
+[MIT](https://raw.githubusercontent.com/mperdeck/jsnlog/master/License)
 
 ## Why JSNLog?
 
