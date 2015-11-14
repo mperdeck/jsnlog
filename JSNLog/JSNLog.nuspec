@@ -25,10 +25,17 @@
           <dependency id="Common.Logging" version="3.0.0" />
           <dependency id="WebActivatorEx" version="2.0.0" />
 
-          <!-- IMPORTANT
-			Versions past 2.1.0 no longer support .Net 4.0
+          <!-- 
+			The below definition causes NuGet to load version 2.1.0 if no version of 
+			icrosoft.Owin has already been installed (it tries to install the LOWEST 
+			possible version of a package).
+
+			This will work fine in a .Net 4.0 project. Note that versions past 2.1.0 no longer support .Net 4.0.
+			If the project already has a higher version of Microsoft.Owin, this definition will accept that too.
+			The assemblyBinding binding section in the section's web.config will translate 2.1.0 (as asked for by
+			JSNLog project in its references) to the version that is actually installed in the project.
           --> 
-          <dependency id="Microsoft.Owin" version="(,2.1.0]" />
+          <dependency id="Microsoft.Owin" version="2.1.0" />
           <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
       </dependencies>
   </metadata>
