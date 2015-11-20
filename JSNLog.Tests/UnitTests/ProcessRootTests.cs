@@ -276,7 +276,7 @@ namespace JSNLog.Tests.UnitTests
         private void RunTest(string configXml)
         {
             var sb = new StringBuilder();
-            XmlElement xe = JSNLog.Tests.Logic.Utils.ConfigToXe(configXml);
+            XmlElement xe = JSNLog.Tests.Logic.TestUtils.ConfigToXe(configXml);
 
             var configProcessor = new ConfigProcessor();
             configProcessor.ProcessRootExec(xe, sb, s => s, "23.89.450.1", "req", true);

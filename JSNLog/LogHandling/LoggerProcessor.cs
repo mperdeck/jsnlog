@@ -8,6 +8,7 @@ using System.Xml;
 using System.Web;
 using System.Net;
 using System.Text.RegularExpressions;
+using JSNLog.Exceptions;
 
 namespace JSNLog.LogHandling
 {
@@ -106,10 +107,10 @@ namespace JSNLog.LogHandling
         /// <param name="logger">
         /// Logger object, used to do the actual logging.
         /// </param>
-        /// <param name="xe">The JSNLog element in web.config</param>
+        /// <param name="jsnlogConfiguration">Contains all config info</param>
         internal static void ProcessLogRequest(string json, LogRequestBase logRequestBase,
             DateTime serverSideTimeUtc,
-            string httpMethod, string origin, LogResponse response, ILogger logger, XmlElement xe)
+            string httpMethod, string origin, LogResponse response, ILogger logger, JsnlogConfiguration jsnlogConfiguration)
         {
             if ((httpMethod != "POST") && (httpMethod != "OPTIONS"))
             {
@@ -117,7 +118,7 @@ namespace JSNLog.LogHandling
                 return;
             }
 
-            string corsAllowedOriginsRegex = XmlHelpers.OptionalAttribute(xe, "corsAllowedOriginsRegex", null);
+            string corsAllowedOriginsRegex = jsnlogConfiguration.corsAllowedOriginsRegex;
             bool originIsAllowed = ((!string.IsNullOrEmpty(corsAllowedOriginsRegex)) && (!string.IsNullOrEmpty(origin)) && Regex.IsMatch(origin, corsAllowedOriginsRegex));
 
             if (originIsAllowed)
@@ -146,7 +147,7 @@ namespace JSNLog.LogHandling
             // httpMethod must be POST
 
             List<LogData> logDatas =
-                ProcessLogRequestExec(json, logRequestBase, serverSideTimeUtc, xe);
+                ProcessLogRequestExec(json, logRequestBase, serverSideTimeUtc, jsnlogConfiguration);
 
             // ---------------------------------
             // Pass log data to Common Logging
@@ -164,9 +165,9 @@ namespace JSNLog.LogHandling
         /// </summary>
         /// <param name="json">JSON sent from client by AjaxAppender</param>
         /// <param name="serverSideTimeUtc">Current time in UTC</param>
-        /// <param name="xe">The JSNLog element in web.config</param>
+        /// <param name="jsnlogConfiguration">Contains all config info</param>
         internal static List<LogData> ProcessLogRequestExec(string json, LogRequestBase logRequestBase,
-            DateTime serverSideTimeUtc, XmlElement xe)
+            DateTime serverSideTimeUtc, JsnlogConfiguration jsnlogConfiguration)
         {
             List<LogData> logDatas = new List<LogData>();
 
@@ -180,7 +181,7 @@ namespace JSNLog.LogHandling
                 foreach (Object logItem in logItems)
                 {
                     LogData logData = ProcessLogItem((Dictionary<string, Object>)logItem,
-                        logRequestBase, serverSideTimeUtc, xe);
+                        logRequestBase, serverSideTimeUtc, jsnlogConfiguration);
 
                     if (logData != null)
                     {
@@ -214,12 +215,21 @@ namespace JSNLog.LogHandling
         }
 
         private static LogData ProcessLogItem(Dictionary<string, Object> logItem, LogRequestBase logRequestBase,
-            DateTime serverSideTimeUtc, XmlElement xe)
+            DateTime serverSideTimeUtc, JsnlogConfiguration jsnlogConfiguration)
         {
-            string serversideLoggerNameOverride = XmlHelpers.OptionalAttribute(xe, "serverSideLogger", null);
-            string messageFormat = XmlHelpers.OptionalAttribute(xe, "serverSideMessageFormat", "%message");
-            string levelOverride = XmlHelpers.OptionalAttribute(xe, "serverSideLevel", null, LevelUtils.LevelRegex());
-            string dateFormat = XmlHelpers.OptionalAttribute(xe, "dateFormat", "o");
+            string serversideLoggerNameOverride = jsnlogConfiguration.serverSideLogger;
+            string messageFormat = jsnlogConfiguration.serverSideMessageFormat;
+            string levelOverride = jsnlogConfiguration.serverSideLevel;
+            string dateFormat = jsnlogConfiguration.dateFormat;
+
+            try
+            {
+                LevelUtils.ValidateLevel(levelOverride);
+            }
+            catch (Exception e)
+            {
+                throw new PropertyException("levelOverride", e);
+            }
 
             // ----------------
 

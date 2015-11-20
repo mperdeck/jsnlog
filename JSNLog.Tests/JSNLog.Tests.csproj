@@ -142,7 +142,7 @@
     <Compile Include="IntegrationTests\NuGetTests.cs" />
     <Compile Include="Logic\DummyAppender.cs" />
     <Compile Include="Logic\T.cs" />
-    <Compile Include="Logic\Utils.cs" />
+    <Compile Include="Logic\TestUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\LoggerProcessorTests.Http.cs" />
     <Compile Include="UnitTests\LoggerProcessorTests.Http.Infrastructure.cs" />

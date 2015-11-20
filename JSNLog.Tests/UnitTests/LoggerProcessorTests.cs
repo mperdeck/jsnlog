@@ -7,6 +7,7 @@ using JSNLog.LogHandling;
 using JSNLog.Tests.Logic;
 using System.Xml;
 using System.Web.Script.Serialization;
+using JSNLog.Infrastructure;
 
 namespace JSNLog.Tests.UnitTests
 {
@@ -39,28 +40,28 @@ namespace JSNLog.Tests.UnitTests
 
             _json1 = @"{
 'lg': [
-{ 'm': 'first ""message""', 'n': 'a.b.c', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
+{ 'm': 'first ""message""', 'n': 'a.b.c', 'l': 1500, 't': " + TestUtils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
 ] }";
 
             _json1root = @"{
 'lg': [
-{ 'm': 'first message', 'n': '', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
+{ 'm': 'first message', 'n': '', 'l': 1500, 't': " + TestUtils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
 ] }";
 
             _json2 = @"{
 'lg': [
-{ 'm': 'first message', 'n': 'a.b.c', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"},
-{ 'm': 'second message', 'n': 'a2.b3.c4', 'l': 3000, 't': " + Utils.MsSince1970(_dtSecondLogUtc).ToString() + @"}
+{ 'm': 'first message', 'n': 'a.b.c', 'l': 1500, 't': " + TestUtils.MsSince1970(_dtFirstLogUtc).ToString() + @"},
+{ 'm': 'second message', 'n': 'a2.b3.c4', 'l': 3000, 't': " + TestUtils.MsSince1970(_dtSecondLogUtc).ToString() + @"}
 ] }";
             // Same as _json1, but without 'm' field. This is invalid and should cause an internal error.
             _json4 = @"{
 'lg': [
-{ 'n': 'a.b.c', 'l': 1500, 't': " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
+{ 'n': 'a.b.c', 'l': 1500, 't': " + TestUtils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
 ] }";
 
             _json5 = @"{
 ""lg"": [
-{ ""m"": ""{\""x\"":5,\""y\"":88}"", ""n"": ""a.b.c"", ""l"": 1500, ""t"": " + Utils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
+{ ""m"": ""{\""x\"":5,\""y\"":88}"", ""n"": ""a.b.c"", ""l"": 1500, ""t"": " + TestUtils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
 ] }";
         }
 
@@ -382,15 +383,16 @@ dateFormat=""" + dateFormat + @"""
                     'utcDate': '%utcDate', 'utcDateServer': '%utcDateServer', 'date': '%date', 'dateServer': '%dateServer' 
                     }""></jsnlog>";
 
-            XmlElement xe = Utils.ConfigToXe(configXml);
+            XmlElement xe = TestUtils.ConfigToXe(configXml);
 
             // Act
 
+            var jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
             List<LoggerProcessor.LogData> actual =
                 LoggerProcessor.ProcessLogRequestExec(
                     _json1, 
                     new LogRequestBase("my browser", "12.345.98.7", "http://mydomain.com/main", "",null, null, null),
-                    _dtServerUtc, xe);
+                    _dtServerUtc, jsnlogConfiguration);
 
             string messageToBeLogged = actual.FirstOrDefault().Message;
 
@@ -415,15 +417,16 @@ dateFormat=""" + dateFormat + @"""
                 <jsnlog></jsnlog>
 ";
 
-            XmlElement xe = Utils.ConfigToXe(configXml);
+            XmlElement xe = TestUtils.ConfigToXe(configXml);
 
             // Act
 
+            var jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
             List<LoggerProcessor.LogData> actual =
                 LoggerProcessor.ProcessLogRequestExec(
                     _json4,
                     new LogRequestBase("my browser", "12.345.98.7", "http://mydomain.com/main", "",null, null, null),
-                    _dtServerUtc, xe);
+                    _dtServerUtc, jsnlogConfiguration);
 
             // Assert
 
@@ -434,15 +437,16 @@ dateFormat=""" + dateFormat + @"""
         private void RunTest(string configXml, string json, string requestId, string userAgent, string userHostAddress,
             DateTime serverSideTimeUtc, string url, IEnumerable<LoggerProcessor.LogData> expected)
         {
-            XmlElement xe = Utils.ConfigToXe(configXml);
+            XmlElement xe = TestUtils.ConfigToXe(configXml);
 
             // Act
 
+            var jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
             List<LoggerProcessor.LogData> actual =
                 LoggerProcessor.ProcessLogRequestExec(
                     json,
                     new LogRequestBase(userAgent, userHostAddress, requestId, url, null, null, null),
-                    serverSideTimeUtc, xe);
+                    serverSideTimeUtc, jsnlogConfiguration);
 
             TestLogDatasEqual(expected, actual);
         }

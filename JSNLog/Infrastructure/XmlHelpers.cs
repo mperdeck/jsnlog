@@ -21,10 +21,17 @@ namespace JSNLog.Infrastructure
         /// <returns></returns>
         internal static T DeserialiseXml<T>(XmlNode xmlNode)
         {
-            var xmlNodeReader = new XmlNodeReader(xmlNode);
-            XmlSerializer deserializer = new XmlSerializer(typeof(T));
-            T result = (T)deserializer.Deserialize(xmlNodeReader);
-            return result;
+            try
+            {
+                var xmlNodeReader = new XmlNodeReader(xmlNode);
+                XmlSerializer deserializer = new XmlSerializer(typeof(T));
+                T result = (T)deserializer.Deserialize(xmlNodeReader);
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw new WebConfigException(e);
+            }
         }
 
         /// <summary>

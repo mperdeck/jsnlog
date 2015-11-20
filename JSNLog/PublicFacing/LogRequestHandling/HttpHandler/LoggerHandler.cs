@@ -54,10 +54,11 @@ namespace JSNLog
             ILogger logger = new CommonLoggingLogger();
             XmlElement xe = XmlHelpers.RootElement();
             var logResponse = new LogResponse();
+            var jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
 
             LoggerProcessor.ProcessLogRequest(json, logRequestBase,
                 serverSideTimeUtc,
-                httpMethod, origin, logResponse, logger, xe);
+                httpMethod, origin, logResponse, logger, jsnlogConfiguration);
 
             // Send dummy response. That way, the log request will not remain "pending"
             // in eg. Chrome dev tools.

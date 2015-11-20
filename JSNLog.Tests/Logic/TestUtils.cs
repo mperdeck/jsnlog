@@ -8,7 +8,7 @@ using JSNLog.Infrastructure;
 
 namespace JSNLog.Tests.Logic
 {
-    public class Utils
+    public class TestUtils
     {
         /// <summary>
         /// Generates JS to store the timestamp for a log action

@@ -155,6 +155,15 @@ namespace JSNLog.Infrastructure
         }
 
         /// <summary>
+        /// Throws exception if level is not a valid level.
+        /// </summary>
+        /// <param name="level"></param>
+        public static void ValidateLevel(string level)
+        {
+            LevelNumber(level);
+        }
+
+        /// <summary>
         /// Returns a regex that matches a string with a level.
         /// </summary>
         /// <returns></returns>

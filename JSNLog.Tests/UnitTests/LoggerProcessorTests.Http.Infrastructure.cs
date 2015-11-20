@@ -8,6 +8,7 @@ using JSNLog.Tests.Logic;
 using System.Xml;
 using System.IO;
 using System.Collections.Specialized;
+using JSNLog.Infrastructure;
 
 namespace JSNLog.Tests.UnitTests
 {
@@ -52,15 +53,16 @@ namespace JSNLog.Tests.UnitTests
 
             LogResponse response = new LogResponse();
             TestLogger logger = new TestLogger();
-            XmlElement xe = Utils.ConfigToXe(configXml);
+            XmlElement xe = TestUtils.ConfigToXe(configXml);
 
             // Act
 
+            var jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
             LoggerProcessor.ProcessLogRequest(
                 json, 
                 new LogRequestBase(userAgent, userHostAddress, requestId,url, null, null, null),
-                serverSideTimeUtc, 
-                httpMethod, origin, response, logger, xe);
+                serverSideTimeUtc,
+                httpMethod, origin, response, logger, jsnlogConfiguration);
 
             // Assert
 
