@@ -30,11 +30,14 @@ namespace JSNLog
 
         public Appender()
         {
-            storeInBufferLevel = "ALL";
-            sendWithBufferLevel = "OFF";
+            // Do NOT set defaults for level, storeInBufferLevel, sendWithBufferLevel.
+            // Method ValidateAppender checks if all of these have been given by the user
+            // when at least one has been given (you must set either none or all).
+            // It can't distinguish between user supplied values and defaults.
+            // Note that jsnlog.js sets defaults itself.
+
             bufferSize = 0;
             batchSize = 1;
-            level = "TRACE";
         }
 
         // --------------------------------------------------------

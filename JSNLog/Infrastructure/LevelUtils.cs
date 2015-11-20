@@ -160,6 +160,8 @@ namespace JSNLog.Infrastructure
         /// <param name="level"></param>
         public static void ValidateLevel(string level)
         {
+            if (string.IsNullOrEmpty(level)) { return; }
+
             LevelNumber(level);
         }
 

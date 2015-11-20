@@ -36,7 +36,7 @@ namespace JSNLog.Tests.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidAttributeException))]
+        [ExpectedException(typeof(ConfigurationException))]
         public void InvalidLevel()
         {
             // Arrange
@@ -52,7 +52,7 @@ namespace JSNLog.Tests.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidAttributeException))]
+        [ExpectedException(typeof(ConfigurationException))]
         public void InvalidLevel2()
         {
             // Arrange
@@ -68,7 +68,7 @@ namespace JSNLog.Tests.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidAttributeException))]
+        [ExpectedException(typeof(ConfigurationException))]
         public void InvalidAppender()
         {
             // Arrange
@@ -85,7 +85,7 @@ namespace JSNLog.Tests.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidAttributeException))]
+        [ExpectedException(typeof(ConfigurationException))]
         public void InvalidAppender2()
         {
             // Arrange
@@ -101,7 +101,7 @@ namespace JSNLog.Tests.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(MissingAttributeException))]
+        [ExpectedException(typeof(ConfigurationException))]
         public void NoAppenderName()
         {
             // Arrange
@@ -117,7 +117,7 @@ namespace JSNLog.Tests.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidAttributeException))]
+        [ExpectedException(typeof(WebConfigException))]
         public void InvalidBatchSize()
         {
             // Arrange
@@ -133,7 +133,7 @@ namespace JSNLog.Tests.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidAttributeException))]
+        [ExpectedException(typeof(WebConfigException))]
         public void InvalidBufferSize()
         {
             // Arrange
@@ -149,7 +149,7 @@ namespace JSNLog.Tests.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(GeneralAppenderException))]
+        [ExpectedException(typeof(ConfigurationException))]
         public void MissingBufferParameter()
         {
             // Arrange
@@ -165,7 +165,7 @@ namespace JSNLog.Tests.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(GeneralAppenderException))]
+        [ExpectedException(typeof(ConfigurationException))]
         public void MissingBufferParameter2()
         {
             // Arrange
@@ -181,7 +181,7 @@ namespace JSNLog.Tests.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(GeneralAppenderException))]
+        [ExpectedException(typeof(ConfigurationException))]
         public void MissingBufferParameter3()
         {
             // Arrange
@@ -197,7 +197,7 @@ namespace JSNLog.Tests.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(GeneralAppenderException))]
+        [ExpectedException(typeof(ConfigurationException))]
         public void WrongBufferParameter()
         {
             // Arrange
@@ -213,7 +213,7 @@ namespace JSNLog.Tests.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(GeneralAppenderException))]
+        [ExpectedException(typeof(ConfigurationException))]
         public void WrongBufferParameter2()
         {
             // Arrange
@@ -229,13 +229,15 @@ namespace JSNLog.Tests.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidAttributeException))]
+        [ExpectedException(typeof(WebConfigException))]
         public void InvalidEnabled()
         {
             // Arrange
 
+            // Note that the XML deserializer regards "1" as a valid input for booleans
+            // and correctly translates that to true.
             string configXml = @"
-                <jsnlog enabled=""1"">
+                <jsnlog enabled=""xyz"">
 </jsnlog>
 ";
 
@@ -244,7 +246,7 @@ namespace JSNLog.Tests.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidAttributeException))]
+        [ExpectedException(typeof(WebConfigException))]
         public void InvalidMaxMessages()
         {
             // Arrange
@@ -259,7 +261,7 @@ namespace JSNLog.Tests.UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidAttributeException))]
+        [ExpectedException(typeof(WebConfigException))]
         public void InvalidMaxMessages2()
         {
             // Arrange
