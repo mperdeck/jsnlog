@@ -6,7 +6,7 @@ using Common.Logging;
 
 namespace JSNLog.LogHandling
 {
-    internal class Logger: ILogger
+    internal class CommonLoggingLogger: ILogger
     {
         public void Log(Level level, string loggerName, string message)
         {

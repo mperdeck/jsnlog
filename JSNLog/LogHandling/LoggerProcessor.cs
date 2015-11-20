@@ -132,7 +132,7 @@ namespace JSNLog.LogHandling
                 // Standard HTTP response (not related to CORS)
                 response.AppendHeader("Allow", "POST");
 
-                // Only if the origin is allow send CORS headers
+                // Only if the origin is allowed send CORS headers
                 if (originIsAllowed)
                 {
                     response.AppendHeader("Access-Control-Max-Age", Constants.CorsAccessControlMaxAgeInSeconds.ToString());

@@ -18,6 +18,7 @@ namespace JSNLog.ValueInfos
 
         /// <summary>
         /// Takes a value and converts it to a JavaScript value.
+        /// Note that this method takes care of quoting strings (and not quoting numbers and booleans).
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>

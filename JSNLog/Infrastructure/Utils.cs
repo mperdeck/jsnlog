@@ -48,7 +48,7 @@ namespace JSNLog.Infrastructure
 
             if (validate != null) { validate(attributeValues); }
 
-            JavaScriptHelpers.GenerateSetOptions(parentName, attributeValues, sb);
+            JavaScriptHelpers.GenerateSetOptions2(parentName, attributeValues, sb);
         }
 
         /// <summary>
@@ -92,6 +92,23 @@ namespace JSNLog.Infrastructure
             T value;
             dictionary.TryGetValue(key, out value);
             return value;
+        }
+
+        /// <summary>
+        /// The given url may be virtual (starts with ~). This method returns a version of the url that is not virtual.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static string AbsoluteUrl(string url, Func<string, string> virtualToAbsoluteFunc)
+        {
+            string urlLc = url.ToLower();
+            if (urlLc.StartsWith("//") || urlLc.StartsWith("http://") || urlLc.StartsWith("https://"))
+            {
+                return url;
+            }
+
+            string absoluteUrl = virtualToAbsoluteFunc(url);
+            return absoluteUrl;
         }
     }
 }

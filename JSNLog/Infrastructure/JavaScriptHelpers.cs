@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using JSNLog.ValueInfos;
+using JSNLog.Exceptions;
 
 namespace JSNLog.Infrastructure
 {
@@ -77,13 +79,123 @@ namespace JSNLog.Infrastructure
         /// <param name="parentName">
         /// Name of the JavaScript variable that holds the object.
         /// </param>
+        /// <param name="element">
+        /// The object (logger, etc.) whose fields are to be converted to options.
+        /// </param>
+        /// <param name="sb">
+        /// The JavaScript code is added to this StringBuilder.
+        /// </param>
+        /// <param name="initialJsonFields">
+        /// If not null, the fields in this array will be included in the JSON object passed to the setOptions method. 
+        /// </param>
+        internal static void GenerateSetOptions(string parentName, ICanCreateJsonFields element, 
+            Dictionary<string, string> appenderNames, Func<string, string> virtualToAbsoluteFunc, 
+            StringBuilder sb, IList<string> initialJsonFields = null)
+        {
+            var jsonFields = new List<string>();
+            
+            if (initialJsonFields != null) 
+            {
+                jsonFields.AddRange(initialJsonFields);
+            }
+
+            element.AddJsonFields(jsonFields, appenderNames, virtualToAbsoluteFunc);
+
+            string setOptionsJS = string.Format("{0}.setOptions({1});", parentName, string.Join(",\n", jsonFields));
+            sb.AppendLine(setOptionsJS);
+        }
+
+        internal static string ToJavaScript(bool b)
+        {
+            if (b) { return "true"; }
+            return "false";
+        }
+
+        internal static string ToJavaScript(uint i)
+        {
+            return i.ToString();
+        }
+
+        internal static string ToJavaScript(IEnumerable<string> jsValues)
+        {
+            return "[" + string.Join(", ", jsValues) + "]";
+        }
+
+        /// <summary>
+        /// Creates a JSON field of the form:
+        /// "field name": "field value"
+        /// 
+        /// This string is added to jsonFields.
+        /// 
+        /// If value is null or empty, nothing is added.
+        /// </summary>
+        /// <param name="jsonFields"></param>
+        /// <param name="jsonFieldName">
+        /// Name of the field, without quotes. Will not be escaped.
+        /// </param>
+        /// <param name="value">
+        /// The unescaped value.
+        /// </param>
+        /// <param name="valueInfo">
+        /// Used to validate the value, and to convert it to proper JavaScript.
+        /// </param>
+        internal static void AddJsonField(IList<string> jsonFields, string jsonFieldName, string value, IValueInfo valueInfo) 
+        {
+            if (string.IsNullOrEmpty(value)) { return; }
+
+            try
+            {
+                AddJsonField(jsonFields, jsonFieldName, valueInfo.ToJavaScript(value));
+            }
+            catch (Exception e)
+            {
+                throw new PropertyException(jsonFieldName, e);
+            }
+        }
+
+        internal static void AddJsonField(IList<string> jsonFields, string jsonFieldName, uint value)
+        {
+            AddJsonField(jsonFields, jsonFieldName, ToJavaScript(value));
+        }
+
+        internal static void AddJsonField(IList<string> jsonFields, string jsonFieldName, bool value)
+        {
+            AddJsonField(jsonFields, jsonFieldName, ToJavaScript(value));
+        }
+
+        // valueInfo will be applied to each individual string in value
+        internal static void AddJsonField(IList<string> jsonFields, string jsonFieldName, IEnumerable<string> value, IValueInfo valueInfo)
+        {
+            try
+            {
+                AddJsonField(jsonFields, jsonFieldName, ToJavaScript(value.Select(v=>valueInfo.ToJavaScript(v))));
+            }
+            catch (Exception e)
+            {
+                throw new PropertyException(jsonFieldName, e);
+            }
+        }
+
+        internal static void AddJsonField(IList<string> jsonFields, string jsonFieldName, string jsValue)
+        {
+            // Note: no quotes around {1}. If jsValue represents a string, it will already be quoted.
+            string jsonField = string.Format("\"{0}\": {1}", jsonFieldName, jsValue);
+            jsonFields.Add(jsonField);
+        }
+
+        /// <summary>
+        /// Generates the JavaScript to set options on an object
+        /// </summary>
+        /// <param name="parentName">
+        /// Name of the JavaScript variable that holds the object.
+        /// </param>
         /// <param name="optionValues">
         /// The names and values of the options.
         /// </param>
         /// <param name="sb">
         /// The JavaScript code is added to this StringBuilder.
         /// </param>
-        public static void GenerateSetOptions(string parentName, AttributeValueCollection optionValues, StringBuilder sb)
+        public static void GenerateSetOptions2(string parentName, AttributeValueCollection optionValues, StringBuilder sb)
         {
             string optionsJson = GenerateJson(optionValues);
             sb.AppendLine(string.Format("{0}.setOptions({1});", parentName, optionsJson));

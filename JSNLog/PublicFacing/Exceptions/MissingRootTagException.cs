@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JSNLog.Exceptions
 {
-    public class MissingRootTagException : BaseException
+    public class MissingRootTagException : JSNLogException
     {
         public MissingRootTagException(): 
             base(string.Format(

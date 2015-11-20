@@ -51,7 +51,7 @@ namespace JSNLog
                 json = reader.ReadToEnd();
             }
 
-            ILogger logger = new Logger();
+            ILogger logger = new CommonLoggingLogger();
             XmlElement xe = XmlHelpers.RootElement();
             var logResponse = new LogResponse();
 

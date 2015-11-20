@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JSNLog.Exceptions
 {
-    public class GeneralAppenderException : BaseException
+    public class GeneralAppenderException : JSNLogException
     {
         public GeneralAppenderException(string appenderName, string message) :
             base(string.Format("Appender {0} - {1}",

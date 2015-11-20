@@ -93,7 +93,7 @@ namespace JSNLog.Infrastructure
                 return IntToLevel(levelInt);
             }
 
-            throw new Exception(string.Format("LevelUtils.ParseLevel - unknown level {0}", levelString));
+            throw new Exception(string.Format("Unknown level {0}", levelString));
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace JSNLog.Infrastructure
                 return (int)levelEnum;
             }
 
-            throw new Exception(string.Format("LevelUtils.LevelNumber - unknown level {0}", level));
+            throw new Exception(string.Format("Unknown level {0}", level));
         }
 
         /// <summary>

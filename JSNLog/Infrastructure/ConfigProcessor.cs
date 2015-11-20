@@ -10,13 +10,12 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Reflection;
 using JSNLog.ValueInfos;
+using JSNLog;
 
 namespace JSNLog.Infrastructure
 {
     internal class ConfigProcessor
     {
-        private List<XmlHelpers.TagInfo> topLeveltagInfos = null;
-
         /// <summary>
         /// Processes a configuration (such as the contents of the jsnlog element in web.config).
         /// 
@@ -47,28 +46,17 @@ namespace JSNLog.Infrastructure
         // that are private to the closure, specifically dummyappenders that store the log messages you receive, so you can unit test them.
         public void ProcessRootExec(XmlElement xe, StringBuilder sb, Func<string, string> virtualToAbsoluteFunc, string userIp, string requestId, bool generateClosure)
         {
-            string loggerProductionLibraryVirtualPath = XmlHelpers.OptionalAttribute(xe, "productionLibraryPath", "");
-            bool loggerEnabled = bool.Parse(XmlHelpers.OptionalAttribute(xe, "enabled", "true", Constants.RegexBool));
+            var jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
+            Dictionary<string, string> appenderNames = new Dictionary<string, string>();
+
+            string loggerProductionLibraryVirtualPath = jsnlogConfiguration.productionLibraryPath;
+            bool loggerEnabled = jsnlogConfiguration.enabled;
 
             string loggerProductionLibraryPath = null;
             if (!string.IsNullOrEmpty(loggerProductionLibraryVirtualPath))
             {
                 // Every hard coded path must be resolved. See the declaration of DefaultDefaultAjaxUrl
-                loggerProductionLibraryPath = AbsoluteUrl(loggerProductionLibraryVirtualPath, virtualToAbsoluteFunc);
-            }
-
-            if (!loggerEnabled)
-            {
-                if (!string.IsNullOrWhiteSpace(loggerProductionLibraryPath))
-                {
-                    JavaScriptHelpers.WriteScriptTag(loggerProductionLibraryPath, sb);
-                }
-
-                JavaScriptHelpers.WriteJavaScriptBeginTag(sb);
-                Utils.ProcessOptionAttributes(Constants.JsLogObjectName, xe, Constants.JSNLogAttributes, null, sb);
-                JavaScriptHelpers.WriteJavaScriptEndTag(sb);
-
-                return;
+                loggerProductionLibraryPath = Utils.AbsoluteUrl(loggerProductionLibraryVirtualPath, virtualToAbsoluteFunc);
             }
 
             JavaScriptHelpers.WriteJavaScriptBeginTag(sb);
@@ -79,52 +67,30 @@ namespace JSNLog.Infrastructure
 
             // Generate setOptions for JSNLog object itself
 
-            AttributeValueCollection attributeValues = new AttributeValueCollection();
+            var jsonFields = new List<string>();
+            JavaScriptHelpers.AddJsonField(jsonFields, Constants.JsLogObjectClientIpOption, userIp, new StringValue());
+            JavaScriptHelpers.AddJsonField(jsonFields, Constants.JsLogObjectRequestIdOption, requestId, new StringValue());
 
-            attributeValues[Constants.JsLogObjectClientIpOption] = new Value(userIp, new StringValue());
-            attributeValues[Constants.JsLogObjectRequestIdOption] = new Value(requestId, new StringValue());
+            JavaScriptHelpers.GenerateSetOptions(Constants.JsLogObjectName, jsnlogConfiguration, 
+                appenderNames, virtualToAbsoluteFunc, sb, jsonFields);
 
-            // Set default value for defaultAjaxUrl attribute
-            attributeValues[Constants.JsLogObjectDefaultAjaxUrlOption] =
-                new Value(AbsoluteUrl(Constants.DefaultDefaultAjaxUrl, virtualToAbsoluteFunc), new StringValue());
+            //#########################
+            //// Set default value for defaultAjaxUrl attribute
+            //attributeValues[Constants.] =
+            //    new Value(AbsoluteUrl(Constants.DefaultDefaultAjaxUrl, virtualToAbsoluteFunc), new StringValue());
 
-            Utils.ProcessOptionAttributes(Constants.JsLogObjectName, xe, Constants.JSNLogAttributes,
-                attributeValues, sb);
+            if (loggerEnabled)
+            {
+                // Process all loggers and appenders. First process the appenders, because the loggers can be 
+                // dependent on the appenders, and will use appenderNames to translate configuration appender names
+                // to JavaScript names.
 
-            // Process all loggers and appenders
+                int sequence = 1;
 
-            Dictionary<string, string> appenderNames = new Dictionary<string, string>();
-            Sequence sequence = new Sequence();
-
-            // -----------------
-            // First process all assembly tags
-
-            topLeveltagInfos =
-                new List<XmlHelpers.TagInfo>(
-                    new[] {
-                            new XmlHelpers.TagInfo(Constants.TagAssembly, ProcessAssembly, Constants.AssemblyAttributes, (int)Constants.OrderNbr.Assembly)
-                        });
-
-            XmlHelpers.ProcessNodeList(
-                xe.ChildNodes,
-                topLeveltagInfos.Where(t => t.Tag == Constants.TagAssembly).ToList(),
-                null, appenderNames, sequence, sb,
-                string.Format("^{0}*", Constants.TagAssembly));
-
-            // -----------------
-            // The elements (if any) from external assemblies have now been loaded (with the assembly elements).
-            // Now add the elements from the executing assembly after the external ones. 
-            // This way, logger elements are processed last - after any new appenders.
-
-            AddAssemblyTagInfos(Assembly.GetExecutingAssembly());
-
-            // Now process the external and internal elements, but not the assembly elements.
-
-            XmlHelpers.ProcessNodeList(
-                xe.ChildNodes,
-                topLeveltagInfos,
-                null, appenderNames, sequence, sb,
-                string.Format("^((?!{0}).)*$", Constants.TagAssembly));
+                GenerateCreateJavaScript(jsnlogConfiguration.ajaxAppenders, sb, virtualToAbsoluteFunc, appenderNames, ref sequence);
+                GenerateCreateJavaScript(jsnlogConfiguration.consoleAppenders, sb, virtualToAbsoluteFunc, appenderNames, ref sequence);
+                GenerateCreateJavaScript(jsnlogConfiguration.loggers, sb, virtualToAbsoluteFunc, appenderNames, ref sequence);
+            }
 
             // -------------
 
@@ -147,55 +113,28 @@ namespace JSNLog.Infrastructure
         }
 
         /// <summary>
-        /// The given url may be virtual (starts with ~). This method returns a version of the url that is not virtual.
+        /// Generates JavaScript code for all passed in elements.
         /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        private string AbsoluteUrl(string url, Func<string, string> virtualToAbsoluteFunc)
+        /// <param name="elements"></param>
+        /// <param name="sb">
+        /// The JavaScript code is added here.
+        /// </param>
+        /// <param name="virtualToAbsoluteFunc"></param>
+        /// <param name="appenderNames"></param>
+        /// <param name="sequence">
+        /// When the method is called, this number is not used with any element.
+        /// When the method returns, it ensures that a number is returned that is not used with any element.
+        /// </param>
+        private void GenerateCreateJavaScript(IEnumerable<ICanCreateElement> elements, StringBuilder sb, 
+            Func<string, string> virtualToAbsoluteFunc, Dictionary<string, string> appenderNames, ref int sequence)
         {
-            string urlLc = url.ToLower();
-            if (urlLc.StartsWith("//") || urlLc.StartsWith("http://") || urlLc.StartsWith("https://"))
+            if (elements == null) { return;  }
+
+            foreach(var element in elements)
             {
-                return url;
+                element.CreateElement(sb, appenderNames, sequence, virtualToAbsoluteFunc);
+                sequence++;
             }
-            
-            string absoluteUrl = virtualToAbsoluteFunc(url);
-            return absoluteUrl;
-        }
-
-        private void ProcessAssembly(XmlElement xe, string parentName, Dictionary<string, string> appenderNames, Sequence sequence,
-            IEnumerable<AttributeInfo> assemblyAttributes, StringBuilder sb)
-        {
-            if (xe == null) { return; }
-
-            string assemblyName = XmlHelpers.RequiredAttribute(xe, "name");
-            AddAssemblyTagInfos(Assembly.Load(assemblyName));
-        }
-
-        /// <summary>
-        /// Calls Init on all classes in the given assembly that implement IElement.
-        /// Adds their TagInfos to the end of topLeveltagInfos.
-        /// </summary>
-        /// <param name="assembly"></param>
-        private void AddAssemblyTagInfos(Assembly assembly)
-        {
-            List<IElement> types = new List<IElement>(
-                from t in assembly.GetTypes()
-                where t.IsClass && t.GetInterfaces().Contains(typeof(IElement))
-                select Activator.CreateInstance(t) as IElement
-            );
-
-            var tagInfos = new List<XmlHelpers.TagInfo>();
-            foreach(IElement type in types)
-            {
-                XmlHelpers.TagInfo tagInfo;
-                type.Init(out tagInfo);
-                tagInfos.Add(tagInfo);
-            }
-
-            var sortedTagInfos = tagInfos.OrderBy(t=>(int)t.OrderNbr);
-
-            topLeveltagInfos.AddRange(sortedTagInfos);
         }
     }
 }

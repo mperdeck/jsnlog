@@ -72,7 +72,7 @@ namespace JSNLog
             }
 
             var response = new LogResponse();
-            ILogger logger = new Logger();
+            ILogger logger = new CommonLoggingLogger();
             XmlElement xe = XmlHelpers.RootElement();
 
             LoggerProcessor.ProcessLogRequest(json, logRequestBase,

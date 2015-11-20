@@ -44,6 +44,7 @@ namespace JSNLog
         public const string JsLoggerAppendersOption = "appenders";
         public const string JsLoggerVariable = "logger";
         public const string JsAppenderVariablePrefix = "a";
+        public const string JsLoggerVariablePrefix = "logger";
 
         public enum OrderNbr
         {
@@ -112,7 +113,7 @@ namespace JSNLog
         public static readonly IEnumerable<AttributeInfo> AjaxAppenderAttributes =
             AppenderAttributes.Union(
             new[] {
-                new AttributeInfo("url", new UrlValue(), AttributeInfo.AttributeValidityEnum.OptionalOption)
+                new AttributeInfo("url", new UrlValue(null), AttributeInfo.AttributeValidityEnum.OptionalOption)//###############@@@@
             });
 
         public static readonly IEnumerable<AttributeInfo> ConsoleAppenderAttributes =
