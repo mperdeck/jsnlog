@@ -3,7 +3,10 @@
 
 module TestUtils {
     export function Check(checkAppender: any, checkNbr: number, expected: JL.LogItem[]) {
-        var actual: JL.LogItem[] = checkAppender.logItems;
+		// An appender only calls beforeSend when it tries to send a log request.
+		// So if the appender never tries to send anything, than actual will be undefined.
+        var actual: JL.LogItem[] = checkAppender.logItems || [];
+
         var resultDiv: JQuery;
 
         var expectedString = JSON.stringify(expected);
@@ -48,12 +51,6 @@ module TestUtils {
         var nbrLogItems = expected.length;
         var i;
 
-		// An appender only calls beforeSend when it tries to send a log request.
-		// So if the appender never tries to send anything, than acual will be undefined.
-		if ((nbrLogItems == 0) && ((!actual) || (actual.length == 0))) {
-			return "";
-		}
-
         if (nbrLogItems != actual.length) {
             return "Actual nbr log items (" +
                 actual.length + ") not equal expected nbr log items (" +
@@ -62,7 +59,7 @@ module TestUtils {
 
         for (i = 0; i < nbrLogItems; i++) {
             if (expected[i].l != actual[i].l) {
-                return FormatResult(i, "level", expected[i].l, actual[i].l);
+                return FormatResult(i, "level", expected[i].l.toString(), actual[i].l.toString());
             }
 
             var m: any = expected[i].m;
@@ -94,7 +91,7 @@ module TestUtils {
 			var allowedDifferenceMs = 10; 
 			
             if (Math.abs(expected[i].t - actual[i].t) > allowedDifferenceMs) {
-                return FormatResult(i, "timestamp", expected[i].t, actual[i].t);
+                return FormatResult(i, "timestamp", expected[i].t.toString(), actual[i].t.toString());
             }
         }
 

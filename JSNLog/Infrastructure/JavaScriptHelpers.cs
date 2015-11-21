@@ -141,7 +141,9 @@ namespace JSNLog.Infrastructure
         /// </param>
         internal static void AddJsonField(IList<string> jsonFields, string jsonFieldName, string value, IValueInfo valueInfo) 
         {
-            if (string.IsNullOrEmpty(value)) { return; }
+            // null - the string has not been set in the config
+            // "" - the string has been set in the config to "" (a valid value)
+            if (value == null) { return; }
 
             try
             {

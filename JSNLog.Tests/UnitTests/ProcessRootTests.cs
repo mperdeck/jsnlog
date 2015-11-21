@@ -275,6 +275,24 @@ namespace JSNLog.Tests.UnitTests
             RunTest(configXml);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ConfigurationException))]
+        public void OnceOnlyWithoutRegex()
+        {
+            // Arrange
+
+            string configXml = @"
+                <jsnlog>
+                    <logger>
+                        <onceOnly />
+                    </logger>
+                </jsnlog>
+";
+
+            // Act and Assert
+            RunTest(configXml);
+        }
+
         private void RunTest(string configXml)
         {
             var sb = new StringBuilder();

@@ -35,10 +35,10 @@
     <logger name=""l22b"" appenders=""da20"" ipRegex=""1\.99"" />
     <logger name=""l22c"" appenders=""da21"" ipRegex=""1\.99"" />
 
-    <!-- User Agent filtering. The tests are run in Firefox -->
+    <!-- User Agent filtering. The tests are run in Chrome -->
 
     <ajaxAppender name=""da30"" userAgentRegex=""Unknown Browser"" /><!--never matches-->
-    <ajaxAppender name=""da31"" userAgentRegex=""Firefox"" />
+    <ajaxAppender name=""da31"" userAgentRegex=""Chrome"" />
 
     <logger name=""l30b"" appenders=""da30"" />
     <logger name=""l30c"" appenders=""da31"" />
@@ -47,9 +47,9 @@
     <logger name=""l31b"" appenders=""da30"" userAgentRegex=""Unknown Browser"" />
     <logger name=""l31c"" appenders=""da31"" userAgentRegex=""Unknown Browser"" />
 
-    <logger name=""l32a"" appenders=""da1"" userAgentRegex=""Firefox"" />
-    <logger name=""l32b"" appenders=""da30"" userAgentRegex=""Firefox"" />
-    <logger name=""l32c"" appenders=""da31"" userAgentRegex=""Firefox"" />
+    <logger name=""l32a"" appenders=""da1"" userAgentRegex=""Chrome"" />
+    <logger name=""l32b"" appenders=""da30"" userAgentRegex=""Chrome"" />
+    <logger name=""l32c"" appenders=""da31"" userAgentRegex=""Chrome"" />
 
     <!-- Buffer tests -->
 
@@ -210,7 +210,7 @@ new [] {
     
     // User Agent matching
     
-    new T(header: "User Agent matching - these tests assume current browser is Firefox"),
+    new T(header: "User Agent matching - these tests assume current browser is Chrome"),
     
     new T(4000, "l30b", 0),
     new T(checkNbr: 30, checkAppender: "a5"),

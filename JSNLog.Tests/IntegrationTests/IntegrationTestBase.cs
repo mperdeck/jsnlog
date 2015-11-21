@@ -4,7 +4,10 @@ using System.Linq;
 using System.Web;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
+//##############  using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Chrome;
+using System.IO;
+using System.Reflection;
 
 namespace JSNLog.Tests.IntegrationTests
 {
@@ -20,15 +23,25 @@ namespace JSNLog.Tests.IntegrationTests
         [TestInitialize()]
         public void MyTestInitialize()
         {
-            _driver = new FirefoxDriver();
+            //###########            _driver = new FirefoxDriver();
+
+            // To use ChromeDriver, you must have chromedriver.exe. Download from
+            // https://sites.google.com/a/chromium.org/chromedriver/downloads
+
+            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string dependenciesFolder = Path.Combine(assemblyFolder, "../Dependencies");
+            _driver = new ChromeDriver(dependenciesFolder);
         }
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]
         public void MyTestCleanup()
         {
-            // Close the browser
-            _driver.Quit();
+            // Close the browser if there is no error. Otherwise leave open.
+            if (!ErrorOnPage())
+            {
+                _driver.Quit();
+            }
         }
 
         public void OpenPage(string relativeUrl)
@@ -44,6 +57,12 @@ namespace JSNLog.Tests.IntegrationTests
         /// <returns></returns>
         public bool ErrorOnPage()
         {
+            // Check for C# exception
+            if (_driver.PageSource.Contains("An unhandled exception occurred"))
+            {
+                return true;
+            }
+
             try
             {
                 // Throws NoSuchElementException if error-occurred not found

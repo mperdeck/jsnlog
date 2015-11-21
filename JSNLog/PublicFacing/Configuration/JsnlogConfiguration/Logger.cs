@@ -24,6 +24,9 @@ namespace JSNLog
 
         // --------------------------------------------------------
 
+        protected string ElementOnceOnly { get { return "onceOnly"; } }
+        protected string FieldRegex { get { return "regex"; } }
+
         protected string FieldAppenders { get { return "appenders"; } }
         protected string FieldOnceOnly { get { return "onceOnly"; } }
 
@@ -53,6 +56,11 @@ namespace JSNLog
 
             if (onceOnlies != null)
             {
+                if (onceOnlies.Any(o=>o.regex == null))
+                {
+                    throw new MissingAttributeException(ElementOnceOnly, FieldRegex);
+                }
+
                 JavaScriptHelpers.AddJsonField(jsonFields, FieldOnceOnly,
                     onceOnlies.Select(o=>o.regex), new StringValue());
             }
