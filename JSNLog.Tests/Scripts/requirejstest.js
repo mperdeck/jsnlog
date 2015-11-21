@@ -3,17 +3,10 @@
 
 // Assumes that TestUtil.js has already been loaded
 
-// Note that the call back given to require has only one parameter, JL. This is set to 
-// whatever is returned by DummyAppender. This happens to be the JL created by jsnlog, plus the
-// DummyAppender.
-//
-// If we used a second parameter, that would be set to a second "JL" as set by the 
-// libs/jsnlog in the required list. However, that JL doesn't have createDummyAppender
-// defined.
+require(["libs/jsnlog"], function () {
 
-require(["libs/DummyAppender", "libs/jsnlog"], function (JL) {
-
-    var a0 = JL.createDummyAppender('da1');
+    JL.setOptions({ 'defaultBeforeSend': TestUtils.beforeSend });
+    var a0 = JL.createAjaxAppender('da1');
 
     var logger = JL('l2');
     logger.setOptions({ "appenders": [a0] });

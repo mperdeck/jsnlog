@@ -170,7 +170,8 @@ namespace JSNLog.Infrastructure
         {
             try
             {
-                AddJsonField(jsonFields, jsonFieldName, ToJavaScript(value.Select(v=>valueInfo.ToJavaScript(v))));
+                // If an element in value is null, don't include it in the field. This can be used to create an empty array.
+                AddJsonField(jsonFields, jsonFieldName, ToJavaScript(value.Where(v=>v != null).Select(v=>valueInfo.ToJavaScript(v))));
             }
             catch (Exception e)
             {

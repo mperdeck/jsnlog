@@ -56,11 +56,9 @@ namespace JSNLog
 
             if (onceOnlies != null)
             {
-                if (onceOnlies.Any(o=>o.regex == null))
-                {
-                    throw new MissingAttributeException(ElementOnceOnly, FieldRegex);
-                }
-
+                // Note that regex on a onceOnly object can be null (that is, not given in the config).
+                // This allows user to specify an empty list of onceOnlies, to override the onceOnlies of 
+                // the parent logger. See http://jsnlog.com/Documentation/WebConfig/JSNLog/Logger
                 JavaScriptHelpers.AddJsonField(jsonFields, FieldOnceOnly,
                     onceOnlies.Select(o=>o.regex), new StringValue());
             }

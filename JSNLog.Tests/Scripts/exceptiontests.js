@@ -23,7 +23,7 @@ function fa() {
     TestUtils.Check(a0, 1, [
       {
           l: 6000,
-          m: /{\"stack\":\"fa@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{2}\\n@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,4}.*\",\"message\":\"i is not defined\",\"name\":\"ReferenceError\",\"logData\":\"null\"}/,
+          m: /i is not defined/,
           n: 'l1',
           t: __timestamp1
       }
@@ -45,7 +45,7 @@ function fb() {
     TestUtils.Check(a0, 2, [
       {
           l: 6000,
-          m: /{\"stack\":\"@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,4}\\n@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,4}\\n\",\"message\":\"throwing JL.Exception\",\"name\":\"JL.Exception\",\"logData\":\"{\\\"i\\\":5,\\\"j\\\":\\\"abc\\\"}\"}/,
+          m: /throwing JL\.Exception.*?\{\"i\":5,\"j\":\"abc\"\}/,
           n: 'l2',
           t: __timestamp2
       }
@@ -67,7 +67,7 @@ function fc() {
     TestUtils.Check(a0, 3, [
       {
           l: 6000,
-          m: /{\"e\":\"Not derived from Error\",\"logData\":\"{\\\"i2\\\":66,\\\"j2\\\":\\\"def\\\"}\"}/,
+          m: /Not derived from Error.*?\{\"i2\":66,\"j2\":\"def\"\}/,
           n: 'l3',
           t: __timestamp3
       }
@@ -104,7 +104,7 @@ function fd() {
     TestUtils.Check(a0, 4, [
       {
           l: 6000,
-          m: /{\"stack\":\"@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,5}\\n@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,5}\\n\",\"message\":\"{\\\"i3\\\":77,\\\"j3\\\":\\\"ghi\\\"}\",\"name\":\"JL\.Exception\",\"inner\":{\"stack\":\"f1@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\nf2@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\nfd@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\n@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}.*\",\"message\":\"i is not defined\",\"name\":\"ReferenceError\"},\"logData\":\"{\\\"i4\\\":88,\\\"j4\\\":\\\"jkl\\\"}\"}/,
+          m: /\{\\\"i3\\\":77,\\\"j3\\\":\\\"ghi\\\"\}.*?i is not defined.*?\{\"i4\":88,\"j4\":\"jkl\"\}/,
           n: 'l4',
           t: __timestamp4
       }
@@ -124,7 +124,7 @@ function fd() {
     TestUtils.Check(a0, 5, [
       {
           l: 6000,
-          m: /{\"stack\":\"@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,5}\\n@http:\/\/localhost:\d{5}\/Scripts\/libs\/jsnlog.js:\d{1,5}\\n\",\"message\":\"{\\\"i3\\\":77,\\\"j3\\\":\\\"ghi\\\"}\",\"name\":\"JL\.Exception\",\"inner\":{\"stack\":\"f1@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\nf2@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\nfd@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}\\n@http:\/\/localhost:\d{5}\/Scripts\/exceptiontests.js:\d{1,5}.*\",\"message\":\"i is not defined\",\"name\":\"ReferenceError\"},\"logData\":\"null\"}/,
+          m: /\{\\\"i3\\\":77,\\\"j3\\\":\\\"ghi\\\"\}.*?i is not defined.*?null/,
           n: 'l5',
           t: __timestamp5
       }

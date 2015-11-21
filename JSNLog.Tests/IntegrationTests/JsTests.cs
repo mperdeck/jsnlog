@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
+using System.Threading;
 
 namespace JSNLog.Tests.IntegrationTests
 {
@@ -76,7 +76,10 @@ namespace JSNLog.Tests.IntegrationTests
         public void RequireJSTests()
         {
             OpenPage("/Html/requirejstest.html");
-            
+
+            // Wait a bit to let the JavaScript on the page finish
+            Thread.Sleep(1000);
+
             Assert.IsFalse(ErrorOnPage());
         }
 
