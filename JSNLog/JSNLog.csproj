@@ -84,11 +84,6 @@
   <ItemGroup>
     <Compile Include="ConfigurationSectionHandler.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Elements\ConsoleAppenderElement.cs" />
-    <Compile Include="Elements\AjaxAppenderElement.cs" />
-    <Compile Include="Elements\AppenderElementBase.cs" />
-    <Compile Include="Elements\ElementBase.cs" />
-    <Compile Include="Elements\LoggerElement.cs" />
     <Compile Include="Infrastructure\HttpHelpers.cs" />
     <Compile Include="LogHandling\LogResponse.cs" />
     <Compile Include="PublicFacing\Configuration\JsnlogConfiguration\AjaxAppender.cs" />
@@ -119,13 +114,11 @@
     <Compile Include="PublicFacing\Exceptions\UnknownTagException.cs" />
     <Compile Include="Infrastructure\AttributeInfo.cs" />
     <Compile Include="Infrastructure\ConfigProcessor.cs" />
-    <Compile Include="Infrastructure\IElement.cs" />
     <Compile Include="Infrastructure\JavaScriptHelpers.cs" />
     <Compile Include="Infrastructure\LevelUtils.cs" />
     <Compile Include="Infrastructure\AttributeValueCollection.cs" />
     <Compile Include="Infrastructure\LogMessageHelpers.cs" />
     <Compile Include="Infrastructure\RequestId.cs" />
-    <Compile Include="Infrastructure\Sequence.cs" />
     <Compile Include="Infrastructure\Utils.cs" />
     <Compile Include="Infrastructure\Value.cs" />
     <Compile Include="Infrastructure\XmlHelpers.cs" />

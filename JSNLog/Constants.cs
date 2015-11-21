@@ -65,58 +65,5 @@ namespace JSNLog
         public static readonly string AttributeNameLevel = "level";
 
         public static readonly Level DefaultAppenderLevel = Level.TRACE;
-
-        public static readonly IEnumerable<AttributeInfo> JSNLogAttributes =
-            new[] {
-                new AttributeInfo("enabled", new BoolValue(), AttributeInfo.AttributeValidityEnum.OptionalOption),
-                new AttributeInfo("maxMessages", new PositiveIntegerValue(), AttributeInfo.AttributeValidityEnum.OptionalOption),
-                new AttributeInfo("defaultAjaxUrl", null, AttributeInfo.AttributeValidityEnum.OptionalOption),
-                new AttributeInfo("corsAllowedOriginsRegex", null, AttributeInfo.AttributeValidityEnum.NoOption),
-                new AttributeInfo("serverSideLogger", null, AttributeInfo.AttributeValidityEnum.NoOption),
-                new AttributeInfo("serverSideLevel", new LevelValue(), AttributeInfo.AttributeValidityEnum.NoOption),
-                new AttributeInfo("serverSideMessageFormat", null, AttributeInfo.AttributeValidityEnum.NoOption),
-                new AttributeInfo("dateFormat", null, AttributeInfo.AttributeValidityEnum.NoOption),
-                new AttributeInfo("productionLibraryPath", null, AttributeInfo.AttributeValidityEnum.NoOption)
-            };
-
-        public static readonly IEnumerable<AttributeInfo> AssemblyAttributes =
-            new[] {
-                new AttributeInfo("name", null, AttributeInfo.AttributeValidityEnum.NoOption)
-            };
-
-        public static readonly IEnumerable<AttributeInfo> FilterAttributes =
-            new[] {
-                new AttributeInfo(AttributeNameLevel, new LevelValue(), AttributeInfo.AttributeValidityEnum.OptionalOption),
-                new AttributeInfo("ipRegex", null, AttributeInfo.AttributeValidityEnum.OptionalOption),
-                new AttributeInfo("userAgentRegex", null, AttributeInfo.AttributeValidityEnum.OptionalOption),
-                new AttributeInfo("disallow", null, AttributeInfo.AttributeValidityEnum.OptionalOption)
-            };
-
-        public static readonly IEnumerable<AttributeInfo> LoggerAttributes =
-            FilterAttributes.Union(
-            new[] {
-                new AttributeInfo("name", null, AttributeInfo.AttributeValidityEnum.NoOption),
-                new AttributeInfo("appenders", null, AttributeInfo.AttributeValidityEnum.NoOption),
-                new AttributeInfo("regex", null, AttributeInfo.AttributeValidityEnum.OptionalOption, subTagName: "onceOnly")
-            });
-
-        public static readonly IEnumerable<AttributeInfo> AppenderAttributes =
-            FilterAttributes.Union(
-            new[] {
-                new AttributeInfo("name", null, AttributeInfo.AttributeValidityEnum.NoOption),
-                new AttributeInfo("batchSize", new PositiveIntegerValue(), AttributeInfo.AttributeValidityEnum.OptionalOption),
-                new AttributeInfo(AttributeNameSendWithBufferLevel, new LevelValue(), AttributeInfo.AttributeValidityEnum.OptionalOption),
-                new AttributeInfo(AttributeNameStoreInBufferLevel, new LevelValue(), AttributeInfo.AttributeValidityEnum.OptionalOption),
-                new AttributeInfo(AttributeNameBufferSize, new PositiveIntegerValue(), AttributeInfo.AttributeValidityEnum.OptionalOption)
-            });
-
-        public static readonly IEnumerable<AttributeInfo> AjaxAppenderAttributes =
-            AppenderAttributes.Union(
-            new[] {
-                new AttributeInfo("url", new UrlValue(null), AttributeInfo.AttributeValidityEnum.OptionalOption)//###############@@@@
-            });
-
-        public static readonly IEnumerable<AttributeInfo> ConsoleAppenderAttributes =
-            AppenderAttributes;
     }
 }

@@ -10,48 +10,6 @@ namespace JSNLog.Infrastructure
     internal static class Utils
     {
         /// <summary>
-        /// Generates the JavaScript for the call to setOptions to set the options for an object
-        /// (the JL object itself, an appender or a logger).
-        /// </summary>
-        /// <param name="parentName">
-        /// JavaScript variable that holds the element.
-        /// </param>
-        /// <param name="xe">
-        /// XML element. The attributes on this element will provide the values for the options.
-        /// </param>
-        /// <param name="attributeInfos">
-        /// Describes which attributes to use as options and how to validate them.
-        /// 
-        /// As regards attributeInfos that have a SubTagName:
-        /// * The value of such an attribute is an array, for example [ 'a', 'b' ]
-        /// * If there are no child elements with the given sub tag name, there is no value, and no entry for that attributeinfo in 
-        ///   the generated setOption.
-        /// * If there is only one child element and it does not have an attribute, the value is an empty array [].
-        /// </param>
-        /// <param name="initialAttributeValues">
-        /// Initial attribute values. The elements found in xe will be added to this.
-        /// If null, this method will create an empty collection itself.
-        /// </param>
-        /// <param name="sb">
-        /// The JS code is added to this.
-        /// </param>
-        /// <param name="validate">
-        /// If not null, this method is called on the generated attribute values. This can be used to throw an exception
-        /// if the given parameters are not valid.
-        /// </param>
-        public static void ProcessOptionAttributes(string parentName, XmlElement xe, IEnumerable<AttributeInfo> attributeInfos,
-            AttributeValueCollection initialAttributeValues, StringBuilder sb,
-            Action<AttributeValueCollection> validate = null)
-        {
-            var attributeValues = initialAttributeValues ?? new AttributeValueCollection();
-            XmlHelpers.ProcessAttributes(xe, attributeInfos, attributeValues);
-
-            if (validate != null) { validate(attributeValues); }
-
-            JavaScriptHelpers.GenerateSetOptions2(parentName, attributeValues, sb);
-        }
-
-        /// <summary>
         /// Takes a DateTime in UTC and returns the same timestamp in local time.
         /// </summary>
         /// <param name="utcTime"></param>
