@@ -74,11 +74,6 @@ namespace JSNLog.Infrastructure
             JavaScriptHelpers.GenerateSetOptions(Constants.JsLogObjectName, jsnlogConfiguration, 
                 appenderNames, virtualToAbsoluteFunc, sb, jsonFields);
 
-            //#########################
-            //// Set default value for defaultAjaxUrl attribute
-            //attributeValues[Constants.] =
-            //    new Value(AbsoluteUrl(Constants.DefaultDefaultAjaxUrl, virtualToAbsoluteFunc), new StringValue());
-
             if (loggerEnabled)
             {
                 // Process all loggers and appenders. First process the appenders, because the loggers can be 

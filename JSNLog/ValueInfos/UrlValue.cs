@@ -19,11 +19,6 @@ namespace JSNLog.ValueInfos
             _virtualToAbsoluteFunc = virtualToAbsoluteFunc;
         }
 
-        public string ValidValueRegex
-        {
-            get { return Constants.RegexUrl; }//#########################
-        }
-
         public string ToJavaScript(string text)
         {
             if (!regexUrl.IsMatch(text))

@@ -136,9 +136,6 @@
     <Compile Include="PublicFacing\LogRequestHandling\Owin\JsnlogMiddlewareComponent.cs" />
     <Compile Include="ValueInfos\AppendersValue.cs" />
     <Compile Include="ValueInfos\UrlValue.cs" />
-    <Compile Include="ValueInfos\IntegerGreaterZeroValue.cs" />
-    <Compile Include="ValueInfos\PositiveIntegerValue.cs" />
-    <Compile Include="ValueInfos\BoolValue.cs" />
     <Compile Include="ValueInfos\LevelValue.cs" />
     <Compile Include="ValueInfos\IValueInfo.cs" />
     <Compile Include="ValueInfos\StringValue.cs" />

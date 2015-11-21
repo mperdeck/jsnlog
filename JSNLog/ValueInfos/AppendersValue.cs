@@ -18,29 +18,6 @@ namespace JSNLog.ValueInfos
             _appenderNames = appenderNames;
         }
 
-        private string _validValueRegex = null;
-        public string ValidValueRegex
-        {
-            get 
-            {
-                if (_validValueRegex == null)
-                {
-                    // If no appenders are defined, return a regex that only matches the empty string
-                    if (!_appenderNames.Any())
-                    {
-                        _validValueRegex = "^$";
-                    }
-                    else
-                    {
-                        string[] appenderNames = _appenderNames.Keys.Select(a => Regex.Escape(a)).ToArray();
-                        string regexAppenderNames = "(" + string.Join("|", appenderNames) + ")";
-                        _validValueRegex = string.Format("^({0}(;{0})*)?$", regexAppenderNames);
-                    }
-                }
-                return _validValueRegex; 
-            }
-        }
-
         public string ToJavaScript(string text)
         {
             if (string.IsNullOrEmpty(text))

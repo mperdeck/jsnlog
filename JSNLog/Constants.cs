@@ -40,29 +40,8 @@ namespace JSNLog
         public const string JsLogObjectName = "JL";
         public const string JsLogObjectClientIpOption = "clientIP";
         public const string JsLogObjectRequestIdOption = "requestId";
-        public const string JsLogObjectDefaultAjaxUrlOption = "defaultAjaxUrl";
-        public const string JsLoggerAppendersOption = "appenders";
-        public const string JsLoggerVariable = "logger";
         public const string JsAppenderVariablePrefix = "a";
         public const string JsLoggerVariablePrefix = "logger";
-
-        public enum OrderNbr
-        {
-            Assembly,
-            AjaxAppender,
-            ConsoleAppender,
-            Logger
-        }
-
-        public const string TagAssembly = "assembly";
-        public const string TagAjaxAppender = "ajaxAppender";
-        public const string TagConsoleAppender = "consoleAppender";
-        public const string TagLogger = "logger";
-
-        public static readonly string AttributeNameBufferSize = "bufferSize";
-        public static readonly string AttributeNameSendWithBufferLevel = "sendWithBufferLevel";
-        public static readonly string AttributeNameStoreInBufferLevel = "storeInBufferLevel";
-        public static readonly string AttributeNameLevel = "level";
 
         public static readonly Level DefaultAppenderLevel = Level.TRACE;
     }
