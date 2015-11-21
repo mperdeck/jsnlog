@@ -12,6 +12,8 @@ namespace JSNLog.Tests.IntegrationTests
     public class IntegrationTestBase
     {
         protected static IWebDriver _driver = null;
+
+        // The port 31972 is set in the properties of this project
         private const string _baseUrl = "http://localhost:31972";
 
         // Use TestInitialize to run code before running each test 
@@ -51,7 +53,7 @@ namespace JSNLog.Tests.IntegrationTests
             {
                 try
                 {
-                    // Throws NoSuchElementException if error-occurred not found
+                    // Throws NoSuchElementException if running not found
                     _driver.FindElement(By.Id("running"));
                 }
                 catch(NoSuchElementException)

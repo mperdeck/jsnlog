@@ -6,20 +6,18 @@
     Ensure that no messages will be sent, if MaxMessages equals 0
 -->
 
-@Html.Raw(JSNLog.Tests.Logic.Utils.SetupTest(
+@Html.Raw(JSNLog.Tests.Logic.TestUtils.SetupTest(
 "235.1.99.12", "id123",
 @"
 <jsnlog maxMessages=""0"">
-    <assembly name=""JSNLog.Tests"" />
-    
-    <dummyAppender name=""da1"" />
+    <ajaxAppender name=""da1"" />
     <logger name="""" appenders=""da1"" />
     <logger name=""a"" appenders=""da1"" />
     
-    <dummyAppender name=""da2"" />
+    <ajaxAppender name=""da2"" />
     <logger name=""b"" appenders=""da2"" />
     
-    <dummyAppender name=""da3"" />
+    <ajaxAppender name=""da3"" />
     <logger name=""c"" appenders=""da2"" />
 </jsnlog>
 ",

@@ -1,5 +1,5 @@
 ﻿/// <reference path="jquery.d.ts"/>
-/// <reference path="../../../jsnlog.js/Sources/jsnlog.ts"/>
+/// <reference path="../../../jsnlog.js/jsnlog.ts"/>
 var TestUtils;
 (function (TestUtils) {
     function Check(checkAppender, checkNbr, expected) {
@@ -28,6 +28,19 @@ var TestUtils;
     }
     TestUtils.Check = Check;
 
+    function beforeSend(xhr) {
+        var appenderThis = this;
+        xhr.send = function (json) {
+            if (!appenderThis.logItems) {
+                appenderThis.logItems = [];
+            }
+
+            var item = JSON.parse(json);
+            appenderThis.logItems = appenderThis.logItems.concat(item.lg);
+        };
+    }
+    TestUtils.beforeSend = beforeSend;
+
     function FormatResult(idx, fieldName, expected, actual) {
         return "idx: " + idx + "</br>field: " + fieldName + "</br>expected: " + expected + "</br>actual: " + actual;
     }
@@ -37,6 +50,12 @@ var TestUtils;
     function LogItemArraysCompareResult(expected, actual) {
         var nbrLogItems = expected.length;
         var i;
+
+        // An appender only calls beforeSend when it tries to send a log request.
+        // So if the appender never tries to send anything, than acual will be undefined.
+        if ((nbrLogItems == 0) && ((!actual) || (actual.length == 0))) {
+            return "";
+        }
 
         if (nbrLogItems != actual.length) {
             return "Actual nbr log items (" + actual.length + ") not equal expected nbr log items (" + nbrLogItems + ")";
@@ -64,9 +83,12 @@ var TestUtils;
                 return FormatResult(i, "logger name", expected[i].n, actual[i].n);
             }
 
-            // Timestamps are precise to the ms. Get rid of very last digit
-            // to cut out false positives.
-            if (Math.floor(expected[i].t / 10) != Math.floor(actual[i].t / 10)) {
+            // Timestamps are precise to the ms.
+            // Allow a small difference between actual and expected, because we record the timestamp
+            // a bit later then when jsnlog produces the log request.
+            var allowedDifferenceMs = 10;
+
+            if (Math.abs(expected[i].t - actual[i].t) > allowedDifferenceMs) {
                 return FormatResult(i, "timestamp", expected[i].t, actual[i].t);
             }
         }
@@ -74,3 +96,4 @@ var TestUtils;
         return "";
     }
 })(TestUtils || (TestUtils = {}));
+//# sourceMappingURL=TestUtils.js.map

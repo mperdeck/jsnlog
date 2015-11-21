@@ -85,7 +85,7 @@ namespace JSNLog.Infrastructure
                 // dependent on the appenders, and will use appenderNames to translate configuration appender names
                 // to JavaScript names.
 
-                int sequence = 1;
+                int sequence = 0;
 
                 GenerateCreateJavaScript(jsnlogConfiguration.ajaxAppenders, sb, virtualToAbsoluteFunc, appenderNames, ref sequence);
                 GenerateCreateJavaScript(jsnlogConfiguration.consoleAppenders, sb, virtualToAbsoluteFunc, appenderNames, ref sequence);

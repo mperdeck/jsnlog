@@ -101,7 +101,7 @@ namespace JSNLog.Infrastructure
 
             element.AddJsonFields(jsonFields, appenderNames, virtualToAbsoluteFunc);
 
-            string setOptionsJS = string.Format("{0}.setOptions({1});", parentName, string.Join(",\n", jsonFields));
+            string setOptionsJS = string.Format("{0}.setOptions({{{1}}});", parentName, string.Join(",\n", jsonFields));
             sb.AppendLine(setOptionsJS);
         }
 

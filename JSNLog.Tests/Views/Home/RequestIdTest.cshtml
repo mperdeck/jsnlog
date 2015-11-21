@@ -11,7 +11,7 @@
     <script src="~/Scripts/jquery-2.1.0.min.js"></script>
 </head>
 <body>
-    @Html.Raw(JSNLog.Tests.Logic.Utils.SetupRequestIdTest(ViewBag.PassedInRequestId, 
+    @Html.Raw(JSNLog.Tests.Logic.TestUtils.SetupRequestIdTest(ViewBag.PassedInRequestId, 
         @"<jsnlog productionLibraryPath=""~/Scripts/libs/jsnlog.js""></jsnlog>"))
 
     <div id="IdFromController">@ViewBag.RequestId</div>

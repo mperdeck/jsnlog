@@ -17,9 +17,10 @@ namespace JSNLog
 
         public AjaxAppender()
         {
-            // Set default values. If an element is not given in the XML or JSON,
+            // You can set default values here. If an element is not given in the XML or JSON,
             // the deserializer will simply not set it.
-            url = "/jsnlog.logger";
+
+            // Do not set default for url here. Its default is set in jsnlog.js.
         }
 
         // --------------------------------------------------------

@@ -106,6 +106,8 @@ namespace JSNLog.Tests.Logic
             sb.AppendLine(@"<script type=""text/javascript"">");
             sb.AppendLine("(function () {");
 
+            sb.AppendLine("JL.setOptions({ 'defaultBeforeSend': TestUtils.beforeSend });");
+
             int seq = 0;
             foreach (T t in tests)
             {

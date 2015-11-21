@@ -58,7 +58,8 @@ namespace JSNLog
             maxMessages = int.MaxValue;
             serverSideMessageFormat = "%message";
             dateFormat = "o";
-            defaultAjaxUrl = "/jsnlog.logger";
+
+            // Do not set default for defaultAjaxUrl here. Its default is set in jsnlog.js.
         }
 
         // --------------------------------------------------------
