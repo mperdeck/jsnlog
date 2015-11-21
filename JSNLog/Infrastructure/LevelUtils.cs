@@ -164,26 +164,5 @@ namespace JSNLog.Infrastructure
 
             LevelNumber(level);
         }
-
-        /// <summary>
-        /// Returns a regex that matches a string with a level.
-        /// </summary>
-        /// <returns></returns>
-        public static string LevelRegex()
-        {
-            string regex = "^(" + NamedLevels() + "|([0-9]+))$";
-            return regex;
-        }
-
-        /// <summary>
-        /// Returns a string with all named levels, separated by |
-        /// </summary>
-        /// <returns></returns>
-        public static string NamedLevels()
-        {
-            string[] names = Enum.GetNames(typeof(Level));
-            string namedLevels = string.Join("|", names);
-            return namedLevels;
-        }
     }
 }
