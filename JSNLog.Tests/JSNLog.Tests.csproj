@@ -147,7 +147,6 @@
     <Compile Include="IntegrationTests\IntegrationTestBase.cs" />
     <Compile Include="IntegrationTests\JsTests.cs" />
     <Compile Include="IntegrationTests\NuGetTests.cs" />
-    <Compile Include="Logic\DummyAppender.cs" />
     <Compile Include="Logic\T.cs" />
     <Compile Include="Logic\TestUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -166,7 +165,6 @@
     <Content Include="Html\exceptiontests.html" />
     <Content Include="Html\requirejstest.html" />
     <Content Include="Scripts\jquery-2.1.0.min.js" />
-    <Content Include="Scripts\libs\DummyAppender.js" />
     <Content Include="Scripts\jquery.d.ts" />
     <Content Include="Scripts\exceptiontests.js" />
     <Content Include="Scripts\requirejstest.js" />

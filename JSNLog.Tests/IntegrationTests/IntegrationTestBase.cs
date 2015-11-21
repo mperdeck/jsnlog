@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
-//##############  using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Chrome;
 using System.IO;
 using System.Reflection;
@@ -23,8 +22,6 @@ namespace JSNLog.Tests.IntegrationTests
         [TestInitialize()]
         public void MyTestInitialize()
         {
-            //###########            _driver = new FirefoxDriver();
-
             // To use ChromeDriver, you must have chromedriver.exe. Download from
             // https://sites.google.com/a/chromium.org/chromedriver/downloads
 

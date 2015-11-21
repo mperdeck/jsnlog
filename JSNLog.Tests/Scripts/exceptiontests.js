@@ -4,7 +4,9 @@
 
 // Assumes that TestUtil.js has already been loaded
 
-var a0 = JL.createDummyAppender('da1');
+JL.setOptions({ 'defaultBeforeSend': TestUtils.beforeSend });
+var a0 = JL.createAjaxAppender('da1');
+
 JL().setOptions({ "appenders": [a0] });
 
 // --------------------------------------------------
