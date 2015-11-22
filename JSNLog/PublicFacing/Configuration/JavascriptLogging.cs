@@ -24,10 +24,8 @@ namespace JSNLog
         {
             StringBuilder sb = new StringBuilder();
 
-            var jsnlogConfiguration = JavascriptLogging.JsnlogConfiguration;
-
             var configProcessor = new ConfigProcessor();
-            configProcessor.ProcessRoot(jsnlogConfiguration, requestId, sb);
+            configProcessor.ProcessRoot(requestId, sb);
 
             return sb.ToString();
         }
@@ -68,35 +66,56 @@ namespace JSNLog
             }
         }
 
+        #region JsnlogConfiguration
+
         private static JsnlogConfiguration _jsnlogConfiguration = null;
 
-        public static JsnlogConfiguration JsnlogConfiguration
+        // Seam used for unit testing. During unit testing, gets an xml element created by the test. 
+        // During production get the jsnlog element from web.config.
+        //
+        // >>>>>>
+        // Note that calling this method with a given xe is a way to cache that xe's config
+        // for the next call to GetJsnlogConfiguration().
+        internal static JsnlogConfiguration GetJsnlogConfiguration(Func<XmlElement> lxe)
         {
-            get
+            if (_jsnlogConfiguration == null)
             {
-                if (_jsnlogConfiguration == null)
+                XmlElement xe = lxe();
+                if (xe != null)
                 {
-                    XmlElement xe = XmlHelpers.RootElement();
-                    if (xe != null)
-                    {
-                        var _jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
-                    }
+                    _jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
                 }
-
-                // If there is no configuration, return the default configuration
-                return _jsnlogConfiguration ?? new JsnlogConfiguration();
             }
 
-            set
+            // If there is no configuration, return the default configuration
+            return _jsnlogConfiguration ?? new JsnlogConfiguration();
+        }
+
+        public static JsnlogConfiguration GetJsnlogConfiguration()
+        {
+            return GetJsnlogConfiguration(() => XmlHelpers.RootElement());
+        }
+
+        internal static void SetJsnlogConfiguration(Func<XmlElement> lxe, JsnlogConfiguration jsnlogConfiguration)
+        {
+            // Always allow setting the config to null, because GetJsnlogConfiguration retrieves web.config when config is null.
+            if (jsnlogConfiguration != null)
             {
-                XmlElement xe = XmlHelpers.RootElement();
+                XmlElement xe = lxe();
                 if (xe != null)
                 {
                     throw new ConflictingConfigException();
                 }
-
-                _jsnlogConfiguration = value;
             }
+
+            _jsnlogConfiguration = jsnlogConfiguration;
         }
+
+        public static void SetJsnlogConfiguration(JsnlogConfiguration jsnlogConfiguration)
+        {
+            SetJsnlogConfiguration(() => XmlHelpers.RootElement(), jsnlogConfiguration);
+        }
+
+        #endregion
     }
 }

@@ -79,7 +79,6 @@ namespace JSNLog.Tests.Logic
             return js;
         }
 
-
         /// <summary>
         /// Returns all javascript to set up a test.
         /// The generated javascript is within an immediately executing function, so it sits in its own namespace.
@@ -98,11 +97,12 @@ namespace JSNLog.Tests.Logic
         public static string SetupTest(string userIp, string requestId, string configXml, IEnumerable<T> tests)
         {
             var sb = new StringBuilder();
-            XmlElement xe = ConfigToXe(configXml);
-            var jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
+
+            // Set config cache in JavascriptLogging to contents of xe
+            SetConfigCache(configXml);
 
             var configProcessor = new ConfigProcessor();
-            configProcessor.ProcessRootExec(jsnlogConfiguration, sb, s => s, userIp, requestId, false);
+            configProcessor.ProcessRootExec(sb, s => s, userIp, requestId, false);
 
             sb.AppendLine(@"<script type=""text/javascript"">");
             sb.AppendLine("(function () {");
@@ -177,13 +177,21 @@ namespace JSNLog.Tests.Logic
             return xe;
         }
 
+        internal static void SetConfigCache(string configXml)
+        {
+            // Set config cache in JavascriptLogging to contents of xe
+            XmlElement xe = TestUtils.ConfigToXe(configXml);
+            JavascriptLogging.SetJsnlogConfiguration(null);
+            JavascriptLogging.GetJsnlogConfiguration(() => xe);
+        }
+
         public static string SetupRequestIdTest(string requestId, string configXml)
         {
             var sb = new StringBuilder();
-            XmlElement xe = ConfigToXe(configXml);
+            SetConfigCache(configXml);
 
             var configProcessor = new ConfigProcessor();
-            configProcessor.ProcessRoot(xe, requestId, sb);
+            configProcessor.ProcessRoot(requestId, sb);
             string js = sb.ToString();
 
             return js;

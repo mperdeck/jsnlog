@@ -278,11 +278,11 @@ namespace JSNLog.Tests.UnitTests
         private void RunTest(string configXml)
         {
             var sb = new StringBuilder();
-            XmlElement xe = JSNLog.Tests.Logic.TestUtils.ConfigToXe(configXml);
-            var jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
+
+            TestUtils.SetConfigCache(configXml);
 
             var configProcessor = new ConfigProcessor();
-            configProcessor.ProcessRootExec(jsnlogConfiguration, sb, s => s, "23.89.450.1", "req", true);
+            configProcessor.ProcessRootExec(sb, s => s, "23.89.450.1", "req", true);
         }
     }
 }

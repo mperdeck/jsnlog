@@ -107,11 +107,12 @@ namespace JSNLog.LogHandling
         /// <param name="logger">
         /// Logger object, used to do the actual logging.
         /// </param>
-        /// <param name="jsnlogConfiguration">Contains all config info</param>
         internal static void ProcessLogRequest(string json, LogRequestBase logRequestBase,
             DateTime serverSideTimeUtc,
-            string httpMethod, string origin, LogResponse response, ILogger logger, JsnlogConfiguration jsnlogConfiguration)
+            string httpMethod, string origin, LogResponse response, ILogger logger)
         {
+            JsnlogConfiguration jsnlogConfiguration = JavascriptLogging.GetJsnlogConfiguration();
+
             if ((httpMethod != "POST") && (httpMethod != "OPTIONS"))
             {
                 response.StatusCode = (int)HttpStatusCode.MethodNotAllowed;

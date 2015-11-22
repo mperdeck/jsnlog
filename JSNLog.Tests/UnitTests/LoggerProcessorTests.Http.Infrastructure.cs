@@ -53,16 +53,16 @@ namespace JSNLog.Tests.UnitTests
 
             LogResponse response = new LogResponse();
             TestLogger logger = new TestLogger();
-            XmlElement xe = TestUtils.ConfigToXe(configXml);
+
+            TestUtils.SetConfigCache(configXml);
 
             // Act
 
-            var jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
             LoggerProcessor.ProcessLogRequest(
                 json, 
                 new LogRequestBase(userAgent, userHostAddress, requestId,url, null, null, null),
                 serverSideTimeUtc,
-                httpMethod, origin, response, logger, jsnlogConfiguration);
+                httpMethod, origin, response, logger);
 
             // Assert
 

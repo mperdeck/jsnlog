@@ -55,7 +55,10 @@ namespace JSNLog.Tests.IntegrationTests
         public bool ErrorOnPage()
         {
             // Check for C# exception
-            if (_driver.PageSource.Contains("An unhandled exception occurred"))
+            bool unhandledExceptionOccurred = _driver.PageSource.Contains("An unhandled exception occurred");
+            bool noConnection = _driver.PageSource.Contains("ERR_CONNECTION_REFUSED");
+
+            if (unhandledExceptionOccurred || noConnection)
             {
                 return true;
             }

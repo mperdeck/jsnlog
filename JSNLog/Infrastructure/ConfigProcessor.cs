@@ -29,10 +29,10 @@ namespace JSNLog.Infrastructure
         /// <param name="sb">
         /// All JavaScript needs to be written to this string builder.
         /// </param>
-        public void ProcessRoot(JsnlogConfiguration jsnlogConfiguration, string requestId, StringBuilder sb)
+        public void ProcessRoot(string requestId, StringBuilder sb)
         {
             string userIp = HttpContext.Current.Request.UserHostAddress;
-            ProcessRootExec(jsnlogConfiguration, sb, VirtualPathUtility.ToAbsolute, userIp, requestId ?? RequestId.Get(), true);
+            ProcessRootExec(sb, VirtualPathUtility.ToAbsolute, userIp, requestId ?? RequestId.Get(), true);
         }
 
         // This version is not reliant on sitting in a web site, so can be unit tested.
@@ -41,10 +41,11 @@ namespace JSNLog.Infrastructure
         //
         // You want to set this to false during unit testing, because then you need direct access outside the closure of variables
         // that are private to the closure, specifically dummyappenders that store the log messages you receive, so you can unit test them.
-        public void ProcessRootExec(JsnlogConfiguration jsnlogConfiguration, StringBuilder sb, Func<string, string> virtualToAbsoluteFunc, 
+        public void ProcessRootExec(StringBuilder sb, Func<string, string> virtualToAbsoluteFunc, 
             string userIp, string requestId, bool generateClosure)
         {
             Dictionary<string, string> appenderNames = new Dictionary<string, string>();
+            JsnlogConfiguration jsnlogConfiguration = JavascriptLogging.GetJsnlogConfiguration();
 
             string loggerProductionLibraryVirtualPath = jsnlogConfiguration.productionLibraryPath;
             bool loggerEnabled = jsnlogConfiguration.enabled;
