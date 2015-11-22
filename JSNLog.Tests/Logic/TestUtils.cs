@@ -99,9 +99,10 @@ namespace JSNLog.Tests.Logic
         {
             var sb = new StringBuilder();
             XmlElement xe = ConfigToXe(configXml);
+            var jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
 
             var configProcessor = new ConfigProcessor();
-            configProcessor.ProcessRootExec(xe, sb, s => s, userIp, requestId, false);
+            configProcessor.ProcessRootExec(jsnlogConfiguration, sb, s => s, userIp, requestId, false);
 
             sb.AppendLine(@"<script type=""text/javascript"">");
             sb.AppendLine("(function () {");

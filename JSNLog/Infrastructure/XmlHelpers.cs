@@ -40,7 +40,7 @@ namespace JSNLog.Infrastructure
 
             if (xe == null)
             {
-                throw new MissingRootTagException();
+                return null;
             }
 
             if (xe.Name != Constants.ConfigRootName)

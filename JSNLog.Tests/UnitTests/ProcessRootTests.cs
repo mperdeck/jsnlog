@@ -279,9 +279,10 @@ namespace JSNLog.Tests.UnitTests
         {
             var sb = new StringBuilder();
             XmlElement xe = JSNLog.Tests.Logic.TestUtils.ConfigToXe(configXml);
+            var jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
 
             var configProcessor = new ConfigProcessor();
-            configProcessor.ProcessRootExec(xe, sb, s => s, "23.89.450.1", "req", true);
+            configProcessor.ProcessRootExec(jsnlogConfiguration, sb, s => s, "23.89.450.1", "req", true);
         }
     }
 }

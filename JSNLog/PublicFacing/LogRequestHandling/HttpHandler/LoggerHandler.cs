@@ -52,9 +52,9 @@ namespace JSNLog
             }
 
             ILogger logger = new CommonLoggingLogger();
-            XmlElement xe = XmlHelpers.RootElement();
             var logResponse = new LogResponse();
-            var jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
+
+            var jsnlogConfiguration = JavascriptLogging.JsnlogConfiguration;
 
             LoggerProcessor.ProcessLogRequest(json, logRequestBase,
                 serverSideTimeUtc,

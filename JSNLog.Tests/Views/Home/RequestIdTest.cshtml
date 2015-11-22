@@ -19,7 +19,11 @@
     <div id="IdFromJL"></div>
 
     <script type="text/ecmascript">
-        $("#IdFromJL").html(JL.requestId);
+        __jsnlog_configure = function (JL) {
+            $("#IdFromJL").html(JL.requestId);
+        };
+
+        try { __jsnlog_configure(JL); } catch(e) {};
     </script>
 
 </body>

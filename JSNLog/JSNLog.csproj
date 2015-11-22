@@ -97,6 +97,7 @@
     <Compile Include="PublicFacing\Configuration\JsnlogConfiguration\OnceOnlyOptions.cs" />
     <Compile Include="PublicFacing\Configuration\LoggingHandler.cs" />
     <Compile Include="PublicFacing\Configuration\Owin\AppBuilderExtensions.cs" />
+    <Compile Include="PublicFacing\Exceptions\ConflictingConfigException.cs" />
     <Compile Include="PublicFacing\Exceptions\WebConfigException.cs" />
     <Compile Include="PublicFacing\Exceptions\PropertyException.cs" />
     <Compile Include="PublicFacing\Exceptions\JSNLogException.cs" />

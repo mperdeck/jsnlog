@@ -22,12 +22,12 @@ namespace JSNLog
         /// <returns></returns>
         public static string Configure(string requestId = null)
         {
-            XmlElement xe = XmlHelpers.RootElement();
-
             StringBuilder sb = new StringBuilder();
 
+            var jsnlogConfiguration = JavascriptLogging.JsnlogConfiguration;
+
             var configProcessor = new ConfigProcessor();
-            configProcessor.ProcessRoot(xe, requestId, sb);
+            configProcessor.ProcessRoot(jsnlogConfiguration, requestId, sb);
 
             return sb.ToString();
         }
@@ -65,6 +65,37 @@ namespace JSNLog
             if (OnLogging != null)
             {
                 OnLogging(loggingEventArgs);
+            }
+        }
+
+        private static JsnlogConfiguration _jsnlogConfiguration = null;
+
+        public static JsnlogConfiguration JsnlogConfiguration
+        {
+            get
+            {
+                if (_jsnlogConfiguration == null)
+                {
+                    XmlElement xe = XmlHelpers.RootElement();
+                    if (xe != null)
+                    {
+                        var _jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
+                    }
+                }
+
+                // If there is no configuration, return the default configuration
+                return _jsnlogConfiguration ?? new JsnlogConfiguration();
+            }
+
+            set
+            {
+                XmlElement xe = XmlHelpers.RootElement();
+                if (xe != null)
+                {
+                    throw new ConflictingConfigException();
+                }
+
+                _jsnlogConfiguration = value;
             }
         }
     }

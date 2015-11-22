@@ -26,16 +26,13 @@ namespace JSNLog.Infrastructure
         /// Could be null (when user didn't provide a request id).
         /// In that case, this method creates a request id itself.
         /// </param>
-        /// <param name="xe">
-        /// XmlElement to be processed
-        /// </param>
         /// <param name="sb">
         /// All JavaScript needs to be written to this string builder.
         /// </param>
-        public void ProcessRoot(XmlElement xe, string requestId, StringBuilder sb)
+        public void ProcessRoot(JsnlogConfiguration jsnlogConfiguration, string requestId, StringBuilder sb)
         {
             string userIp = HttpContext.Current.Request.UserHostAddress;
-            ProcessRootExec(xe, sb, VirtualPathUtility.ToAbsolute, userIp, requestId ?? RequestId.Get(), true);
+            ProcessRootExec(jsnlogConfiguration, sb, VirtualPathUtility.ToAbsolute, userIp, requestId ?? RequestId.Get(), true);
         }
 
         // This version is not reliant on sitting in a web site, so can be unit tested.
@@ -44,9 +41,9 @@ namespace JSNLog.Infrastructure
         //
         // You want to set this to false during unit testing, because then you need direct access outside the closure of variables
         // that are private to the closure, specifically dummyappenders that store the log messages you receive, so you can unit test them.
-        public void ProcessRootExec(XmlElement xe, StringBuilder sb, Func<string, string> virtualToAbsoluteFunc, string userIp, string requestId, bool generateClosure)
+        public void ProcessRootExec(JsnlogConfiguration jsnlogConfiguration, StringBuilder sb, Func<string, string> virtualToAbsoluteFunc, 
+            string userIp, string requestId, bool generateClosure)
         {
-            var jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
             Dictionary<string, string> appenderNames = new Dictionary<string, string>();
 
             string loggerProductionLibraryVirtualPath = jsnlogConfiguration.productionLibraryPath;

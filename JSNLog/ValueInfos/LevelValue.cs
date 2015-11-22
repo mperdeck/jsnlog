@@ -9,8 +9,6 @@ namespace JSNLog.ValueInfos
 {
     internal class LevelValue : IValueInfo
     {
-        private static string _regexLevels = null;
-
         public string ToJavaScript(string text)
         {
             string js = LevelUtils.LevelNumber(text).ToString();
