@@ -248,6 +248,237 @@ new JsnlogConfiguration {
 
         // ---------------------------------------------------------------------------------
 
+        [TestMethod]
+        public void logger1()
+        {
+            TestDemo(
+                @"
+<jsnlog>
+	<logger name=""a.b"" level=""3000"" />
+</jsnlog>
+",
+                @"
+new JsnlogConfiguration {
+    loggers=new List<Logger> {
+        new Logger {
+            name=""a.b"",
+			level=""3000""
+        }
+    }
+}",
+                "logger1");
+        }
+
+        [TestMethod]
+        public void logger2()
+        {
+            TestDemo(
+                @"
+<jsnlog>
+	<logger level=""3000"" />
+</jsnlog>
+",
+                @"
+new JsnlogConfiguration {
+    loggers=new List<Logger> {
+        new Logger {
+			level=""3000""
+        }
+    }
+}",
+                "logger2");
+        }
+
+        [TestMethod]
+        public void logger3()
+        {
+            TestDemo(
+                @"
+<jsnlog>
+	<logger name=""a.b"" level=""INFO"" />
+</jsnlog>
+",
+                @"
+new JsnlogConfiguration {
+    loggers=new List<Logger> {
+        new Logger {
+            name=""a.b"",
+			level=""INFO""
+        }
+    }
+}",
+                "logger3");
+        }
+
+        [TestMethod]
+        public void logger4()
+        {
+            TestDemo(
+                @"
+<jsnlog>
+	<logger name=""a.b"" userAgentRegex=""MSIE 7|MSIE 8"" level=""4000"" />
+</jsnlog>
+",
+                @"
+new JsnlogConfiguration {
+    loggers=new List<Logger> {
+        new Logger {
+            name=""a.b"",
+            userAgentRegex=""MSIE 7|MSIE 8"",
+			level=""4000""
+        }
+    }
+}",
+                "logger4");
+        }
+
+        [TestMethod]
+        public void logger5()
+        {
+            TestDemo(
+                @"
+<jsnlog>
+    <ajaxAppender name=""appender"" />
+	<logger name=""a.b"" appenders=""appender"" />
+</jsnlog>
+",
+                @"
+// Production: loggers log to the server only
+new JsnlogConfiguration {
+    ajaxAppenders=new List<AjaxAppender> {
+        new AjaxAppender {
+		    name=""appender""
+        }
+    },
+    loggers=new List<Logger> {
+        new Logger {
+            name=""a.b"",
+            appenders=""appender""
+        }
+    }
+}",
+                "logger5");
+        }
+
+        [TestMethod]
+        public void logger6()
+        {
+            TestDemo(
+                @"
+<jsnlog>
+    <ajaxAppender name=""appender1"" />
+    <ajaxAppender name=""appender2"" />
+	<logger name=""a.b"" appenders=""apender1;appender2"" />
+</jsnlog>
+",
+                @"
+// Production: loggers log to the server only
+new JsnlogConfiguration {
+    ajaxAppenders=new List<AjaxAppender> {
+        new AjaxAppender {
+		    name=""appender1""
+        },
+        new AjaxAppender {
+		    name=""appender2""
+        }
+    },
+    loggers=new List<Logger> {
+        new Logger {
+            name=""a.b"",
+            appenders=""apender1;appender2""
+        }
+    }
+}",
+                "logger6");
+        }
+
+        [TestMethod]
+        public void logger7()
+        {
+            TestDemo(
+                @"
+<jsnlog>
+	<logger name=""a"">
+		<onceOnly regex=""Parameter x too high - x ="" />
+	</logger>
+</jsnlog>
+",
+                @"
+new JsnlogConfiguration {
+    loggers=new List<Logger> {
+        new Logger {
+            name=""a"",
+			onceOnlies = new List<OnceOnlyOptions> {
+				new OnceOnlyOptions {
+					regex=""Parameter x too high - x =""
+				}
+            }
+        }
+    }
+}",
+                "logger7");
+        }
+
+        [TestMethod]
+        public void logger8()
+        {
+            TestDemo(
+                @"
+<jsnlog>
+	<logger name=""a"">
+		<onceOnly regex=""Parameter x too high - x ="" />
+        <onceOnly regex=""x = \d+ and y = \d+"" />
+	</logger>
+</jsnlog>
+",
+                @"
+new JsnlogConfiguration {
+    loggers=new List<Logger> {
+        new Logger {
+            name=""a"",
+			onceOnlies = new List<OnceOnlyOptions> {
+				new OnceOnlyOptions {
+					regex=""Parameter x too high - x =""
+				},
+				new OnceOnlyOptions {
+					regex=""x = \\d+ and y = \\d+""
+				}
+            }
+        }
+    }
+}",
+                "logger8");
+        }
+
+        [TestMethod]
+        public void logger9()
+        {
+            TestDemo(
+                @"
+<jsnlog>
+	<logger name=""a.b"">
+		<onceOnly />
+	</logger>
+</jsnlog>
+",
+                @"
+new JsnlogConfiguration {
+    loggers=new List<Logger> {
+        new Logger {
+            name=""a.b"",
+			onceOnlies = new List<OnceOnlyOptions> {
+				new OnceOnlyOptions {
+				}
+            }
+        }
+    }
+}",
+                "logger9");
+        }
+
+
+        // ---------------------------------------------------------------------------------
+
         /// <summary>
         /// Ensures that the xml will be serialised by JSNLog to the code in csharp.
         /// Also writes HTML to d:\temp\demos.html with premade html for example tabs.
