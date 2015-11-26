@@ -53,6 +53,201 @@ new JsnlogConfiguration {
                 "jsnlog1");
         }
 
+        [TestMethod]
+        public void jsnlog2()
+        {
+            TestDemo(
+                @"
+<jsnlog serverSideLogger=""jslogger"">
+</jsnlog>",
+                @"
+new JsnlogConfiguration {
+    serverSideLogger=""jslogger""
+}",
+                "jsnlog2");
+        }
+
+        [TestMethod]
+        public void jsnlog3()
+        {
+            TestDemo(
+                @"
+<jsnlog enabled=""false"">
+</jsnlog>",
+                @"
+new JsnlogConfiguration {
+    enabled=false
+}",
+                "jsnlog3");
+        }
+
+        // ---------------------------------------------------------------------------------
+
+        [TestMethod]
+        public void ajaxappender1()
+        {
+            TestDemo(
+                @"
+<jsnlog>
+	<ajaxAppender 
+		name=""appender1"" 
+		storeInBufferLevel=""TRACE"" 
+		level=""WARN"" 
+		sendWithBufferLevel=""FATAL"" 
+		bufferSize=""20""/>
+	<logger appenders=""appender1""/>
+</jsnlog>
+",
+                @"
+new JsnlogConfiguration {
+    ajaxAppenders=new List<AjaxAppender> {
+        new AjaxAppender {
+		    name=""appender1"", 
+		    storeInBufferLevel=""TRACE"", 
+		    level=""WARN"", 
+		    sendWithBufferLevel=""FATAL"", 
+		    bufferSize=20
+        }
+    },
+    loggers=new List<Logger> {
+        new Logger {
+            appenders=""appender1""
+        }
+    }
+}",
+                "ajaxappender1");
+        }
+
+        // ---------------------------------------------------------------------------------
+
+        [TestMethod]
+        public void consoleappender1()
+        {
+            TestDemo(
+                @"
+<jsnlog>
+	<!-- ""mylogger"" logs to just the console -->
+	<consoleAppender name=""consoleAppender"" />
+	<logger name=""mylogger"" appenders=""consoleAppender"" />
+</jsnlog>
+",
+                @"
+// ""mylogger"" logs to just the console
+new JsnlogConfiguration {
+    consoleAppenders=new List<ConsoleAppender> {
+        new ConsoleAppender {
+		    name=""consoleAppender""
+        }
+    },
+    loggers=new List<Logger> {
+        new Logger {
+            name=""mylogger"",
+            appenders=""consoleAppender""
+        }
+    }
+}",
+                "consoleappender1");
+        }
+
+        [TestMethod]
+        public void consoleappender2()
+        {
+            TestDemo(
+                @"
+<jsnlog>
+	<!-- ""mylogger"" logs to both the server and the console -->
+    <consoleAppender name=""consoleAppender"" />
+    <ajaxAppender name=""ajaxAppender"" />
+	<logger name=""mylogger"" appenders=""ajaxAppender;consoleAppender"" />
+</jsnlog>
+",
+                @"
+// ""mylogger"" logs to both the server and the console
+new JsnlogConfiguration {
+    consoleAppenders=new List<ConsoleAppender> {
+        new ConsoleAppender {
+		    name=""consoleAppender""
+        }
+    },
+    ajaxAppenders=new List<AjaxAppender> {
+        new AjaxAppender {
+		    name=""ajaxAppender""
+        }
+    },
+    loggers=new List<Logger> {
+        new Logger {
+            name=""mylogger"",
+            appenders=""ajaxAppender;consoleAppender""
+        }
+    }
+}",
+                "consoleappender2");
+        }
+
+        [TestMethod]
+        public void consoleappender3()
+        {
+            TestDemo(
+                @"
+<jsnlog>
+	<!-- Debugging: all loggers log to both the server and the console -->
+    <consoleAppender name=""consoleAppender"" />
+    <ajaxAppender name=""ajaxAppender"" />
+	<logger appenders=""ajaxAppender;consoleAppender"" />
+</jsnlog>
+",
+                @"
+// Debugging: all loggers log to both the server and the console
+new JsnlogConfiguration {
+    consoleAppenders=new List<ConsoleAppender> {
+        new ConsoleAppender {
+		    name=""consoleAppender""
+        }
+    },
+    ajaxAppenders=new List<AjaxAppender> {
+        new AjaxAppender {
+		    name=""ajaxAppender""
+        }
+    },
+    loggers=new List<Logger> {
+        new Logger {
+            appenders=""ajaxAppender;consoleAppender""
+        }
+    }
+}",
+                "consoleappender3");
+        }
+
+        [TestMethod]
+        public void consoleappender4()
+        {
+            TestDemo(
+                @"
+<jsnlog>
+	<!-- Production: loggers log to the server only -->
+    <ajaxAppender name=""ajaxAppender"" />
+	<logger appenders=""ajaxAppender;consoleAppender"" />
+</jsnlog>
+",
+                @"
+// Production: loggers log to the server only
+new JsnlogConfiguration {
+    ajaxAppenders=new List<AjaxAppender> {
+        new AjaxAppender {
+		    name=""ajaxAppender""
+        }
+    },
+    loggers=new List<Logger> {
+        new Logger {
+            appenders=""ajaxAppender;consoleAppender""
+        }
+    }
+}",
+                "consoleappender4");
+        }
+
+        // ---------------------------------------------------------------------------------
+
         /// <summary>
         /// Ensures that the xml will be serialised by JSNLog to the code in csharp.
         /// Also writes HTML to d:\temp\demos.html with premade html for example tabs.
@@ -77,11 +272,11 @@ new JsnlogConfiguration {
 
             sb.AppendLine(@"<div class=""commontabs""><div data-tab=""Web.config"">");
             sb.AppendLine(@"");
-            sb.AppendLine(string.Format(@"<pre>{0}</pre>", HttpUtility.HtmlEncode(configXml.Trim())));
+            sb.AppendLine(string.Format(@"<pre>{0}</pre>", ScrubbedCode(configXml)));
             sb.AppendLine(@"");
             sb.AppendLine(@"</div><div data-tab=""JsnlogConfiguration"">");
             sb.AppendLine(@"");
-            sb.AppendLine(string.Format(@"<pre>{0}</pre>", HttpUtility.HtmlEncode(csharp.Trim())));
+            sb.AppendLine(string.Format(@"<pre>{0}</pre>", ScrubbedCode(csharp)));
             sb.AppendLine(@"");
             sb.AppendLine(@"</div></div>");
 
@@ -92,6 +287,11 @@ new JsnlogConfiguration {
             Assert.IsFalse(fileExists, string.Format("{0} already exists", path));
 
             System.IO.File.WriteAllText(path, content);
+        }
+
+        private string ScrubbedCode(string code)
+        {
+            return HttpUtility.HtmlEncode(code.Trim().Replace("\t", "    "));
         }
 
     }
