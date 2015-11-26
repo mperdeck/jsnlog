@@ -476,6 +476,109 @@ new JsnlogConfiguration {
                 "logger9");
         }
 
+        // ---------------------------------------------------------------------------------
+
+        [TestMethod]
+        public void consolelog1()
+        {
+            TestDemo(
+                @"
+<!-- Debug version of web.config -->
+<jsnlog>
+	<!-- Create console appender -->
+	<consoleAppender name=""consoleAppender"" />
+
+    <!-- Send all log messages to console appender -->
+	<logger appenders=""consoleAppender"" />
+</jsnlog>
+",
+                @"
+// Debug version of web.config
+new JsnlogConfiguration {
+
+    // Create console appender
+    consoleAppenders=new List<ConsoleAppender> {
+        new ConsoleAppender {
+		    name=""consoleAppender""
+        }
+    },
+
+    // Send all log messages to console appender
+    loggers=new List<Logger> {
+        new Logger {
+            appenders=""consoleAppender""
+        }
+    }
+}",
+                "consolelog1");
+        }
+
+        [TestMethod]
+        public void consolelog2()
+        {
+            TestDemo(
+                @"
+<!-- Release version of web.config -->
+<jsnlog>
+    <!-- Stop all messages with severity lower than fatal -->
+	<logger level=""FATAL"" />
+</jsnlog>
+",
+                @"
+// Release version of web.config
+new JsnlogConfiguration {
+
+    // Stop all messages with severity lower than fatal
+    loggers=new List<Logger> {
+        new Logger {
+            level=""FATAL""
+        }
+    }
+}",
+                "consolelog2");
+        }
+
+        [TestMethod]
+        public void consolelog3()
+        {
+            TestDemo(
+                @"
+<!-- Debug version of web.config -->
+<jsnlog>
+	<!-- Create console appender and AJAX appender -->
+    <consoleAppender name=""consoleAppender"" />
+    <ajaxAppender name=""ajaxAppender"" />
+
+    <!-- Send all log messages to both -->
+	<logger appenders=""ajaxAppender;consoleAppender"" />
+</jsnlog>
+",
+                @"
+// Debug version of web.config
+new JsnlogConfiguration {
+
+    // Create console appender and AJAX appender
+    consoleAppenders=new List<ConsoleAppender> {
+        new ConsoleAppender {
+		    name=""consoleAppender""
+        }
+    },
+    ajaxAppenders=new List<AjaxAppender> {
+        new AjaxAppender {
+		    name=""ajaxAppender""
+        }
+    },
+
+    // Send all log messages to both
+    loggers=new List<Logger> {
+        new Logger {
+            appenders=""ajaxAppender;consoleAppender""
+        }
+    }
+}",
+                "consolelog3");
+        }
+
 
         // ---------------------------------------------------------------------------------
 
