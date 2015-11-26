@@ -150,6 +150,7 @@
     <Compile Include="Logic\T.cs" />
     <Compile Include="Logic\TestUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTests\DemoTests.cs" />
     <Compile Include="UnitTests\LoggerProcessorTests.Http.cs" />
     <Compile Include="UnitTests\LoggerProcessorTests.Http.Infrastructure.cs" />
     <Compile Include="UnitTests\LoggerProcessorTests.cs" />
