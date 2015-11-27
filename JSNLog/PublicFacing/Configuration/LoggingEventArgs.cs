@@ -14,7 +14,7 @@ namespace JSNLog
         public string FinalLogger { get; set; }
         public Level FinalLevel { get; set; }
         public string FinalMessage { get; set; }
-        public string ServerSideMessageFormat { get; set; }
+        public string ServerSideMessageFormat { get; internal set; }
 
         public LoggingEventArgs(ILogRequest logRequest)
         {
