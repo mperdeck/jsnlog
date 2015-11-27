@@ -39,8 +39,10 @@ namespace JSNLog.Tests.UnitTests
             }
         }
 
+        // ---------------------------------------------------------------------------------
+
         [TestMethod]
-        public void DemoTest1()
+        public void jsnlog1()
         {
             TestDemo(
                 @"
@@ -579,12 +581,143 @@ new JsnlogConfiguration {
                 "consolelog3");
         }
 
+        // ---------------------------------------------------------------------------------
+
+        [TestMethod]
+        public void cors1()
+        {
+            TestDemo(
+                @"
+<jsnlog corsAllowedOriginsRegex=""^https?:\/\/([a-z0-9]+[.])*(my-abc-domain[.]com|my-xyz-domain[.]com)$"" >
+</jsnlog>",
+                @"
+new JsnlogConfiguration {
+    corsAllowedOriginsRegex=""^https?:\\/\\/([a-z0-9]+[.])*(my-abc-domain[.]com|my-xyz-domain[.]com)$""
+}",
+                "cors1");
+        }
 
         // ---------------------------------------------------------------------------------
+
+        [TestMethod]
+        public void exceptions1()
+        {
+            TestDemo(
+                @"
+<jsnlog>
+	<ajaxAppender 
+		name=""appender1"" 
+		storeInBufferLevel=""DEBUG"" 
+		level=""FATAL"" 
+		sendWithBufferLevel=""FATAL"" 
+		bufferSize=""20""/>
+	<logger appenders=""appender1""/>
+</jsnlog>
+",
+                @"
+new JsnlogConfiguration {
+    ajaxAppenders=new List<AjaxAppender> {
+        new AjaxAppender {
+		    name=""appender1"", 
+		    storeInBufferLevel=""DEBUG"", 
+		    level=""FATAL"", 
+		    sendWithBufferLevel=""FATAL"", 
+		    bufferSize=20
+        }
+    },
+    loggers=new List<Logger> {
+        new Logger {
+            appenders=""appender1""
+        }
+    }
+}",
+                "exceptions1");
+        }
+
+        // ---------------------------------------------------------------------------------
+
+        [TestMethod]
+        public void requestids1()
+        {
+            TestDemo(
+                @"
+<jsnlog serverSideMessageFormat="""+ _newCodeStart + @"%requestId" + _newCodeEnd + @" | %logger | %level | %message"">
+</jsnlog>",
+                @"
+new JsnlogConfiguration {
+    serverSideMessageFormat=""" + _newCodeStart + @"%requestId" + _newCodeEnd + @" | %logger | %level | %message""
+}",
+                "requestids1");
+        }
+
+        [TestMethod]
+        public void requestids2()
+        {
+            TestDemo(
+                @"
+<jsnlog serverSideMessageFormat=
+    ""{ " + _newCodeStart + @"'requestId': '%requestId'," + _newCodeEnd + @" 'clientdate': '%date', 'url': '%url', 'logmessage': %jsonmessage }"">
+</jsnlog>",
+                @"
+new JsnlogConfiguration {
+    serverSideMessageFormat=
+        ""{ " + _newCodeStart + @"'requestId': '%requestId'," + _newCodeEnd + @" 'clientdate': '%date', 'url': '%url', 'logmessage': %jsonmessage }""
+}",
+                "requestids2");
+        }
+
+        // ---------------------------------------------------------------------------------
+
+        [TestMethod]
+        public void loadingjsfile1()
+        {
+            TestDemo(
+                @"
+<jsnlog productionLibraryPath=""" + _newCodeStart + @"https://cdnjs.cloudflare.com/ajax/libs/jsnlog/2.12.1/jsnlog.min.js" + _newCodeEnd + @""">
+</jsnlog>",
+                @"
+new JsnlogConfiguration {
+    productionLibraryPath=""" + _newCodeStart + @"https://cdnjs.cloudflare.com/ajax/libs/jsnlog/2.12.1/jsnlog.min.js" + _newCodeEnd + @"""
+}",
+                "loadingjsfile1");
+        }
+
+        [TestMethod]
+        public void loadingjsfile2()
+        {
+            TestDemo(
+                @"
+<jsnlog " + _strikeThroughStart + @"productionLibraryPath=""~/Scripts/jsnlog.min.js""" + _strikeThroughEnd + @">
+</jsnlog>",
+                @"
+new JsnlogConfiguration {
+    " + _strikeThroughStart + @"productionLibraryPath=""~/Scripts/jsnlog.min.js""" + _strikeThroughEnd + @"
+}",
+                "loadingjsfile2");
+        }
+
+
+        // ---------------------------------------------------------------------------------
+
+        private const string _strikeThroughStart = "(S}";
+        private const string _strikeThroughEnd = "{S)";
+        private const string _newCodeStart = "(N}";
+        private const string _newCodeEnd = "{N)";
+
+        private const string _jsnlogUrl = "/Documentation/Configuration/JSNLog";
+        private const string _setJsnlogConfigurationUrl = "/Documentation/JavascriptLogging/SetJsnlogConfiguration";
 
         /// <summary>
         /// Ensures that the xml will be serialised by JSNLog to the code in csharp.
         /// Also writes HTML to d:\temp\demos.html with premade html for example tabs.
+        /// 
+        /// In that HTML, you may want to apply strikethrough or the "new code" style.
+        /// To do that, use these meta tags:
+        /// 
+        /// <![CDATA[
+        /// (S}...striked through text ...{S)"/>
+        /// (N}...striked through text ...{N)"/>
+        /// ]]>
         /// </summary>
         /// <param name="configXml"></param>
         /// <param name="csharp"></param>
@@ -592,10 +725,10 @@ new JsnlogConfiguration {
         {
             // Testing to ensure xml and code are the same
 
-            XmlElement xe = TestUtils.ConfigToXe(configXml);
+            XmlElement xe = TestUtils.ConfigToXe(CodeWithoutMeta(configXml));
             var jsnlogConfigurationFromXml = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
 
-            JsnlogConfiguration jsnlogConfigurationFromCode = (JsnlogConfiguration)TestUtils.Eval(csharp);
+            JsnlogConfiguration jsnlogConfigurationFromCode = (JsnlogConfiguration)TestUtils.Eval(CodeWithoutMeta(csharp));
 
             TestUtils.EnsureEqualJsnlogConfiguration(jsnlogConfigurationFromXml, jsnlogConfigurationFromCode);
 
@@ -606,11 +739,13 @@ new JsnlogConfiguration {
 
             sb.AppendLine(@"<div class=""commontabs""><div data-tab=""Web.config"">");
             sb.AppendLine(@"");
-            sb.AppendLine(string.Format(@"<pre>{0}</pre>", ScrubbedCode(configXml)));
+            sb.AppendLine(string.Format(@"<pre>{0}</pre>", CodeToHtml(configXml)));
             sb.AppendLine(@"");
             sb.AppendLine(@"</div><div data-tab=""JsnlogConfiguration"">");
             sb.AppendLine(@"");
-            sb.AppendLine(string.Format(@"<pre>{0}</pre>", ScrubbedCode(csharp)));
+            sb.AppendLine(string.Format(@"<pre>JavascriptLogging.{0}({1});</pre>",
+                LinkedText("SetJsnlogConfiguration", _setJsnlogConfigurationUrl),
+                CodeToHtml(csharp)));
             sb.AppendLine(@"");
             sb.AppendLine(@"</div></div>");
 
@@ -623,9 +758,23 @@ new JsnlogConfiguration {
             System.IO.File.WriteAllText(path, content);
         }
 
-        private string ScrubbedCode(string code)
+        private string CodeWithoutMeta(string code)
         {
-            return HttpUtility.HtmlEncode(code.Trim().Replace("\t", "    "));
+            return code.Replace(_strikeThroughStart, "").Replace(_newCodeStart, "").Replace(_strikeThroughEnd, "").Replace(_newCodeEnd, "");
+        }
+
+        private string LinkedText(string text, string url)
+        {
+            return string.Format("<a href='{0}'>{1}</a>", url, text);
+        }
+
+        private string CodeToHtml(string code)
+        {
+            return HttpUtility.HtmlEncode(code.Trim().Replace("\t", "    "))
+                .Replace(_strikeThroughStart, "<del>").Replace(_newCodeStart, "<span class='addedcode'>")
+                .Replace(_strikeThroughEnd, "</del>").Replace(_newCodeEnd, "</span>")
+                .Replace("JsnlogConfiguration", LinkedText("JsnlogConfiguration", _jsnlogUrl))
+                .Replace("&lt;jsnlog", "&lt;" + LinkedText("jsnlog", _jsnlogUrl));
         }
 
     }
