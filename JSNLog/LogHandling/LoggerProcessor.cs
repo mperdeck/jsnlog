@@ -262,7 +262,8 @@ namespace JSNLog.LogHandling
             var logRequest = new LogRequest(message, logger, level, utcDate, jsonmessage, logRequestBase);
             var loggingEventArgs = new LoggingEventArgs(logRequest) 
             {
-                Cancel = false
+                Cancel = false,
+                ServerSideMessageFormat = messageFormat
             };
 
             // ----------------

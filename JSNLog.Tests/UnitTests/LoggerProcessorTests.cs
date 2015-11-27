@@ -364,7 +364,46 @@ dateFormat=""" + dateFormat + @"""
 
             JSNLog.JavascriptLogging.OnLogging -= loggingHandler;
         }
-        
+
+        [TestMethod]
+        public void TestServerSideMessageFormatCopied()
+        {
+            // Arrange
+
+            string serverSideMessageFormat = "Logging Message: %message";
+
+            string configXml = string.Format(@"
+                <jsnlog serverSideMessageFormat=""{0}""></jsnlog>
+", serverSideMessageFormat);
+
+            var expected = new[] {
+                new LoggerProcessor.LogData(@"Logging Message: first ""message""", "a.b.c",Level.DEBUG, 1500,
+                    @"first ""message""", 1500, "a.b.c",  "therequestid1",
+                    _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
+                    "my browser", "12.345.98.7", "http://mydomain.com/main")
+            };
+
+            string receivedServerSideMessageFormat = "";
+
+            JSNLog.LoggingHandler loggingHandler = (LoggingEventArgs loggingEventArgs) =>
+            {
+                receivedServerSideMessageFormat = loggingEventArgs.ServerSideMessageFormat;
+            };
+
+            JSNLog.JavascriptLogging.OnLogging += loggingHandler;
+
+            // Act and Assert
+
+            RunTest(configXml, _json1, "therequestid1", "my browser", "12.345.98.7",
+                        _dtServerUtc, "http://mydomain.com/main", expected);
+
+            Assert.AreEqual(receivedServerSideMessageFormat, serverSideMessageFormat);
+
+            // Clean up
+
+            JSNLog.JavascriptLogging.OnLogging -= loggingHandler;
+        }
+
         private class DatesBag
         {
             public DateTime utcDate { get; set; }
