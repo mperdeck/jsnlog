@@ -22,6 +22,10 @@ namespace JSNLog
         AppFunc _next;
         Regex _loggerUrlRegex;
 
+        public JsnlogMiddlewareComponent(AppFunc next): this(next, null)
+        {
+        }
+
         public JsnlogMiddlewareComponent(AppFunc next, string loggerUrlRegex)
         {
             _next = next;
