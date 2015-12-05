@@ -27,7 +27,7 @@
 
           <!-- 
 			The below definition causes NuGet to load version 2.1.0 if no version of 
-			icrosoft.Owin has already been installed (it tries to install the LOWEST 
+			Microsoft.Owin has already been installed (it tries to install the LOWEST 
 			possible version of a package).
 
 			This will work fine in a .Net 4.0 project. Note that versions past 2.1.0 no longer support .Net 4.0.
