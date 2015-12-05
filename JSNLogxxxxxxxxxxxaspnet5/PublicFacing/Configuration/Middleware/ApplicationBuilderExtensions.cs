@@ -10,7 +10,7 @@ namespace JSNLog
     {
         public static void UseJSNLog(this IApplicationBuilder app, string loggerUrlRegex = null)
         {
-     //##########       app.Use<MiddlewareComponent>(loggerUrlRegex);
+            app.Use<MiddlewareComponent>(loggerUrlRegex);
         }
     }
 }
