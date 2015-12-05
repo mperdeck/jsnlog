@@ -12,7 +12,8 @@
     <description>$description$</description>
     <copyright>Copyright 2015</copyright>
     <tags>JavaScript logging exceptions log4net nlog elmah</tags>
-      <dependencies>
+    <dependencies>
+        <group targetFramework="net40">
           <!-- IMPORTANT
                The CommonLogging NuGet package and the JSNLog package have the same dependencies
                and files. This because CommonLogging is purely a convenience package - JSNLog
@@ -37,9 +38,24 @@
           --> 
           <dependency id="Microsoft.Owin" version="2.1.0" />
           <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
-      </dependencies>
+        </group>
+        <group targetFramework="net451">
+          <!-- Copy of the net40 group, with Microsoft.AspNet.Http.Abstractions added -->
+
+
+          <dependency id="Microsoft.AspNet.Http.Abstractions" />
+<!--
+          <dependency id="Microsoft.AspNet.Http.Abstractions" version="1.0.0-rc1-final" />
+
+          <dependency id="Common.Logging" version="3.0.0" />
+          <dependency id="WebActivatorEx" version="2.0.0" />
+          <dependency id="Microsoft.Owin" version="2.1.0" />
+          <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
+-->
+        </group>
+    </dependencies>
   </metadata>
-    <files>
+  <files>
         <!-- JSNLog.dll itself gets automatically added to lib\net40 -->
         <file src="bin\Release\JSNLog.dll" target="lib\net451\" />
         <file src="..\JSNLog.AspNet5\bin\Release\JSNLog.AspNet5.dll" target="lib\net451\" />
@@ -50,5 +66,5 @@
         <file src="NuGet\AdditionalContent\*.*" target="content" />
         <file src="NuGet\AdditionalAppStart\*.*" target="content\App_Start" />
         <file src="NuGet\readme.txt" target="" />
-    </files>
+  </files>
 </package>
