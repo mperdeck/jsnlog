@@ -20,7 +20,7 @@ namespace JSNLog
         public string name { get; set; }
 
         [XmlElement("onceOnly")]
-        public List<OnceOnlyOptions> onceOnlies = new List<OnceOnlyOptions>();
+        public List<OnceOnlyOptions> onceOnlies { get; set; }
 
         // --------------------------------------------------------
 

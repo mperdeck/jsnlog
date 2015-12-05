@@ -312,16 +312,10 @@ namespace JSNLog.Tests.Logic
             Assert.AreEqual(oo1.regex, oo2.regex);
         }
 
-        public static void EnsureListsEqual<T>(List<T> list1, List<T> list2, Action<T, T> ensurer)
+        public static void EnsureListsEqual<T>(List<T> list1i, List<T> list2i, Action<T, T> ensurer)
         {
-            // Ensure either both lists are null, or neither is null
-            Assert.AreEqual((list1 == null), (list2 == null));
-
-            // If list1 is null here, list2 is null as well.
-            if (list1 == null)
-            {
-                return;
-            }
+            var list1 = list1i ?? new List<T>();
+            var list2 = list2i ?? new List<T>();
 
             int nbrElements = list1.Count;
             Assert.AreEqual(nbrElements, list2.Count);

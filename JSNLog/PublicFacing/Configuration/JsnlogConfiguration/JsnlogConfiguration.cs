@@ -41,14 +41,17 @@ namespace JSNLog
         [XmlAttribute]
         public string productionLibraryPath { get; set; }
 
+        // Be sure to make everything Properties. While the XML serializer handles fields ok,
+        // the JSON serializer used in ASP.NET 5 doesn't.
+
         [XmlElement("logger")]
-        public List<Logger> loggers = new List<Logger>();
+        public List<Logger> loggers { get; set; }
 
         [XmlElement("ajaxAppender")]
-        public List<AjaxAppender> ajaxAppenders = new List<AjaxAppender>();
+        public List<AjaxAppender> ajaxAppenders { get; set; }
 
         [XmlElement("consoleAppender")]
-        public List<ConsoleAppender> consoleAppenders = new List<ConsoleAppender>();
+        public List<ConsoleAppender> consoleAppenders { get; set; }
 
         public JsnlogConfiguration()
         {
