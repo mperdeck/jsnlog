@@ -40,6 +40,10 @@
       </dependencies>
   </metadata>
     <files>
+        <!-- JSNLog.dll itself gets automatically added to lib\net40 -->
+        <file src="bin\Release\JSNLog.dll" target="lib\net451\" />
+        <file src="..\JSNLog.AspNet5\bin\Release\JSNLog.AspNet5.dll" target="lib\net451\" />
+
         <file src="..\..\jsnlog.js\jsnlog.js" target="content\Scripts" />
         <file src="..\..\jsnlog.js\jsnlog.min.js" target="content\Scripts" />
         <file src="..\..\jsnlog.js\jsnlog.js.map" target="content\Scripts" />
