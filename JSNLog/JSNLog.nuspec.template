@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>JSNLog</id>
-    <version>2.15.7</version>
+    <version>__Version__</version>
     <title>JSNLog - JavaScript Logging Package</title>
     <authors>Matt Perdeck</authors>
     <owners>Matt Perdeck</owners>

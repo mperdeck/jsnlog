@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------------
 // Generated.cs gets copied from Generated.cs.template
-// During the copy, 2.15.2 is replaced by the actual version.
+// During the copy, 2.15.7 is replaced by the actual version.
 // ---------------------------------------------------------------------------
 
 using System.Reflection;
@@ -37,8 +37,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.15.2")]
-[assembly: AssemblyFileVersion("2.15.2")]
+[assembly: AssemblyVersion("2.15.7")]
+[assembly: AssemblyFileVersion("2.15.7")]
 
 // Allow JSNLog.Tests to access internal definitions inside JSNLog
 // See https://msdn.microsoft.com/en-us/library/bb384966.aspx
