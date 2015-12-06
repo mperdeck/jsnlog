@@ -5,20 +5,13 @@ using System.Text;
 
 namespace JSNLog
 {
-    public class LoggingEventArgs
+    public class LoggingEventArgs : FinalLogData
     {
-        public ILogRequest LogRequest { get; private set; }
-
         public bool Cancel { get; set; }
 
-        public string FinalLogger { get; set; }
-        public Level FinalLevel { get; set; }
-        public string FinalMessage { get; set; }
-        public string ServerSideMessageFormat { get; internal set; }
-
         public LoggingEventArgs(ILogRequest logRequest)
+            : base(logRequest)
         {
-            LogRequest = logRequest;
         }
     }
 }

@@ -75,7 +75,7 @@ namespace JSNLog.Tests.UnitTests
 ";
 
             var expected = new [] {
-                new LoggerProcessor.LogData(@"first ""message""", "a.b.c",Level.DEBUG, 1500,
+                new LogData(@"first ""message""", "a.b.c",Level.DEBUG, 1500,
                     @"first ""message""", 1500, "a.b.c", "therequestid1", 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
@@ -97,7 +97,7 @@ namespace JSNLog.Tests.UnitTests
 ";
 
             var expected = new[] {
-                new LoggerProcessor.LogData(@"{""x"":5,""y"":88}", "a.b.c",Level.DEBUG, 1500,
+                new LogData(@"{""x"":5,""y"":88}", "a.b.c",Level.DEBUG, 1500,
                     @"{""x"":5,""y"":88}", 1500, "a.b.c", "therequestid1", 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
@@ -119,8 +119,8 @@ namespace JSNLog.Tests.UnitTests
 ";
 
             var expected = new[] {
-                new LoggerProcessor.LogData("first message", Constants.RootLoggerNameServerSide,Level.DEBUG, 1500,
-                    "first message", 1500, Constants.RootLoggerNameServerSide, "therequestid", 
+                new LogData("first message", Constants.RootLoggerNameServerSide,Level.DEBUG, 1500,
+                    "first message", 1500, "", "therequestid", 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
             };
@@ -141,13 +141,13 @@ namespace JSNLog.Tests.UnitTests
 ";
 
             var expected = new[] {
-                new LoggerProcessor.LogData(
+                new LogData(
                     "first message", 
                     "a.b.c",Level.DEBUG, 1500,
                     "first message", 1500, "a.b.c", "therequestid2", 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main"),
-                new LoggerProcessor.LogData(
+                new LogData(
                     "second message",
                     "a2.b3.c4",Level.INFO, 3000,
                     "second message", 3000, "a2.b3.c4", "therequestid2", 
@@ -175,7 +175,7 @@ dateFormat="""+dateFormat+@"""
 ></jsnlog>
 ";
             var expected = new[] {
-                new LoggerProcessor.LogData(
+                new LogData(
                     string.Format(
                     @"msg: first ""message"", json: ""first \""message\"""", utcDate: {0}, utcDateServer: {1}, date: {2}, dateServer: {3}, level: 1500, userAgent: my browser, userHostAddress: 12.345.98.7, requestId: therequestid1, url: http://mydomain.com/main, logger: a.b.c",
                             _dtFirstLogUtc.ToString(dateFormat), _dtServerUtc.ToString(dateFormat), 
@@ -206,7 +206,7 @@ dateFormat=""" + dateFormat + @"""
 ></jsnlog>
 ";
             var expected = new[] {
-                new LoggerProcessor.LogData(
+                new LogData(
                     string.Format(
                     @"msg: {{""x"":5,""y"":88}}, json: {{""x"":5,""y"":88}}, utcDate: {0}, utcDateServer: {1}, date: {2}, dateServer: {3}, level: 1500, userAgent: my browser, userHostAddress: 12.345.98.7, requestId: therequestid1, url: http://mydomain.com/main, logger: a.b.c",
                             _dtFirstLogUtc.ToString(dateFormat), _dtServerUtc.ToString(dateFormat), 
@@ -233,7 +233,7 @@ dateFormat=""" + dateFormat + @"""
 ";
 
             var expected = new[] {
-                new LoggerProcessor.LogData(@"first ""message""", "server.logger",Level.FATAL, 6000,
+                new LogData(@"first ""message""", "server.logger",Level.FATAL, 6000,
                     @"first ""message""", 1500, "a.b.c", "therequestid1", 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
@@ -255,7 +255,7 @@ dateFormat=""" + dateFormat + @"""
 ";
 
             var expected = new[] {
-                new LoggerProcessor.LogData(
+                new LogData(
                     string.Format(@"first ""message"" | {0}", _dtFirstLogUtc.ToString("o")), 
                     "a.b.c",Level.DEBUG, 1500,
                     @"first ""message""", 1500, "a.b.c", "therequestid1", 
@@ -279,7 +279,7 @@ dateFormat=""" + dateFormat + @"""
 ";
 
             var expected = new[] {
-                new LoggerProcessor.LogData(@"first ""message""", "a.b.c",Level.DEBUG, 1500,
+                new LogData(@"first ""message""", "a.b.c",Level.DEBUG, 1500,
                     @"first ""message""", 1500, "a.b.c", null, 
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
@@ -300,7 +300,7 @@ dateFormat=""" + dateFormat + @"""
             string appendedMsg = "Extra Message";
 
             var expected = new[] {
-                new LoggerProcessor.LogData(@"first ""message""" + appendedMsg , "d.e.f", Level.FATAL, 1500,
+                new LogData(@"first ""message""" + appendedMsg , "d.e.f", Level.FATAL, 1500,
                     @"first ""message""", 1500, "a.b.c",  "therequestid1",
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
@@ -335,7 +335,7 @@ dateFormat=""" + dateFormat + @"""
 ";
 
             var expected = new[] {
-                new LoggerProcessor.LogData(
+                new LogData(
                     "first message",
                     "a.b.c",Level.DEBUG, 1500,
                     "first message", 1500, "a.b.c", "therequestid2",
@@ -377,7 +377,7 @@ dateFormat=""" + dateFormat + @"""
 ", serverSideMessageFormat);
 
             var expected = new[] {
-                new LoggerProcessor.LogData(@"Logging Message: first ""message""", "a.b.c",Level.DEBUG, 1500,
+                new LogData(@"Logging Message: first ""message""", "a.b.c",Level.DEBUG, 1500,
                     @"first ""message""", 1500, "a.b.c",  "therequestid1",
                     _dtFirstLogUtc, _dtServerUtc, _dtFirstLog,_dtServer,
                     "my browser", "12.345.98.7", "http://mydomain.com/main")
@@ -427,13 +427,13 @@ dateFormat=""" + dateFormat + @"""
             // Act
 
             var jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
-            List<LoggerProcessor.LogData> actual =
+            List<FinalLogData> actual =
                 LoggerProcessor.ProcessLogRequestExec(
                     _json1, 
                     new LogRequestBase("my browser", "12.345.98.7", "http://mydomain.com/main", "",null, null, null),
                     _dtServerUtc, jsnlogConfiguration);
 
-            string messageToBeLogged = actual.FirstOrDefault().Message;
+            string messageToBeLogged = actual.FirstOrDefault().FinalMessage;
 
             var javaScriptSerializer = new JavaScriptSerializer();
             var datesBag1 = javaScriptSerializer.Deserialize<DatesBag>(messageToBeLogged);
@@ -461,33 +461,33 @@ dateFormat=""" + dateFormat + @"""
             // Act
 
             var jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
-            List<LoggerProcessor.LogData> actual =
+            List<FinalLogData> actual =
                 LoggerProcessor.ProcessLogRequestExec(
                     _json4,
-                    new LogRequestBase("my browser", "12.345.98.7", "http://mydomain.com/main", "",null, null, null),
+                    new LogRequestBase("my browser", "12.345.98.7", "", "http://mydomain.com/main", null, null, null),
                     _dtServerUtc, jsnlogConfiguration);
 
             // Assert
 
             Assert.AreEqual(1, actual.Count);
-            Assert.AreEqual(Constants.JSNLogInternalErrorLoggerName, actual.ElementAt(0).LoggerName);
+            Assert.AreEqual(Constants.JSNLogInternalErrorLoggerName, actual.ElementAt(0).FinalLogger);
         }
 
         private void RunTest(string configXml, string json, string requestId, string userAgent, string userHostAddress,
-            DateTime serverSideTimeUtc, string url, IEnumerable<LoggerProcessor.LogData> expected)
+            DateTime serverSideTimeUtc, string url, IEnumerable<LogData> expected)
         {
             XmlElement xe = TestUtils.ConfigToXe(configXml);
 
             // Act
 
             var jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
-            List<LoggerProcessor.LogData> actual =
+            List<FinalLogData> actual =
                 LoggerProcessor.ProcessLogRequestExec(
                     json,
                     new LogRequestBase(userAgent, userHostAddress, requestId, url, null, null, null),
                     serverSideTimeUtc, jsnlogConfiguration);
 
-            TestLogDatasEqual(expected, actual);
+            TestLogDatasEqual(expected, actual, serverSideTimeUtc);
         }
 
         private void TestDatesEqual(DateTime dt1, DateTime dt2)
@@ -495,16 +495,17 @@ dateFormat=""" + dateFormat + @"""
             Assert.IsTrue(new DateTimeOffset(dt1) == new DateTimeOffset(dt2));
         }
 
-        private void TestLogDatasEqual(IEnumerable<LoggerProcessor.LogData> expected, IEnumerable<LoggerProcessor.LogData> actual)
+        private void TestLogDatasEqual(IEnumerable<LogData> expected, IEnumerable<FinalLogData> actualFinals, DateTime serverSideTimeUtc)
         {
-            Assert.AreEqual(expected.Count(), actual.Count(), "Counts not equal");
+            Assert.AreEqual(expected.Count(), actualFinals.Count(), "Counts not equal");
+
+            List<LogData> actual = actualFinals.Select(af => new LogData(af, serverSideTimeUtc)).ToList();
 
             for (int i = 0; i < expected.Count(); i++)
             {
                 Assert.AreEqual(expected.ElementAt(i).Message, actual.ElementAt(i).Message);
                 Assert.AreEqual(expected.ElementAt(i).LoggerName, actual.ElementAt(i).LoggerName);
                 Assert.AreEqual(expected.ElementAt(i).Level, actual.ElementAt(i).Level);
-                Assert.AreEqual(expected.ElementAt(i).LevelInt, actual.ElementAt(i).LevelInt);
 
                 Assert.AreEqual(expected.ElementAt(i).ClientLogMessage, actual.ElementAt(i).ClientLogMessage);
                 Assert.AreEqual(expected.ElementAt(i).ClientLogLevel, actual.ElementAt(i).ClientLogLevel);

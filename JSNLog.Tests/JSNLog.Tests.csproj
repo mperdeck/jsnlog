@@ -148,6 +148,7 @@
     <Compile Include="IntegrationTests\IntegrationTestBase.cs" />
     <Compile Include="IntegrationTests\JsTests.cs" />
     <Compile Include="IntegrationTests\NuGetTests.cs" />
+    <Compile Include="LogData.cs" />
     <Compile Include="Logic\T.cs" />
     <Compile Include="Logic\TestUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

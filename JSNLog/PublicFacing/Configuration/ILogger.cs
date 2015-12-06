@@ -8,6 +8,6 @@ namespace JSNLog
 {
     public interface ILogger
     {
-        void Log(Level level, string loggerName, string message);
+        void Log(FinalLogData finalLogData);
     }
 }

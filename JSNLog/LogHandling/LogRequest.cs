@@ -21,5 +21,12 @@ namespace JSNLog
             UtcDate = utcDate;
             JsonMessage = jsonMessage;
         }
+
+        public override string ToString()
+        {
+            return string.Format(
+                "Message: {0}, Logger: {1}, Level: {2}, UtcDate: {3}, JsonMessage: {4}, logRequestBase: {{{5}}}",
+                Message, Logger, Level, UtcDate, JsonMessage, base.ToString());
+        }
     }
 }

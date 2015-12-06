@@ -24,61 +24,6 @@ namespace JSNLog.LogHandling
         {
         }
 
-        internal class LogData
-        {
-            // ----- Processed data -----
-
-            public string Message { get; private set; }
-
-            // Client LoggerName and Level may have been overridden by JSNLog config in web.config.
-            // Final result of this is stored in properties below. 
-            public string LoggerName { get; private set; }
-            public Level Level { get; private set; }
-
-            // The level number. May not correspond directly with Level
-            // To get Level from LevelInt, first Level at or above LevelInt is used.
-            public int LevelInt { get; private set; }
-
-            // ----- Raw data -----
-
-            public string ClientLogMessage { get; private set; }
-            public int ClientLogLevel { get; private set; }
-            public string ClientLogLoggerName { get; private set; }
-            public string ClientLogRequestId { get; private set; }
-
-            public DateTime LogDateUtc { get; private set; }
-            public DateTime LogDateServerUtc { get; private set; }
-            public DateTime LogDate { get; private set; }
-            public DateTime LogDateServer { get; private set; }
-
-            public string UserAgent { get; private set; }
-            public string UserHostAddress { get; private set; }
-            public string LogRequestUrl { get; private set; }
-
-            public LogData(string message, string loggerName, Level level, int levelInt,
-                    string clientLogMessage, int clientLogLevel, string clientLogLoggerName, string clientLogRequestId,
-                    DateTime logDateUtc, DateTime logDateServerUtc, DateTime logDate, DateTime logDateServer,
-                    string userAgent, string userHostAddress, string logRequestUrl)
-            {
-                Message = message;
-                LoggerName = loggerName;
-                Level = level;
-                LevelInt = levelInt;
-
-                ClientLogMessage = clientLogMessage;
-                ClientLogLevel = clientLogLevel;
-                ClientLogLoggerName = clientLogLoggerName;
-                ClientLogRequestId = clientLogRequestId;
-                LogDateUtc = logDateUtc;
-                LogDateServerUtc = logDateServerUtc;
-                LogDate = logDate;
-                LogDateServer = logDateServer;
-                UserAgent = userAgent;
-                UserHostAddress = userHostAddress;
-                LogRequestUrl = logRequestUrl;
-            }
-        }
-
         /// <summary>
         /// Processes the incoming request. This method is not depended on the environment and so can be unit tested.
         /// Note that the incoming request may not be the POST request with log data.
@@ -146,15 +91,15 @@ namespace JSNLog.LogHandling
 
             // httpMethod must be POST
 
-            List<LogData> logDatas =
+            List<FinalLogData> logDatas =
                 ProcessLogRequestExec(json, logRequestBase, serverSideTimeUtc, jsnlogConfiguration);
 
             // ---------------------------------
             // Pass log data to Common Logging
 
-            foreach (LogData logData in logDatas)
+            foreach (FinalLogData logData in logDatas)
             {
-                logger.Log(logData.Level, logData.LoggerName, logData.Message);
+                logger.Log(logData);
             }
         }
 
@@ -166,10 +111,11 @@ namespace JSNLog.LogHandling
         /// <param name="json">JSON sent from client by AjaxAppender</param>
         /// <param name="serverSideTimeUtc">Current time in UTC</param>
         /// <param name="jsnlogConfiguration">Contains all config info</param>
-        internal static List<LogData> ProcessLogRequestExec(string json, LogRequestBase logRequestBase,
+        internal static List<FinalLogData> ProcessLogRequestExec(string json, LogRequestBase logRequestBase,
             DateTime serverSideTimeUtc, JsnlogConfiguration jsnlogConfiguration)
         {
-            List<LogData> logDatas = new List<LogData>();
+            var logDatas = new List<FinalLogData>();
+            FinalLogData logData = null;
 
             try
             {
@@ -180,7 +126,8 @@ namespace JSNLog.LogHandling
 
                 foreach (Object logItem in logItems)
                 {
-                    LogData logData = ProcessLogItem((Dictionary<string, Object>)logItem,
+                    logData = null; // in case ProcessLogItem throws exception
+                    logData = ProcessLogItem((Dictionary<string, Object>)logItem,
                         logRequestBase, serverSideTimeUtc, jsnlogConfiguration);
 
                     if (logData != null)
@@ -193,18 +140,16 @@ namespace JSNLog.LogHandling
             {
                 try
                 {
-                    string message =
-                        string.Format(
-                            "json: {0}, userAgent: {1}, userHostAddress: {2}, serverSideTimeUtc: {3}, url: {4}, exception: {5}",
-                            json, logRequestBase.UserAgent, logRequestBase.UserHostAddress, serverSideTimeUtc,
-                            logRequestBase.Url, e);
+                    string message = string.Format("Exception: {0}, json: {1}, FinalLogData: {{{2}}}, logRequestBase: {{{3}}}", e, json, logData, logRequestBase);
 
-                    var logData = new LogData(message, Constants.JSNLogInternalErrorLoggerName, Level.ERROR,
-                        5000, "", 5000, "", "", serverSideTimeUtc, serverSideTimeUtc,
-                        Utils.UtcToLocalDateTime(serverSideTimeUtc), Utils.UtcToLocalDateTime(serverSideTimeUtc),
-                        logRequestBase.UserAgent, logRequestBase.UserHostAddress, logRequestBase.Url);
+                    var internalErrorFinalLogData = new FinalLogData(null)
+                    {
+                        FinalMessage = message,
+                        FinalLogger = Constants.JSNLogInternalErrorLoggerName,
+                        FinalLevel = Level.ERROR
+                    };
 
-                    logDatas.Add(logData);
+                    logDatas.Add(internalErrorFinalLogData);
                 }
                 catch
                 {
@@ -214,7 +159,7 @@ namespace JSNLog.LogHandling
             return logDatas;
         }
 
-        private static LogData ProcessLogItem(Dictionary<string, Object> logItem, LogRequestBase logRequestBase,
+        private static FinalLogData ProcessLogItem(Dictionary<string, Object> logItem, LogRequestBase logRequestBase,
             DateTime serverSideTimeUtc, JsnlogConfiguration jsnlogConfiguration)
         {
             string serversideLoggerNameOverride = jsnlogConfiguration.serverSideLogger;
@@ -297,16 +242,7 @@ namespace JSNLog.LogHandling
             // If user wrote event handler that decided not to log the message, return null
             if (loggingEventArgs.Cancel) { return null; }
 
-            // ---------------
-
-            LogData logData = new LogData(
-                loggingEventArgs.FinalMessage, loggingEventArgs.FinalLogger, loggingEventArgs.FinalLevel, 
-                LevelUtils.LevelNumber(consolidatedLevel),
-                message, int.Parse(level), logger, logRequestBase.RequestId,
-                utcDate, serverSideTimeUtc, Utils.UtcToLocalDateTime(utcDate), Utils.UtcToLocalDateTime(serverSideTimeUtc),
-                logRequestBase.UserAgent, logRequestBase.UserHostAddress, logRequestBase.Url);
-
-            return logData;
+            return loggingEventArgs;
         }
 
         /// <summary>

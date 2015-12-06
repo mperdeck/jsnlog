@@ -39,5 +39,15 @@ namespace JSNLog
             Cookies = other.Cookies;
             Headers = other.Headers;
         }
+
+        public override string ToString()
+        {
+            return string.Format(
+                "UserAgent: {0}, UserHostAddress: {1}, RequestId: {2}, Url: {3}, QueryParameters: {4}, Cookies: {5}, Headers: {6}",
+                UserAgent, UserHostAddress, RequestId, Url, 
+                QueryParameters == null ? "null" : "not null",
+                Cookies == null ? "null" : "not null",
+                Headers == null ? "null" : "not null");
+        }
     }
 }

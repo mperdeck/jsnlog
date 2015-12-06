@@ -37,9 +37,9 @@ namespace JSNLog.Tests.UnitTests
                 LogEntries = new List<LogEntry>();
             }
 
-            public void Log(Level level, string loggerName, string message)
+            public void Log(FinalLogData finalLogData)
             {
-                LogEntries.Add(new LogEntry(level,loggerName, message));
+                LogEntries.Add(new LogEntry(finalLogData.FinalLevel, finalLogData.FinalLogger, finalLogData.FinalMessage));
             }
         }
 
