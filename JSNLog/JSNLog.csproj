@@ -122,7 +122,7 @@
     <Compile Include="LogHandling\LogRequest.cs" />
     <Compile Include="LogHandling\LogRequestBase.cs" />
     <Compile Include="PublicFacing\Configuration\JavascriptLogging.cs" />
-    <Compile Include="PublicFacing\Configuration\ILogger.cs" />
+    <Compile Include="PublicFacing\Configuration\IJSNLogLogger.cs" />
     <Compile Include="LogHandling\CommonLoggingLogger.cs" />
     <Compile Include="LogHandling\LoggerProcessor.cs" />
     <None Include="app.config" />
