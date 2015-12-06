@@ -54,7 +54,7 @@ namespace JSNLog.Tests.UnitTests
             LogResponse response = new LogResponse();
             TestLogger logger = new TestLogger();
 
-            TestUtils.SetConfigCache(configXml);
+            TestUtils.SetConfigCache(configXml, logger);
 
             // Act
 
@@ -62,7 +62,7 @@ namespace JSNLog.Tests.UnitTests
                 json, 
                 new LogRequestBase(userAgent, userHostAddress, requestId,url, null, null, null),
                 serverSideTimeUtc,
-                httpMethod, origin, response, logger);
+                httpMethod, origin, response);
 
             // Assert
 

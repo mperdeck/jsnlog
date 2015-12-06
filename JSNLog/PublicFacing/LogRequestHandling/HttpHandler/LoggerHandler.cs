@@ -51,12 +51,11 @@ namespace JSNLog
                 json = reader.ReadToEnd();
             }
 
-            ILogger logger = new CommonLoggingLogger();
             var logResponse = new LogResponse();
 
             LoggerProcessor.ProcessLogRequest(json, logRequestBase,
                 serverSideTimeUtc,
-                httpMethod, origin, logResponse, logger);
+                httpMethod, origin, logResponse);
 
             // Send dummy response. That way, the log request will not remain "pending"
             // in eg. Chrome dev tools.

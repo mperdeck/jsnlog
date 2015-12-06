@@ -104,14 +104,13 @@ namespace JSNLog.LogHandling
         /// <param name="response">
         /// Empty response object. This method can add headers, etc.
         /// </param>
-        /// <param name="logger">
-        /// Logger object, used to do the actual logging.
-        /// </param>
         internal static void ProcessLogRequest(string json, LogRequestBase logRequestBase,
             DateTime serverSideTimeUtc,
-            string httpMethod, string origin, LogResponse response, ILogger logger)
+            string httpMethod, string origin, LogResponse response)
         {
             JsnlogConfiguration jsnlogConfiguration = JavascriptLogging.GetJsnlogConfiguration();
+
+            ILogger logger = JavascriptLogging.GetLogger();
 
             if ((httpMethod != "POST") && (httpMethod != "OPTIONS"))
             {

@@ -181,11 +181,11 @@ namespace JSNLog.Tests.Logic
             return xe;
         }
 
-        internal static void SetConfigCache(string configXml)
+        internal static void SetConfigCache(string configXml, ILogger logger = null)
         {
             // Set config cache in JavascriptLogging to contents of xe
             XmlElement xe = TestUtils.ConfigToXe(configXml);
-            JavascriptLogging.SetJsnlogConfiguration(null);
+            JavascriptLogging.SetJsnlogConfiguration(null, logger);
             JavascriptLogging.GetJsnlogConfiguration(() => xe);
         }
 

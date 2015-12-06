@@ -6,6 +6,7 @@ using System.Xml;
 using JSNLog.Exceptions;
 using JSNLog.Infrastructure;
 using System.Text.RegularExpressions;
+using JSNLog.LogHandling;
 
 namespace JSNLog
 {
@@ -69,6 +70,7 @@ namespace JSNLog
         #region JsnlogConfiguration
 
         private static JsnlogConfiguration _jsnlogConfiguration = null;
+        private static ILogger _logger = new CommonLoggingLogger();
 
         // Seam used for unit testing. During unit testing, gets an xml element created by the test. 
         // During production get the jsnlog element from web.config.
@@ -96,7 +98,13 @@ namespace JSNLog
             return GetJsnlogConfiguration(() => XmlHelpers.RootElement());
         }
 
-        internal static void SetJsnlogConfiguration(Func<XmlElement> lxe, JsnlogConfiguration jsnlogConfiguration)
+        internal static ILogger GetLogger()
+        {
+            return _logger;
+        }
+
+        internal static void SetJsnlogConfiguration(
+            Func<XmlElement> lxe, JsnlogConfiguration jsnlogConfiguration, ILogger logger = null)
         {
             // Always allow setting the config to null, because GetJsnlogConfiguration retrieves web.config when config is null.
             if (jsnlogConfiguration != null)
@@ -109,11 +117,20 @@ namespace JSNLog
             }
 
             _jsnlogConfiguration = jsnlogConfiguration;
+
+            // Never allow setting the logger to null.
+            // If user only set the configuration (leaving logger at null), don't change the logger.
+
+            if (logger != null)
+            {
+                _logger = logger;
+            }
         }
 
-        public static void SetJsnlogConfiguration(JsnlogConfiguration jsnlogConfiguration)
+        public static void SetJsnlogConfiguration(
+            JsnlogConfiguration jsnlogConfiguration, ILogger logger = null)
         {
-            SetJsnlogConfiguration(() => XmlHelpers.RootElement(), jsnlogConfiguration);
+            SetJsnlogConfiguration(() => XmlHelpers.RootElement(), jsnlogConfiguration, logger);
         }
 
         #endregion

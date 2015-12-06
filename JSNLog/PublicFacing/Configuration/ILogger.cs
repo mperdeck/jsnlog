@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using JSNLog;
 
-namespace JSNLog.LogHandling
+namespace JSNLog
 {
-    internal interface ILogger
+    public interface ILogger
     {
         void Log(Level level, string loggerName, string message);
     }
