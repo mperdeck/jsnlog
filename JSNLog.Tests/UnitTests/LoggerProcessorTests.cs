@@ -53,10 +53,10 @@ namespace JSNLog.Tests.UnitTests
 { 'm': 'first message', 'n': 'a.b.c', 'l': 1500, 't': " + TestUtils.MsSince1970(_dtFirstLogUtc).ToString() + @"},
 { 'm': 'second message', 'n': 'a2.b3.c4', 'l': 3000, 't': " + TestUtils.MsSince1970(_dtSecondLogUtc).ToString() + @"}
 ] }";
-            // Same as _json1, but without 'm' field. This is invalid and should cause an internal error.
+            // Same as _json1, but with string 't' field which is not quoted. This is invalid JSON and should cause an internal error.
             _json4 = @"{
 'lg': [
-{ 'n': 'a.b.c', 'l': 1500, 't': " + TestUtils.MsSince1970(_dtFirstLogUtc).ToString() + @"}
+{ 'm': 'second message', 'n': 'a.b.c', 'l': 1500, 't': xxx}
 ] }";
 
             _json5 = @"{

@@ -20,8 +20,19 @@ namespace JSNLog.LogHandling
         /// * the requestId (key: r)
         /// * the array with log items (key: lg)
         /// </summary>
-        private class LogRequestData : Dictionary<string, Object>
+        
+        private class LogRequestSingleMsg
         {
+            public string m {get;set;}
+            public string n {get;set;}
+            public string l {get;set;}
+            public string t {get;set;}
+        }
+
+        private class LogRequestData
+        {
+            public string r {get;set;}
+            public ICollection<LogRequestSingleMsg> lg {get;set;}
         }
 
         /// <summary>
@@ -120,12 +131,11 @@ namespace JSNLog.LogHandling
             try
             {
                 LogRequestData logRequestData = LogMessageHelpers.DeserializeJson<LogRequestData>(json);
-                Object[] logItems = (Object[])(logRequestData["lg"]);
 
-                foreach (Object logItem in logItems)
+                foreach (var logItem in logRequestData.lg)
                 {
                     logData = null; // in case ProcessLogItem throws exception
-                    logData = ProcessLogItem((Dictionary<string, Object>)logItem,
+                    logData = ProcessLogItem(logItem,
                         logRequestBase, serverSideTimeUtc, jsnlogConfiguration);
 
                     if (logData != null)
@@ -157,7 +167,7 @@ namespace JSNLog.LogHandling
             return logDatas;
         }
 
-        private static FinalLogData ProcessLogItem(Dictionary<string, Object> logItem, LogRequestBase logRequestBase,
+        private static FinalLogData ProcessLogItem(LogRequestSingleMsg logItem, LogRequestBase logRequestBase,
             DateTime serverSideTimeUtc, JsnlogConfiguration jsnlogConfiguration)
         {
             string serversideLoggerNameOverride = jsnlogConfiguration.serverSideLogger;
@@ -176,12 +186,12 @@ namespace JSNLog.LogHandling
 
             // ----------------
 
-            string message = logItem["m"].ToString();
-            string logger = logItem["n"].ToString();
-            string level = logItem["l"].ToString(); // note that level as sent by the javascript is a number
+            string message = logItem.m;
+            string logger = logItem.n;
+            string level = logItem.l; // note that level as sent by the javascript is a number
 
             DateTime utcDate = DateTime.UtcNow;
-            string timestampMs = logItem["t"].ToString();
+            string timestampMs = logItem.t;
             try
             {
                 double ms = double.Parse(timestampMs);
