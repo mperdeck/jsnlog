@@ -4,11 +4,48 @@ using System.Linq;
 using System.Text;
 using System.Web.Script.Serialization;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace JSNLog.Infrastructure
 {
     internal class LogMessageHelpers
     {
+        public static T DeserializeJson<T>(string json)
+        {
+            T result = JsonConvert.DeserializeObject<T>(json);
+            return result;
+        }
+
+        public static bool IsPotentialJson(string msg)
+        {
+            string trimmedMsg = msg.Trim();
+            return (trimmedMsg.StartsWith("{") && trimmedMsg.EndsWith("}")); 
+        }
+
+        /// <summary>
+        /// Tries to deserialize msg.
+        /// If that works, returns the resulting object.
+        /// Otherwise returns msg itself (which is a string).
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public static Object DeserializeIfPossible(string msg)
+        {
+            try
+            {
+                if (IsPotentialJson(msg))
+                {
+                    Object result = DeserializeJson<Object>(msg);
+                    return result;
+                }
+            }
+            catch
+            {
+            }
+
+            return msg;
+        }
+
         /// <summary>
         /// Returns true if the msg contains a valid JSON string.
         /// </summary>
@@ -18,13 +55,12 @@ namespace JSNLog.Infrastructure
         {
             try
             {
-                if (msg.TrimStart().StartsWith("{"))
+                if (IsPotentialJson(msg))
                 {
                     // Try to deserialise the msg. If that does not throw an exception,
                     // decide that msg is a good JSON string.
 
-                    JavaScriptSerializer js = new JavaScriptSerializer();
-                    js.Deserialize<Dictionary<string, Object>>(msg);
+                    DeserializeJson<Dictionary<string, Object>>(msg);
 
                     return true;
                 }

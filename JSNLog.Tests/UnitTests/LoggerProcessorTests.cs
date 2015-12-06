@@ -435,8 +435,7 @@ dateFormat=""" + dateFormat + @"""
 
             string messageToBeLogged = actual.FirstOrDefault().FinalMessage;
 
-            var javaScriptSerializer = new JavaScriptSerializer();
-            var datesBag1 = javaScriptSerializer.Deserialize<DatesBag>(messageToBeLogged);
+            var datesBag1 = LogMessageHelpers.DeserializeJson<DatesBag>(messageToBeLogged);
             TestDatesEqual(datesBag1.utcDate, _dtFirstLogUtc);
             TestDatesEqual(datesBag1.utcDateServer, _dtServerUtc);
             TestDatesEqual(datesBag1.date, _dtFirstLog);

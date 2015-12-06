@@ -43,3 +43,4 @@ using System.Runtime.InteropServices;
 // Allow JSNLog.Tests to access internal definitions inside JSNLog
 // See https://msdn.microsoft.com/en-us/library/bb384966.aspx
 [assembly: InternalsVisibleTo("JSNLog.Tests")]
+[assembly: InternalsVisibleTo("JSNLog.AspNet5")]

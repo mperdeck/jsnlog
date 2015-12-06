@@ -67,17 +67,20 @@ namespace JSNLog.Tests
             Level = finalLogData.FinalLevel;
             LevelInt = -1;
 
-            ClientLogMessage = finalLogData.LogRequest.Message;
-            ClientLogLevel = int.Parse(finalLogData.LogRequest.Level);
-            ClientLogLoggerName = finalLogData.LogRequest.Logger;
-            ClientLogRequestId = finalLogData.LogRequest.RequestId;
-            LogDateUtc = finalLogData.LogRequest.UtcDate;
-            LogDateServerUtc = serverUtc;
-            LogDate = Utils.UtcToLocalDateTime(finalLogData.LogRequest.UtcDate);
-            LogDateServer = Utils.UtcToLocalDateTime(serverUtc);
-            UserAgent = finalLogData.LogRequest.UserAgent;
-            UserHostAddress = finalLogData.LogRequest.UserHostAddress;
-            LogRequestUrl = finalLogData.LogRequest.Url;
+            if (finalLogData.LogRequest != null)
+            {
+                ClientLogMessage = finalLogData.LogRequest.Message;
+                ClientLogLevel = int.Parse(finalLogData.LogRequest.Level);
+                ClientLogLoggerName = finalLogData.LogRequest.Logger;
+                ClientLogRequestId = finalLogData.LogRequest.RequestId;
+                LogDateUtc = finalLogData.LogRequest.UtcDate;
+                LogDateServerUtc = serverUtc;
+                LogDate = Utils.UtcToLocalDateTime(finalLogData.LogRequest.UtcDate);
+                LogDateServer = Utils.UtcToLocalDateTime(serverUtc);
+                UserAgent = finalLogData.LogRequest.UserAgent;
+                UserHostAddress = finalLogData.LogRequest.UserHostAddress;
+                LogRequestUrl = finalLogData.LogRequest.Url;
+            }
         }
     }
 }

@@ -119,9 +119,7 @@ namespace JSNLog.LogHandling
 
             try
             {
-                JavaScriptSerializer js = new JavaScriptSerializer();
-                LogRequestData logRequestData = js.Deserialize<LogRequestData>(json);
-
+                LogRequestData logRequestData = LogMessageHelpers.DeserializeJson<LogRequestData>(json);
                 Object[] logItems = (Object[])(logRequestData["lg"]);
 
                 foreach (Object logItem in logItems)
