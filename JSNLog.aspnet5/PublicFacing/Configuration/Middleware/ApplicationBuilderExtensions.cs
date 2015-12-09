@@ -8,9 +8,19 @@ namespace JSNLog
 {
     public static class ApplicationBuilderExtensions
     {
-        public static void UseJSNLog(this IApplicationBuilder builder)
+        /// <summary>
+        /// Normally, an ASP.NET 5 app would simply call this to insert JSNLog middleware into the pipeline.
+        /// Note that the logger is required, otherwise JSNLog can't hand off log messages.
+        /// It can live without a configuration though (it will use default settings).
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="logger"></param>
+        /// <param name="jsnlogConfiguration"></param>
+        public static void UseJSNLog(this IApplicationBuilder builder, 
+            IJSNLogLogger logger, JsnlogConfiguration jsnlogConfiguration = null)
         {
-            builder.UseMiddleware<JSNLogMiddlewareComponent>();
+            JavascriptLogging.SetJsnlogConfiguration(jsnlogConfiguration, logger);
+            builder.UseMiddleware<JSNLogMiddleware>();
         }
     }
 }
