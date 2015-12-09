@@ -65,7 +65,8 @@
     <Compile Include="PublicFacing\Configuration\JSNlogLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublicFacing\Configuration\Middleware\ApplicationBuilderExtensions.cs" />
-    <Compile Include="PublicFacing\LogRequestHandling\Middleware\JSNLogMiddlewareComponent.cs" />
+    <Compile Include="PublicFacing\LogRequestHandling\Middleware\JSNLogMiddleware.cs" />
+    <Compile Include="PublicFacing\TagHelpers\JavascriptLoggersConfigurationCodeTagHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
