@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using Microsoft.AspNet.Mvc..TagHelpers;
+using Microsoft.AspNet.Razor.TagHelpers;
 
-//namespace JSNLog
-//{
-//    public class JavascriptLoggersConfigurationCodeTagHelper: TagHelper
-//    {
-//    }
-//}
+namespace JSNLog
+{
+    public class JavascriptLoggersConfigurationCodeTagHelper : TagHelper
+    {
+    }
+}
