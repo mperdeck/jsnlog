@@ -29,10 +29,9 @@ namespace JSNLog.Infrastructure
         /// <param name="sb">
         /// All JavaScript needs to be written to this string builder.
         /// </param>
-        public void ProcessRoot(string requestId, StringBuilder sb)
+        public void ProcessRoot(string requestId, StringBuilder sb, string userIp)
         {
-            string userIp = HttpContext.Current.Request.UserHostAddress;
-            ProcessRootExec(sb, VirtualPathUtility.ToAbsolute, userIp, requestId ?? RequestId.Get(), true);
+            ProcessRootExec(sb, VirtualPathUtility.ToAbsolute, userIp, requestId, true);
         }
 
         // This version is not reliant on sitting in a web site, so can be unit tested.

@@ -195,7 +195,7 @@ namespace JSNLog.Tests.Logic
             SetConfigCache(configXml);
 
             var configProcessor = new ConfigProcessor();
-            configProcessor.ProcessRoot(requestId, sb);
+            configProcessor.ProcessRoot(requestId, sb, "");
             string js = sb.ToString();
 
             return js;

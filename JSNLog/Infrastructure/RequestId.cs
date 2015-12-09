@@ -3,6 +3,9 @@ using System.Web;
 
 namespace JSNLog.Infrastructure
 {
+    // This class only works in ASP.NET 4.x
+    // It cannot be used in ASP.NET 5+
+
     static class RequestId
     {
         /// <summary>

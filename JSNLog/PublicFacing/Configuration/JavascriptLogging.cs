@@ -7,6 +7,8 @@ using JSNLog.Exceptions;
 using JSNLog.Infrastructure;
 using System.Text.RegularExpressions;
 using JSNLog.LogHandling;
+using System.Web;
+using JSNLog.Infrastructure;
 
 namespace JSNLog
 {
@@ -25,8 +27,12 @@ namespace JSNLog
         {
             StringBuilder sb = new StringBuilder();
 
+            // This only works in ASP.NET 4.x
+            // Configure cannot be used in ASP.NET 5+
+
+            string userIp = HttpContext.Current.Request.UserHostAddress;
             var configProcessor = new ConfigProcessor();
-            configProcessor.ProcessRoot(requestId, sb);
+            configProcessor.ProcessRoot(requestId ?? JSNLog.Infrastructure.RequestId.Get(), sb, userIp);
 
             return sb.ToString();
         }
