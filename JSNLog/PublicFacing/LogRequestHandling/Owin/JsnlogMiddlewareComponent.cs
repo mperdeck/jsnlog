@@ -20,16 +20,10 @@ namespace JSNLog
     public class JsnlogMiddlewareComponent
     {
         AppFunc _next;
-        Regex _loggerUrlRegex;
 
-        public JsnlogMiddlewareComponent(AppFunc next): this(next, null)
-        {
-        }
-
-        public JsnlogMiddlewareComponent(AppFunc next, string loggerUrlRegex)
+        public JsnlogMiddlewareComponent(AppFunc next)
         {
             _next = next;
-            _loggerUrlRegex = new Regex(loggerUrlRegex ?? @"\.logger$");
         }
 
         public async Task Invoke(IDictionary<string, object> environment)
@@ -38,7 +32,8 @@ namespace JSNLog
 
             // If this is a logging request (based on its url), do the logging and don't pass on the request
             // to the rest of the pipeline.
-            if (_loggerUrlRegex.IsMatch(context.Request.Uri.OriginalString))
+
+            if (LoggingUrlHelpers.IsLoggingUrl(context.Request.Uri.OriginalString))
             {
                 ProcessRequest(context);
                 return;

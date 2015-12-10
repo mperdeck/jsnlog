@@ -89,6 +89,7 @@
     <Compile Include="ConfigurationSectionHandler.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Infrastructure\HttpHelpers.cs" />
+    <Compile Include="Infrastructure\LoggingUrlHelpers.cs" />
     <Compile Include="LogHandling\LogResponse.cs" />
     <Compile Include="PublicFacing\Configuration\FinalLogData.cs" />
     <Compile Include="PublicFacing\Configuration\JsnlogConfiguration\AjaxAppender.cs" />

@@ -31,13 +31,10 @@ namespace JSNLog
 
         public async Task Invoke(HttpContext context)
         {
-            //#####################
-            Regex _loggerUrlRegex = new Regex(@"\.logger$");
-
             // If this is a logging request (based on its url), do the logging and don't pass on the request
             // to the rest of the pipeline.
             string url = context.Request.GetDisplayUrl();
-            if (_loggerUrlRegex.IsMatch(url))
+            if (LoggingUrlHelpers.IsLoggingUrl(url))
             {
                 ProcessRequest(context);
                 return;

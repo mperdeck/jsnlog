@@ -157,6 +157,7 @@
     <Compile Include="UnitTests\LoggerProcessorTests.Http.Infrastructure.cs" />
     <Compile Include="UnitTests\LoggerProcessorTests.cs" />
     <Compile Include="UnitTests\ConfigCacheTests.cs" />
+    <Compile Include="UnitTests\LoggingUrlHelpersTests.cs" />
     <Compile Include="UnitTests\ProcessRootTests.cs" />
   </ItemGroup>
   <ItemGroup>
