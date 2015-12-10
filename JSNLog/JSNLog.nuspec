@@ -46,6 +46,7 @@
           <dependency id="Microsoft.AspNet.Http.Abstractions" />
           <dependency id="Microsoft.Extensions.Logging" />
           <dependency id="Microsoft.AspNet.Http.Extensions" />
+          <dependency id="Microsoft.AspNet.Mvc.TagHelpers" />
 
           <dependency id="Newtonsoft.Json" version="7.0.1" />
           <dependency id="Common.Logging" version="3.0.0" />

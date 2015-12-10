@@ -7,7 +7,27 @@ using Microsoft.AspNet.Razor.TagHelpers;
 
 namespace JSNLog
 {
+    [HtmlTargetElement("jl-javascript-logging-configuration-code", Attributes = RequestIdAttributeName)]
     public class JavascriptLoggersConfigurationCodeTagHelper : TagHelper
     {
+        private const string RequestIdAttributeName = "requestid";
+
+        [HtmlAttributeName(RequestIdAttributeName)]
+        public string RequestId { get; set; }
+
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+
+            if (output == null)
+            {
+                throw new ArgumentNullException("output");
+            }
+
+            output.Content.SetContent("xxxxxxxxxxxxxxx");
+        }
     }
 }
