@@ -97,13 +97,25 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.Formatters.Json.6.0.0-rc1-final\lib\net451\Microsoft.AspNet.Mvc.Formatters.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Mvc.Razor, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.Razor.6.0.0-rc1-final\lib\net451\Microsoft.AspNet.Mvc.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Mvc.Razor.Host, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.Razor.Host.6.0.0-rc1-final\lib\net451\Microsoft.AspNet.Mvc.Razor.Host.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Mvc.TagHelpers, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.TagHelpers.6.0.0-rc1-final\lib\net451\Microsoft.AspNet.Mvc.TagHelpers.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Mvc.ViewFeatures, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.ViewFeatures.6.0.0-rc1-final\lib\net451\Microsoft.AspNet.Mvc.ViewFeatures.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.PageExecutionInstrumentation.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.PageExecutionInstrumentation.Interfaces.1.0.0-rc1-final\lib\net451\Microsoft.AspNet.PageExecutionInstrumentation.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Razor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -113,6 +125,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Razor.Runtime.4.0.0-rc1-final\lib\net451\Microsoft.AspNet.Razor.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Razor.Runtime.Precompilation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.Runtime.Precompilation.4.0.0-rc1-final\lib\net451\Microsoft.AspNet.Razor.Runtime.Precompilation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Routing, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Routing.1.0.0-rc1-final\lib\net451\Microsoft.AspNet.Routing.dll</HintPath>
@@ -121,9 +137,25 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebUtilities.1.0.0-rc1-final\lib\net451\Microsoft.AspNet.WebUtilities.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CodeAnalysis, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.CodeAnalysis.Common.1.1.0-rc1-20151109-01\lib\net45\Microsoft.CodeAnalysis.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.1.1.0-rc1-20151109-01\lib\net45\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Dnx.Compilation.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Dnx.Compilation.Abstractions.1.0.0-rc1-final\lib\net451\Microsoft.Dnx.Compilation.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dnx.Compilation.CSharp.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Dnx.Compilation.CSharp.Abstractions.1.0.0-rc1-final\lib\net451\Microsoft.Dnx.Compilation.CSharp.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dnx.Compilation.CSharp.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Dnx.Compilation.CSharp.Common.1.0.0-rc1-final\lib\net451\Microsoft.Dnx.Compilation.CSharp.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -147,6 +179,10 @@
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
       <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0-rc1-final\lib\net451\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileSystemGlobbing, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Extensions.FileSystemGlobbing.1.0.0-rc1-final\lib\net451\Microsoft.Extensions.FileSystemGlobbing.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Localization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -189,6 +225,7 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Collections" />
     <Reference Include="System.Collections.Concurrent" />
     <Reference Include="System.Collections.Immutable, Version=1.1.37.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -201,8 +238,14 @@
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.0.0-beta-23516\lib\portable-net45+win8+wp8+wpa81\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.IO" />
+    <Reference Include="System.Reflection.Metadata, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Reflection.Metadata.1.1.0\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Text.Encoding" />
+    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -210,6 +253,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\HttpExtensions.cs" />
     <Compile Include="PublicFacing\Configuration\JSNlogLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublicFacing\Configuration\Middleware\ApplicationBuilderExtensions.cs" />

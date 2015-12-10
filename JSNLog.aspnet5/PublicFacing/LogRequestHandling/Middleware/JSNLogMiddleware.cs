@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
 using System.Text.RegularExpressions;
-using Microsoft.AspNet.Http.Extensions;
+// Nuget cannot find this package! using Microsoft.AspNet.Http.Extensions;
+using JSNLog.AspNet5.Infrastructure;
 using Microsoft.Extensions.Primitives;
 using JSNLog.Infrastructure;
 using JSNLog.LogHandling;
@@ -90,12 +91,12 @@ namespace JSNLog
             // http://www.acnenomor.com/307387p1/how-do-i-setup-my-ajax-post-request-to-prevent-no-element-found-on-empty-response
             // http://stackoverflow.com/questions/975929/firefox-error-no-element-found/976200#976200
 
-            ToOwinResponse(response, context.Response);
+            ToAspNet5Response(response, context.Response);
             context.Response.ContentType = "text/plain";
             context.Response.ContentLength = 0;
         }
 
-        private void ToOwinResponse(LogResponse logResponse, HttpResponse owinResponse)
+        private void ToAspNet5Response(LogResponse logResponse, HttpResponse owinResponse)
         {
             owinResponse.StatusCode = logResponse.StatusCode;
 
