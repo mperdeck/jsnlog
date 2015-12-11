@@ -28,7 +28,7 @@ namespace JSNLog.Tests.UnitTests
             }
         }
 
-        private class TestLogger : IJSNLogLogger
+        private class TestLogger : ILoggingAdapter
         {
             public List<LogEntry> LogEntries { get; set; }
 

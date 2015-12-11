@@ -7,7 +7,7 @@ using JSNLog.Infrastructure;
 
 namespace JSNLog
 {
-    public class JSNlogLogger : IJSNLogLogger
+    public class JSNlogLogger : ILoggingAdapter
     {
         private ILoggerFactory _loggerFactory;
 

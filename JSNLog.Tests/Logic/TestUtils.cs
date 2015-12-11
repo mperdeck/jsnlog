@@ -181,7 +181,7 @@ namespace JSNLog.Tests.Logic
             return xe;
         }
 
-        internal static void SetConfigCache(string configXml, IJSNLogLogger logger = null)
+        internal static void SetConfigCache(string configXml, ILoggingAdapter logger = null)
         {
             // Set config cache in JavascriptLogging to contents of xe
             XmlElement xe = TestUtils.ConfigToXe(configXml);

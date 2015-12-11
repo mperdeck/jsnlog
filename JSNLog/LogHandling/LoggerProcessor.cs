@@ -66,7 +66,7 @@ namespace JSNLog.LogHandling
         {
             JsnlogConfiguration jsnlogConfiguration = JavascriptLogging.GetJsnlogConfiguration();
 
-            IJSNLogLogger logger = JavascriptLogging.GetLogger();
+            ILoggingAdapter logger = JavascriptLogging.GetLogger();
 
             if ((httpMethod != "POST") && (httpMethod != "OPTIONS"))
             {

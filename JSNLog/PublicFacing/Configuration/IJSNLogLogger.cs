@@ -6,7 +6,7 @@ using JSNLog;
 
 namespace JSNLog
 {
-    public interface IJSNLogLogger
+    public interface ILoggingAdapter
     {
         void Log(FinalLogData finalLogData);
     }

@@ -76,7 +76,7 @@ namespace JSNLog
         #region JsnlogConfiguration
 
         private static JsnlogConfiguration _jsnlogConfiguration = null;
-        private static IJSNLogLogger _logger = new CommonLoggingLogger();
+        private static ILoggingAdapter _logger = new CommonLoggingAdapter();
 
         // Seam used for unit testing. During unit testing, gets an xml element created by the test. 
         // During production get the jsnlog element from web.config.
@@ -104,13 +104,13 @@ namespace JSNLog
             return GetJsnlogConfiguration(() => XmlHelpers.RootElement());
         }
 
-        internal static IJSNLogLogger GetLogger()
+        internal static ILoggingAdapter GetLogger()
         {
             return _logger;
         }
 
         internal static void SetJsnlogConfiguration(
-            Func<XmlElement> lxe, JsnlogConfiguration jsnlogConfiguration, IJSNLogLogger logger = null)
+            Func<XmlElement> lxe, JsnlogConfiguration jsnlogConfiguration, ILoggingAdapter logger = null)
         {
             // Always allow setting the config to null, because GetJsnlogConfiguration retrieves web.config when config is null.
             if (jsnlogConfiguration != null)
@@ -134,9 +134,9 @@ namespace JSNLog
         }
 
         public static void SetJsnlogConfiguration(
-            JsnlogConfiguration jsnlogConfiguration, IJSNLogLogger logger = null)
+            JsnlogConfiguration jsnlogConfiguration, ILoggingAdapter loggingAdapter = null)
         {
-            SetJsnlogConfiguration(() => XmlHelpers.RootElement(), jsnlogConfiguration, logger);
+            SetJsnlogConfiguration(() => XmlHelpers.RootElement(), jsnlogConfiguration, loggingAdapter);
         }
 
         #endregion
