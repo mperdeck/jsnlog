@@ -8,7 +8,6 @@ using JSNLog.Infrastructure;
 using System.Text.RegularExpressions;
 using JSNLog.LogHandling;
 using System.Web;
-using JSNLog.Infrastructure;
 
 namespace JSNLog
 {
