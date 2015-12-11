@@ -52,6 +52,16 @@ namespace JSNLog.Infrastructure
             return value;
         }
 
+        public static string SafeToString<T>(this T obj)
+        {
+            if (obj == null)
+            {
+                return "";
+            }
+
+            return obj.ToString();
+        }
+
         /// <summary>
         /// The given url may be virtual (starts with ~). This method returns a version of the url that is not virtual.
         /// </summary>
