@@ -46,13 +46,16 @@ namespace JSNLog.Infrastructure
                 return true;
             }
 
-            foreach (AjaxAppender ajaxAppender in jsnlogConfiguration.ajaxAppenders)
+            if (jsnlogConfiguration.ajaxAppenders != null)
             {
-                string resolvedAppenderUrl = ResolvedAppenderUrl(
-                    Constants.DefaultDefaultAjaxUrl, jsnlogConfiguration.defaultAjaxUrl, ajaxAppender.url);
-                if (UrlMatchesAppenderUrl(resolvedAppenderUrl, url))
+                foreach (AjaxAppender ajaxAppender in jsnlogConfiguration.ajaxAppenders)
                 {
-                    return true;
+                    string resolvedAppenderUrl = ResolvedAppenderUrl(
+                        Constants.DefaultDefaultAjaxUrl, jsnlogConfiguration.defaultAjaxUrl, ajaxAppender.url);
+                    if (UrlMatchesAppenderUrl(resolvedAppenderUrl, url))
+                    {
+                        return true;
+                    }
                 }
             }
 

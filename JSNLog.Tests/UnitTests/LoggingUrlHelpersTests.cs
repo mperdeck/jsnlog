@@ -26,6 +26,16 @@ namespace JSNLog.Tests.UnitTests
         }
 
         [TestMethod]
+        public void IsLoggingUrl_NoUrlsConfigured_CodeConfig()
+        {
+            JavascriptLogging.SetJsnlogConfiguration(null, null);
+
+            Assert.IsTrue(LoggingUrlHelpers.IsLoggingUrl("/jsnlog.logger"));
+            Assert.IsTrue(LoggingUrlHelpers.IsLoggingUrl("http://abc.com/jsnlog.logger"));
+            Assert.IsFalse(LoggingUrlHelpers.IsLoggingUrl("http://abc.com/jsnlog.css"));
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void IsLoggingUrl_NoUrl()
         {
