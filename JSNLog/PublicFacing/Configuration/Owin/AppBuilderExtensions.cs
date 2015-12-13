@@ -8,9 +8,9 @@ namespace JSNLog
 {
     public static class AppBuilderExtensions
     {
-        public static void UseJSNLog(this IAppBuilder app, string loggerUrlRegex = null)
+        public static void UseJSNLog(this IAppBuilder app)
         {
-            app.Use<JsnlogMiddlewareComponent>(loggerUrlRegex);
+            app.Use<JsnlogMiddlewareComponent>();
         }
     }
 }
