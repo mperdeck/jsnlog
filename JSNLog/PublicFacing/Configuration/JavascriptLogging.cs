@@ -9,6 +9,8 @@ using System.Text.RegularExpressions;
 using JSNLog.LogHandling;
 using System.Web;
 
+using Autofac;
+
 namespace JSNLog
 {
     public class JavascriptLogging
@@ -75,7 +77,7 @@ namespace JSNLog
         #region JsnlogConfiguration
 
         private static JsnlogConfiguration _jsnlogConfiguration = null;
-        private static ILoggingAdapter _logger = new CommonLoggingAdapter();
+        private static ILoggingAdapter _logger; // = new CommonLoggingAdapter();
 
         // Seam used for unit testing. During unit testing, gets an xml element created by the test. 
         // During production get the jsnlog element from web.config.
@@ -105,7 +107,8 @@ namespace JSNLog
 
         internal static ILoggingAdapter GetLogger()
         {
-            return _logger;
+
+            return GlobalContainer.Instance.Resolve<ILoggingAdapter>(); ;
         }
 
         internal static void SetJsnlogConfiguration(

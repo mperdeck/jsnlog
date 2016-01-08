@@ -7,7 +7,7 @@ using System.Collections.Specialized;
 
 namespace JSNLog.Infrastructure
 {
-    internal static class Utils
+    public static class Utils
     {
         /// <summary>
         /// Takes a DateTime in UTC and returns the same timestamp in local time.

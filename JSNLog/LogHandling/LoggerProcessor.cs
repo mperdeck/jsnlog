@@ -12,7 +12,7 @@ using JSNLog.Exceptions;
 
 namespace JSNLog.LogHandling
 {
-    internal class LoggerProcessor
+    public class LoggerProcessor
     {
         /// <summary>
         /// The log data sent in a single log request from the client.
@@ -60,7 +60,7 @@ namespace JSNLog.LogHandling
         /// <param name="response">
         /// Empty response object. This method can add headers, etc.
         /// </param>
-        internal static void ProcessLogRequest(string json, LogRequestBase logRequestBase,
+        public static void ProcessLogRequest(string json, LogRequestBase logRequestBase,
             DateTime serverSideTimeUtc,
             string httpMethod, string origin, LogResponse response)
         {

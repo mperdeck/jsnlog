@@ -39,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Common.Logging">
       <HintPath>..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
@@ -92,6 +96,7 @@
     <Compile Include="Infrastructure\LoggingUrlHelpers.cs" />
     <Compile Include="LogHandling\LogResponse.cs" />
     <Compile Include="PublicFacing\Configuration\FinalLogData.cs" />
+    <Compile Include="PublicFacing\Configuration\GlobalContainer.cs" />
     <Compile Include="PublicFacing\Configuration\JsnlogConfiguration\AjaxAppender.cs" />
     <Compile Include="PublicFacing\Configuration\JsnlogConfiguration\Appender.cs" />
     <Compile Include="PublicFacing\Configuration\JsnlogConfiguration\ConsoleAppender.cs" />
