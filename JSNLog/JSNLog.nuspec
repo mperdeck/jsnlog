@@ -42,11 +42,6 @@
           <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
         </group>
         <group targetFramework="net451">
-          <!-- Copy of the net40 group, with ASP.NET 5 packages added -->
-          <dependency id="Microsoft.AspNet.Http.Abstractions" version="1.0.0-rc1-final" />
-          <dependency id="Microsoft.Extensions.Logging" version="1.0.0-rc1-final" />
-          <dependency id="Microsoft.AspNet.Http.Extensions" version="1.0.0-rc1-final" />
-          <dependency id="Microsoft.AspNet.Mvc.TagHelpers" version="6.0.0-rc1-final" />
 
           <dependency id="Newtonsoft.Json" version="7.0.1" />
           <dependency id="Common.Logging" version="3.0.0" />
