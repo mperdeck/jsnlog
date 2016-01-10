@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Xml;
 using JSNLog.Exceptions;
 using JSNLog.Infrastructure;
-using System.Text.RegularExpressions;
 using JSNLog.LogHandling;
+#if NET40
 using System.Web;
+#endif
 
 namespace JSNLog
 {
@@ -79,7 +78,13 @@ namespace JSNLog
 #region JsnlogConfiguration
 
         private static JsnlogConfiguration _jsnlogConfiguration = null;
+
+#if NET40
         private static ILoggingAdapter _logger = new CommonLoggingAdapter();
+#else
+        private static ILoggingAdapter _logger = null;
+#endif
+
 
         internal static JsnlogConfiguration GetJsnlogConfigurationWithoutWebConfig()
         {

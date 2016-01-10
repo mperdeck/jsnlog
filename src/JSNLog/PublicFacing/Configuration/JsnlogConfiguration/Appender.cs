@@ -13,19 +13,29 @@ namespace JSNLog
 {
     public class Appender : FilterOptions, ICanCreateJsonFields 
     {
+#if !DNXCORE50
         [XmlAttribute]
+#endif
         public string name { get; set; }
 
+#if !DNXCORE50
         [XmlAttribute]
+#endif
         public string sendWithBufferLevel { get; set; }
 
+#if !DNXCORE50
         [XmlAttribute]
+#endif
         public string storeInBufferLevel { get; set; }
 
+#if !DNXCORE50
         [XmlAttribute]
+#endif
         public uint bufferSize { get; set; }
 
+#if !DNXCORE50
         [XmlAttribute]
+#endif
         public uint batchSize { get; set; }
 
         public Appender()

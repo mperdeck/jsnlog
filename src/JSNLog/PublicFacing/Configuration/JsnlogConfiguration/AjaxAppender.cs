@@ -12,7 +12,9 @@ namespace JSNLog
 {
     public class AjaxAppender : Appender, ICanCreateJsonFields, ICanCreateElement
     {
+#if !DNXCORE50
         [XmlAttribute]
+#endif
         public string url { get; set; }
 
         public AjaxAppender()

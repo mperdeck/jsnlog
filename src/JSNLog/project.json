@@ -5,11 +5,9 @@
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
-
   "frameworks": {
     "dnx451": {
       "dependencies": {
-        "Common.Logging": "3.3.1",
         "Microsoft.AspNet.Http.Abstractions": "1.0.0-rc1-final",
         "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
         "Microsoft.AspNet.Http.Extensions": "1.0.0-rc1-final",
@@ -18,7 +16,6 @@
     },
     "dnxcore50": {
       "dependencies": {
-        "System.Runtime": "4.0.20",
         "System.Runtime.InteropServices": "4.0.20",
         "Microsoft.AspNet.Http.Abstractions": "1.0.0-rc1-final",
         "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
@@ -29,8 +26,17 @@
     "net40": {
       "dependencies": {
         "Common.Logging": "3.3.1",
-        "Microsoft.Owin": "2.1.0"
+        "Microsoft.Bcl.Async": "1.0.168",
+        "Microsoft.Owin": "2.1.0",
+        "WebActivatorEx": "2.1.0"
+      },
+      "frameworkAssemblies": {
+        "System.Web": "4.0.0.0",
+        "System.XML": "4.0.0.0"
       }
     }
+  },
+  "dependencies": {
+    "Newtonsoft.Json": "8.0.2"
   }
 }

@@ -2,15 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
-using System.Text.RegularExpressions;
-// Nuget cannot find this package! using Microsoft.AspNet.Http.Extensions;
-using JSNLog.AspNet5.Infrastructure;
+using JSNLog.Infrastructure.AspNet5;
 using Microsoft.Extensions.Primitives;
 using JSNLog.Infrastructure;
 using JSNLog.LogHandling;
