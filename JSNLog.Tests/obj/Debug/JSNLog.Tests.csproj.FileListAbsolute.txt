@@ -1,0 +1,6 @@
+D:\Dev\JSNLog\jsnlog\JSNLog.Tests\bin\Debug\JSNLog.Tests.dll
+D:\Dev\JSNLog\jsnlog\JSNLog.Tests\bin\Debug\JSNLog.Tests.pdb
+D:\Dev\JSNLog\jsnlog\JSNLog.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\Dev\JSNLog\jsnlog\JSNLog.Tests\obj\Debug\JSNLog.Tests.csprojResolveAssemblyReference.cache
+D:\Dev\JSNLog\jsnlog\JSNLog.Tests\obj\Debug\JSNLog.Tests.dll
+D:\Dev\JSNLog\jsnlog\JSNLog.Tests\obj\Debug\JSNLog.Tests.pdb

@@ -1,0 +1,36 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "JSNLog Class Library",
+  "authors": [ "mperdeck" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "frameworks": {
+    "dnx451": {
+      "dependencies": {
+        "Common.Logging": "3.3.1",
+        "Microsoft.AspNet.Http.Abstractions": "1.0.0-rc1-final",
+        "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
+        "Microsoft.AspNet.Http.Extensions": "1.0.0-rc1-final",
+        "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final"
+      }
+    },
+    "dnxcore50": {
+      "dependencies": {
+        "System.Runtime": "4.0.20",
+        "System.Runtime.InteropServices": "4.0.20",
+        "Microsoft.AspNet.Http.Abstractions": "1.0.0-rc1-final",
+        "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
+        "Microsoft.AspNet.Http.Extensions": "1.0.0-rc1-final",
+        "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final"
+      }
+    },
+    "net40": {
+      "dependencies": {
+        "Common.Logging": "3.3.1",
+        "Microsoft.Owin": "2.1.0"
+      }
+    }
+  }
+}
