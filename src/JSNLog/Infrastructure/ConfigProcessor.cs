@@ -22,7 +22,7 @@ namespace JSNLog.Infrastructure
         /// </param>
         public void ProcessRoot(string requestId, StringBuilder sb, string userIp)
         {
-            ProcessRootExec(sb, VirtualPathUtility.ToAbsolute, userIp, requestId, true);
+            ProcessRootExec(sb, HostingHelpers.VirtualToAbsolutePath, userIp, requestId, true);
         }
 
         // This version is not reliant on sitting in a web site, so can be unit tested.

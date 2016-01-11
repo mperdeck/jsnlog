@@ -83,7 +83,7 @@ namespace JSNLog.Infrastructure
                 return msg;
             }
 
-            return HttpUtility.JavaScriptStringEncode(msg, true);
+            return HtmlHelpers.JavaScriptStringEncode(msg, true);
         }
     }
 }

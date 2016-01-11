@@ -23,7 +23,7 @@ namespace JSNLog.ValueInfos
             }
 
             string resolvedUrl = Utils.AbsoluteUrl(text, _virtualToAbsoluteFunc);
-            return HttpUtility.JavaScriptStringEncode(resolvedUrl, true);
+            return HtmlHelpers.JavaScriptStringEncode(resolvedUrl, true);
         }
     }
 }

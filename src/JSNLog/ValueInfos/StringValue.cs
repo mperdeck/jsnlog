@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿
+using JSNLog.Infrastructure;
 
 namespace JSNLog.ValueInfos
 {
@@ -6,7 +7,7 @@ namespace JSNLog.ValueInfos
     {
         public string ToJavaScript(string text)
         {
-            return HttpUtility.JavaScriptStringEncode(text, true);
+            return HtmlHelpers.JavaScriptStringEncode(text, true);
         }
     }
 }

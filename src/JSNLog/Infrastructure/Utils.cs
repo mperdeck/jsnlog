@@ -16,10 +16,12 @@ namespace JSNLog.Infrastructure
         /// <returns></returns>
         public static DateTime UtcToLocalDateTime(DateTime utcTime)
         {
-            TimeZoneInfo localZone = TimeZoneInfo.Local;
-            DateTime localTime = TimeZoneInfo.ConvertTimeFromUtc(utcTime, localZone);
+            DateTime localTime = utcTime.ToLocalTime();
             return localTime;
         }
+
+#if NET40
+        // NameValueCollection is unknown in DNX environments
 
         public static Dictionary<string, string> ToDictionary(NameValueCollection nameValueCollection)
         {
@@ -32,6 +34,7 @@ namespace JSNLog.Infrastructure
 
             return result;
         }
+#endif
 
         public static Dictionary<string, string> ToDictionary(IEnumerable<KeyValuePair<string, string>> nameValueCollection)
         {
