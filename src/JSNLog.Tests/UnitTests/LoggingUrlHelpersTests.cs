@@ -38,6 +38,8 @@ namespace JSNLog.Tests.UnitTests
                 <jsnlog></jsnlog>
 ";
 
+            UnitTestHelpers.SetConfigCache(configXml, null);
+
             Exception ex = Assert.Throws<ArgumentNullException>(() => LoggingUrlHelpers.IsLoggingUrl(null));
         }
 

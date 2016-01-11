@@ -122,7 +122,7 @@ namespace JSNLog.Tests.UnitTests
 ";
 
             // Act and Assert
-            Exception ex = Assert.Throws<ConfigurationException>(() => RunTest(configXml));
+            Exception ex = Assert.Throws<WebConfigException>(() => RunTest(configXml));
         }
 
         [Fact]

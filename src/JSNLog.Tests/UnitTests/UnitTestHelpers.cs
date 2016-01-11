@@ -56,7 +56,9 @@ namespace JSNLog.Tests.UnitTests
 
             cp.ReferencedAssemblies.Add("system.dll");
             cp.ReferencedAssemblies.Add("system.xml.dll");
-            cp.ReferencedAssemblies.Add("JSNLog.dll");
+
+            // If it can't find JSNLog.dll, make sure that "Produce outputs on build" property of JSNLog project is checked.
+            cp.ReferencedAssemblies.Add(@"D:\Dev\JSNLog\jsnlog\artifacts\bin\JSNLog\Debug\dnx451\JSNLog.dll");
 
             cp.CompilerOptions = "/t:library";
             cp.GenerateInMemory = true;
@@ -70,7 +72,9 @@ namespace JSNLog.Tests.UnitTests
             sb.Append("namespace CSCodeEvaler{ \n");
             sb.Append("public class CSCodeEvaler{ \n");
             sb.Append("public object EvalCode(){\n");
+
             sb.Append("return " + sCSCode + "; \n");
+
             sb.Append("} \n");
             sb.Append("} \n");
             sb.Append("}\n");
