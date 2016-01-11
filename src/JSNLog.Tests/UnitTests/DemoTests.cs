@@ -770,13 +770,24 @@ new JsnlogConfiguration {
 
         private string CodeToHtml(string code)
         {
-            return HttpUtility.HtmlEncode(code.Trim().Replace("\t", "    "))
+            return HtmlEncode(code.Trim().Replace("\t", "    "))
                 .Replace(_strikeThroughStart, "<del>").Replace(_newCodeStart, "<span class='addedcode'>")
                 .Replace(_strikeThroughEnd, "</del>").Replace(_newCodeEnd, "</span>")
                 .Replace("JsnlogConfiguration", LinkedText("JsnlogConfiguration", _jsnlogUrl))
                 .Replace("&lt;jsnlog", "&lt;" + LinkedText("jsnlog", _jsnlogUrl));
         }
 
+        // Version of HttpUtility.HtmlEncode. Needed, because DNX451 doesn't have HttpUtility.HtmlEncode.
+        private string HtmlEncode(string unencodedText)
+        {
+            string encoded = unencodedText
+                .Replace("&", "&amp;")
+                .Replace("<", "&lt;")
+                .Replace(">", "&gt;")
+                .Replace("\"", "&quot;");
+
+            return encoded;
+        }
     }
 }
 

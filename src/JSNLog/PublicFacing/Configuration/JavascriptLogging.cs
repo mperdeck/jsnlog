@@ -92,7 +92,8 @@ namespace JSNLog
             return _jsnlogConfiguration ?? new JsnlogConfiguration();
         }
 
-#if NET40
+        // All unit tests run under DNX451
+#if NET40 || DNX451
 
         // Seam used for unit testing. During unit testing, gets an xml element created by the test. 
         // During production get the jsnlog element from web.config.
@@ -144,8 +145,8 @@ namespace JSNLog
             }
         }
 
-
-#if NET40
+        // All unit tests run under DNX451
+#if NET40 || DNX451
         internal static void SetJsnlogConfiguration(
             Func<XmlElement> lxe, JsnlogConfiguration jsnlogConfiguration, ILoggingAdapter logger = null)
         {

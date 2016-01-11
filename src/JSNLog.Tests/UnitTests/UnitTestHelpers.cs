@@ -42,18 +42,6 @@ namespace JSNLog.Tests.UnitTests
             JavascriptLogging.GetJsnlogConfiguration(() => xe);
         }
 
-        public static string SetupRequestIdTest(string requestId, string configXml)
-        {
-            var sb = new StringBuilder();
-            SetConfigCache(configXml);
-
-            var configProcessor = new ConfigProcessor();
-            configProcessor.ProcessRoot(requestId ?? JSNLog.Infrastructure.RequestId.Get(), sb, "");
-            string js = sb.ToString();
-
-            return js;
-        }
-
         /// <summary>
         /// Evalutes the passed in string as C# code.
         /// Returns the resulting value.
