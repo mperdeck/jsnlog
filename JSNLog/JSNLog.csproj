@@ -43,12 +43,6 @@
       <HintPath>..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Common.Logging">
-      <HintPath>..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Common.Logging.Core">
-      <HintPath>..\packages\Common.Logging.Core.3.0.0\lib\net40\Common.Logging.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Owin">
       <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net40\Microsoft.Owin.dll</HintPath>
     </Reference>
@@ -133,7 +127,6 @@
     <Compile Include="LogHandling\LogRequestBase.cs" />
     <Compile Include="PublicFacing\Configuration\JavascriptLogging.cs" />
     <Compile Include="PublicFacing\Configuration\ILoggingAdapter.cs" />
-    <Compile Include="LogHandling\CommonLoggingAdapter.cs" />
     <Compile Include="LogHandling\LoggerProcessor.cs" />
     <None Include="app.config" />
     <None Include="Properties\AssemblyInfo.cs.template" />
