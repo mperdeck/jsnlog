@@ -5,6 +5,7 @@ using Xunit;
 using JSNLog.LogHandling;
 using System.Xml;
 using JSNLog.Infrastructure;
+using JSNLog.Tests.Common;
 
 namespace JSNLog.Tests.UnitTests
 {
@@ -419,7 +420,7 @@ dateFormat=""" + dateFormat + @"""
                     'utcDate': '%utcDate', 'utcDateServer': '%utcDateServer', 'date': '%date', 'dateServer': '%dateServer' 
                     }""></jsnlog>";
 
-            XmlElement xe = UnitTestHelpers.ConfigToXe(configXml);
+            XmlElement xe = CommonTestHelpers.ConfigToXe(configXml);
 
             // Act
 
@@ -452,7 +453,7 @@ dateFormat=""" + dateFormat + @"""
                 <jsnlog></jsnlog>
 ";
 
-            XmlElement xe = UnitTestHelpers.ConfigToXe(configXml);
+            XmlElement xe = CommonTestHelpers.ConfigToXe(configXml);
 
             // Act
 
@@ -472,7 +473,7 @@ dateFormat=""" + dateFormat + @"""
         private void RunTest(string configXml, string json, string requestId, string userAgent, string userHostAddress,
             DateTime serverSideTimeUtc, string url, IEnumerable<LogData> expected)
         {
-            XmlElement xe = UnitTestHelpers.ConfigToXe(configXml);
+            XmlElement xe = CommonTestHelpers.ConfigToXe(configXml);
 
             // Act
 

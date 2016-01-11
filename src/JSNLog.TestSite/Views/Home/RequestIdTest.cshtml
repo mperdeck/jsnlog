@@ -1,0 +1,29 @@
+﻿@*
+TODO: reactivate when RequestIds used with DNX
+    
+@using JSNLog
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>RequestIdTest</title>
+    <script src="~/Scripts/jquery-2.1.0.min.js"></script>
+</head>
+<body>
+    @Html.Raw(JSNLog.Tests.Logic.TestUtils.SetupRequestIdTest(ViewBag.PassedInRequestId, 
+        @"<jsnlog productionLibraryPath=""~/Scripts/libs/jsnlog.js""></jsnlog>"))
+
+    <div id="IdFromController">@ViewBag.RequestId</div>
+    <div id="IdFromView">@JSNLog.JavascriptLogging.RequestId()</div>
+    <div id="IdFromJL"></div>
+
+    <script type="text/ecmascript">
+        $("#IdFromJL").html(JL.requestId);
+    </script>
+
+</body>
+</html>*@

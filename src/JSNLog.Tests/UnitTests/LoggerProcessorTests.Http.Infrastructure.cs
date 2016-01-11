@@ -8,6 +8,7 @@ using System.Xml;
 using System.IO;
 using System.Collections.Specialized;
 using JSNLog.Infrastructure;
+using JSNLog.Tests.Common;
 
 namespace JSNLog.Tests.UnitTests
 {
@@ -53,7 +54,7 @@ namespace JSNLog.Tests.UnitTests
             LogResponse response = new LogResponse();
             TestLogger logger = new TestLogger();
 
-            UnitTestHelpers.SetConfigCache(configXml, logger);
+            CommonTestHelpers.SetConfigCache(configXml, logger);
 
             // Act
 

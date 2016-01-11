@@ -8,6 +8,7 @@ using System.Xml;
 using JSNLog.Infrastructure;
 using System.Text;
 using JSNLog.Exceptions;
+using JSNLog.Tests.Common;
 
 namespace JSNLog.Tests.UnitTests
 {
@@ -263,7 +264,7 @@ namespace JSNLog.Tests.UnitTests
         {
             var sb = new StringBuilder();
 
-            UnitTestHelpers.SetConfigCache(configXml);
+            CommonTestHelpers.SetConfigCache(configXml);
 
             var configProcessor = new ConfigProcessor();
             configProcessor.ProcessRootExec(sb, s => s, "23.89.450.1", "req", true);

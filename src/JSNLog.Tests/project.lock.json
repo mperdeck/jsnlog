@@ -1010,6 +1010,18 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
+      "Selenium.WebDriver/2.48.2": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Drawing"
+        ],
+        "compile": {
+          "lib/net40/WebDriver.dll": {}
+        },
+        "runtime": {
+          "lib/net40/WebDriver.dll": {}
+        }
+      },
       "System.Collections/4.0.0": {
         "type": "package",
         "compile": {
@@ -2328,6 +2340,18 @@
         },
         "runtime": {
           "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Selenium.WebDriver/2.48.2": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Drawing"
+        ],
+        "compile": {
+          "lib/net40/WebDriver.dll": {}
+        },
+        "runtime": {
+          "lib/net40/WebDriver.dll": {}
         }
       },
       "System.Collections/4.0.0": {
@@ -3650,6 +3674,18 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
+      "Selenium.WebDriver/2.48.2": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Drawing"
+        ],
+        "compile": {
+          "lib/net40/WebDriver.dll": {}
+        },
+        "runtime": {
+          "lib/net40/WebDriver.dll": {}
+        }
+      },
       "System.Collections/4.0.0": {
         "type": "package",
         "compile": {
@@ -4769,6 +4805,19 @@
         "tools/install.ps1"
       ]
     },
+    "Selenium.WebDriver/2.48.2": {
+      "type": "package",
+      "sha512": "e+HQfiZygj4dBbhL3AiFgS9LYUbdtAbLn5edU+Zu0lqTAgQuhiAZbweJPZpOqxNVGzj3vztoZicaNO+m3PSftg==",
+      "files": [
+        "lib/net35/WebDriver.dll",
+        "lib/net35/WebDriver.xml",
+        "lib/net40/WebDriver.dll",
+        "lib/net40/WebDriver.xml",
+        "Selenium.WebDriver.2.48.2.nupkg",
+        "Selenium.WebDriver.2.48.2.nupkg.sha512",
+        "Selenium.WebDriver.nuspec"
+      ]
+    },
     "System.Collections/4.0.0": {
       "type": "package",
       "sha512": "i2vsGDIEbWdHcUSNDPKZP/ZWod6o740el7mGTCy0dqbCxQh74W4QoC+klUwPEtGEFuvzJ7bJgvwJqscosVNyZQ==",
@@ -5685,6 +5734,7 @@
   "projectFileDependencyGroups": {
     "": [
       "JSNLog >= 2.16.0",
+      "Selenium.WebDriver >= 2.48.2",
       "xunit >= 2.1.0",
       "xunit.runner.dnx >= 2.1.0-rc1-build204"
     ],

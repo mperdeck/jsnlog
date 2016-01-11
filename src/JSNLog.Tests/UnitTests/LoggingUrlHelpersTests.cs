@@ -1,6 +1,7 @@
 ﻿using System;
 using Xunit;
 using JSNLog.Infrastructure;
+using JSNLog.Tests.Common;
 
 namespace JSNLog.Tests.UnitTests
 {
@@ -14,7 +15,7 @@ namespace JSNLog.Tests.UnitTests
                 <jsnlog></jsnlog>
 ";
 
-            UnitTestHelpers.SetConfigCache(configXml, null);
+            CommonTestHelpers.SetConfigCache(configXml, null);
 
             Assert.True(LoggingUrlHelpers.IsLoggingUrl("/jsnlog.logger"));
             Assert.True(LoggingUrlHelpers.IsLoggingUrl("http://abc.com/jsnlog.logger"));
@@ -38,7 +39,7 @@ namespace JSNLog.Tests.UnitTests
                 <jsnlog></jsnlog>
 ";
 
-            UnitTestHelpers.SetConfigCache(configXml, null);
+            CommonTestHelpers.SetConfigCache(configXml, null);
 
             Exception ex = Assert.Throws<ArgumentNullException>(() => LoggingUrlHelpers.IsLoggingUrl(null));
         }
@@ -50,7 +51,7 @@ namespace JSNLog.Tests.UnitTests
                 <jsnlog defaultAjaxUrl=""/jsnlogger""></jsnlog>
 ";
 
-            UnitTestHelpers.SetConfigCache(configXml, null);
+            CommonTestHelpers.SetConfigCache(configXml, null);
 
             Assert.True(LoggingUrlHelpers.IsLoggingUrl("/jsnlogger"));
             Assert.True(LoggingUrlHelpers.IsLoggingUrl("/abc/def/jsnlogger"));
@@ -69,7 +70,7 @@ namespace JSNLog.Tests.UnitTests
 </jsnlog>
 ";
 
-            UnitTestHelpers.SetConfigCache(configXml, null);
+            CommonTestHelpers.SetConfigCache(configXml, null);
 
             Assert.True(LoggingUrlHelpers.IsLoggingUrl("/jsn2logger"));
             Assert.True(LoggingUrlHelpers.IsLoggingUrl("//abc.com/jsn2logger?a=b;c=d"));
@@ -90,7 +91,7 @@ namespace JSNLog.Tests.UnitTests
 </jsnlog>
 ";
 
-            UnitTestHelpers.SetConfigCache(configXml, null);
+            CommonTestHelpers.SetConfigCache(configXml, null);
 
             Assert.True(LoggingUrlHelpers.IsLoggingUrl("/jsn2logger"));
             Assert.True(LoggingUrlHelpers.IsLoggingUrl("//abc.com/jsn2logger?a=b;c=d"));
@@ -110,7 +111,7 @@ namespace JSNLog.Tests.UnitTests
 </jsnlog>
 ";
 
-            UnitTestHelpers.SetConfigCache(configXml, null);
+            CommonTestHelpers.SetConfigCache(configXml, null);
 
             Assert.True(LoggingUrlHelpers.IsLoggingUrl("/jsn2logger"));
             Assert.True(LoggingUrlHelpers.IsLoggingUrl("//abc.com/jsn2logger?a=b;c=d"));
@@ -132,7 +133,7 @@ namespace JSNLog.Tests.UnitTests
 </jsnlog>
 ";
 
-            UnitTestHelpers.SetConfigCache(configXml, null);
+            CommonTestHelpers.SetConfigCache(configXml, null);
 
             Assert.True(LoggingUrlHelpers.IsLoggingUrl("/jsn2logger"));
             Assert.True(LoggingUrlHelpers.IsLoggingUrl("//abc.com/jsn2logger?a=b;c=d"));

@@ -8,6 +8,7 @@ using System.Xml;
 using JSNLog.Infrastructure;
 using System.Text;
 using JSNLog.Exceptions;
+using JSNLog.Tests.Common;
 
 namespace JSNLog.Tests.UnitTests
 {
@@ -24,7 +25,7 @@ namespace JSNLog.Tests.UnitTests
 </jsnlog>
 ";
 
-            XmlElement xe = UnitTestHelpers.ConfigToXe(configXml);
+            XmlElement xe = CommonTestHelpers.ConfigToXe(configXml);
             JsnlogConfiguration jsnlogConfiguration = new JsnlogConfiguration();
 
             // Act
@@ -64,7 +65,7 @@ namespace JSNLog.Tests.UnitTests
                 <jsnlog maxMessages=""5"">
 </jsnlog>
 ";
-            XmlElement xe = UnitTestHelpers.ConfigToXe(configXml);
+            XmlElement xe = CommonTestHelpers.ConfigToXe(configXml);
             JavascriptLogging.SetJsnlogConfiguration(null);
             JavascriptLogging.GetJsnlogConfiguration(() => xe);
 

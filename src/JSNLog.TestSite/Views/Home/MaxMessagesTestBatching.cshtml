@@ -1,0 +1,44 @@
+﻿@using JSNLog.Tests.Logic
+
+<h2>MaxMessagesTests</h2>
+
+<!-- 
+    Test interplay between maxMessages and batching.
+    Batching overrides maxMessages, in that JSNLog could send a batch with 2 messages
+    even if maxMessages is 1. However, after that batch, no more messages will be sent.
+    Same for buffering.
+-->
+
+@Html.Raw(JSNLog.Tests.Logic.TestUtils.SetupTest(
+"235.1.99.12", "id123",
+@"
+<jsnlog maxMessages=""4"">
+    <ajaxAppender name=""da1"" />
+    <logger name="""" appenders=""da1"" batchSize=""3"" />
+    <logger name=""a"" appenders=""da1"" />
+    
+    <ajaxAppender name=""da2"" />
+    <logger name=""b"" appenders=""da2"" />
+    
+    <ajaxAppender name=""da3"" storeInBufferLevel=""2000"" level=""3000"" sendWithBufferLevel=""4000"" bufferSize=""2"" />
+    <logger name=""c"" appenders=""da3"" />
+</jsnlog>
+",
+new [] {
+    new T(3000, "a", 1),     // da1's batch size is 3, so won't attempt to send yet
+    new T(2000, "c", 2),    // message will be stored in buffer
+    new T(3000, "", 1),     // da1's batch size is 3, so won't attempt to send yet
+    new T(4000, "c", 2),    // message will be sent, together with message stored in buffer - count 2 toward maxMessages
+    new T(3000, "b", 3),    // No batching or buffering for da2, so this will be sent and count 1 towards maxMessages right away
+    new T(3000, "a", 1),    // Batch size for da1 is reached, so will send because maxMessages is now 1. Note it will send 3 messages in the batch.
+    new T(3000, "", 0),
+    new T(3000, "b", 0),
+    new T(4000, "c", 0),
+    new T(4000, "a", 0),
+    
+    new T(checkNbr: 1, checkAppender: "a0"),
+    new T(checkNbr: 2, checkAppender: "a2"),
+    new T(checkNbr: 3, checkAppender: "a1")
+}))
+
+

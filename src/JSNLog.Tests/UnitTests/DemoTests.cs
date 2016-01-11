@@ -9,6 +9,7 @@ using JSNLog.Infrastructure;
 using System.Text;
 using JSNLog.Exceptions;
 using System.IO;
+using JSNLog.Tests.Common;
 
 namespace JSNLog.Tests.UnitTests
 {
@@ -725,7 +726,7 @@ new JsnlogConfiguration {
         {
             // Testing to ensure xml and code are the same
 
-            XmlElement xe = UnitTestHelpers.ConfigToXe(CodeWithoutMeta(configXml));
+            XmlElement xe = CommonTestHelpers.ConfigToXe(CodeWithoutMeta(configXml));
             var jsnlogConfigurationFromXml = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
 
             JsnlogConfiguration jsnlogConfigurationFromCode = (JsnlogConfiguration)UnitTestHelpers.Eval(CodeWithoutMeta(csharp));

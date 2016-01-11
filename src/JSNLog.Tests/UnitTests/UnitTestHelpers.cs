@@ -8,6 +8,7 @@ using JSNLog.Infrastructure;
 using Microsoft.CSharp;
 using System.CodeDom.Compiler;
 using System.Reflection;
+using JSNLog.Tests.Common;
 
 namespace JSNLog.Tests.UnitTests
 {
@@ -23,23 +24,6 @@ namespace JSNLog.Tests.UnitTests
             TimeSpan ts = dtUtc - new DateTime(1970, 1, 1);
             Double result = ts.TotalMilliseconds;
             return result;
-        }
-
-        public static XmlElement ConfigToXe(string configXml)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(configXml);
-            XmlElement xe = (XmlElement)doc.DocumentElement;
-
-            return xe;
-        }
-
-        internal static void SetConfigCache(string configXml, ILoggingAdapter logger = null)
-        {
-            // Set config cache in JavascriptLogging to contents of xe
-            XmlElement xe = UnitTestHelpers.ConfigToXe(configXml);
-            JavascriptLogging.SetJsnlogConfiguration(null, logger);
-            JavascriptLogging.GetJsnlogConfiguration(() => xe);
         }
 
         /// <summary>
