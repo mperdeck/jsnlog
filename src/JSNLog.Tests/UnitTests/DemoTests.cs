@@ -13,22 +13,13 @@ using JSNLog.Tests.Common;
 
 namespace JSNLog.Tests.UnitTests
 {
-    
-    public class DemoTests
+    public class DemoTestsContext : IDisposable
     {
         // All tests here write a partial with the complete demo html.
         // The partials are written to directory:
-        private const string _demosDirectory = @"D:\Dev\JSNLog\jsnlog.website\WebSite\Views\Shared\Demos";
+        internal const string _demosDirectory = @"D:\Dev\JSNLog\jsnlog.website\WebSite\Views\Shared\Demos";
 
-        // >>>>>>>>>>>>>>>>>>>>>>>
-        // All files are removed from the Demos directory before the tests are run.
-        // If you run 1 test, you'll get only 1 file.
-        // Be sure to run ALL tests before publishing the web site.
-        // <<<<<<<<<<<<<<<<<<<<<<<<
-
-        // See https://xunit.github.io/docs/shared-context.html
-        // The class is recreated for each test, so ok to put stuff in constructor that needs to run at start of each test.
-        public DemoTests()
+        public DemoTestsContext()
         {
             // Delete all files in Demos directory
 
@@ -39,6 +30,19 @@ namespace JSNLog.Tests.UnitTests
                 file.Delete();
             }
         }
+
+        public void Dispose()
+        {
+        }
+    }
+
+    public class DemoTests : IClassFixture<DemoTestsContext>
+    {
+        // >>>>>>>>>>>>>>>>>>>>>>>
+        // All files are removed from the Demos directory before the tests are run.
+        // If you run 1 test, you'll get only 1 file.
+        // Be sure to run ALL tests before publishing the web site.
+        // <<<<<<<<<<<<<<<<<<<<<<<<
 
         // ---------------------------------------------------------------------------------
 
@@ -750,7 +754,7 @@ new JsnlogConfiguration {
             sb.AppendLine(@"");
             sb.AppendLine(@"</div></div>");
 
-            string path = Path.Combine(_demosDirectory, string.Format("_{0}.cshtml", demoId));
+            string path = Path.Combine(DemoTestsContext._demosDirectory, string.Format("_{0}.cshtml", demoId));
             string content = sb.ToString();
 
             bool fileExists = File.Exists(path);
