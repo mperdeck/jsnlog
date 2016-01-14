@@ -6,30 +6,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Razor.TagHelpers;
+using Microsoft.AspNet.Http;
 
 namespace JSNLog
 {
-    [HtmlTargetElement("jl-javascript-logging-configuration-code", Attributes = RequestIdAttributeName)]
-    public class JavascriptLoggersConfigurationCodeTagHelper : TagHelper
+    public class JlJavascriptLoggerDefinitionsTagHelper : TagHelper
     {
-        private const string RequestIdAttributeName = "requestid";
-
-        [HtmlAttributeName(RequestIdAttributeName)]
+        // Can be passed via <jl-javascript-logger-definitions request-id="..." />. 
+        // Pascal case gets translated into lower-kebab-case.
         public string RequestId { get; set; }
+
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public JlJavascriptLoggerDefinitionsTagHelper(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException("context");
-            }
+            output.TagName = ""; // Remove the jl-javascript-logger-definitions tag completely
 
-            if (output == null)
-            {
-                throw new ArgumentNullException("output");
-            }
+            HttpContext httpContext = _httpContextAccessor.HttpContext;
+            string JSCode = httpContext.Configure(RequestId);
 
-            output.Content.SetContent("xxxxxxxxxxxxxxx");
+            output.Content.SetHtmlContent(JSCode);
+
+            output.TagMode = TagMode.StartTagAndEndTag;
         }
     }
 }
