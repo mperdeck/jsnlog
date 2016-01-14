@@ -163,9 +163,6 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Content Include="..\..\jsnlog.js\jsnlog.js">
-      <Link>Scripts\libs\jsnlog.js</Link>
-    </Content>
     <Content Include="Global.asax" />
     <Content Include="Html\exceptiontests.html" />
     <Content Include="Html\requirejstest.html" />
@@ -193,6 +190,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Scripts\libs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

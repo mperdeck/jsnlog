@@ -39,12 +39,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging">
-      <HintPath>..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Common.Logging.Core">
-      <HintPath>..\packages\Common.Logging.Core.3.0.0\lib\net40\Common.Logging.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Owin">
       <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net40\Microsoft.Owin.dll</HintPath>
     </Reference>
@@ -57,9 +51,9 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -90,6 +84,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Infrastructure\HttpHelpers.cs" />
     <Compile Include="Infrastructure\LoggingUrlHelpers.cs" />
+    <Compile Include="LogHandling\DefaultEmptyLogger.cs" />
     <Compile Include="LogHandling\LogResponse.cs" />
     <Compile Include="PublicFacing\Configuration\FinalLogData.cs" />
     <Compile Include="PublicFacing\Configuration\JsnlogConfiguration\AjaxAppender.cs" />
@@ -128,7 +123,6 @@
     <Compile Include="LogHandling\LogRequestBase.cs" />
     <Compile Include="PublicFacing\Configuration\JavascriptLogging.cs" />
     <Compile Include="PublicFacing\Configuration\ILoggingAdapter.cs" />
-    <Compile Include="LogHandling\CommonLoggingAdapter.cs" />
     <Compile Include="LogHandling\LoggerProcessor.cs" />
     <None Include="app.config" />
     <None Include="Properties\AssemblyInfo.cs.template" />
@@ -151,9 +145,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dependencies\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="NuGet\readme.txt" />
   </ItemGroup>

@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace JSNLog.Infrastructure
 {
-    internal class LogMessageHelpers
+    public class LogMessageHelpers
     {
         public static T DeserializeJson<T>(string json)
         {

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JSNLog.LogHandling
 {
-    internal class LogResponse
+    public class LogResponse
     {
         private Dictionary<string, string> _headers = new Dictionary<string, string>();
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace JSNLog
 {
-    internal class LogRequestBase
+    public class LogRequestBase
     {
         public string UserAgent { get; private set; }
         public string UserHostAddress { get; private set; }
