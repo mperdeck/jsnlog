@@ -6,14 +6,14 @@ using JSNLog.Infrastructure;
 using JSNLog.LogHandling;
 #if NET40
 using System.Web;
+#else
+using Microsoft.AspNet.Http;
 #endif
 
 namespace JSNLog
 {
-    public class JavascriptLogging
+    public static class JavascriptLogging
     {
-#if NET40
-
         /// <summary>
         /// Call this method for every request to generate a script tag with JavaScript
         /// that configures all loggers and appenders, based on the jsnlog element in the web.config.
@@ -22,17 +22,23 @@ namespace JSNLog
         /// Request Id to be included in all logging requests sent by jsnlog.js from the client.
         /// If null, a new request id will be generated (the same one that will be returned from RequestId method).
         /// </param>
-        /// <returns></returns>
+        /// <returns>
+        /// A script tag with the JavaScript to do all configuration.
+        /// </returns>
+#if NET40
         public static string Configure(string requestId = null)
+        {
+            return HttpContext.Current.Configure(requestId);
+        }
+#endif
+
+        public static string Configure(this HttpContext httpContext, string requestId = null)
         {
             StringBuilder sb = new StringBuilder();
 
-            // This only works in ASP.NET 4.x
-            // Configure cannot be used in ASP.NET 5+
-
-            string userIp = HttpContext.Current.Request.UserHostAddress;
+            string userIp = httpContext.GetUserIp();
             var configProcessor = new ConfigProcessor();
-            configProcessor.ProcessRoot(requestId ?? JSNLog.Infrastructure.RequestId.Get(), sb, userIp);
+            configProcessor.ProcessRoot(requestId ?? httpContext.GetRequestId(), sb, userIp);
 
             return sb.ToString();
         }
@@ -46,9 +52,16 @@ namespace JSNLog
         /// The site can call this method to get the request id for use in server side logging.
         /// </summary>
         /// <returns></returns>
+#if NET40
         public static string RequestId()
         {
-            string requestId = JSNLog.Infrastructure.RequestId.GetFromRequest();
+            return HttpContext.Current.RequestId();
+        }
+#endif
+
+        public static string RequestId(this HttpContext httpContext)
+        {
+            string requestId = httpContext.GetLogRequestId();
 
             // If requestId is empty string, regard that as a valid requestId.
             // jsnlog.js will send such request ids when the request id has not been
@@ -56,13 +69,11 @@ namespace JSNLog
             // a log request, because that would be confusing.
             if (requestId == null)
             {
-                requestId = JSNLog.Infrastructure.RequestId.Get();
+                requestId = httpContext.GetRequestId();
             }
 
             return requestId;
         }
-
-#endif
 
         // Definitions for the OnLogging event. Search for OnLogging to see how it is used.
         public static event LoggingHandler OnLogging;

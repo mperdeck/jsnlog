@@ -4,6 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
+#if NET40
+using System.Web;
+#else
+using Microsoft.AspNet.Http;
+#endif
+
 namespace JSNLog.Infrastructure
 {
     internal static class HttpHelpers
@@ -32,6 +38,16 @@ namespace JSNLog.Infrastructure
             {
                 return Encoding.UTF8;
             }
+        }
+
+        public static string GetUserIp(this HttpContext httpContext)
+        {
+#if NET40
+            string userIp = httpContext.Request.UserHostAddress;
+#else
+            string userIp = Utils.SafeToString(httpContext.Connection.RemoteIpAddress);
+#endif
+            return userIp;
         }
     }
 }

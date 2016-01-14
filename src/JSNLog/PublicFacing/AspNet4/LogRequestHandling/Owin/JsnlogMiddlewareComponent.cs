@@ -16,7 +16,7 @@ using System.Text.RegularExpressions;
 // Be sure to leave the namespace at JSNLog.
 namespace JSNLog
 {
-    // use an alias for the OWIN AppFunc:
+    using System.Web;    // use an alias for the OWIN AppFunc:
     using AppFunc = Func<IDictionary<string, object>, System.Threading.Tasks.Task>;
 
     public class JsnlogMiddlewareComponent
@@ -53,8 +53,8 @@ namespace JSNLog
 
             var logRequestBase = new LogRequestBase(
                 userAgent: headers.SafeGet("User-Agent"),
-                userHostAddress: context.Request.RemoteIpAddress,
-                requestId: JSNLog.Infrastructure.RequestId.GetFromRequest(),
+                userHostAddress: HttpContext.Current.GetUserIp(),
+                requestId: HttpContext.Current.GetLogRequestId(),
                 url: (urlReferrer ?? url).ToString(),
                 queryParameters: ToDictionary(context.Request.Query),
                 cookies: Utils.ToDictionary(context.Request.Cookies),

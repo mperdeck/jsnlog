@@ -51,8 +51,8 @@ namespace JSNLog
 
             var logRequestBase = new LogRequestBase(
                 userAgent: headers.SafeGet("User-Agent"),
-                userHostAddress: Utils.SafeToString(context.Connection.RemoteIpAddress),
-                requestId: headers.SafeGet(Constants.HttpHeaderRequestIdName),
+                userHostAddress: context.GetUserIp(),
+                requestId: context.GetLogRequestId(),
                 url: (urlReferrer ?? url).ToString(),
                 queryParameters: ToDictionary(context.Request.Query),
                 cookies: ToDictionary(context.Request.Cookies),

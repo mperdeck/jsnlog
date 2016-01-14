@@ -1,13 +1,12 @@
-﻿#if NET40
-
-using System;
+﻿using System;
+#if NET40
 using System.Web;
+#else
+using Microsoft.AspNet.Http;
+#endif
 
 namespace JSNLog.Infrastructure
 {
-    // This class only works in ASP.NET 4.x
-    // It cannot be used in ASP.NET 5+
-
     static class RequestId
     {
         /// <summary>
@@ -20,8 +19,9 @@ namespace JSNLog.Infrastructure
         /// http://blog.tatham.oddie.com.au/2012/02/07/code-request-correlation-in-asp-net/
         /// </summary>
         /// <returns></returns>
-        private static string CreateNewRequestId()
+        private static string IISRequestId(HttpContext httpContext)
         {
+#if NET40
             var provider = (IServiceProvider)HttpContext.Current;
             if (provider != null)
             {
@@ -35,27 +35,29 @@ namespace JSNLog.Infrastructure
                     }
                 }
             }
+#endif
 
-            // Couldn't get the GUID as used in in all ETW outputs by IIS. So, use a random GUID.
-            return Guid.NewGuid().ToString();
+            // DNX versions always return null
+
+            return null;
         }
 
-        /// <summary>
-        /// Gets an id, that is unique to this request. 
-        /// That is, for the same request, this method always returns the same string.
-        /// </summary>
-        /// <returns></returns>
-        public static string Get()
+        private static string GetRequestIdFromContext(HttpContext httpContext)
         {
-            string requestId = (string)(HttpContext.Current.Items[Constants.ContextItemRequestIdName]);
+#if NET40
+            return (string)(HttpContext.Current.Items[Constants.ContextItemRequestIdName]);
+#else
+            return httpContext.TraceIdentifier;
+#endif
+        }
 
-            if (requestId == null)
-            {
-                requestId = CreateNewRequestId();
-                HttpContext.Current.Items[Constants.ContextItemRequestIdName] = requestId;
-            }
-
-            return requestId;
+        private static void SetRequestIdInContext(HttpContext httpContext, string requestId)
+        {
+#if NET40
+            HttpContext.Current.Items[Constants.ContextItemRequestIdName] = requestId;
+#else
+            httpContext.TraceIdentifier = requestId;
+#endif
         }
 
         /// <summary>
@@ -66,13 +68,43 @@ namespace JSNLog.Infrastructure
         /// If the request id cannot be found, returns null.
         /// </summary>
         /// <returns></returns>
-        public static string GetFromRequest()
+        public static string GetLogRequestId(this HttpContext httpContext)
         {
-            var headers = HttpContext.Current.Request.Headers;
+            // Even though the code for NET40 and DNX is the same for getting the headers,
+            // the type of the headers variable will be different.
+            var headers = httpContext.Request.Headers;
+
             string requestId = headers[Constants.HttpHeaderRequestIdName];
+            return requestId;
+        }
+
+        private static string CreateNewRequestId()
+        {
+            return Guid.NewGuid().ToString();
+        }
+
+        /// <summary>
+        /// Gets an id, that is unique to this request. 
+        /// That is, for the same request, this method always returns the same string.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetRequestId(this HttpContext httpContext)
+        {
+            string requestId = GetRequestIdFromContext(httpContext);
+
+            if (requestId == null)
+            {
+                requestId = IISRequestId(httpContext);
+
+                if (requestId == null)
+                {
+                    requestId = CreateNewRequestId();
+                }
+
+                SetRequestIdInContext(httpContext, requestId);
+            }
+
             return requestId;
         }
     }
 }
-
-#endif
