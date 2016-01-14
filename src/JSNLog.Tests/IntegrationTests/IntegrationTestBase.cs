@@ -10,7 +10,18 @@ using System.Reflection;
 
 namespace JSNLog.Tests.IntegrationTests
 {
-    public class IntegrationTestBase : IDisposable
+    public class IntegrationTestBaseContext : IDisposable
+    {
+        public IntegrationTestBaseContext()
+        {
+        }
+
+        public void Dispose()
+        {
+        }
+    }
+
+    public class IntegrationTestBase : IClassFixture<IntegrationTestBaseContext>
     {
         protected static IWebDriver _driver = null;
 
@@ -23,8 +34,15 @@ namespace JSNLog.Tests.IntegrationTests
             // To use ChromeDriver, you must have chromedriver.exe. Download from
             // https://sites.google.com/a/chromium.org/chromedriver/downloads
 
-            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string dependenciesFolder = Path.Combine(assemblyFolder, "Dependencies");
+            //TODO: fix hard coding of path to dependencies folder
+            // The following code works fine in .Net 40, but in DNX451 executingAssemblyLocation is set to "".
+            // So hard code the path for now.
+            //var executingAssembly = Assembly.GetExecutingAssembly();
+            //var executingAssemblyLocation = executingAssembly.Location;
+            //string assemblyFolder = Path.GetDirectoryName(executingAssemblyLocation);
+            //string dependenciesFolder = Path.Combine(assemblyFolder, "Dependencies");
+
+            string dependenciesFolder = @"D:\Dev\JSNLog\jsnlog\src\JSNLog.Tests\IntegrationTests\Dependencies";
             _driver = new ChromeDriver(dependenciesFolder);
         }
 
