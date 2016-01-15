@@ -13,9 +13,6 @@
 
     <jl-javascript-logger-definitions request-id="@ViewBag.PassedInRequestId" />
 
-    @*############@Html.Raw(JSNLog.Tests.Logic.TestUtils.SetupRequestIdTest(httpContextAccessor.HttpContext, ViewBag.PassedInRequestId, 
-        ))*@
-
     <div id="IdFromController">@ViewBag.RequestId</div>
     <div id="IdFromView">@httpContextAccessor.HttpContext.RequestId()</div>
     <div id="IdFromJL"></div>

@@ -156,17 +156,5 @@ namespace JSNLog.Tests.Logic
 
             return js;
         }
-        //#####################
-        //public static string SetupRequestIdTest(HttpContext httpContext, string requestId, string configXml)
-        //{
-        //    var sb = new StringBuilder();
-        //    CommonTestHelpers.SetConfigCache(configXml);
-
-        //    var configProcessor = new ConfigProcessor();
-        //    configProcessor.ProcessRoot(requestId ?? httpContext.GetRequestId(), sb, "");
-        //    string js = sb.ToString();
-
-        //    return js;
-        //}
     }
 }
