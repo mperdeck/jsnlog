@@ -8,64 +8,68 @@ using System.Threading;
 
 namespace JSNLog.Tests.IntegrationTests
 {
-    public class JsTests : IntegrationTestBase
+    [Trait("Category", "JavaScript")]
+    public class JsTests : IClassFixture<JsTestsContext>
     {
-        public JsTests(): base()
+        JsTestsContext _context;
+
+        public JsTests(JsTestsContext context)
         {
+            _context = context;
         }
 
         [Fact]
         public void JSTests()
         {
-            OpenPage("/home/JSTests");
+            _context.OpenPage("/home/JSTests");
 
-            Assert.False(ErrorOnPage());
+            Assert.False(_context.ErrorOnPage());
         }
 
         [Fact]
         public void NotEnabledTest()
         {
-            OpenPage("/home/NotEnabledTest");
+            _context.OpenPage("/home/NotEnabledTest");
 
-            Assert.False(ErrorOnPage());
+            Assert.False(_context.ErrorOnPage());
         }
 
         [Fact]
         public void MaxMessagesTest()
         {
-            OpenPage("/home/MaxMessagesTest");
+            _context.OpenPage("/home/MaxMessagesTest");
 
-            Assert.False(ErrorOnPage());
+            Assert.False(_context.ErrorOnPage());
         }
 
         [Fact]
         public void MaxMessagesTest0()
         {
-            OpenPage("/home/MaxMessagesTest0");
+            _context.OpenPage("/home/MaxMessagesTest0");
 
-            Assert.False(ErrorOnPage());
+            Assert.False(_context.ErrorOnPage());
         }
 
         [Fact]
         public void MaxMessagesTestBatching()
         {
-            OpenPage("/home/MaxMessagesTest0");
+            _context.OpenPage("/home/MaxMessagesTest0");
 
-            Assert.False(ErrorOnPage());
+            Assert.False(_context.ErrorOnPage());
         }
 
         [Fact]
         public void RequestIdTest()
         {
-            OpenPage("/home/RequestIdTest");
+            _context.OpenPage("/home/RequestIdTest");
             string requestId1 = RequestIdFieldsConsistent(false);
 
-            OpenPage("/home/RequestIdTest");
+            _context.OpenPage("/home/RequestIdTest");
             string requestId2 = RequestIdFieldsConsistent(false);
 
             Assert.NotEqual(requestId1, requestId2); // , "request ids are equal, so are not unique per request"
 
-            OpenPage("/home/RequestIdTest/6789");
+            _context.OpenPage("/home/RequestIdTest/6789");
             string requestId3 = RequestIdFieldsConsistent(true);
 
             Assert.Equal(requestId3, "6789"); // , "JL.RequestId not the same as passed in"
@@ -74,27 +78,27 @@ namespace JSNLog.Tests.IntegrationTests
         [Fact]
         public void RequireJSTests()
         {
-            OpenPage("/Html/requirejstest.html");
+            _context.OpenPage("/Html/requirejstest.html");
 
             // Wait a bit to let the JavaScript on the page finish
             Thread.Sleep(1000);
 
-            Assert.False(ErrorOnPage());
+            Assert.False(_context.ErrorOnPage());
         }
 
         [Fact]
         public void ExceptionTests()
         {
-            OpenPage("/Html/exceptiontests.html");
+            _context.OpenPage("/Html/exceptiontests.html");
 
-            Assert.False(ErrorOnPage());
+            Assert.False(_context.ErrorOnPage());
         }
 
         private string RequestIdFieldsConsistent(bool jlCanDifferFromOthers)
         {
-            string idFromController = Driver.FindElement(By.Id("IdFromController")).Text;
-            string idFromView = Driver.FindElement(By.Id("IdFromView")).Text;
-            string idFromJL = Driver.FindElement(By.Id("IdFromJL")).Text;
+            string idFromController = _context.Driver.FindElement(By.Id("IdFromController")).Text;
+            string idFromView = _context.Driver.FindElement(By.Id("IdFromView")).Text;
+            string idFromJL = _context.Driver.FindElement(By.Id("IdFromJL")).Text;
 
             Assert.Equal(idFromView, idFromController); // , "request id not the same during request - 1"
             if (!jlCanDifferFromOthers)

@@ -5,12 +5,14 @@ using System.Web;
 using Xunit;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 
 namespace JSNLog.Tests.IntegrationTests
 {
-    public class IntegrationTestBaseContext : IDisposable
+    public class JsTestsContext : IDisposable
     {
         public IWebDriver Driver
         {
@@ -19,9 +21,39 @@ namespace JSNLog.Tests.IntegrationTests
 
         // The port 5000 is always used by kestrel
         private const string _baseUrl = "http://localhost:5000";
+        private readonly Process _serverProcess;
 
-        public IntegrationTestBaseContext()
+        public JsTestsContext()
         {
+            string jsnlogTestsProjectDirectory = Directory.GetCurrentDirectory();
+            string jsnlogTestSiteProjectDirectory = Path.Combine(jsnlogTestsProjectDirectory, "..", "JSNLog.TestSite");
+
+            _serverProcess = Process.Start(new ProcessStartInfo
+            {
+                FileName = "dnx.exe",
+                Arguments = "web",
+                WorkingDirectory = jsnlogTestSiteProjectDirectory
+            });
+
+            Thread.Sleep(3000);
+
+            if (_serverProcess.HasExited)
+            {
+                throw new Exception(string.Format("Kestrel server could not be started - exit code: {0}. Before running these tests, " +
+                    "make sure Kestrel is not already running.", 
+                    _serverProcess.ExitCode));
+            }
+
+
+
+//##################
+            //string processErrors = _serverProcess.StandardError.ReadToEnd();
+            //if (!string.IsNullOrEmpty(processErrors))
+            //{
+            //}
+
+            // ----------------------
+
             // To use ChromeDriver, you must have chromedriver.exe. Download from
             // https://sites.google.com/a/chromium.org/chromedriver/downloads
 
@@ -33,7 +65,7 @@ namespace JSNLog.Tests.IntegrationTests
             //string assemblyFolder = Path.GetDirectoryName(executingAssemblyLocation);
             //string dependenciesFolder = Path.Combine(assemblyFolder, "Dependencies");
 
-            string dependenciesFolder = @"D:\Dev\JSNLog\jsnlog\src\JSNLog.Tests\IntegrationTests\Dependencies";
+            string dependenciesFolder = Path.Combine(jsnlogTestsProjectDirectory, "IntegrationTests", "Dependencies");
             Driver = new ChromeDriver(dependenciesFolder);
         }
 
@@ -42,6 +74,7 @@ namespace JSNLog.Tests.IntegrationTests
             // Close the browser if there is no error. Otherwise leave open.
             if (!ErrorOnPage())
             {
+                _serverProcess.Kill();
                 Driver.Quit();
             }
         }
@@ -87,34 +120,6 @@ namespace JSNLog.Tests.IntegrationTests
             }
 
             return true;
-        }
-    }
-
-    public class IntegrationTestBase : IClassFixture<IntegrationTestBaseContext>
-    {
-        IntegrationTestBaseContext _context;
-
-        // Runs before each test runs
-        public IntegrationTestBase(IntegrationTestBaseContext context)
-        {
-            _context = context;
-        }
-
-        // Runs after each test has run
-        public void Dispose()
-        {
-        }
-
-        protected IWebDriver Driver { get { return _context.Driver; } }
-
-        public bool ErrorOnPage()
-        {
-            return _context.ErrorOnPage();
-        }
-
-        public void OpenPage(string relativeUrl)
-        {
-            _context.OpenPage(relativeUrl);
         }
     }
 }
