@@ -10,6 +10,8 @@ using Microsoft.AspNet.Http;
 
 namespace JSNLog
 {
+    // HtmlTargetElementAttribute is needed because this tag helper will be used in other projects
+    [HtmlTargetElement("jl-javascript-logger-definitions")]
     public class JlJavascriptLoggerDefinitionsTagHelper : TagHelper
     {
         // Can be passed via <jl-javascript-logger-definitions request-id="..." />. 
