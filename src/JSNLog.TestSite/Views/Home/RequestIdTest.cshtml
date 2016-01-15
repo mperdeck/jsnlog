@@ -3,18 +3,9 @@
 @using Microsoft.AspNet.Http;
 
 @inject IHttpContextAccessor httpContextAccessor
-@{
-    Layout = null;
-}
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>RequestIdTest</title>
-    <script src="~/Scripts/jquery-2.1.0.min.js"></script>
-</head>
-<body>
+    <h2>RequestIdTest</h2>
+
     @Html.Raw(JSNLog.Tests.Logic.TestUtils.SetupRequestIdTest(httpContextAccessor.HttpContext, ViewBag.PassedInRequestId, 
         @"<jsnlog productionLibraryPath=""~/Scripts/libs/jsnlog.js""></jsnlog>"))
 
@@ -25,6 +16,3 @@
     <script type="text/ecmascript">
         $("#IdFromJL").html(JL.requestId);
     </script>
-
-</body>
-</html>

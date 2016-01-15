@@ -100,6 +100,17 @@ namespace JSNLog.Tests.IntegrationTests
             {
                 return true;
             }
+            
+            try
+            {
+                // Throws NoSuchElementException if error-occurred not found
+                Driver.FindElement(By.Id("loaded"));
+            }
+            catch (NoSuchElementException)
+            {
+                // page never even loaded
+                return true;
+            }
 
             try
             {
