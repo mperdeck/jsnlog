@@ -92,9 +92,9 @@ namespace JSNLog.Tests.IntegrationTests
 
         private string RequestIdFieldsConsistent(bool jlCanDifferFromOthers)
         {
-            string idFromController = _driver.FindElement(By.Id("IdFromController")).Text;
-            string idFromView = _driver.FindElement(By.Id("IdFromView")).Text;
-            string idFromJL = _driver.FindElement(By.Id("IdFromJL")).Text;
+            string idFromController = Driver.FindElement(By.Id("IdFromController")).Text;
+            string idFromView = Driver.FindElement(By.Id("IdFromView")).Text;
+            string idFromJL = Driver.FindElement(By.Id("IdFromJL")).Text;
 
             Assert.Equal(idFromView, idFromController); // , "request id not the same during request - 1"
             if (!jlCanDifferFromOthers)

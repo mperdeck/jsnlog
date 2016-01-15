@@ -12,24 +12,15 @@ namespace JSNLog.Tests.IntegrationTests
 {
     public class IntegrationTestBaseContext : IDisposable
     {
-        public IntegrationTestBaseContext()
+        public IWebDriver Driver
         {
+            get; private set;
         }
-
-        public void Dispose()
-        {
-        }
-    }
-
-    public class IntegrationTestBase : IClassFixture<IntegrationTestBaseContext>
-    {
-        protected static IWebDriver _driver = null;
 
         // The port 5000 is always used by kestrel
         private const string _baseUrl = "http://localhost:5000";
 
-        // Runs before each test runs
-        public IntegrationTestBase()
+        public IntegrationTestBaseContext()
         {
             // To use ChromeDriver, you must have chromedriver.exe. Download from
             // https://sites.google.com/a/chromium.org/chromedriver/downloads
@@ -43,23 +34,22 @@ namespace JSNLog.Tests.IntegrationTests
             //string dependenciesFolder = Path.Combine(assemblyFolder, "Dependencies");
 
             string dependenciesFolder = @"D:\Dev\JSNLog\jsnlog\src\JSNLog.Tests\IntegrationTests\Dependencies";
-            _driver = new ChromeDriver(dependenciesFolder);
+            Driver = new ChromeDriver(dependenciesFolder);
         }
 
-        // Runs after each test has run
         public void Dispose()
         {
             // Close the browser if there is no error. Otherwise leave open.
             if (!ErrorOnPage())
             {
-                _driver.Quit();
+                Driver.Quit();
             }
         }
 
         public void OpenPage(string relativeUrl)
         {
             string absoluteUrl = _baseUrl + relativeUrl;
-            _driver.Navigate().GoToUrl(absoluteUrl);
+            Driver.Navigate().GoToUrl(absoluteUrl);
         }
 
         /// <summary>
@@ -70,8 +60,8 @@ namespace JSNLog.Tests.IntegrationTests
         public bool ErrorOnPage()
         {
             // Check for C# exception
-            bool unhandledExceptionOccurred = _driver.PageSource.Contains("An unhandled exception occurred");
-            bool noConnection = _driver.PageSource.Contains("ERR_CONNECTION_REFUSED");
+            bool unhandledExceptionOccurred = Driver.PageSource.Contains("An unhandled exception occurred");
+            bool noConnection = Driver.PageSource.Contains("ERR_CONNECTION_REFUSED");
 
             if (unhandledExceptionOccurred || noConnection)
             {
@@ -81,22 +71,50 @@ namespace JSNLog.Tests.IntegrationTests
             try
             {
                 // Throws NoSuchElementException if error-occurred not found
-                _driver.FindElement(By.ClassName("error-occurred"));
+                Driver.FindElement(By.ClassName("error-occurred"));
             }
-            catch(NoSuchElementException)
+            catch (NoSuchElementException)
             {
                 try
                 {
                     // Throws NoSuchElementException if running not found
-                    _driver.FindElement(By.Id("running"));
+                    Driver.FindElement(By.Id("running"));
                 }
-                catch(NoSuchElementException)
+                catch (NoSuchElementException)
                 {
                     return false;
                 }
             }
 
             return true;
+        }
+    }
+
+    public class IntegrationTestBase : IClassFixture<IntegrationTestBaseContext>
+    {
+        IntegrationTestBaseContext _context;
+
+        // Runs before each test runs
+        public IntegrationTestBase(IntegrationTestBaseContext context)
+        {
+            _context = context;
+        }
+
+        // Runs after each test has run
+        public void Dispose()
+        {
+        }
+
+        protected IWebDriver Driver { get { return _context.Driver; } }
+
+        public bool ErrorOnPage()
+        {
+            return _context.ErrorOnPage();
+        }
+
+        public void OpenPage(string relativeUrl)
+        {
+            _context.OpenPage(relativeUrl);
         }
     }
 }
