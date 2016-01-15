@@ -1,5 +1,4 @@
 ﻿@using JSNLog
-@using JSNLog.Infrastructure
 @using Microsoft.AspNet.Http;
 
 @inject IHttpContextAccessor httpContextAccessor
@@ -10,9 +9,10 @@
         @"<jsnlog productionLibraryPath=""~/Scripts/libs/jsnlog.js""></jsnlog>"))
 
     <div id="IdFromController">@ViewBag.RequestId</div>
-    <div id="IdFromView">@httpContextAccessor.HttpContext.GetRequestId()</div>
+    <div id="IdFromView">@httpContextAccessor.HttpContext.RequestId()</div>
     <div id="IdFromJL"></div>
 
     <script type="text/ecmascript">
-        $("#IdFromJL").html(JL.requestId);
+    $("#IdFromJL").html(JL.requestId);
+    $("#running").remove(); // make sure OnError doesn't think the page has errored
     </script>

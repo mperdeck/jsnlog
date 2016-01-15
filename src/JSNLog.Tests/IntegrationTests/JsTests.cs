@@ -51,14 +51,6 @@ namespace JSNLog.Tests.IntegrationTests
         }
 
         [Fact]
-        public void MaxMessagesTestBatching()
-        {
-            _context.OpenPage("/home/MaxMessagesTest0");
-
-            Assert.False(_context.ErrorOnPage());
-        }
-
-        [Fact]
         public void RequestIdTest()
         {
             _context.OpenPage("/home/RequestIdTest");
