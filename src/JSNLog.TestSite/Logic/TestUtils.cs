@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
 using System.Xml;
 using JSNLog.Infrastructure;
 using JSNLog.Tests.Common;
+using Microsoft.AspNet.Http;
 
 namespace JSNLog.Tests.Logic
 {
@@ -157,17 +157,16 @@ namespace JSNLog.Tests.Logic
             return js;
         }
 
-        //TODO: reactivate when RequestIds used with DNX
-        //public static string SetupRequestIdTest(string requestId, string configXml)
-        //{
-        //    var sb = new StringBuilder();
-        //    SetConfigCache(configXml);
+        public static string SetupRequestIdTest(HttpContext httpContext, string requestId, string configXml)
+        {
+            var sb = new StringBuilder();
+            CommonTestHelpers.SetConfigCache(configXml);
 
-        //    var configProcessor = new ConfigProcessor();
-        //    configProcessor.ProcessRoot(requestId ?? JSNLog.Infrastructure.RequestId.Get(), sb, "");
-        //    string js = sb.ToString();
+            var configProcessor = new ConfigProcessor();
+            configProcessor.ProcessRoot(requestId ?? httpContext.GetRequestId(), sb, "");
+            string js = sb.ToString();
 
-        //    return js;
-        //}
+            return js;
+        }
     }
 }

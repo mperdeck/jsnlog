@@ -25,8 +25,8 @@ namespace JSNLog.Tests.IntegrationTests
     {
         protected static IWebDriver _driver = null;
 
-        // The port 31972 is set in the properties of the TestSite project
-        private const string _baseUrl = "http://localhost:31972";
+        // The port 5000 is always used by kestrel
+        private const string _baseUrl = "http://localhost:5000";
 
         // Runs before each test runs
         public IntegrationTestBase()

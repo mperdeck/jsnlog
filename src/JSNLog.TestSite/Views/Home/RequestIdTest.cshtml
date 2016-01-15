@@ -1,7 +1,8 @@
-﻿@*
-TODO: reactivate when RequestIds used with DNX
-    
-@using JSNLog
+﻿@using JSNLog
+@using JSNLog.Infrastructure
+@using Microsoft.AspNet.Http;
+
+@inject IHttpContextAccessor httpContextAccessor
 @{
     Layout = null;
 }
@@ -14,11 +15,11 @@ TODO: reactivate when RequestIds used with DNX
     <script src="~/Scripts/jquery-2.1.0.min.js"></script>
 </head>
 <body>
-    @Html.Raw(JSNLog.Tests.Logic.TestUtils.SetupRequestIdTest(ViewBag.PassedInRequestId, 
+    @Html.Raw(JSNLog.Tests.Logic.TestUtils.SetupRequestIdTest(httpContextAccessor.HttpContext, ViewBag.PassedInRequestId, 
         @"<jsnlog productionLibraryPath=""~/Scripts/libs/jsnlog.js""></jsnlog>"))
 
     <div id="IdFromController">@ViewBag.RequestId</div>
-    <div id="IdFromView">@JSNLog.JavascriptLogging.RequestId()</div>
+    <div id="IdFromView">@httpContextAccessor.HttpContext.GetRequestId()</div>
     <div id="IdFromJL"></div>
 
     <script type="text/ecmascript">
@@ -26,4 +27,4 @@ TODO: reactivate when RequestIds used with DNX
     </script>
 
 </body>
-</html>*@
+</html>
