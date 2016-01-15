@@ -38,7 +38,11 @@ namespace JSNLog
 
             string userIp = httpContext.GetUserIp();
             var configProcessor = new ConfigProcessor();
-            configProcessor.ProcessRoot(requestId ?? httpContext.GetRequestId(), sb, userIp);
+
+            // If someone passes in a null requestId via a ViewBag, then it may be converted to empty string 
+            configProcessor.ProcessRoot(
+                string.IsNullOrEmpty(requestId) ? httpContext.GetRequestId() : requestId, 
+                sb, userIp);
 
             return sb.ToString();
         }
