@@ -12,7 +12,7 @@
     }
   },
   "dependencies": {
-    "JSNLog": "2.16.0",
+    "JSNLog": "0.0.0",
     "Selenium.WebDriver": "2.48.2",
     "xunit": "2.1.0",
     "xunit.runner.dnx": "2.1.0-rc1-build204"

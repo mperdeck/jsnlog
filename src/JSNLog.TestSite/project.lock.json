@@ -3,7 +3,7 @@
   "version": 2,
   "targets": {
     "DNX,Version=v4.5.1": {
-      "JSNLog/2.16.0": {
+      "JSNLog/0.0.0": {
         "type": "project",
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
@@ -18,7 +18,7 @@
         "type": "project",
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
-          "JSNLog": "2.16.0",
+          "JSNLog": "0.0.0",
           "Selenium.WebDriver": "2.48.2",
           "xunit": "2.1.0",
           "xunit.runner.dnx": "2.1.0-rc1-build204"
@@ -1745,7 +1745,7 @@
       }
     },
     "DNX,Version=v4.5.1/win7-x86": {
-      "JSNLog/2.16.0": {
+      "JSNLog/0.0.0": {
         "type": "project",
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
@@ -1760,7 +1760,7 @@
         "type": "project",
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
-          "JSNLog": "2.16.0",
+          "JSNLog": "0.0.0",
           "Selenium.WebDriver": "2.48.2",
           "xunit": "2.1.0",
           "xunit.runner.dnx": "2.1.0-rc1-build204"
@@ -3490,7 +3490,7 @@
       }
     },
     "DNX,Version=v4.5.1/win7-x64": {
-      "JSNLog/2.16.0": {
+      "JSNLog/0.0.0": {
         "type": "project",
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
@@ -3505,7 +3505,7 @@
         "type": "project",
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
-          "JSNLog": "2.16.0",
+          "JSNLog": "0.0.0",
           "Selenium.WebDriver": "2.48.2",
           "xunit": "2.1.0",
           "xunit.runner.dnx": "2.1.0-rc1-build204"
@@ -5236,7 +5236,7 @@
     }
   },
   "libraries": {
-    "JSNLog/2.16.0": {
+    "JSNLog/0.0.0": {
       "type": "project",
       "path": "../JSNLog/project.json"
     },
@@ -7286,8 +7286,8 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "JSNLog >= 2.16.0",
-      "JSNLog.Tests >= 1.0.0-*",
+      "JSNLog >= 0.0.0",
+      "JSNLog.Tests >= 1.0.0",
       "Microsoft.AspNet.Diagnostics >= 1.0.0-rc1-final",
       "Microsoft.AspNet.IISPlatformHandler >= 1.0.0-rc1-final",
       "Microsoft.AspNet.Mvc >= 6.0.0-rc1-final",
