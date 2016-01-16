@@ -2852,10 +2852,10 @@
       }
     },
     ".NETFramework,Version=v4.0": {
-      "Common.Logging/3.3.1": {
+      "Common.Logging/3.0.0": {
         "type": "package",
         "dependencies": {
-          "Common.Logging.Core": "3.3.1"
+          "Common.Logging.Core": "3.0.0"
         },
         "compile": {
           "lib/net40/Common.Logging.dll": {}
@@ -2864,7 +2864,7 @@
           "lib/net40/Common.Logging.dll": {}
         }
       },
-      "Common.Logging.Core/3.3.1": {
+      "Common.Logging.Core/3.0.0": {
         "type": "package",
         "compile": {
           "lib/net40/Common.Logging.Core.dll": {}
@@ -2950,7 +2950,7 @@
           "lib/net40/Owin.dll": {}
         }
       },
-      "WebActivatorEx/2.1.0": {
+      "WebActivatorEx/2.0.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Web.Infrastructure": "1.0.0"
@@ -9498,10 +9498,10 @@
       }
     },
     ".NETFramework,Version=v4.0/win7-x86": {
-      "Common.Logging/3.3.1": {
+      "Common.Logging/3.0.0": {
         "type": "package",
         "dependencies": {
-          "Common.Logging.Core": "3.3.1"
+          "Common.Logging.Core": "3.0.0"
         },
         "compile": {
           "lib/net40/Common.Logging.dll": {}
@@ -9510,7 +9510,7 @@
           "lib/net40/Common.Logging.dll": {}
         }
       },
-      "Common.Logging.Core/3.3.1": {
+      "Common.Logging.Core/3.0.0": {
         "type": "package",
         "compile": {
           "lib/net40/Common.Logging.Core.dll": {}
@@ -9596,7 +9596,7 @@
           "lib/net40/Owin.dll": {}
         }
       },
-      "WebActivatorEx/2.1.0": {
+      "WebActivatorEx/2.0.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Web.Infrastructure": "1.0.0"
@@ -9610,10 +9610,10 @@
       }
     },
     ".NETFramework,Version=v4.0/win7-x64": {
-      "Common.Logging/3.3.1": {
+      "Common.Logging/3.0.0": {
         "type": "package",
         "dependencies": {
-          "Common.Logging.Core": "3.3.1"
+          "Common.Logging.Core": "3.0.0"
         },
         "compile": {
           "lib/net40/Common.Logging.dll": {}
@@ -9622,7 +9622,7 @@
           "lib/net40/Common.Logging.dll": {}
         }
       },
-      "Common.Logging.Core/3.3.1": {
+      "Common.Logging.Core/3.0.0": {
         "type": "package",
         "compile": {
           "lib/net40/Common.Logging.Core.dll": {}
@@ -9708,7 +9708,7 @@
           "lib/net40/Owin.dll": {}
         }
       },
-      "WebActivatorEx/2.1.0": {
+      "WebActivatorEx/2.0.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Web.Infrastructure": "1.0.0"
@@ -9723,23 +9723,12 @@
     }
   },
   "libraries": {
-    "Common.Logging/3.3.1": {
+    "Common.Logging/3.0.0": {
       "type": "package",
-      "sha512": "Wv07G5iQ+yUHI3RWqXGFys3N7Gd7vx+OYFGw4kcqfCSoWMJJLNVZqB/zyqPC8kqxE7Ezcj1YrU7zGC3/gUXF3A==",
+      "sha512": "nduF2UGeo8Spgt87QI/nlfkn9sd2kA0eXc7pUutfyGeDb9cG8vlOpTasOwY7CxG2Ws9oq+Qlp+TPJF/x3CYzdQ==",
       "files": [
-        "Common.Logging.3.3.1.nupkg",
-        "Common.Logging.3.3.1.nupkg.sha512",
-        "Common.Logging.3.3.1.zip",
-        "Common.Logging.3.3.1/[Content_Types].xml",
-        "Common.Logging.3.3.1/_rels/.rels",
-        "Common.Logging.3.3.1/Common.Logging.nuspec",
-        "Common.Logging.3.3.1/lib/net35/Common.Logging.dll",
-        "Common.Logging.3.3.1/lib/net35/Common.Logging.pdb",
-        "Common.Logging.3.3.1/lib/net35/Common.Logging.xml",
-        "Common.Logging.3.3.1/lib/net40/Common.Logging.dll",
-        "Common.Logging.3.3.1/lib/net40/Common.Logging.pdb",
-        "Common.Logging.3.3.1/lib/net40/Common.Logging.xml",
-        "Common.Logging.3.3.1/package/services/metadata/core-properties/561e297200d744029f9c05ea28a4e893.psmdcp",
+        "Common.Logging.3.0.0.nupkg",
+        "Common.Logging.3.0.0.nupkg.sha512",
         "Common.Logging.nuspec",
         "lib/net35/Common.Logging.dll",
         "lib/net35/Common.Logging.pdb",
@@ -9749,12 +9738,12 @@
         "lib/net40/Common.Logging.xml"
       ]
     },
-    "Common.Logging.Core/3.3.1": {
+    "Common.Logging.Core/3.0.0": {
       "type": "package",
-      "sha512": "geJ4X7mjL/KDXNMfJbq6TnZfZ0bbEFi1HpS3Ayv09ZKxBgKaL0KysAw4k8w7DSE/nk0nDwkQEmStRxBIpBlsAQ==",
+      "sha512": "aXRqKJ84uLMmwz9/MlYTzrFGPPpo5FlNhBzzC9AT4lmtIO11XcnlwzFmvdevwuUXWMiSS8i9GGEbk2dYtroVXw==",
       "files": [
-        "Common.Logging.Core.3.3.1.nupkg",
-        "Common.Logging.Core.3.3.1.nupkg.sha512",
+        "Common.Logging.Core.3.0.0.nupkg",
+        "Common.Logging.Core.3.0.0.nupkg.sha512",
         "Common.Logging.Core.nuspec",
         "lib/net35/Common.Logging.Core.dll",
         "lib/net35/Common.Logging.Core.pdb",
@@ -14235,13 +14224,13 @@
         "System.Xml.XDocument.nuspec"
       ]
     },
-    "WebActivatorEx/2.1.0": {
+    "WebActivatorEx/2.0.0": {
       "type": "package",
-      "sha512": "0HJ6DpxcTzSGIgcN6Q0jKAwLX1bWKnbeDOvT7vFXB/e4MIrwWc+1XwzihQp0Sr91EUK2N7j5cjZ1cIvWCraeJg==",
+      "sha512": "B3ZbOEaGCqa7BLjZZw6wqprOJJMvP39h7Lr5ADkJOCPKHppAaCre34kR63/gfgpM4htzTfgm/pEw7r7qqqMgIA==",
       "files": [
         "lib/net40/WebActivatorEx.dll",
-        "WebActivatorEx.2.1.0.nupkg",
-        "WebActivatorEx.2.1.0.nupkg.sha512",
+        "WebActivatorEx.2.0.0.nupkg",
+        "WebActivatorEx.2.0.0.nupkg.sha512",
         "WebActivatorEx.nuspec"
       ]
     }
@@ -14264,10 +14253,10 @@
       "Microsoft.AspNet.Mvc.TagHelpers >= 6.0.0-rc1-final"
     ],
     ".NETFramework,Version=v4.0": [
-      "Common.Logging >= 3.3.1",
+      "Common.Logging >= 3.0.0",
       "Microsoft.Bcl.Async >= 1.0.168",
       "Microsoft.Owin >= 2.1.0",
-      "WebActivatorEx >= 2.1.0",
+      "WebActivatorEx >= 2.0.0",
       "fx/System.Web >= 4.0.0",
       "fx/System.XML >= 4.0.0"
     ]

@@ -1,5 +1,5 @@
-{
-  "version": "2.16.0",
+﻿{
+  "version": "__Version__",
   "frameworks": {
     "dnx451": {
       "dependencies": {
