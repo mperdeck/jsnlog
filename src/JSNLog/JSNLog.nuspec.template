@@ -14,8 +14,6 @@
     <tags>JavaScript logging exceptions ajax log4net nlog elmah serilog ASP.NET 4.x ASP.NET 5 DNX451 DNXCORE50</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.0">
-          <dependency id="Newtonsoft.Json" version="7.0.1" />
-
           <!-- IMPORTANT
                The CommonLogging NuGet package and the JSNLog package have the same dependencies
                and files. This because CommonLogging is purely a convenience package - JSNLog
