@@ -9,12 +9,11 @@
     <projectUrl>http://jsnlog.com</projectUrl>
     <iconUrl>http://jsnlog.com/Nuget/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>This JavaScript logging package logs JavaScript errors, AJAX timeouts and other client side events in your server side log. Supports Elmah, Log4Net, NLog, Serilog, Common.Logging.</description>
-    <copyright>Copyright 2015</copyright>
-    <tags>JavaScript logging exceptions log4net nlog elmah</tags>
+    <description>JavaScript logging package that lets you log exceptions, AJAX timeouts and other client side events in your server side log. Supports ASP.NET 4.x (.Net 4.0+) and ASP.NET 5+ (DNX451, DNXCORE50).</description>
+    <copyright>Copyright 2016</copyright>
+    <tags>JavaScript logging exceptions ajax log4net nlog elmah serilog ASP.NET 4.x ASP.NET 5 DNX451 DNXCORE50</tags>
     <dependencies>
-        <group targetFramework="net40">
-          <dependency id="Newtonsoft.Json" version="7.0.1" />
+      <group targetFramework=".NETFramework4.0">
 
           <!-- IMPORTANT
                The CommonLogging NuGet package and the JSNLog package have the same dependencies
@@ -29,46 +28,55 @@
           <dependency id="WebActivatorEx" version="2.0.0" />
 
           <!-- 
-			The below definition causes NuGet to load version 2.1.0 if no version of 
-			Microsoft.Owin has already been installed (it tries to install the LOWEST 
-			possible version of a package).
+			      The below definition causes NuGet to load version 2.1.0 if no version of 
+			      Microsoft.Owin has already been installed (it tries to install the LOWEST 
+			      possible version of a package).
 
-			This will work fine in a .Net 4.0 project. Note that versions past 2.1.0 no longer support .Net 4.0.
-			If the project already has a higher version of Microsoft.Owin, this definition will accept that too.
-			The assemblyBinding binding section in the section's web.config will translate 2.1.0 (as asked for by
-			JSNLog project in its references) to the version that is actually installed in the project.
+			      This will work fine in a .Net 4.0 project. Note that versions past 2.1.0 no longer support .Net 4.0.
+			      If the project already has a higher version of Microsoft.Owin, this definition will accept that too.
+			      The assemblyBinding binding section in the section's web.config will translate 2.1.0 (as asked for by
+			      JSNLog project in its references) to the version that is actually installed in the project.
           --> 
           <dependency id="Microsoft.Owin" version="2.1.0" />
           <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
-        </group>
-        <group targetFramework="net451">
-          <!-- Copy of the net40 group, with ASP.NET 5 packages added
-               Comment out for now, because non-prerelease packages cannot depend on prerelease packages
+          <dependency id="Newtonsoft.Json" version="7.0.1" />
+      </group>
+      <group targetFramework="DNX4.5.1">
+          <!-- ASP.NET 5 packages
+               Comment out for now, because non-prerelease packages cannot depend on prerelease packages.
+               This means that installation instructions have to tell users to install these packages manually.
 
           <dependency id="Microsoft.AspNet.Http.Abstractions" version="1.0.0-rc1-final" />
           <dependency id="Microsoft.Extensions.Logging" version="1.0.0-rc1-final" />
           <dependency id="Microsoft.AspNet.Http.Extensions" version="1.0.0-rc1-final" />
           <dependency id="Microsoft.AspNet.Mvc.TagHelpers" version="6.0.0-rc1-final" />
           -->
-
           <dependency id="Newtonsoft.Json" version="7.0.1" />
-          <dependency id="Common.Logging" version="3.0.0" />
-          <dependency id="WebActivatorEx" version="2.0.0" />
-          <dependency id="Microsoft.Owin" version="2.1.0" />
-          <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
-        </group>
+      </group>
+      <group targetFramework="DNXCore5.0">
+          <!-- ASP.NET 5 packages
+               Comment out for now, because non-prerelease packages cannot depend on prerelease packages.
+               This means that installation instructions have to tell users to install these packages manually.
+
+          <dependency id="Microsoft.AspNet.Http.Abstractions" version="1.0.0-rc1-final" />
+          <dependency id="Microsoft.Extensions.Logging" version="1.0.0-rc1-final" />
+          <dependency id="Microsoft.AspNet.Http.Extensions" version="1.0.0-rc1-final" />
+          <dependency id="Microsoft.AspNet.Mvc.TagHelpers" version="6.0.0-rc1-final" />
+          -->
+      
+          <dependency id="System.Runtime.InteropServices" version="4.0.20" />
+          <dependency id="Newtonsoft.Json" version="7.0.1" />
+      </group>
     </dependencies>
   </metadata>
   <files>
-        <file src="bin\Release\JSNLog.dll" target="lib\net40\" />
-        <file src="bin\Release\JSNLog.dll" target="lib\net451\" />
-        <file src="..\JSNLog.AspNet5\bin\Release\JSNLog.AspNet5.dll" target="lib\net451\" />
+    <file src="bin\Release\net40\*"     target="lib\net40\" />
+    <file src="bin\Release\dnx451\*"    target="lib\dnx451\" />
+    <file src="bin\Release\dnxcore50\*" target="lib\dnxcore50\" />
 
-        <file src="..\..\jsnlog.js\jsnlog.js" target="content\Scripts" />
-        <file src="..\..\jsnlog.js\jsnlog.min.js" target="content\Scripts" />
-        <file src="..\..\jsnlog.js\jsnlog.js.map" target="content\Scripts" />
-        <file src="NuGet\AdditionalContent\*.*" target="content" />
-        <file src="NuGet\AdditionalAppStart\*.*" target="content\App_Start" />
-        <file src="NuGet\readme.txt" target="" />
+    <file src="NuGet\content\Scripts\*.*"   target="content\Scripts" />
+    <file src="NuGet\content\App_Start\*.*" target="content\App_Start" />
+    <file src="NuGet\content\*.*"           target="content" />
+    <file src="NuGet\readme.txt"            target="" />
   </files>
 </package>
