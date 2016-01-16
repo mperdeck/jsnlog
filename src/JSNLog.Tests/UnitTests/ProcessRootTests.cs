@@ -16,7 +16,7 @@ namespace JSNLog.Tests.UnitTests
     /// These tests ensure that errorneous config is handled with an exception, rather than outright crashing.
     /// </summary>
 
-    
+    [Collection("JSNLog")]
     public class ProcessRootTests
     {
         [Fact]

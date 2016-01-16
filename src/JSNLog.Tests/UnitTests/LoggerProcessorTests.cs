@@ -9,7 +9,8 @@ using JSNLog.Tests.Common;
 
 namespace JSNLog.Tests.UnitTests
 {
-    
+
+    [Collection("JSNLog")]
     public partial class LoggerProcessorTests
     {
         private string _json1 = null;

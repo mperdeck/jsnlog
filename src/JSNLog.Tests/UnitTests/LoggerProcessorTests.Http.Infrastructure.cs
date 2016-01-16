@@ -86,7 +86,7 @@ namespace JSNLog.Tests.UnitTests
         private void TestResponseHeaders(Dictionary<string, string> expectedHeaders, 
             Dictionary<string, string> actualHeaders)
         {
-            Assert.True(expectedHeaders.Count == actualHeaders.Count);
+            Assert.Equal(expectedHeaders.Count, actualHeaders.Count);
 
             foreach(string key in expectedHeaders.Keys)
             {

@@ -36,6 +36,7 @@ namespace JSNLog.Tests.UnitTests
         }
     }
 
+    [Collection("JSNLog")]
     public class DemoTests : IClassFixture<DemoTestsContext>
     {
         // >>>>>>>>>>>>>>>>>>>>>>>

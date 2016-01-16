@@ -12,7 +12,10 @@ using JSNLog.Tests.Common;
 
 namespace JSNLog.Tests.UnitTests
 {
-    
+    // Put all test classes in the one collection, so xUnit won't run them in parallel with each other.
+    // This is because JSNLog assumes there is only one JSNLog instance and specifically only one JSNLog configuration
+    // per web site.
+    [Collection("JSNLog")]
     public class ConfigCacheTests
     {
         [Fact]

@@ -5,7 +5,7 @@ using JSNLog.Tests.Common;
 
 namespace JSNLog.Tests.UnitTests
 {
-    
+    [Collection("JSNLog")]
     public class LoggingUrlHelpersTests
     {
         [Fact]
@@ -96,7 +96,7 @@ namespace JSNLog.Tests.UnitTests
             Assert.True(LoggingUrlHelpers.IsLoggingUrl("/jsn2logger"));
             Assert.True(LoggingUrlHelpers.IsLoggingUrl("//abc.com/jsn2logger?a=b;c=d"));
 
-            // Should also the url of the default appender
+            // url of the default appender should also be regarded as a logging url
             Assert.True(LoggingUrlHelpers.IsLoggingUrl("/jsnlog.logger"));
             Assert.True(LoggingUrlHelpers.IsLoggingUrl("http://abc.com/jsnlog.logger"));
             Assert.False(LoggingUrlHelpers.IsLoggingUrl("http://abc.com/jsnlog.css"));

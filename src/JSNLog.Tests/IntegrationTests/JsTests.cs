@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace JSNLog.Tests.IntegrationTests
 {
-    [Trait("Category", "JavaScript")]
+    [Collection("JSNLog")]
     public class JsTests : IClassFixture<JsTestsContext>
     {
         JsTestsContext _context;
