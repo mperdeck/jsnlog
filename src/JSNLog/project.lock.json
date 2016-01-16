@@ -952,7 +952,7 @@
           "lib/net451/Microsoft.Net.Http.Headers.dll": {}
         }
       },
-      "Newtonsoft.Json/8.0.2": {
+      "Newtonsoft.Json/7.0.1": {
         "type": "package",
         "compile": {
           "lib/net45/Newtonsoft.Json.dll": {}
@@ -2077,7 +2077,7 @@
           "lib/DNXCore50/Microsoft.Win32.Registry.dll": {}
         }
       },
-      "Newtonsoft.Json/8.0.2": {
+      "Newtonsoft.Json/7.0.1": {
         "type": "package",
         "compile": {
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
@@ -2932,7 +2932,7 @@
           "lib/net40/Microsoft.Web.Infrastructure.dll": {}
         }
       },
-      "Newtonsoft.Json/8.0.2": {
+      "Newtonsoft.Json/7.0.1": {
         "type": "package",
         "compile": {
           "lib/net40/Newtonsoft.Json.dll": {}
@@ -3913,7 +3913,7 @@
           "lib/net451/Microsoft.Net.Http.Headers.dll": {}
         }
       },
-      "Newtonsoft.Json/8.0.2": {
+      "Newtonsoft.Json/7.0.1": {
         "type": "package",
         "compile": {
           "lib/net45/Newtonsoft.Json.dll": {}
@@ -5075,7 +5075,7 @@
           "lib/net451/Microsoft.Net.Http.Headers.dll": {}
         }
       },
-      "Newtonsoft.Json/8.0.2": {
+      "Newtonsoft.Json/7.0.1": {
         "type": "package",
         "compile": {
           "lib/net45/Newtonsoft.Json.dll": {}
@@ -6200,7 +6200,7 @@
           "lib/DNXCore50/Microsoft.Win32.Registry.dll": {}
         }
       },
-      "Newtonsoft.Json/8.0.2": {
+      "Newtonsoft.Json/7.0.1": {
         "type": "package",
         "compile": {
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
@@ -8305,7 +8305,7 @@
           "lib/DNXCore50/Microsoft.Win32.Registry.dll": {}
         }
       },
-      "Newtonsoft.Json/8.0.2": {
+      "Newtonsoft.Json/7.0.1": {
         "type": "package",
         "compile": {
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
@@ -9578,7 +9578,7 @@
           "lib/net40/Microsoft.Web.Infrastructure.dll": {}
         }
       },
-      "Newtonsoft.Json/8.0.2": {
+      "Newtonsoft.Json/7.0.1": {
         "type": "package",
         "compile": {
           "lib/net40/Newtonsoft.Json.dll": {}
@@ -9690,7 +9690,7 @@
           "lib/net40/Microsoft.Web.Infrastructure.dll": {}
         }
       },
-      "Newtonsoft.Json/8.0.2": {
+      "Newtonsoft.Json/7.0.1": {
         "type": "package",
         "compile": {
           "lib/net40/Newtonsoft.Json.dll": {}
@@ -10818,9 +10818,9 @@
         "ref/net46/Microsoft.Win32.Registry.dll"
       ]
     },
-    "Newtonsoft.Json/8.0.2": {
+    "Newtonsoft.Json/7.0.1": {
       "type": "package",
-      "sha512": "e5yWmEfu68rmtG431zl9N/7PlNKQDIuiDW5MHlEFAZcecakcxrIGnKqrPAtWNILzK2oNanRB5cD150MYhECK3g==",
+      "sha512": "q3V4KLetMLnt1gpAVWgtXnHjKs0UG/RalBc29u2ZKxd5t5Ze4JBL5WiiYIklJyK/5CRiIiNwigVQUo0FgbsuWA==",
       "files": [
         "lib/net20/Newtonsoft.Json.dll",
         "lib/net20/Newtonsoft.Json.xml",
@@ -10834,8 +10834,8 @@
         "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.xml",
         "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll",
         "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.xml",
-        "Newtonsoft.Json.8.0.2.nupkg",
-        "Newtonsoft.Json.8.0.2.nupkg.sha512",
+        "Newtonsoft.Json.7.0.1.nupkg",
+        "Newtonsoft.Json.7.0.1.nupkg.sha512",
         "Newtonsoft.Json.nuspec",
         "tools/install.ps1"
       ]
@@ -14248,7 +14248,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "Newtonsoft.Json >= 8.0.2"
+      "Newtonsoft.Json >= 7.0.1"
     ],
     "DNX,Version=v4.5.1": [
       "Microsoft.AspNet.Http.Abstractions >= 1.0.0-rc1-final",
