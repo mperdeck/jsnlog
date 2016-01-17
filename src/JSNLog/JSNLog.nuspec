@@ -38,7 +38,9 @@
           --> 
           <dependency id="Microsoft.Owin" version="2.1.0" />
           <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
-          <dependency id="Newtonsoft.Json" version="7.0.1" />
+
+        <!-- Use low minimum version to make installation easier with old code -->
+        <dependency id="Newtonsoft.Json" version="4.0.1" />
       </group>
       <group targetFramework="DNX4.5.1">
           <!-- ASP.NET 5 packages
@@ -50,7 +52,8 @@
           <dependency id="Microsoft.AspNet.Http.Extensions" version="1.0.0-rc1-final" />
           <dependency id="Microsoft.AspNet.Mvc.TagHelpers" version="6.0.0-rc1-final" />
           -->
-          <dependency id="Newtonsoft.Json" version="7.0.1" />
+          <!-- Use low minimum version to make installation easier with old code -->
+          <dependency id="Newtonsoft.Json" version="4.0.1" />
       </group>
       <group targetFramework="DNXCore5.0">
           <!-- ASP.NET 5 packages
@@ -64,7 +67,9 @@
           -->
       
           <dependency id="System.Runtime.InteropServices" version="4.0.20" />
-          <dependency id="Newtonsoft.Json" version="7.0.1" />
+
+        <!-- 4.0.1 does not support DNXCORE, so use higher version here -->
+        <dependency id="Newtonsoft.Json" version="7.0.1" />
       </group>
     </dependencies>
   </metadata>

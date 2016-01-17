@@ -952,13 +952,13 @@
           "lib/net451/Microsoft.Net.Http.Headers.dll": {}
         }
       },
-      "Newtonsoft.Json/7.0.1": {
+      "Newtonsoft.Json/4.0.1": {
         "type": "package",
         "compile": {
-          "lib/net45/Newtonsoft.Json.dll": {}
+          "lib/40/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/net45/Newtonsoft.Json.dll": {}
+          "lib/40/Newtonsoft.Json.dll": {}
         }
       },
       "System.Collections/4.0.0": {
@@ -2932,13 +2932,13 @@
           "lib/net40/Microsoft.Web.Infrastructure.dll": {}
         }
       },
-      "Newtonsoft.Json/7.0.1": {
+      "Newtonsoft.Json/4.0.1": {
         "type": "package",
         "compile": {
-          "lib/net40/Newtonsoft.Json.dll": {}
+          "lib/40/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/net40/Newtonsoft.Json.dll": {}
+          "lib/40/Newtonsoft.Json.dll": {}
         }
       },
       "Owin/1.0.0": {
@@ -3913,13 +3913,13 @@
           "lib/net451/Microsoft.Net.Http.Headers.dll": {}
         }
       },
-      "Newtonsoft.Json/7.0.1": {
+      "Newtonsoft.Json/4.0.1": {
         "type": "package",
         "compile": {
-          "lib/net45/Newtonsoft.Json.dll": {}
+          "lib/40/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/net45/Newtonsoft.Json.dll": {}
+          "lib/40/Newtonsoft.Json.dll": {}
         }
       },
       "System.Collections/4.0.0": {
@@ -5075,13 +5075,13 @@
           "lib/net451/Microsoft.Net.Http.Headers.dll": {}
         }
       },
-      "Newtonsoft.Json/7.0.1": {
+      "Newtonsoft.Json/4.0.1": {
         "type": "package",
         "compile": {
-          "lib/net45/Newtonsoft.Json.dll": {}
+          "lib/40/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/net45/Newtonsoft.Json.dll": {}
+          "lib/40/Newtonsoft.Json.dll": {}
         }
       },
       "System.Collections/4.0.0": {
@@ -9578,13 +9578,13 @@
           "lib/net40/Microsoft.Web.Infrastructure.dll": {}
         }
       },
-      "Newtonsoft.Json/7.0.1": {
+      "Newtonsoft.Json/4.0.1": {
         "type": "package",
         "compile": {
-          "lib/net40/Newtonsoft.Json.dll": {}
+          "lib/40/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/net40/Newtonsoft.Json.dll": {}
+          "lib/40/Newtonsoft.Json.dll": {}
         }
       },
       "Owin/1.0.0": {
@@ -9690,13 +9690,13 @@
           "lib/net40/Microsoft.Web.Infrastructure.dll": {}
         }
       },
-      "Newtonsoft.Json/7.0.1": {
+      "Newtonsoft.Json/4.0.1": {
         "type": "package",
         "compile": {
-          "lib/net40/Newtonsoft.Json.dll": {}
+          "lib/40/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/net40/Newtonsoft.Json.dll": {}
+          "lib/40/Newtonsoft.Json.dll": {}
         }
       },
       "Owin/1.0.0": {
@@ -10805,6 +10805,30 @@
         "ref/dotnet5.2/zh-hans/Microsoft.Win32.Registry.xml",
         "ref/dotnet5.2/zh-hant/Microsoft.Win32.Registry.xml",
         "ref/net46/Microsoft.Win32.Registry.dll"
+      ]
+    },
+    "Newtonsoft.Json/4.0.1": {
+      "type": "package",
+      "sha512": "sdoAI99EGUHx7Hr7j1lfR8dGF+uXP61m5jA9fSej69j282NFej+ElHs1WNKcDAF3iJpOHE3DLjTagjzoX6v78A==",
+      "files": [
+        "lib/20/Newtonsoft.Json.Net20.dll",
+        "lib/20/Newtonsoft.Json.Net20.pdb",
+        "lib/20/Newtonsoft.Json.Net20.xml",
+        "lib/35/Newtonsoft.Json.Net35.dll",
+        "lib/35/Newtonsoft.Json.Net35.pdb",
+        "lib/35/Newtonsoft.Json.Net35.xml",
+        "lib/40/Newtonsoft.Json.dll",
+        "lib/40/Newtonsoft.Json.pdb",
+        "lib/40/Newtonsoft.Json.xml",
+        "lib/SL/Newtonsoft.Json.Silverlight.dll",
+        "lib/SL/Newtonsoft.Json.Silverlight.pdb",
+        "lib/SL/Newtonsoft.Json.Silverlight.xml",
+        "lib/WP/Newtonsoft.Json.WindowsPhone.dll",
+        "lib/WP/Newtonsoft.Json.WindowsPhone.pdb",
+        "lib/WP/Newtonsoft.Json.WindowsPhone.xml",
+        "Newtonsoft.Json.4.0.1.nupkg",
+        "Newtonsoft.Json.4.0.1.nupkg.sha512",
+        "Newtonsoft.Json.nuspec"
       ]
     },
     "Newtonsoft.Json/7.0.1": {
@@ -14236,27 +14260,28 @@
     }
   },
   "projectFileDependencyGroups": {
-    "": [
-      "Newtonsoft.Json >= 7.0.1"
-    ],
+    "": [],
     "DNX,Version=v4.5.1": [
       "Microsoft.AspNet.Http.Abstractions >= 1.0.0-rc1-final",
       "Microsoft.Extensions.Logging >= 1.0.0-rc1-final",
       "Microsoft.AspNet.Http.Extensions >= 1.0.0-rc1-final",
-      "Microsoft.AspNet.Mvc.TagHelpers >= 6.0.0-rc1-final"
+      "Microsoft.AspNet.Mvc.TagHelpers >= 6.0.0-rc1-final",
+      "Newtonsoft.Json >= 4.0.1"
     ],
     "DNXCore,Version=v5.0": [
       "System.Runtime.InteropServices >= 4.0.20",
       "Microsoft.AspNet.Http.Abstractions >= 1.0.0-rc1-final",
       "Microsoft.Extensions.Logging >= 1.0.0-rc1-final",
       "Microsoft.AspNet.Http.Extensions >= 1.0.0-rc1-final",
-      "Microsoft.AspNet.Mvc.TagHelpers >= 6.0.0-rc1-final"
+      "Microsoft.AspNet.Mvc.TagHelpers >= 6.0.0-rc1-final",
+      "Newtonsoft.Json >= 7.0.1"
     ],
     ".NETFramework,Version=v4.0": [
       "Common.Logging >= 3.0.0",
       "Microsoft.Bcl.Async >= 1.0.168",
       "Microsoft.Owin >= 2.1.0",
       "WebActivatorEx >= 2.0.0",
+      "Newtonsoft.Json >= 4.0.1",
       "fx/System.Web >= 4.0.0",
       "fx/System.XML >= 4.0.0"
     ]

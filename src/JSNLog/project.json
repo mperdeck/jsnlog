@@ -6,7 +6,8 @@
         "Microsoft.AspNet.Http.Abstractions": "1.0.0-rc1-final",
         "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
         "Microsoft.AspNet.Http.Extensions": "1.0.0-rc1-final",
-        "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final"
+        "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
+        "Newtonsoft.Json": "4.0.1"
       }
     },
     "dnxcore50": {
@@ -15,7 +16,8 @@
         "Microsoft.AspNet.Http.Abstractions": "1.0.0-rc1-final",
         "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
         "Microsoft.AspNet.Http.Extensions": "1.0.0-rc1-final",
-        "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final"
+        "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
+        "Newtonsoft.Json": "7.0.1"
       }
     },
     "net40": {
@@ -23,7 +25,8 @@
         "Common.Logging": "3.0.0",
         "Microsoft.Bcl.Async": "1.0.168",
         "Microsoft.Owin": "2.1.0",
-        "WebActivatorEx": "2.0.0"
+        "WebActivatorEx": "2.0.0",
+        "Newtonsoft.Json": "4.0.1"
       },
       "frameworkAssemblies": {
         "System.Web": "4.0.0.0",
@@ -32,6 +35,5 @@
     }
   },
   "dependencies": {
-    "Newtonsoft.Json": "7.0.1"
   }
 }
