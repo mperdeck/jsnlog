@@ -530,26 +530,27 @@ var JL;
                     ajaxUrl = this.url;
                 }
 
-                var json = JSON.stringify({
-                    r: JL.requestId,
-                    lg: logItems
-                });
-
                 // Send the json to the server.
                 // Note that there is no event handling here. If the send is not
                 // successful, nothing can be done about it.
                 var xhr = this.getXhr(ajaxUrl);
 
+                var json = {
+                    r: JL.requestId,
+                    lg: logItems
+                };
+
                 // call beforeSend callback
                 // first try the callback on the appender
                 // then the global defaultBeforeSend callback
                 if (typeof this.beforeSend === 'function') {
-                    this.beforeSend.call(this, xhr);
+                    this.beforeSend.call(this, xhr, json);
                 } else if (typeof JL.defaultBeforeSend === 'function') {
-                    JL.defaultBeforeSend.call(this, xhr);
+                    JL.defaultBeforeSend.call(this, xhr, json);
                 }
 
-                xhr.send(json);
+                var finalmsg = JSON.stringify(json);
+                xhr.send(finalmsg);
             } catch (e) {
             }
         };

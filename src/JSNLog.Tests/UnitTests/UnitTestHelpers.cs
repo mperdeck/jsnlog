@@ -42,7 +42,7 @@ namespace JSNLog.Tests.UnitTests
             cp.ReferencedAssemblies.Add("system.xml.dll");
 
             // If it can't find JSNLog.dll, make sure that "Produce outputs on build" property of JSNLog project is checked.
-            cp.ReferencedAssemblies.Add(@"D:\Dev\JSNLog\jsnlog\artifacts\bin\JSNLog\Debug\dnx451\JSNLog.dll");
+            cp.ReferencedAssemblies.Add(TestConstants._jsnlogDllDirectory);
 
             cp.CompilerOptions = "/t:library";
             cp.GenerateInMemory = true;

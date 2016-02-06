@@ -1,12 +1,12 @@
 {
-  "version": "2.16.0",
+  "version": "2.17.0",
   "compilationOptions": {
     "emitEntryPoint": true
   },
 
   "dependencies": {
-    "JSNLog": "2.16.0",
-    "JSNLog.Tests": "2.16.0",
+    "JSNLog": "2.17.0",
+    "JSNLog.Tests": "2.17.0",
     "Microsoft.AspNet.Diagnostics": "1.0.0-rc1-final",
     "Microsoft.AspNet.IISPlatformHandler": "1.0.0-rc1-final",
     "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",

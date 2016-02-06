@@ -15,15 +15,11 @@ namespace JSNLog.Tests.UnitTests
 {
     public class DemoTestsContext : IDisposable
     {
-        // All tests here write a partial with the complete demo html.
-        // The partials are written to directory:
-        internal const string _demosDirectory = @"D:\Dev\JSNLog\jsnlog.website\WebSite\Views\Shared\Demos";
-
         public DemoTestsContext()
         {
             // Delete all files in Demos directory
 
-            System.IO.DirectoryInfo demosDirectory = new DirectoryInfo(_demosDirectory);
+            System.IO.DirectoryInfo demosDirectory = new DirectoryInfo(TestConstants._demosDirectory);
 
             foreach (FileInfo file in demosDirectory.GetFiles("*.cshtml"))
             {
@@ -755,7 +751,7 @@ new JsnlogConfiguration {
             sb.AppendLine(@"");
             sb.AppendLine(@"</div></div>");
 
-            string path = Path.Combine(DemoTestsContext._demosDirectory, string.Format("_{0}.cshtml", demoId));
+            string path = Path.Combine(TestConstants._demosDirectory, string.Format("_{0}.cshtml", demoId));
             string content = sb.ToString();
 
             bool fileExists = File.Exists(path);
