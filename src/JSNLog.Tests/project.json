@@ -1,5 +1,5 @@
 {
-  "version": "2.17.2",
+  "version": "2.17.3",
   "description": "JSNLog.Tests Class Library",
   "authors": [ "mperdeck" ],
   "tags": [ "" ],
@@ -12,7 +12,7 @@
     }
   },
   "dependencies": {
-    "JSNLog": "2.17.2",
+    "JSNLog": "2.17.3",
     "Selenium.WebDriver": "2.48.2",
     "xunit": "2.1.0",
     "xunit.runner.dnx": "2.1.0-rc1-build204"
