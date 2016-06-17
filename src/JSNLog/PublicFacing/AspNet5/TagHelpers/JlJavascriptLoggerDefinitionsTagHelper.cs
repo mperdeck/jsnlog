@@ -42,18 +42,6 @@ namespace JSNLog
 
             output.TagMode = TagMode.StartTagAndEndTag;
         }
-
-        //public override void Process(TagHelperContext context, TagHelperOutput output)
-        //{
-        //    output.TagName = ""; // Remove the jl-javascript-logger-definitions tag completely
-
-        //    HttpContext httpContext = _httpContextAccessor.HttpContext;
-        //    string JSCode = httpContext.Configure(RequestId);
-
-        //    output.Content.SetHtmlContent(JSCode);
-
-        //    output.TagMode = TagMode.StartTagAndEndTag;
-        //}
     }
 }
 

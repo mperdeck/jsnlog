@@ -13,7 +13,7 @@
       }
     },
     "net40": {
-      "buildOptions": { "define": [ "NET450", "SUPPORTSXML" ] },   
+      "buildOptions": { "define": [ "NET40", "SUPPORTSXML" ] },   
       "dependencies": {
         "Common.Logging": "3.0.0",
         "Microsoft.Owin": "2.1.0",
