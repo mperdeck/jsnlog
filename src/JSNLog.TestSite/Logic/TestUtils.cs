@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
 using JSNLog.Infrastructure;
 using JSNLog.Tests.Common;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace JSNLog.Tests.Logic
 {

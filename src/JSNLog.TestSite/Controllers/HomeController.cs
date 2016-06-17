@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JSNLog;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using JSNLog.Infrastructure;
 
 namespace JSNLog.Tests.Controllers

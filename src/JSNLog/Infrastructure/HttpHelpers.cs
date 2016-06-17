@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 #if NET40
 using System.Web;
 #else
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 #endif
 
 namespace JSNLog.Infrastructure

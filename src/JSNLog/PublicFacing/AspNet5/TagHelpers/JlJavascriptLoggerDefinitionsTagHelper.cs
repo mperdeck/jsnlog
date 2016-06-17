@@ -1,12 +1,13 @@
-﻿#if !NET40
+#if !NET40
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Razor.TagHelpers;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace JSNLog
 {
@@ -25,6 +26,11 @@ namespace JSNLog
             _httpContextAccessor = httpContextAccessor;
         }
 
+        public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+        {
+            return base.ProcessAsync(context, output);
+        }
+
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             output.TagName = ""; // Remove the jl-javascript-logger-definitions tag completely
@@ -36,6 +42,18 @@ namespace JSNLog
 
             output.TagMode = TagMode.StartTagAndEndTag;
         }
+
+        //public override void Process(TagHelperContext context, TagHelperOutput output)
+        //{
+        //    output.TagName = ""; // Remove the jl-javascript-logger-definitions tag completely
+
+        //    HttpContext httpContext = _httpContextAccessor.HttpContext;
+        //    string JSCode = httpContext.Configure(RequestId);
+
+        //    output.Content.SetHtmlContent(JSCode);
+
+        //    output.TagMode = TagMode.StartTagAndEndTag;
+        //}
     }
 }
 

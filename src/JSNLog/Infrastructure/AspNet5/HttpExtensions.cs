@@ -1,11 +1,11 @@
-﻿#if !NET40
+#if !NET40
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace JSNLog.Infrastructure.AspNet5
 {

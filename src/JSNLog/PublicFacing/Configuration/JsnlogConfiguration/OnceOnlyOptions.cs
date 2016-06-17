@@ -10,7 +10,7 @@ namespace JSNLog
 {
     public class OnceOnlyOptions
     {
-#if !DNXCORE50
+#if SUPPORTSXML
         [XmlAttribute]
 #endif
         public string regex { get; set; }
