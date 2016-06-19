@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Xml;
 using JSNLog.Exceptions;
@@ -7,7 +7,7 @@ using JSNLog.LogHandling;
 #if NET40
 using System.Web;
 #else
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 #endif
 
 namespace JSNLog
@@ -107,8 +107,8 @@ namespace JSNLog
             return _jsnlogConfiguration ?? new JsnlogConfiguration();
         }
 
-        // All unit tests run under DNX451
-#if NET40 || DNX451
+        // All unit tests run under DOTNETCLI
+#if SUPPORTSXML
 
         // Seam used for unit testing. During unit testing, gets an xml element created by the test. 
         // During production get the jsnlog element from web.config.
@@ -160,8 +160,8 @@ namespace JSNLog
             }
         }
 
-        // All unit tests run under DNX451
-#if NET40 || DNX451
+        // All unit tests run under DOTNETCLI
+#if SUPPORTSXML
         internal static void SetJsnlogConfiguration(
             Func<XmlElement> lxe, JsnlogConfiguration jsnlogConfiguration, ILoggingAdapter logger = null)
         {

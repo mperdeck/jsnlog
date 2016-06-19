@@ -1,12 +1,13 @@
-﻿#if !NET40
+#if !NET40
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Razor.TagHelpers;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace JSNLog
 {
@@ -23,6 +24,11 @@ namespace JSNLog
         public JlJavascriptLoggerDefinitionsTagHelper(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
+        }
+
+        public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+        {
+            return base.ProcessAsync(context, output);
         }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)

@@ -29,8 +29,8 @@ namespace JSNLog
 
             switch (finalLogData.FinalLevel)
             {
-                case Level.TRACE: logger.LogDebug("{logMessage}", message); break;
-                case Level.DEBUG: logger.LogVerbose("{logMessage}", message); break;
+                case Level.TRACE: logger.LogTrace("{logMessage}", message); break;
+                case Level.DEBUG: logger.LogDebug("{logMessage}", message); break;
                 case Level.INFO: logger.LogInformation("{logMessage}", message); break;
                 case Level.WARN: logger.LogWarning("{logMessage}", message); break;
                 case Level.ERROR: logger.LogError("{logMessage}", message); break;

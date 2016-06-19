@@ -1,5 +1,5 @@
-﻿// All unit tests run under DNX451
-#if NET40 || DNX451
+﻿// All unit tests run under dotnet cli
+#if SUPPORTSXML
 
 using System;
 using System.Collections.Generic;

@@ -1,10 +1,10 @@
-﻿#if !NET40
+#if !NET40
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.AspNet.Builder;
+using Microsoft.AspNetCore.Builder;
 
 namespace JSNLog
 {

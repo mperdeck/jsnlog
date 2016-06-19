@@ -1,12 +1,12 @@
-﻿#if !NET40
+#if !NET40
 
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using JSNLog.Infrastructure.AspNet5;
 using Microsoft.Extensions.Primitives;
 using JSNLog.Infrastructure;
@@ -102,17 +102,31 @@ namespace JSNLog
             }
         }
 
-        private Dictionary<string, string> ToDictionary(IEnumerable<KeyValuePair<string, StringValues>> stringValuesDictionary)
+        private Dictionary<string, string> ToDictionary(IEnumerable<KeyValuePair<string, string>> values)
         {
             var result = new Dictionary<string, string>();
-
-            foreach (var kvp in stringValuesDictionary)
+            foreach (var kvp in values)
             {
                 result[kvp.Key] = kvp.Value.ToString();
             }
 
             return result;
         }
+
+        private Dictionary<string, string> ToDictionary(IEnumerable<KeyValuePair<string, StringValues>> values)
+        {
+            var result = new Dictionary<string, string>();
+            foreach (var kvp in values)
+            {
+                result[kvp.Key] = kvp.Value.ToString();
+            }
+
+            return result;
+        }
+
+
+
+        
     }
 }
 
