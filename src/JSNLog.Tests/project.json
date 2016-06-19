@@ -7,7 +7,7 @@
   ],
   "frameworks": {
     "net452": {
-      "dependencies": { }
+      "dependencies": {}
     }
   },
   "dependencies": {
@@ -16,13 +16,11 @@
     "dotnet-test-xunit": "1.0.0-rc2-build10025",
     "JSNLog": "2.17.4"
   },
-  "tools": {
-   
-  },
+  "tools": {},
   "buildOptions": {
-    "preserveCompilationContext": true,   
+    "preserveCompilationContext": true,
     "copyToOutput": {
-      "include": [ ]
+      "include": []
     }
   },
   "packOptions": {
@@ -33,6 +31,6 @@
     "projectUrl": ""
   },
   "publishOptions": {
-    "include": [ ]
+    "include": []
   }
 }

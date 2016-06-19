@@ -2,7 +2,12 @@
   "version": "2.17.4",
   "frameworks": {
     "net452": {
-      "buildOptions": { "define": [ "NET452", "SUPPORTSXML" ] },   
+      "buildOptions": {
+        "define": [
+          "NET452",
+          "SUPPORTSXML"
+        ]
+      },
       "dependencies": {
         "Microsoft.AspNetCore.Http.Abstractions": "1.0.0-rc2-final",
         "Microsoft.Extensions.Logging": "1.0.0-rc2-final",
@@ -13,7 +18,12 @@
       }
     },
     "net40": {
-      "buildOptions": { "define": [ "NET40", "SUPPORTSXML" ] },   
+      "buildOptions": {
+        "define": [
+          "NET40",
+          "SUPPORTSXML"
+        ]
+      },
       "dependencies": {
         "Common.Logging": "3.0.0",
         "Microsoft.Owin": "2.1.0",
@@ -26,7 +36,12 @@
       }
     },
     "netstandard1.5": {
-      "buildOptions": { "define": [ "NETSTANDARD", "NETSTANDARD1_5" ] },      
+      "buildOptions": {
+        "define": [
+          "NETSTANDARD",
+          "NETSTANDARD1_5"
+        ]
+      },
       "imports": [
         "dnxcore50",
         "portable-net45+win8"
@@ -47,11 +62,11 @@
   "buildOptions": {
     "preserveCompilationContext": true,
     "copyToOutput": {
-      "include": [ ]
+      "include": []
     }
   },
   "publishOptions": {
-    "include": [ ]
+    "include": []
   },
-  "tools": { }
+  "tools": {}
 }
