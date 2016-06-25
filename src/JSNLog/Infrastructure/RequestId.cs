@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 #if NET40
 using System.Web;
 #else
@@ -78,6 +79,12 @@ namespace JSNLog.Infrastructure
             return requestId;
         }
 
+        public static string GetLogRequestId(this Dictionary<string,string> headers)
+        {
+            string requestId = headers.SafeGet(Constants.HttpHeaderRequestIdName);
+            return requestId;
+        }
+        
         private static string CreateNewRequestId()
         {
             return Guid.NewGuid().ToString();
