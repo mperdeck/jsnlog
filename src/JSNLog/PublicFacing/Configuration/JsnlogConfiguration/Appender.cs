@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+#if !DNXCORE50
 using System.Xml.Serialization;
+#endif
+
 using JSNLog.Exceptions;
 using JSNLog.Infrastructure;
 using JSNLog.ValueInfos;

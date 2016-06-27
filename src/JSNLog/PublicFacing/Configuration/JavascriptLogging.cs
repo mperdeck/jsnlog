@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
+#if NET40 || DNX451
 using System.Xml;
+#endif
 using JSNLog.Exceptions;
 using JSNLog.Infrastructure;
 using JSNLog.LogHandling;

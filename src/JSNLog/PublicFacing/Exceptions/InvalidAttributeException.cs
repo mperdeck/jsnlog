@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
-
-namespace JSNLog.Exceptions
+﻿namespace JSNLog.Exceptions
 {
     public class InvalidAttributeException : JSNLogException
     {
