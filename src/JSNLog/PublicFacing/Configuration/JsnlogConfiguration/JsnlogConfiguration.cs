@@ -35,8 +35,12 @@ namespace JSNLog
 
 #if !DNXCORE50
         [XmlAttribute]
-#endif
+        /// <summary>
+        /// corsAllowedOriginsRegex not supported by DNXCORE50, because that does not
+        /// support regular expressions.
+        /// </summary>
         public string corsAllowedOriginsRegex { get; set; }
+#endif
 
 #if !DNXCORE50
         [XmlAttribute]

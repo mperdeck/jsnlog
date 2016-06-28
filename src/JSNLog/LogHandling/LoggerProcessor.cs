@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using JSNLog.Infrastructure;
 using System.Net;
+#if !DNXCORE50
 using System.Text.RegularExpressions;
+#endif
 using JSNLog.Exceptions;
 
 namespace JSNLog.LogHandling
@@ -69,8 +71,11 @@ namespace JSNLog.LogHandling
                 return;
             }
 
+            bool originIsAllowed = false;
+#if !DNXCORE50
             string corsAllowedOriginsRegex = jsnlogConfiguration.corsAllowedOriginsRegex;
-            bool originIsAllowed = ((!string.IsNullOrEmpty(corsAllowedOriginsRegex)) && (!string.IsNullOrEmpty(origin)) && Regex.IsMatch(origin, corsAllowedOriginsRegex));
+            originIsAllowed = ((!string.IsNullOrEmpty(corsAllowedOriginsRegex)) && (!string.IsNullOrEmpty(origin)) && Regex.IsMatch(origin, corsAllowedOriginsRegex));
+#endif
 
             if (originIsAllowed)
             {
