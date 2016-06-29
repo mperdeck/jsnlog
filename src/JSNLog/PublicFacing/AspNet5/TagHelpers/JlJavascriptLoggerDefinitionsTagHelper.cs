@@ -1,4 +1,7 @@
-﻿#if !NET40
+﻿#if DNX451
+
+// In DNXCORE50, namespace Razor does not exist in Microsoft.AspNet, and there seems to be no way to 
+// use tag helpers.
 
 using System;
 using System.Collections.Generic;
