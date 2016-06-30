@@ -1,17 +1,10 @@
 ﻿@using JSNLog
-@using Microsoft.AspNet.Http;
 @using JSNLog.Tests.Common;
-
-@inject IHttpContextAccessor httpContextAccessor
-@addTagHelper "*, JSNLog"
-
 
     <h2>RequestIdTest</h2>
     @{ 
         CommonTestHelpers.SetConfigCache(@"<jsnlog></jsnlog>");
     }
-
-    <jl-javascript-logger-definitions request-id="@ViewBag.PassedInRequestId" />
 
     <div id="IdFromController">@ViewBag.RequestId</div>
     <div id="IdFromView">@httpContextAccessor.HttpContext.RequestId()</div>
