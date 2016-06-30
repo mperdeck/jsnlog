@@ -19,28 +19,36 @@ namespace JSNLog.Tests.IntegrationTests
             get; private set;
         }
 
-        // The port 5000 is always used by kestrel
-        private const string _baseUrl = "http://localhost:5000";
+        private const int _port = 5100;
+        private readonly string _baseUrl = string.Format("http://localhost:{0}", _port);
         private readonly Process _serverProcess;
 
         public JsTestsContext()
         {
             string jsnlogTestsProjectDirectory = Directory.GetCurrentDirectory();
-            string jsnlogTestSiteProjectDirectory = Path.Combine(jsnlogTestsProjectDirectory, "..", "JSNLog.TestSite");
+            string jsnlogTestSiteProjectDirectory = Path.GetFullPath(Path.Combine(jsnlogTestsProjectDirectory, "..", "JSNLog.TestSite2"));
 
+//####            jsnlogTestSiteProjectDirectory = "C:\\Dev\\JSNLog\\jsnlog\\src\\JSNLog.TestSite2";
+            //########            string jsnlogTestSiteProjectDirectory = Path.Combine(jsnlogTestsProjectDirectory, "..", "JSNLog.TestSite");
+
+            string arguments = string.Format(@"/path:""{0}"" /port:{1}", jsnlogTestSiteProjectDirectory, _port);
+
+
+
+            // Before you can run this code, make sure that IIS Express has been installed.
             _serverProcess = Process.Start(new ProcessStartInfo
             {
-                FileName = "dnx.exe",
-                Arguments = "web",
+                FileName = "iisexpress",
+                Arguments = arguments,
                 WorkingDirectory = jsnlogTestSiteProjectDirectory
             });
 
-            Thread.Sleep(3000);
+            Thread.Sleep(1000);
 
             if (_serverProcess.HasExited)
             {
-                throw new Exception(string.Format("Kestrel server could not be started - exit code: {0}. Before running these tests, " +
-                    "make sure Kestrel is not already running.", 
+                throw new Exception(string.Format("IIS Express could not be started - exit code: {0}. Before running these tests, " +
+                    "make sure IIS Express is not already running.", 
                     _serverProcess.ExitCode));
             }
 
@@ -82,6 +90,10 @@ namespace JSNLog.Tests.IntegrationTests
         public void OpenPage(string relativeUrl)
         {
             string absoluteUrl = _baseUrl + relativeUrl;
+
+            //##############
+            absoluteUrl = _baseUrl;
+
             Driver.Navigate().GoToUrl(absoluteUrl);
         }
 
