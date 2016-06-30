@@ -125,7 +125,7 @@
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="scripts\exceptiontests.js" />
-    <Content Include="scripts\jquery-2.1.0.min.js" />
+    <Content Include="scripts\jquery\jquery-3.0.0.js" />
     <Content Include="scripts\libs\jsnlog.js" />
     <Content Include="scripts\libs\jsnlog.min.js" />
     <Content Include="scripts\require.js" />
@@ -173,6 +173,7 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="scripts\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="scripts\TestUtils.ts" />
   </ItemGroup>
   <ItemGroup>
