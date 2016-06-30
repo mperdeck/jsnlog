@@ -9,9 +9,9 @@
     <projectUrl>http://jsnlog.com</projectUrl>
     <iconUrl>http://jsnlog.com/Nuget/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>JavaScript logging package that lets you log exceptions, AJAX timeouts and other client side events in your server side log. Supports ASP.NET 4.x (.Net 4.0+) and ASP.NET 5+ (DNX451, DNXCORE50).</description>
+    <description>JavaScript logging package that lets you log exceptions, AJAX timeouts and other client side events in your server side log. Supports ASP.NET 4.x (.Net 4.0+) and ASP.NET CORE RC1 (DNX451, DNXCORE50).</description>
     <copyright>Copyright 2016</copyright>
-    <tags>JavaScript logging exceptions ajax log4net nlog elmah serilog ASP.NET 4.x ASP.NET 5 DNX451 DNXCORE50</tags>
+    <tags>JavaScript logging exceptions ajax log4net nlog elmah serilog ASP.NET 4.x ASP.NET CORE DNX451 DNXCORE50</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.0">
           <!-- IMPORTANT
