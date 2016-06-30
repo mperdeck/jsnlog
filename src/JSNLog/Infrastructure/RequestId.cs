@@ -20,9 +20,9 @@ namespace JSNLog.Infrastructure
         /// http://blog.tatham.oddie.com.au/2012/02/07/code-request-correlation-in-asp-net/
         /// </summary>
         /// <returns></returns>
-        private static string IISRequestId(HttpContext httpContext)
-        {
 #if NET40
+        private static string IISRequestId(HttpContextBase httpContext)
+        {
             var provider = (IServiceProvider)HttpContext.Current;
             if (provider != null)
             {
@@ -36,30 +36,40 @@ namespace JSNLog.Infrastructure
                     }
                 }
             }
-#endif
-
-            // DNX versions always return null
 
             return null;
         }
-
-        private static string GetRequestIdFromContext(HttpContext httpContext)
-        {
-#if NET40
-            return (string)(HttpContext.Current.Items[Constants.ContextItemRequestIdName]);
 #else
-            return httpContext.TraceIdentifier;
-#endif
+        private static string IISRequestId(HttpContext httpContext)
+        {
+            // DNX versions always return null
+            return null;
         }
+#endif
 
+#if NET40
+        private static string GetRequestIdFromContext(this HttpContextBase httpContext)
+        {
+            return (string)(HttpContext.Current.Items[Constants.ContextItemRequestIdName]);
+        }
+#else
+        private static string GetRequestIdFromContext(this HttpContext httpContext)
+        {
+            return httpContext.TraceIdentifier;
+        }
+#endif
+
+#if NET40
+        private static void SetRequestIdInContext(HttpContextBase httpContext, string requestId)
+        {
+            HttpContext.Current.Items[Constants.ContextItemRequestIdName] = requestId;
+        }
+#else
         private static void SetRequestIdInContext(HttpContext httpContext, string requestId)
         {
-#if NET40
-            HttpContext.Current.Items[Constants.ContextItemRequestIdName] = requestId;
-#else
             httpContext.TraceIdentifier = requestId;
-#endif
         }
+#endif
 
         /// <summary>
         /// Gets the request id from an HTTP header in the request.
@@ -69,7 +79,13 @@ namespace JSNLog.Infrastructure
         /// If the request id cannot be found, returns null.
         /// </summary>
         /// <returns></returns>
-        public static string GetLogRequestId(this HttpContext httpContext)
+        public static string GetLogRequestId(
+#if NET40
+                this HttpContextBase httpContext
+#else
+                this HttpContext httpContext
+#endif
+            )
         {
             // Even though the code for NET40 and DNX is the same for getting the headers,
             // the type of the headers variable will be different.
@@ -95,7 +111,13 @@ namespace JSNLog.Infrastructure
         /// That is, for the same request, this method always returns the same string.
         /// </summary>
         /// <returns></returns>
-        public static string GetRequestId(this HttpContext httpContext)
+        public static string GetRequestId(
+#if NET40
+                this HttpContextBase httpContext
+#else
+                this HttpContext httpContext
+#endif
+            )
         {
             string requestId = GetRequestIdFromContext(httpContext);
 

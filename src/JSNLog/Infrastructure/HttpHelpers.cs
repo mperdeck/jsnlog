@@ -51,14 +51,18 @@ namespace JSNLog.Infrastructure
             }
         }
 
-        public static string GetUserIp(this HttpContext httpContext)
-        {
 #if NET40
+        public static string GetUserIp(this HttpContextBase httpContext)
+        {
             string userIp = httpContext.Request.UserHostAddress;
-#else
-            string userIp = Utils.SafeToString(httpContext.Connection.RemoteIpAddress);
-#endif
             return userIp;
         }
+#else
+        public static string GetUserIp(this HttpContext httpContext)
+        {
+            string userIp = Utils.SafeToString(httpContext.Connection.RemoteIpAddress);
+            return userIp;
+        }
+#endif
     }
 }

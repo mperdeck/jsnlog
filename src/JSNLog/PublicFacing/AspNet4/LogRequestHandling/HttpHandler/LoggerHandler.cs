@@ -34,6 +34,12 @@ namespace JSNLog
 
         public void ProcessRequest(HttpContext context)
         {
+            var contextBase = new HttpContextWrapper(context);
+            ProcessRequest(contextBase);
+        }
+
+    public void ProcessRequest(HttpContextBase context)
+        {
             var logRequestBase = new LogRequestBase(
                 userAgent: context.Request.UserAgent,
                 userHostAddress: context.GetUserIp(),
@@ -70,14 +76,14 @@ namespace JSNLog
             // http://www.acnenomor.com/307387p1/how-do-i-setup-my-ajax-post-request-to-prevent-no-element-found-on-empty-response
             // http://stackoverflow.com/questions/975929/firefox-error-no-element-found/976200#976200
 
-            HttpResponse httpResponse = context.Response;
+            HttpResponseBase httpResponse = context.Response;
             ToHttpResponse(logResponse, httpResponse);
             httpResponse.ContentType = "text/plain";
             httpResponse.ClearContent();
             httpResponse.Write("");
         }
 
-        private void ToHttpResponse(LogResponse logResponse, HttpResponse httpResponse)
+        private void ToHttpResponse(LogResponse logResponse, HttpResponseBase httpResponse)
         {
             httpResponse.StatusCode = logResponse.StatusCode;
 

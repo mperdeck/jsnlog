@@ -34,7 +34,17 @@ namespace JSNLog
         }
 #endif
 
+#if NET40
         public static string Configure(this HttpContext httpContext, string requestId = null)
+        {
+            var contextBase = new HttpContextWrapper(httpContext);
+            return contextBase.Configure(requestId);
+        }
+
+        public static string Configure(this HttpContextBase httpContext, string requestId = null)
+#else
+        public static string Configure(this HttpContext httpContext, string requestId = null)
+#endif
         {
             StringBuilder sb = new StringBuilder();
 
@@ -61,11 +71,16 @@ namespace JSNLog
 #if NET40
         public static string RequestId()
         {
-            return HttpContext.Current.RequestId();
+            var contextBase = new HttpContextWrapper(HttpContext.Current);
+            return contextBase.RequestId();
         }
 #endif
 
+#if NET40
+        public static string RequestId(this HttpContextBase httpContext)
+#else
         public static string RequestId(this HttpContext httpContext)
+#endif
         {
             string requestId = httpContext.GetLogRequestId();
 
