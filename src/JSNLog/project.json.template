@@ -7,7 +7,7 @@
         "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
         "Microsoft.AspNet.Http.Extensions": "1.0.0-rc1-final",
         "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
-        "Newtonsoft.Json": "4.0.1"
+        "Newtonsoft.Json": "7.0.1"
       }
     },
     "dnxcore50": {
@@ -16,7 +16,6 @@
         "Microsoft.AspNet.Http.Abstractions": "1.0.0-rc1-final",
         "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
         "Microsoft.AspNet.Http.Extensions": "1.0.0-rc1-final",
-        "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
         "Newtonsoft.Json": "7.0.1"
       }
     },

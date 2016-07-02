@@ -26,7 +26,7 @@ namespace JSNLog.Tests.IntegrationTests
         public JsTestsContext()
         {
             string jsnlogTestsProjectDirectory = Directory.GetCurrentDirectory();
-            string jsnlogTestSiteProjectDirectory = Path.GetFullPath(Path.Combine(jsnlogTestsProjectDirectory, "..", "JSNLog.TestSite2"));
+            string jsnlogTestSiteProjectDirectory = Path.GetFullPath(Path.Combine(jsnlogTestsProjectDirectory, "..", "..", "JSNLog.TestSite"));
 
 //####            jsnlogTestSiteProjectDirectory = "C:\\Dev\\JSNLog\\jsnlog\\src\\JSNLog.TestSite2";
             //########            string jsnlogTestSiteProjectDirectory = Path.Combine(jsnlogTestsProjectDirectory, "..", "JSNLog.TestSite");
