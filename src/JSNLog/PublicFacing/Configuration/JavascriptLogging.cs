@@ -37,8 +37,7 @@ namespace JSNLog
 #if NET40
         public static string Configure(this HttpContext httpContext, string requestId = null)
         {
-            var contextBase = new HttpContextWrapper(httpContext);
-            return contextBase.Configure(requestId);
+            return httpContext.ToContextBase().Configure(requestId);
         }
 
         public static string Configure(this HttpContextBase httpContext, string requestId = null)
@@ -71,8 +70,7 @@ namespace JSNLog
 #if NET40
         public static string RequestId()
         {
-            var contextBase = new HttpContextWrapper(HttpContext.Current);
-            return contextBase.RequestId();
+            return HttpContext.Current.ToContextBase().RequestId();
         }
 #endif
 

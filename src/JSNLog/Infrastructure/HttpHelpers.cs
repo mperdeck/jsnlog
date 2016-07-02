@@ -20,6 +20,14 @@ namespace JSNLog.Infrastructure
         private static Regex _regex = new Regex(@";\s*charset=(?<charset>[^\s;]+)");
 #endif
 
+#if NET40
+        public static HttpContextBase ToContextBase(this HttpContext httpContext)
+        {
+            var contextBase = new HttpContextWrapper(httpContext);
+            return contextBase;
+        }
+#endif
+
         public static Encoding GetEncoding(string contentType)
         {
             if (string.IsNullOrEmpty(contentType))

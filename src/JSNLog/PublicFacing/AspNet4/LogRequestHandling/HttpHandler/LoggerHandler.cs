@@ -34,8 +34,7 @@ namespace JSNLog
 
         public void ProcessRequest(HttpContext context)
         {
-            var contextBase = new HttpContextWrapper(context);
-            ProcessRequest(contextBase);
+            ProcessRequest(context.ToContextBase());
         }
 
     public void ProcessRequest(HttpContextBase context)
