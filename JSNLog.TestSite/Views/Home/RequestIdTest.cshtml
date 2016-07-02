@@ -1,13 +1,15 @@
 ﻿@using JSNLog
-@using JSNLog.Tests.Common;
+@using JSNLog.Infrastructure
+@using JSNLog.Tests.Common
+@model JSNLog.TestSite.Models.RequestIdVm
 
     <h2>RequestIdTest</h2>
     @{ 
         CommonTestHelpers.SetConfigCache(@"<jsnlog></jsnlog>");
     }
 
-    <div id="IdFromController">@ViewBag.RequestId</div>
-    <div id="IdFromView">@HttpContext.RequestId()</div>
+    <div id="IdFromController">@Model.RequestId</div>
+    <div id="IdFromView">@((new HttpContextWrapper(HttpContext.Current)).RequestId())</div>
     <div id="IdFromJL"></div>
 
     <script type="text/ecmascript">

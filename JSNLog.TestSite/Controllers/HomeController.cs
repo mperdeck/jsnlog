@@ -5,6 +5,7 @@ using JSNLog;
 using System.Web.Mvc;
 using System.Web;
 using JSNLog.Infrastructure;
+using JSNLog.TestSite.Models;
 
 namespace JSNLog.Tests.Controllers
 {
@@ -42,10 +43,12 @@ namespace JSNLog.Tests.Controllers
 
         public ActionResult RequestIdTest(string id)
         {
-            ViewBag.RequestId = HttpContext.GetRequestId();
-            ViewBag.PassedInRequestId = id;
+            var requestIdVm = new RequestIdVm
+            {
+                RequestId = HttpContext.GetRequestId()
+            };
 
-            return View();
+            return View(requestIdVm);
         }
 
     }
