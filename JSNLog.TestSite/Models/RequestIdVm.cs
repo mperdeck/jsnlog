@@ -8,6 +8,7 @@ namespace JSNLog.TestSite.Models
     public class RequestIdVm
     {
         public string RequestId { get; set; }
+        public string PassedInRequestId { get; set; }
     }
 }
 

@@ -4,9 +4,11 @@
 @model JSNLog.TestSite.Models.RequestIdVm
 
     <h2>RequestIdTest</h2>
-    @{ 
+    @{
         CommonTestHelpers.SetConfigCache(@"<jsnlog></jsnlog>");
     }
+
+    @Html.Raw(JSNLog.JavascriptLogging.Configure(Model.PassedInRequestId))
 
     <div id="IdFromController">@Model.RequestId</div>
     <div id="IdFromView">@((new HttpContextWrapper(HttpContext.Current)).RequestId())</div>

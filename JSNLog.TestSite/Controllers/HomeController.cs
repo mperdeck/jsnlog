@@ -45,7 +45,8 @@ namespace JSNLog.Tests.Controllers
         {
             var requestIdVm = new RequestIdVm
             {
-                RequestId = HttpContext.GetRequestId()
+                RequestId = HttpContext.GetRequestId(),
+                PassedInRequestId = id
             };
 
             return View(requestIdVm);
