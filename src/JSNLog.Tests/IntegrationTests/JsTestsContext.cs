@@ -69,7 +69,11 @@ namespace JSNLog.Tests.IntegrationTests
             // Close the browser if there is no error. Otherwise leave open.
             if (!ErrorOnPage())
             {
-                _serverProcess.Kill();
+                if (!_serverProcess.HasExited)
+                {
+                    _serverProcess.Kill();
+                }
+
                 Driver.Quit();
             }
         }
