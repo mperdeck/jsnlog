@@ -28,12 +28,7 @@ namespace JSNLog.Tests.IntegrationTests
             string jsnlogTestsProjectDirectory = Directory.GetCurrentDirectory();
             string jsnlogTestSiteProjectDirectory = Path.GetFullPath(Path.Combine(jsnlogTestsProjectDirectory, "..", "..", "JSNLog.TestSite"));
 
-//####            jsnlogTestSiteProjectDirectory = "C:\\Dev\\JSNLog\\jsnlog\\src\\JSNLog.TestSite2";
-            //########            string jsnlogTestSiteProjectDirectory = Path.Combine(jsnlogTestsProjectDirectory, "..", "JSNLog.TestSite");
-
             string arguments = string.Format(@"/path:""{0}"" /port:{1}", jsnlogTestSiteProjectDirectory, _port);
-
-
 
             // Before you can run this code, make sure that IIS Express has been installed.
             _serverProcess = Process.Start(new ProcessStartInfo
@@ -51,14 +46,6 @@ namespace JSNLog.Tests.IntegrationTests
                     "make sure IIS Express is not already running.", 
                     _serverProcess.ExitCode));
             }
-
-
-
-//##################
-            //string processErrors = _serverProcess.StandardError.ReadToEnd();
-            //if (!string.IsNullOrEmpty(processErrors))
-            //{
-            //}
 
             // ----------------------
 
@@ -90,10 +77,6 @@ namespace JSNLog.Tests.IntegrationTests
         public void OpenPage(string relativeUrl)
         {
             string absoluteUrl = _baseUrl + relativeUrl;
-
-            //##############
-            absoluteUrl = _baseUrl;
-
             Driver.Navigate().GoToUrl(absoluteUrl);
         }
 
