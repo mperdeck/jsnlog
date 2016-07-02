@@ -5,6 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
 
+/// <summary>
+/// This testing related code lives in the main JSNLog project, so it can be shared by 
+/// the DNX JSNLog.Tests project and the non-DNX JSNLog.Testsite project.
+/// Tried to create a separate DNX class library to house this common code, but VS doesn't seem
+/// to give you that option.
+/// </summary>
+
 namespace JSNLog.Tests.Common
 {
     public class CommonTestHelpers
