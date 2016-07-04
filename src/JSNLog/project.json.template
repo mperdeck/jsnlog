@@ -29,7 +29,7 @@
       },
       "frameworkAssemblies": {
         "System.Web": "4.0.0.0",
-        "System.XML": "4.0.0.0"
+        "System.Xml": "4.0.0.0"
       }
     }
   },
