@@ -1,5 +1,5 @@
 ﻿// All unit tests run under DNX451
-#if NET40 || DNX451
+#if NET45 || DNX451
 
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using JSNLog.Exceptions;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
-#if NET40
+#if NET45
 using System.Web.Configuration;
 #endif
 
@@ -40,7 +40,7 @@ namespace JSNLog.Infrastructure
             }
         }
 
-#if NET40
+#if NET45
         public static XmlElement RootElement()
         {
             XmlElement xe = WebConfigurationManager.GetSection(Constants.ConfigRootName) as XmlElement;

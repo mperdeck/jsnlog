@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-#if NET40
+#if NET45
 using System.Collections.Specialized;
 #endif
 
@@ -21,7 +21,7 @@ namespace JSNLog.Infrastructure
             return localTime;
         }
 
-#if NET40
+#if NET45
         // NameValueCollection is unknown in DNX environments
 
         public static Dictionary<string, string> ToDictionary(NameValueCollection nameValueCollection)

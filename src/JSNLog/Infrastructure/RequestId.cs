@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-#if NET40
+#if NET45
 using System.Web;
 #else
 using Microsoft.AspNet.Http;
@@ -20,7 +20,7 @@ namespace JSNLog.Infrastructure
         /// http://blog.tatham.oddie.com.au/2012/02/07/code-request-correlation-in-asp-net/
         /// </summary>
         /// <returns></returns>
-#if NET40
+#if NET45
         private static string IISRequestId(HttpContextBase httpContext)
         {
             var provider = (IServiceProvider)HttpContext.Current;
@@ -47,7 +47,7 @@ namespace JSNLog.Infrastructure
         }
 #endif
 
-#if NET40
+#if NET45
         private static string GetRequestIdFromContext(this HttpContextBase httpContext)
         {
             return (string)(HttpContext.Current.Items[Constants.ContextItemRequestIdName]);
@@ -59,7 +59,7 @@ namespace JSNLog.Infrastructure
         }
 #endif
 
-#if NET40
+#if NET45
         private static void SetRequestIdInContext(HttpContextBase httpContext, string requestId)
         {
             HttpContext.Current.Items[Constants.ContextItemRequestIdName] = requestId;
@@ -80,14 +80,14 @@ namespace JSNLog.Infrastructure
         /// </summary>
         /// <returns></returns>
         public static string GetLogRequestId(
-#if NET40
+#if NET45
                 this HttpContextBase httpContext
 #else
                 this HttpContext httpContext
 #endif
             )
         {
-            // Even though the code for NET40 and DNX is the same for getting the headers,
+            // Even though the code for NET45 and DNX is the same for getting the headers,
             // the type of the headers variable will be different.
             var headers = httpContext.Request.Headers;
 
@@ -112,7 +112,7 @@ namespace JSNLog.Infrastructure
         /// </summary>
         /// <returns></returns>
         public static string GetRequestId(
-#if NET40
+#if NET45
                 this HttpContextBase httpContext
 #else
                 this HttpContext httpContext

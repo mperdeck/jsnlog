@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 #endif
 
-#if NET40
+#if NET45
 using System.Web;
 #else
 using Microsoft.AspNet.Http;
@@ -20,7 +20,7 @@ namespace JSNLog.Infrastructure
         private static Regex _regex = new Regex(@";\s*charset=(?<charset>[^\s;]+)");
 #endif
 
-#if NET40
+#if NET45
         public static HttpContextBase ToContextBase(this HttpContext httpContext)
         {
             var contextBase = new HttpContextWrapper(httpContext);
@@ -59,7 +59,7 @@ namespace JSNLog.Infrastructure
             }
         }
 
-#if NET40
+#if NET45
         public static string GetUserIp(this HttpContextBase httpContext)
         {
             string userIp = httpContext.Request.UserHostAddress;
