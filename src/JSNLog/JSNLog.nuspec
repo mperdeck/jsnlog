@@ -51,9 +51,7 @@
         <dependency id="Microsoft.AspNetCore.Http.Extensions" version="1.0.0" />
         <dependency id="Microsoft.AspNetCore.Mvc.TagHelpers" version="1.0.0" />
         <dependency id="Microsoft.AspNetCore.Mvc.Razor" version="1.0.0" />
-
-        <!-- Use low minimum version to make installation easier with old code -->
-        <dependency id="Newtonsoft.Json" version="4.0.1" />
+        <dependency id="Newtonsoft.Json" version="9.0.1" />
 
       </group>
       <group targetFramework="netstandard16">       
