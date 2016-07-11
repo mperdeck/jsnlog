@@ -66,8 +66,8 @@
         <dependency id="Microsoft.AspNetCore.Mvc.Razor" version="1.0.0" />
 
         <!--<dependency id="System.Runtime.InteropServices" version="4.0.20" />-->
-        <!-- 4.0.1 does not support DNXCORE, so use higher version here -->
-        <!--<dependency id="Newtonsoft.Json" version="7.0.1" />-->
+        <!-- 9.0.1 supports netStandard -->
+        <dependency id="Newtonsoft.Json" version="9.0.1" />
       </group>
     </dependencies>
   </metadata>
