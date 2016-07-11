@@ -14,7 +14,7 @@
         "Microsoft.AspNetCore.Http.Extensions": "1.0.0",
         "Microsoft.AspNetCore.Mvc.TagHelpers": "1.0.0",
         "Microsoft.AspNetCore.Mvc.Razor": "1.0.0",
-        "Newtonsoft.Json": "4.0.1"
+        "Newtonsoft.Json": "9.0.1"
       }
     },
     "net40": {
