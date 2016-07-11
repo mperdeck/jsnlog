@@ -35,7 +35,9 @@ namespace JSNLog.Tests.UnitTests
         public static object Eval(string sCSCode)
         {
             CSharpCodeProvider c = new CSharpCodeProvider();
+#pragma warning disable CS0618
             ICodeCompiler icc = c.CreateCompiler();
+#pragma warning restore CS0618
             CompilerParameters cp = new CompilerParameters();
 
             cp.ReferencedAssemblies.Add("system.dll");
