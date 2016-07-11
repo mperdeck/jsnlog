@@ -46,7 +46,7 @@
       </group>
       <group targetFramework=".NETFramework4.5.2">
 
-        <dependency id="Microsoft.AspNet.Http.Abstractions" version="1.0.0" />
+        <dependency id="Microsoft.AspNetCore.Http.Abstractions" version="1.0.0" />
         <dependency id="Microsoft.Extensions.Logging" version="1.0.0" />
         <dependency id="Microsoft.AspNetCore.Http.Extensions" version="1.0.0" />
         <dependency id="Microsoft.AspNetCore.Mvc.TagHelpers" version="1.0.0" />
@@ -59,7 +59,7 @@
       <group targetFramework="netstandard16">       
 
         <dependency id="NETStandard.Library" version="1.6.0" />
-        <dependency id="Microsoft.AspNet.Http.Abstractions" version="1.0.0" />
+        <dependency id="Microsoft.AspNetCore.Http.Abstractions" version="1.0.0" />
         <dependency id="Microsoft.Extensions.Logging" version="1.0.0" />
         <dependency id="Microsoft.AspNetCore.Http.Extensions" version="1.0.0" />
         <dependency id="Microsoft.AspNetCore.Mvc.TagHelpers" version="1.0.0" />
