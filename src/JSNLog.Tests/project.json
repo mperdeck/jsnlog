@@ -20,7 +20,7 @@
   "buildOptions": {
     "preserveCompilationContext": true,
     "copyToOutput": {
-      "include": []
+      "include": [ "IntegrationTests\\Dependencies\\chromedriver.exe" ]
     }
   },
   "packOptions": {
