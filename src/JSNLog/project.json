@@ -19,17 +19,16 @@
         "Newtonsoft.Json": "7.0.1"
       }
     },
-    "net40": {
+    "net45": {
       "dependencies": {
-        "Common.Logging": "3.1.0",
-        "Microsoft.Bcl.Async": "1.0.168",
+        "Common.Logging": "3.3.1",
         "Microsoft.Owin": "2.1.0",
         "WebActivatorEx": "2.0.0",
         "Newtonsoft.Json": "4.0.1"
       },
       "frameworkAssemblies": {
         "System.Web": "4.0.0.0",
-        "System.XML": "4.0.0.0"
+        "System.Xml": "4.0.0.0"
       }
     }
   },
