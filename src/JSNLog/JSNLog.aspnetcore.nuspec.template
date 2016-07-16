@@ -39,8 +39,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\net452\*"    target="lib\net452\" />
-    <file src="bin\Release\netstandard1.6\*" target="lib\netstandard16\" />
+    <file src="bin\Release\net452\jsnlog.*"    target="lib\net452\" />
+    <file src="bin\Release\netstandard1.6\jsnlog.*" target="lib\netstandard16\" />
 
     <file src="NuGet\content\Scripts\*.*"   target="content\Scripts" />
     <file src="NuGet\content\App_Start\*.*" target="content\App_Start" />
