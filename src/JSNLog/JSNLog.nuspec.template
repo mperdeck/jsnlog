@@ -50,7 +50,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\net40\*"     target="lib\net40\" />
+    <file src="bin\Release\net40\jsnlog.*"     target="lib\net40\" />
 
     <file src="NuGet\content\Scripts\*.*"   target="content\Scripts" />
     <file src="NuGet\content\App_Start\*.*" target="content\App_Start" />
