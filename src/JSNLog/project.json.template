@@ -10,7 +10,7 @@
       },
       "dependencies": {
         "Microsoft.Bcl.Async": "1.0.168",
-        "Common.Logging": "3.1.0",
+        "Common.Logging": "3.3.1",
         "Microsoft.Owin": "2.1.0",
         "WebActivatorEx": "2.0.0",
         "Newtonsoft.Json": "4.0.1"
