@@ -20,24 +20,6 @@
         "System.Xml": "4.0.0.0"
       }
     },
-    "net45": {
-      "buildOptions": {
-        "define": [
-          "NET40",
-          "SUPPORTSXML"
-        ]
-      },
-      "dependencies": {
-        "Common.Logging": "3.1.0",
-        "Microsoft.Owin": "2.1.0",
-        "WebActivatorEx": "2.0.0",
-        "Newtonsoft.Json": "4.0.1"
-      },
-      "frameworkAssemblies": {
-        "System.Web": "4.0.0.0",
-        "System.Xml": "4.0.0.0"
-      }
-    },
     "net452": {
       "buildOptions": {
         "define": [
