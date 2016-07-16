@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<package >
-  <metadata>
-    <id>JSNLog</id>
+<package>
+  <metadata minClientVersion="3.4">
+    <id>JSNLog</id>   
     <version>2.17.4</version>
-    <title>JSNLog - JavaScript Logging Package</title>
+    <title>JSNLog dazinator - JavaScript Logging Package</title>
     <authors>Matt Perdeck</authors>
     <owners>Matt Perdeck</owners>
     <projectUrl>http://jsnlog.com</projectUrl>
@@ -14,7 +14,7 @@
     <tags>JavaScript logging exceptions ajax log4net nlog elmah serilog ASP.NET 4.x ASP.NET 5 DNX451 DNXCORE50</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.0">
-          <!-- IMPORTANT
+        <!-- IMPORTANT
                The CommonLogging NuGet package and the JSNLog package have the same dependencies
                and files. This because CommonLogging is purely a convenience package - JSNLog
                already builds on Common.Logging, so it is not really needed. Only reason it is there
@@ -22,11 +22,13 @@
                the core JSNLog.
 
                If you change the dependencies or files in one of these nuspecs, change them
-               in the other as well. --> 
-          <dependency id="Common.Logging" version="3.0.0" />
-          <dependency id="WebActivatorEx" version="2.0.0" />
+               in the other as well. -->
+        <dependency id="Common.Logging" version="3.1.0" />
+        <dependency id="WebActivatorEx" version="2.0.0" />
 
-          <!-- 
+
+
+        <!-- 
 			      The below definition causes NuGet to load version 2.1.0 if no version of 
 			      Microsoft.Owin has already been installed (it tries to install the LOWEST 
 			      possible version of a package).
@@ -35,48 +37,42 @@
 			      If the project already has a higher version of Microsoft.Owin, this definition will accept that too.
 			      The assemblyBinding binding section in the section's web.config will translate 2.1.0 (as asked for by
 			      JSNLog project in its references) to the version that is actually installed in the project.
-          --> 
-          <dependency id="Microsoft.Owin" version="2.1.0" />
-          <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
+          -->
+        <dependency id="Microsoft.Owin" version="2.1.0" />
+        <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
 
         <!-- Use low minimum version to make installation easier with old code -->
         <dependency id="Newtonsoft.Json" version="4.0.1" />
       </group>
-      <group targetFramework="DNX4.5.1">
-          <!-- ASP.NET 5 packages
-               Comment out for now, because non-prerelease packages cannot depend on prerelease packages.
-               This means that installation instructions have to tell users to install these packages manually.
+      <group targetFramework=".NETFramework4.5.2">
 
-          <dependency id="Microsoft.AspNet.Http.Abstractions" version="1.0.0-rc1-final" />
-          <dependency id="Microsoft.Extensions.Logging" version="1.0.0-rc1-final" />
-          <dependency id="Microsoft.AspNet.Http.Extensions" version="1.0.0-rc1-final" />
-          <dependency id="Microsoft.AspNet.Mvc.TagHelpers" version="6.0.0-rc1-final" />
-          -->
-          <!-- Use low minimum version to make installation easier with old code -->
-          <dependency id="Newtonsoft.Json" version="4.0.1" />
+        <dependency id="Microsoft.AspNetCore.Http.Abstractions" version="1.0.0" />
+        <dependency id="Microsoft.Extensions.Logging" version="1.0.0" />
+        <dependency id="Microsoft.AspNetCore.Http.Extensions" version="1.0.0" />
+        <dependency id="Microsoft.AspNetCore.Mvc.TagHelpers" version="1.0.0" />
+        <dependency id="Microsoft.AspNetCore.Mvc.Razor" version="1.0.0" />
+        <dependency id="Newtonsoft.Json" version="9.0.1" />
+
       </group>
-      <group targetFramework="DNXCore5.0">
-          <!-- ASP.NET 5 packages
-               Comment out for now, because non-prerelease packages cannot depend on prerelease packages.
-               This means that installation instructions have to tell users to install these packages manually.
+      <group targetFramework="netstandard16">       
 
-          <dependency id="Microsoft.AspNet.Http.Abstractions" version="1.0.0-rc1-final" />
-          <dependency id="Microsoft.Extensions.Logging" version="1.0.0-rc1-final" />
-          <dependency id="Microsoft.AspNet.Http.Extensions" version="1.0.0-rc1-final" />
-          <dependency id="Microsoft.AspNet.Mvc.TagHelpers" version="6.0.0-rc1-final" />
-          -->
-      
-          <dependency id="System.Runtime.InteropServices" version="4.0.20" />
+        <dependency id="NETStandard.Library" version="1.6.0" />
+        <dependency id="Microsoft.AspNetCore.Http.Abstractions" version="1.0.0" />
+        <dependency id="Microsoft.Extensions.Logging" version="1.0.0" />
+        <dependency id="Microsoft.AspNetCore.Http.Extensions" version="1.0.0" />
+        <dependency id="Microsoft.AspNetCore.Mvc.TagHelpers" version="1.0.0" />
+        <dependency id="Microsoft.AspNetCore.Mvc.Razor" version="1.0.0" />
 
-        <!-- 4.0.1 does not support DNXCORE, so use higher version here -->
-        <dependency id="Newtonsoft.Json" version="7.0.1" />
+        <!--<dependency id="System.Runtime.InteropServices" version="4.0.20" />-->
+        <!-- 9.0.1 supports netStandard -->
+        <dependency id="Newtonsoft.Json" version="9.0.1" />
       </group>
     </dependencies>
   </metadata>
   <files>
     <file src="bin\Release\net40\*"     target="lib\net40\" />
-    <file src="bin\Release\dnx451\*"    target="lib\dnx451\" />
-    <file src="bin\Release\dnxcore50\*" target="lib\dnxcore50\" />
+    <file src="bin\Release\net452\*"    target="lib\net452\" />
+    <file src="bin\Release\netstandard1.6\*" target="lib\netstandard16\" />
 
     <file src="NuGet\content\Scripts\*.*"   target="content\Scripts" />
     <file src="NuGet\content\App_Start\*.*" target="content\App_Start" />

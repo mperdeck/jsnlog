@@ -26,7 +26,7 @@ namespace JSNLog.TestSite
         public void Configure(IApplicationBuilder app)
         {
             app.UseDeveloperExceptionPage();
-            app.UseRuntimeInfoPage();
+          //  app.UseRuntimeInfoPage();
 
           //  app.UseIISPlatformHandler();
             app.UseStaticFiles();

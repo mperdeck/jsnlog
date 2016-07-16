@@ -26,12 +26,14 @@ namespace JSNLog.Tests.IntegrationTests
         public JsTestsContext()
         {
             string jsnlogTestsProjectDirectory = Directory.GetCurrentDirectory();
-            string jsnlogTestSiteProjectDirectory = Path.Combine(jsnlogTestsProjectDirectory, "..", "JSNLog.TestSite");
+            string jsnlogTestSiteProjectDirectory = Path.Combine(jsnlogTestsProjectDirectory, "..\\..\\..\\..\\..\\", "JSNLog.TestSite");
+
+            var projectDir = new DirectoryInfo(jsnlogTestSiteProjectDirectory);
 
             _serverProcess = Process.Start(new ProcessStartInfo
             {
-                FileName = "dnx.exe",
-                Arguments = "web",
+                FileName = "dotnet",
+                Arguments = "run",
                 WorkingDirectory = jsnlogTestSiteProjectDirectory
             });
 
