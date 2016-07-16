@@ -23,26 +23,26 @@
 
                If you change the dependencies or files in one of these nuspecs, change them
                in the other as well. -->
-        <dependency id="Common.Logging" version="3.1.0" />
+        <dependency id="Common.Logging" version="3.3.1" />
         <dependency id="WebActivatorEx" version="2.0.0" />
 
         <!-- 
-		  The below definition causes NuGet to load version 2.1.0 if no version of 
-		  Microsoft.Owin has already been installed (it tries to install the LOWEST 
-		  possible version of a package).
+		    The below definition causes NuGet to load version 2.1.0 if no version of 
+		    Microsoft.Owin has already been installed (it tries to install the LOWEST 
+		    possible version of a package).
 
-		  This will work fine in a .Net 4.0 project. Note that versions past 2.1.0 no longer support .Net 4.0.
-		  If the project already has a higher version of Microsoft.Owin, this definition will accept that too.
-		  The assemblyBinding binding section in the section's web.config will translate 2.1.0 (as asked for by
-		  JSNLog project in its references) to the version that is actually installed in the project.
+		    This will work fine in a .Net 4.0 project. Note that versions past 2.1.0 no longer support .Net 4.0.
+		    If the project already has a higher version of Microsoft.Owin, this definition will accept that too.
+		    The assemblyBinding binding section in the section's web.config will translate 2.1.0 (as asked for by
+		    JSNLog project in its references) to the version that is actually installed in the project.
         -->
         <dependency id="Microsoft.Owin" version="2.1.0" />
         
         <!-- 
-		Required because async/await not supported in .Net below 4.5
-		When installed in a project that targets 4.5 or higher, Microsoft.Bcl.Async correctly doesn't add anything.
-		-->
-		<dependency id="Microsoft.Bcl.Async" version="1.0.168" />
+		    Required because async/await not supported in .Net below 4.5
+		    When installed in a project that targets 4.5 or higher, Microsoft.Bcl.Async correctly doesn't add anything.
+		    -->
+		    <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
 
         <!-- Use low minimum version to make installation easier with old code -->
         <dependency id="Newtonsoft.Json" version="4.0.1" />
@@ -51,7 +51,6 @@
   </metadata>
   <files>
     <file src="bin\Release\net40\*"     target="lib\net40\" />
-    <file src="bin\Release\net45\*"     target="lib\net45\" />
 
     <file src="NuGet\content\Scripts\*.*"   target="content\Scripts" />
     <file src="NuGet\content\App_Start\*.*" target="content\App_Start" />
