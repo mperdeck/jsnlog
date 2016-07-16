@@ -1,23 +1,26 @@
 ﻿{
   "version": "__Version__",
   "frameworks": {
-    "net452": {
+    "net40": {
       "buildOptions": {
         "define": [
-          "NET452",
+          "NET40",
           "SUPPORTSXML"
         ]
       },
       "dependencies": {
-        "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
-        "Microsoft.Extensions.Logging": "1.0.0",
-        "Microsoft.AspNetCore.Http.Extensions": "1.0.0",
-        "Microsoft.AspNetCore.Mvc.TagHelpers": "1.0.0",
-        "Microsoft.AspNetCore.Mvc.Razor": "1.0.0",
-        "Newtonsoft.Json": "9.0.1"
+        "Microsoft.Bcl.Async": "1.0.168",
+        "Common.Logging": "3.1.0",
+        "Microsoft.Owin": "2.1.0",
+        "WebActivatorEx": "2.0.0",
+        "Newtonsoft.Json": "4.0.1"
+      },
+      "frameworkAssemblies": {
+        "System.Web": "4.0.0.0",
+        "System.Xml": "4.0.0.0"
       }
     },
-    "net40": {
+    "net45": {
       "buildOptions": {
         "define": [
           "NET40",
@@ -33,6 +36,22 @@
       "frameworkAssemblies": {
         "System.Web": "4.0.0.0",
         "System.Xml": "4.0.0.0"
+      }
+    },
+    "net452": {
+      "buildOptions": {
+        "define": [
+          "NET452",
+          "SUPPORTSXML"
+        ]
+      },
+      "dependencies": {
+        "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
+        "Microsoft.Extensions.Logging": "1.0.0",
+        "Microsoft.AspNetCore.Http.Extensions": "1.0.0",
+        "Microsoft.AspNetCore.Mvc.TagHelpers": "1.0.0",
+        "Microsoft.AspNetCore.Mvc.Razor": "1.0.0",
+        "Newtonsoft.Json": "9.0.1"
       }
     },
     "netstandard1.6": {
@@ -58,7 +77,6 @@
     }
   },
   "dependencies": {
-    "Microsoft.Bcl.Async": "1.0.168"
   },
   "buildOptions": {
     "preserveCompilationContext": true,
