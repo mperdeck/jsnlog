@@ -199,7 +199,7 @@ var JL;
             this.finalString = finalString;
         }
         return StringifiedLogObject;
-    })();
+    }());
     // Takes a logObject, which can be 
     // * a scalar
     // * an object
@@ -295,7 +295,7 @@ var JL;
             this.message = stringifyLogObject(data).finalString;
         }
         return Exception;
-    })();
+    }());
     JL.Exception = Exception;
     // Derive Exception from Error (a Host object), so browsers
     // are more likely to produce a stack trace for it in their console.
@@ -321,7 +321,7 @@ var JL;
             this.t = t;
         }
         return LogItem;
-    })();
+    }());
     JL.LogItem = LogItem;
     // ---------------------
     var Appender = (function () {
@@ -441,7 +441,7 @@ var JL;
             this.batchBuffer.length = 0;
         };
         return Appender;
-    })();
+    }());
     JL.Appender = Appender;
     // ---------------------
     var AjaxAppender = (function (_super) {
@@ -546,7 +546,7 @@ var JL;
             return xhr;
         };
         return AjaxAppender;
-    })(Appender);
+    }(Appender));
     JL.AjaxAppender = AjaxAppender;
     // ---------------------
     var ConsoleAppender = (function (_super) {
@@ -630,7 +630,7 @@ var JL;
             }
         };
         return ConsoleAppender;
-    })(Appender);
+    }(Appender));
     JL.ConsoleAppender = ConsoleAppender;
     // --------------------
     var Logger = (function () {
@@ -744,7 +744,7 @@ var JL;
         Logger.prototype.fatal = function (logObject) { return this.log(getFatalLevel(), logObject); };
         Logger.prototype.fatalException = function (logObject, e) { return this.log(getFatalLevel(), logObject, e); };
         return Logger;
-    })();
+    }());
     JL.Logger = Logger;
     function createAjaxAppender(appenderName) {
         return new AjaxAppender(appenderName);
