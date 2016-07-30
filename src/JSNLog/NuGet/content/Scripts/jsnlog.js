@@ -791,4 +791,18 @@ if (typeof define == 'function' && define.amd) {
 if (typeof __jsnlog_configure == 'function') {
     __jsnlog_configure(JL);
 }
-//# sourceMappingURL=jsnlog.js.map
+// Create onerror handler to log uncaught exceptions to the server side log, but only if there 
+// is no such handler already.
+if (window && !window.onerror) {
+    window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
+        // Send object with all data to server side log, using severity fatal, 
+        // from logger "onerrorLogger"
+        JL("onerrorLogger").fatalException({
+            "msg": "Uncaught Exception",
+            "errorMsg": errorMsg, "url": url,
+            "line number": lineNumber, "column": column
+        }, errorObj);
+        // Tell browser to run its own error handler as well   
+        return false;
+    };
+}

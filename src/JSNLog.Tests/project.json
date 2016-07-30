@@ -1,5 +1,5 @@
 {
-  "version": "2.18.0",
+  "version": "2.19.0",
   "testRunner": "xunit",
   "description": "JSNLog.Tests Class Library",
   "authors": [
@@ -14,7 +14,7 @@
     "Selenium.WebDriver": "2.48.2",
     "xunit": "2.1.0",
     "dotnet-test-xunit": "1.0.0-rc2-build10025",
-    "JSNLog": "2.18.0"
+    "JSNLog": "2.19.0"
   },
   "tools": {},
   "buildOptions": {

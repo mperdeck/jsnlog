@@ -171,3 +171,5 @@ pip-log.txt
 # Included files
 !chromedriver.exe
 
+background
+
