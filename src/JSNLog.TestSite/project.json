@@ -1,5 +1,5 @@
 {
-  "version": "2.19.0",
+  "version": "2.19.1",
   "buildOptions": {
     "emitEntryPoint": true,
     "preserveCompilationContext": true,
@@ -23,8 +23,8 @@
     }
   },
   "dependencies": {
-    "JSNLog": "2.19.0",
-    "JSNLog.Tests": "2.19.0",
+    "JSNLog": "2.19.1",
+    "JSNLog.Tests": "2.19.1",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.0",
