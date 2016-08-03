@@ -607,16 +607,20 @@ new JsnlogConfiguration {
             TestDemo(
                 @"
 <jsnlog>
+    <!-- Create appender that stores debug messages in memory until fatal log message is sent -->
 	<ajaxAppender 
 		name=""appender1"" 
 		storeInBufferLevel=""DEBUG"" 
 		level=""FATAL"" 
 		sendWithBufferLevel=""FATAL"" 
 		bufferSize=""20""/>
+
+    <!-- Get the loggers to use the new appender -->
 	<logger appenders=""appender1""/>
 </jsnlog>
 ",
                 @"
+// Create appender that stores debug messages in memory until fatal log message is sent
 new JsnlogConfiguration {
     ajaxAppenders=new List<AjaxAppender> {
         new AjaxAppender {
@@ -627,6 +631,8 @@ new JsnlogConfiguration {
 		    bufferSize=20
         }
     },
+
+    // Get the loggers to use the new appender
     loggers=new List<Logger> {
         new Logger {
             appenders=""appender1""
@@ -747,7 +753,7 @@ new JsnlogConfiguration {
             sb.AppendLine(@"");
             sb.AppendLine(string.Format(@"<pre>JavascriptLogging.{0}({1});</pre>",
                 LinkedText("SetJsnlogConfiguration", _setJsnlogConfigurationUrl),
-                CodeToHtml(csharp)));
+                CodeToHtml(csharp, 2)));
             sb.AppendLine(@"");
             sb.AppendLine(@"</div></div>");
 
@@ -770,9 +776,9 @@ new JsnlogConfiguration {
             return string.Format("<a href='{0}'>{1}</a>", url, text);
         }
 
-        private string CodeToHtml(string code)
+        private string CodeToHtml(string code, int indent = 0)
         {
-            return HtmlEncode(code.Trim().Replace("\t", "    "))
+            return HtmlEncode(("\n" + code.Trim()).Replace("\t", "    ").Replace("\n", "\n" + new string(' ', indent)))
                 .Replace(_strikeThroughStart, "<del>").Replace(_newCodeStart, "<span class='addedcode'>")
                 .Replace(_strikeThroughEnd, "</del>").Replace(_newCodeEnd, "</span>")
                 .Replace("JsnlogConfiguration", LinkedText("JsnlogConfiguration", _jsnlogUrl))
