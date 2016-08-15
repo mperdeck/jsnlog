@@ -22,3 +22,8 @@ using System.Runtime;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("650f9c8c-3496-416b-9e73-29b74b074a45")]
+
+// Get the compiler to create a strong named assembly, using the key pair in this file.
+// This way, this assembly can be a friend of JSNLog, which is a strong named assembly itself.
+[assembly: AssemblyKeyFileAttribute("../jsnlog.strongname.snk")]
+

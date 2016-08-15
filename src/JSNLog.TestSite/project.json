@@ -1,5 +1,8 @@
 {
   "version": "2.19.1",
+  "compilationOptions": {
+    "keyFile": "../jsnlog.strongname.snk"
+  },
   "buildOptions": {
     "emitEntryPoint": true,
     "preserveCompilationContext": true,
