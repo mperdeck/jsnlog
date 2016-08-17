@@ -8,7 +8,7 @@
 
     <h2>RequestIdTest</h2>
     @{ 
-        CommonTestHelpers.SetConfigCache(@"<jsnlog></jsnlog>");
+        CommonTestHelpers.SetConfigCache(@"<jsnlog productionLibraryPath=""~/scripts/lib/jsnlog.js""></jsnlog>");
     }
 
     <jl-javascript-logger-definitions request-id="@ViewBag.PassedInRequestId" />

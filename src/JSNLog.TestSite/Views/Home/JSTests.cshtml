@@ -5,8 +5,8 @@
 @Html.Raw(JSNLog.Tests.Logic.TestUtils.SetupTest(
 "235.1.99.12", "id123",
 @"
-<jsnlog>
-    <ajaxAppender name=""da1"" />
+<jsnlog productionLibraryPath=""~/scripts/lib/jsnlog.js"">
+    < ajaxAppender name=""da1"" />
     <logger name="""" appenders=""da1"" />
 
     <ajaxAppender name=""da2"" level=""ERROR"" />
@@ -77,30 +77,30 @@
     <!-- Stopping duplicates -->
 
     <!-- Logger inherit appender from root -->
-    <logger name=""l100"" /> 
+    <logger name=""l100"" />
 
     <logger name=""l101"">
        <onceOnly regex=""msg"" />
-    </logger> 
+    </logger>
 
     <logger name=""l102"" level=""1000"">
        <onceOnly regex=""msg"" />
        <onceOnly regex=""xyz"" />
-    </logger> 
+    </logger>
 
     <logger name=""l103"">
        <onceOnly regex=""msg"" />
        <onceOnly regex=""x[a-z]z"" />
        <onceOnly regex=""abc"" />
-    </logger> 
+    </logger>
 
     <logger name=""l103.x2"">
        <onceOnly regex=""msg"" />
-    </logger> 
+    </logger>
 
     <logger name=""l103.x3"">
        <onceOnly />
-    </logger> 
+    </logger>
 
     <!-- disallow -->
 
@@ -119,7 +119,7 @@ new [] {
     // Test filtering based on level
     
     new T(header: "Test filtering based on level"),
-    
+
     new T(1000, "", 0),
     new T(1500, "", 0),
     new T(2000, "", 1),
@@ -130,24 +130,24 @@ new [] {
     new T(3000, "x1", 1),
 
     new T(2000, "x2", 0), // x2 sets level
-    new T(3000, "x2", 1), 
+    new T(3000, "x2", 1),
     new T(2000, "x2.b", 0), // test inheritance from x2
     new T(3000, "x2.b", 1),
     new T(2000, "x2.b.c", 0), // test inheritance from inheritance from x2
     new T(3000, "x2.b.c", 1),
-    
+
     new T(3000, "x1", 1),
     new T(3000, "x1", 1),
     new T(3000, "x1", 1),
     new T(3000, "x1", 1),
     new T(3000, "x1", 1),
-    
+
     new T(checkNbr: 1, checkAppender: "a0"),
     
     // Situation where appender level is higher than logger level
     
     new T(header: "Situation where appender level is higher than logger level"),
-    
+
     new T(1000, "l2", 0),
     new T(6000, "l2", 2),
     new T(1500, "l2", 0),
@@ -158,7 +158,7 @@ new [] {
     // Test Batching. Batch size is 3, so only after 3 log should the appender spit them out.
     
     new T(header: "Test Batching"),
-    
+
     new T(2000, "l10", 0), // level too low.
     new T(checkNbr: 10, checkAppender: "a2"),
     new T(5000, "l10", 13),
@@ -177,10 +177,10 @@ new [] {
     // IP matching
     
     new T(header: "IP matching"),
-    
+
     new T(4000, "l20b", 0),
     new T(checkNbr: 20, checkAppender: "a3"),
-    
+
     new T(4000, "l20c", 21),
     new T(checkNbr: 21, checkAppender: "a4"),
     
@@ -192,7 +192,7 @@ new [] {
 
     new T(4000, "l21b", 0),
     new T(checkNbr: 23, checkAppender: "a3"),
-    
+
     new T(4000, "l21c", 0),
     new T(checkNbr: 24, checkAppender: "a4"),
     
@@ -204,17 +204,17 @@ new [] {
 
     new T(4000, "l22b", 0),
     new T(checkNbr: 26, checkAppender: "a3"),
-    
+
     new T(4000, "l22c", 27),
     new T(checkNbr: 27, checkAppender: "a4"),
     
     // User Agent matching
     
     new T(header: "User Agent matching - these tests assume current browser is Chrome"),
-    
+
     new T(4000, "l30b", 0),
     new T(checkNbr: 30, checkAppender: "a5"),
-    
+
     new T(4000, "l30c", 31),
     new T(checkNbr: 31, checkAppender: "a6"),
     
@@ -226,7 +226,7 @@ new [] {
 
     new T(4000, "l31b", 0),
     new T(checkNbr: 33, checkAppender: "a5"),
-    
+
     new T(4000, "l31c", 0),
     new T(checkNbr: 34, checkAppender: "a6"),
     
@@ -238,14 +238,14 @@ new [] {
 
     new T(4000, "l32b", 0),
     new T(checkNbr: 36, checkAppender: "a5"),
-    
+
     new T(4000, "l32c", 37),
     new T(checkNbr: 37, checkAppender: "a6"),
 
     // -----------
     
     new T(header: "Buffer tests"),
-    
+
     new T(2000, "l40", 0), // will be shifted out when 2 more "store only" log items arrive.
     new T(checkNbr: 40, checkAppender: "a7"),
     new T(2100, "l40", 45),
@@ -304,7 +304,7 @@ new [] {
 
     new T(4000, "l41", 67),
     new T(checkNbr: 65, checkAppender: "a8"),
-    
+
     new T(2000, "l41", 67),
     new T(checkNbr: 66, checkAppender: "a8"),
 
@@ -315,17 +315,17 @@ new [] {
     // Multiple appenders / no appenders    
     
     new T(header: "Multiple appenders"),
-    
+
     new T(2000, "l50", 0),
     new T(2000, "l50.a", 0),
     new T(checkNbr: 70, checkAppender: "a9"),
     new T(checkNbr: 70, checkAppender: "a10"),
-    
+
     new T(3000, "l50", 71),
     new T(3000, "l50.a", 71),
     new T(checkNbr: 71, checkAppender: "a9"),
     new T(checkNbr: 72, checkAppender: "a10"),
-    
+
     new T(4000, "l50", 73),
     new T(4000, "l50.a", 73),
     new T(checkNbr: 73, checkAppender: "a9"),
@@ -334,7 +334,7 @@ new [] {
     // No appenders 
         
     new T(header: "No appenders"),
-    
+
     new T(4000, "l51", 0),
     new T(checkNbr: 74, checkAppender: "a9"),
     new T(checkNbr: 74, checkAppender: "a10"),
@@ -344,7 +344,7 @@ new [] {
     // ALL level 
         
     new T(header: "ALL level"),
-    
+
     new T(0, "l60", 80),
     new T(6000, "l60", 80),
     new T(checkNbr: 80, checkAppender: "a11"),
@@ -353,7 +353,7 @@ new [] {
     // OFF level 
         
     new T(header: "OFF level"),
-    
+
     new T(0, "l61", 0),
     new T(6000, "l61", 0),
     new T(checkNbr: 81, checkAppender: "a0"),
@@ -361,7 +361,7 @@ new [] {
     // ---------------------
         
     new T(header: "Passing objects and functions"),
-    
+
     new T(3000, "", 91, logObject: "\"string\"", expectedMsg: "string"),
     new T(3000, "", 91, logObject: "new String(\"string object\")", expectedMsg: "string object"),
     new T(3000, "", 91, logObject: "121", expectedMsg: "121"),
@@ -377,7 +377,7 @@ new [] {
     new T(3000, "", 91, logObject: "function() { return \"funcreturn\"; }", expectedMsg: "funcreturn"),
     new T(3000, "", 91, logObject: "function() { return {\"f1\": \"v1a\", \"f2\": \"v2a\"}; }", expectedMsg: "{\"f1\":\"v1a\",\"f2\":\"v2a\"}"),
     new T(3000, "", 91, logObject: "function() { return function() { return {\"f1\": \"v1b\", \"f2\": \"v2b\"}; }; }", expectedMsg: "unknown"),
-    
+
     new T(checkNbr: 91, checkAppender: "a0"),
     
     // ---------------------
@@ -394,7 +394,7 @@ new [] {
     new T(3000, "l100", 100, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
     new T(3000, "l100", 100, logObject: "\"xyz\"", expectedMsg: "xyz"),
     new T(checkNbr: 100, checkAppender: "a0"),
-    
+
     new T(3000, "l101", 101, logObject: "\"abc\"", expectedMsg: "abc"),
     new T(3000, "l101", 101, logObject: "\"33msg9\"", expectedMsg: "33msg9"),
     new T(3000, "l101", 101, logObject: "\"xyz\"", expectedMsg: "xyz"),
@@ -459,7 +459,7 @@ new [] {
     new T(3000, "l103.x2", 0, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
     new T(3000, "l103.x2", 105, logObject: "\"xyz\"", expectedMsg: "xyz"),
     new T(checkNbr: 105, checkAppender: "a0"),
-    
+
     new T(3000, "l103.x3", 106, logObject: "\"abc\"", expectedMsg: "abc"),
     new T(3000, "l103.x3", 106, logObject: "\"33msg9\"", expectedMsg: "33msg9"),
     new T(3000, "l103.x3", 106, logObject: "\"xyz\"", expectedMsg: "xyz"),
