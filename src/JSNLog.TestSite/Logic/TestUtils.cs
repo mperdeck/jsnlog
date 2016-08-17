@@ -95,10 +95,8 @@ namespace JSNLog.Tests.Logic
             var sb = new StringBuilder();
 
             // Set config cache in JavascriptLogging to contents of xe
+            // This essentially injects the config XML into JSNLog (the same way as when reading from web.config).
             CommonTestHelpers.SetConfigCache(configXml);
-
-            //##############         var configProcessor = new ConfigProcessor();
-            //##############            configProcessor.ProcessRootExec(sb, s => s, userIp, requestId, false);
 
             sb.AppendLine(@"<script type=""text/javascript"">");
             sb.AppendLine("(function () {");
