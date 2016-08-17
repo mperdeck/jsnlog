@@ -1,11 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Xml;
-using JSNLog.Infrastructure;
 using JSNLog.Tests.Common;
-using Microsoft.AspNetCore.Http;
 
 namespace JSNLog.Tests.Logic
 {
@@ -102,8 +97,8 @@ namespace JSNLog.Tests.Logic
             // Set config cache in JavascriptLogging to contents of xe
             CommonTestHelpers.SetConfigCache(configXml);
 
-            var configProcessor = new ConfigProcessor();
-            configProcessor.ProcessRootExec(sb, s => s, userIp, requestId, false);
+            //##############         var configProcessor = new ConfigProcessor();
+            //##############            configProcessor.ProcessRootExec(sb, s => s, userIp, requestId, false);
 
             sb.AppendLine(@"<script type=""text/javascript"">");
             sb.AppendLine("(function () {");

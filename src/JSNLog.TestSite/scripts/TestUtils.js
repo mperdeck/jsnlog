@@ -1,5 +1,5 @@
 /// <reference path="jquery.d.ts"/>
-/// <reference path="../../../../../jsnlog.js/jsnlog.ts"/>
+/// <reference path="../../../../jsnlog.js/jsnlog.ts"/>
 var TestUtils;
 (function (TestUtils) {
     function Check(checkAppender, checkNbr, expected) {
@@ -79,3 +79,4 @@ var TestUtils;
         return "";
     }
 })(TestUtils || (TestUtils = {}));
+//# sourceMappingURL=TestUtils.js.map
