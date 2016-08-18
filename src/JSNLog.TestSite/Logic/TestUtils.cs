@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text;
+using JSNLog.Tests.Common;
 
 namespace JSNLog.TestSite.Logic
 {
@@ -95,13 +96,16 @@ namespace JSNLog.TestSite.Logic
 
             // Set config cache in JavascriptLogging to contents of xe
             // This essentially injects the config XML into JSNLog (the same way as when reading from web.config).
-   //###########         CommonTestHelpers.SetConfigCache(configXml);
+            CommonTestHelpers.SetConfigCache(configXml);
+
+            var jsnlogJavaScriptConfig = JSNLog.JavascriptLogging.Configure(); //################################
+            sb.AppendLine(jsnlogJavaScriptConfig);
 
             sb.AppendLine(@"<script type=""text/javascript"">");
             sb.AppendLine("(function () {");
 
             sb.AppendLine("JL.setOptions({ 'defaultBeforeSend': TestUtils.beforeSend });");
-
+            
             int seq = 0;
             foreach (T t in tests)
             {
@@ -123,7 +127,7 @@ namespace JSNLog.TestSite.Logic
                     string expected = Expected(t.CheckNbr, tests);
 
                     // Generate check js
-                    string checkJs = string.Format("TestUtils.Check({0}, {1}, {2});", t.CheckAppender, t.CheckNbr, expected);
+                    string checkJs = string.Format("TestUtils.Check('{0}', {1}, {2});", t.CheckAppender, t.CheckNbr, expected);
                     sb.AppendLine("");
                     sb.AppendLine(checkJs);
                     sb.AppendLine("// ----------------------");

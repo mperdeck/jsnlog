@@ -2,10 +2,11 @@
 /// <reference path="../../../../jsnlog.js/jsnlog.ts"/>
 var TestUtils;
 (function (TestUtils) {
-    function Check(checkAppender, checkNbr, expected) {
+    function Check(checkAppenderUrlPath, checkNbr, expected) {
+        var checkAppenderUrl = 'http://dummy.com/' + checkAppenderUrlPath;
         // An appender only calls beforeSend when it tries to send a log request.
         // So if the appender never tries to send anything, than actual will be undefined.
-        var actual = checkAppender.logItems || [];
+        var actual = window[checkAppenderUrl] || [];
         var resultDiv;
         var expectedString = JSON.stringify(expected);
         var actualString = JSON.stringify(actual);
@@ -23,17 +24,19 @@ var TestUtils;
             resultDiv = $('<div style="border-top: 3px green solid" >Passed: ' + checkNbr + '</div>');
         }
         $('body').append(resultDiv);
-        checkAppender.logItems = [];
+        window[checkAppenderUrl] = [];
     }
     TestUtils.Check = Check;
     function beforeSend(xhr) {
         var appenderThis = this;
         xhr.send = function (json) {
-            if (!appenderThis.logItems) {
-                appenderThis.logItems = [];
+            //####################################
+            console.log(appenderThis.url);
+            if (!window[appenderThis.url]) {
+                window[appenderThis.url] = [];
             }
             var item = JSON.parse(json);
-            appenderThis.logItems = appenderThis.logItems.concat(item.lg);
+            window[appenderThis.url] = window[appenderThis.url].concat(item.lg);
         };
     }
     TestUtils.beforeSend = beforeSend;

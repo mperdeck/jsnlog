@@ -2,10 +2,13 @@
 /// <reference path="../../../../jsnlog.js/jsnlog.ts"/>
 
 module TestUtils {
-    export function Check(checkAppender: any, checkNbr: number, expected: JL.LogItem[]) {
+    export function Check(checkAppenderUrlPath: string, checkNbr: number, expected: JL.LogItem[]) {
+
+        var checkAppenderUrl = 'http://dummy.com/' + checkAppenderUrlPath;
+
 		// An appender only calls beforeSend when it tries to send a log request.
 		// So if the appender never tries to send anything, than actual will be undefined.
-        var actual: JL.LogItem[] = checkAppender.logItems || [];
+        var actual: JL.LogItem[] = (<any>window)[checkAppenderUrl] || [];
 
         var resultDiv: JQuery;
 
@@ -28,16 +31,21 @@ module TestUtils {
 
         $('body').append(resultDiv);
 
-        checkAppender.logItems = [];
+        (<any>window)[checkAppenderUrl] = [];
     }
 
 	export function beforeSend(xhr: any) {
 		var appenderThis = this;
-		xhr.send = function(json) {
-            if (!appenderThis.logItems) { appenderThis.logItems = []; }
+        xhr.send = function (json) {
+
+            //####################################
+            console.log(appenderThis.url);
+
+
+            if (!(<any>window)[appenderThis.url]) { (<any>window)[appenderThis.url] = []; }
 
             var item = JSON.parse(json);
-			appenderThis.logItems = appenderThis.logItems.concat(item.lg);
+            (<any>window)[appenderThis.url] = (<any>window)[appenderThis.url].concat(item.lg);
 		};
 	}
 

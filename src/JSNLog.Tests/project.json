@@ -11,17 +11,13 @@
     }
   },
   "dependencies": {
-    "Selenium.WebDriver": "2.48.2",
     "xunit": "2.1.0",
     "dotnet-test-xunit": "1.0.0-rc2-build10025",
     "JSNLog": "2.19.1"
   },
   "tools": {},
   "buildOptions": {
-    "preserveCompilationContext": true,
-    "copyToOutput": {
-      "include": [ "IntegrationTests\\Dependencies\\chromedriver.exe" ]
-    }
+    "preserveCompilationContext": true
   },
   "packOptions": {
     "tags": [

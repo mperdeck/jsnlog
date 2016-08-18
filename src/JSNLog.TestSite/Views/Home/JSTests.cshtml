@@ -2,27 +2,27 @@
 
 <h2>JSTests</h2>
 
-@Html.Raw(JSNLog.Tests.Logic.TestUtils.SetupTest(
+@Html.Raw(JSNLog.TestSite.Logic.TestUtils.SetupTest(
 "235.1.99.12", "id123",
 @"
-<jsnlog productionLibraryPath=""~/scripts/lib/jsnlog.js"">
-    <ajaxAppender name=""da1"" />
+<jsnlog productionLibraryPath=""~/scripts/libs/jsnlog.js"">
+    <ajaxAppender url=""http://dummy.com/da1"" name=""da1"" />
     <logger name="""" appenders=""da1"" />
 
-    <ajaxAppender name=""da2"" level=""ERROR"" />
+    <ajaxAppender url=""http://dummy.com/da2"" name=""da2"" level=""ERROR"" />
     <logger name=""l2"" appenders=""da2"" level=""WARN"" />
 
     <logger name=""x2"" level=""INFO"" /> <!-- inherits appender from root -->
 
     <!-- batch size -->
 
-    <ajaxAppender name=""da10"" batchSize=""3"" />
+    <ajaxAppender url=""http://dummy.com/da10"" name=""da10"" batchSize=""3"" />
     <logger name=""l10"" appenders=""da10"" level=""WARN"" />
 
     <!-- IP filtering -->
 
-    <ajaxAppender name=""da20"" ipRegex=""1\.98"" /><!--never matches-->
-    <ajaxAppender name=""da21"" ipRegex=""1\.99"" />
+    <ajaxAppender url=""http://dummy.com/da20"" name=""da20"" ipRegex=""1\.98"" /><!--never matches-->
+    <ajaxAppender url=""http://dummy.com/da21"" name=""da21"" ipRegex=""1\.99"" />
 
     <logger name=""l20b"" appenders=""da20"" />
     <logger name=""l20c"" appenders=""da21"" />
@@ -37,8 +37,8 @@
 
     <!-- User Agent filtering. The tests are run in Chrome -->
 
-    <ajaxAppender name=""da30"" userAgentRegex=""Unknown Browser"" /><!--never matches-->
-    <ajaxAppender name=""da31"" userAgentRegex=""Chrome"" />
+    <ajaxAppender url=""http://dummy.com/da30"" name=""da30"" userAgentRegex=""Unknown Browser"" /><!--never matches-->
+    <ajaxAppender url=""http://dummy.com/da31"" name=""da31"" userAgentRegex=""Chrome"" />
 
     <logger name=""l30b"" appenders=""da30"" />
     <logger name=""l30c"" appenders=""da31"" />
@@ -53,23 +53,23 @@
 
     <!-- Buffer tests -->
 
-    <ajaxAppender name=""da40"" storeInBufferLevel=""2000"" level=""3000"" sendWithBufferLevel=""4000"" bufferSize=""2""/>
+    <ajaxAppender url=""http://dummy.com/da40"" name=""da40"" storeInBufferLevel=""2000"" level=""3000"" sendWithBufferLevel=""4000"" bufferSize=""2""/>
     <logger name=""l40"" appenders=""da40"" level=""1000"" />
 
-    <ajaxAppender name=""da41"" storeInBufferLevel=""DEBUG"" level=""INFO"" sendWithBufferLevel=""WARN"" bufferSize=""2"" batchSize=""3""/>
+    <ajaxAppender url=""http://dummy.com/da41"" name=""da41"" storeInBufferLevel=""DEBUG"" level=""INFO"" sendWithBufferLevel=""WARN"" bufferSize=""2"" batchSize=""3""/>
     <logger name=""l41"" appenders=""da41"" level=""TRACE"" />
 
     <!-- Appender tests -->
 
-    <ajaxAppender name=""da51"" level=""3000"" />
-    <ajaxAppender name=""da52"" level=""4000"" />
+    <ajaxAppender url=""http://dummy.com/da51"" name=""da51"" level=""3000"" />
+    <ajaxAppender url=""http://dummy.com/da52"" name=""da52"" level=""4000"" />
     <logger name=""l50"" appenders=""da51;da52"" /> <!-- 2 appenders -->
 
     <logger name=""l51"" appenders="""" /> <!-- no appenders -->
 
     <!-- Testing ALL and OFF -->
 
-    <ajaxAppender name=""da60"" level=""ALL"" />
+    <ajaxAppender url=""http://dummy.com/da60"" name=""da60"" level=""ALL"" />
     <logger name=""l60"" appenders=""da60"" level=""ALL"" />
 
     <logger name=""l61"" appenders=""da1"" level=""OFF"" />
@@ -104,7 +104,7 @@
 
     <!-- disallow -->
 
-    <ajaxAppender name=""da110"" disallow=""x[a-z]z"" />
+    <ajaxAppender url=""http://dummy.com/da110"" name=""da110"" disallow=""x[a-z]z"" />
 
     <logger name=""l110"" appenders=""da110"" />
     <logger name=""l111"" disallow=""msg"" />
@@ -142,7 +142,8 @@ new [] {
     new T(3000, "x1", 1),
     new T(3000, "x1", 1),
 
-    new T(checkNbr: 1, checkAppender: "a0"),
+    new T(checkNbr: 1, checkAppender: "da1"),
+ /*   new T(checkNbr: 1, checkAppender: "a0"),   ################## */
     
     // Situation where appender level is higher than logger level
     
