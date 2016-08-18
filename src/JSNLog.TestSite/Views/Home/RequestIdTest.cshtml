@@ -1,20 +1,17 @@
 ﻿@using JSNLog
-@using Microsoft.AspNetCore.Http;
 @using JSNLog.Tests.Common;
-
-@inject IHttpContextAccessor httpContextAccessor
-@addTagHelper "*, JSNLog"
-
+@using System.Web;
 
     <h2>RequestIdTest</h2>
     @{ 
         CommonTestHelpers.SetConfigCache(@"<jsnlog productionLibraryPath=""~/scripts/lib/jsnlog.js""></jsnlog>");
+   //#########     var idFromView = HttpContext.Current.RequestId();
     }
 
     <jl-javascript-logger-definitions request-id="@ViewBag.PassedInRequestId" />
 
     <div id="IdFromController">@ViewBag.RequestId</div>
-    <div id="IdFromView">@httpContextAccessor.HttpContext.RequestId()</div>
+    @*#############   <div id="IdFromView">@HttpContext.RequestId()</div>*@
     <div id="IdFromJL"></div>
 
     <script type="text/ecmascript">
