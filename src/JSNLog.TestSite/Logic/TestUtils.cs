@@ -98,7 +98,7 @@ namespace JSNLog.TestSite.Logic
             // This essentially injects the config XML into JSNLog (the same way as when reading from web.config).
             CommonTestHelpers.SetConfigCache(configXml);
 
-            var jsnlogJavaScriptConfig = JSNLog.JavascriptLogging.Configure(); //################################
+            var jsnlogJavaScriptConfig = JSNLog.JavascriptLogging.Configure(); 
             sb.AppendLine(jsnlogJavaScriptConfig);
 
             sb.AppendLine(@"<script type=""text/javascript"">");

@@ -1,4 +1,4 @@
-﻿@using JSNLog.Tests.Logic
+﻿@using JSNLog.TestSite.Logic
 
 <h2>MaxMessagesTests0</h2>
 
@@ -6,18 +6,18 @@
     Ensure that no messages will be sent, if MaxMessages equals 0
 -->
 
-@Html.Raw(JSNLog.Tests.Logic.TestUtils.SetupTest(
+@Html.Raw(JSNLog.TestSite.Logic.TestUtils.SetupTest(
 "235.1.99.12", "id123",
 @"
 <jsnlog maxMessages=""0"" productionLibraryPath=""~/scripts/libs/jsnlog.js"">
-    <ajaxAppender name=""da1"" />
+    <ajaxAppender url=""http://dummy.com/da1"" name=""da1"" />
     <logger name="""" appenders=""da1"" />
     <logger name=""a"" appenders=""da1"" />
     
-    <ajaxAppender name=""da2"" />
+    <ajaxAppender url=""http://dummy.com/da2"" name=""da2"" />
     <logger name=""b"" appenders=""da2"" />
     
-    <ajaxAppender name=""da3"" />
+    <ajaxAppender url=""http://dummy.com/da3"" name=""da3"" />
     <logger name=""c"" appenders=""da2"" />
 </jsnlog>
 ",
@@ -29,8 +29,8 @@ new [] {
     new T(3000, "a", 0),
     new T(3000, "", 0),
     
-    new T(checkNbr: 1, checkAppender: "a0"),
-    new T(checkNbr: 2, checkAppender: "a2"),
-    new T(checkNbr: 3, checkAppender: "a1")
+    new T(checkNbr: 1, checkAppender: "da1"),
+    new T(checkNbr: 2, checkAppender: "da3"),
+    new T(checkNbr: 3, checkAppender: "da2")
 }))
 
