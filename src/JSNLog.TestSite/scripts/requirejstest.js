@@ -7,13 +7,13 @@ require(["libs/jsnlog"], function () {
 
     JL.setOptions({ 'defaultBeforeSend': TestUtils.beforeSend });
     var a0 = JL.createAjaxAppender('da1');
-
+    a0.setOptions({ "url": "http://dummy.com/da1" });
     var logger = JL('l2');
     logger.setOptions({ "appenders": [a0] });
     
     JL('l2').log(6000, "msg22 level: 6000, logger: l2"); __timestamp22 = (new Date).getTime();
 
-    TestUtils.Check(a0, 1, [
+    TestUtils.Check('da1', 1, [
       {
           l: 6000,
           m: 'msg22 level: 6000, logger: l2',
