@@ -1,4 +1,4 @@
-﻿@using JSNLog.Tests.Logic
+﻿@using JSNLog.TestSite.Logic
 
 <h2>Index2</h2>
 
@@ -7,7 +7,7 @@
     and that logging something doesn't crash the JS
 -->
 
-@Html.Raw(JSNLog.Tests.Logic.TestUtils.SetupTest(
+@Html.Raw(JSNLog.TestSite.Logic.TestUtils.SetupTest(
 "235.1.99.12", "id123",
 @"
 <jsnlog enabled=""false"" productionLibraryPath=""~/scripts/lib/jsnlog.js"">

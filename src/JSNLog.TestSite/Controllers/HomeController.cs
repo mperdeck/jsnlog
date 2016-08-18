@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JSNLog;
-using JSNLog.Infrastructure;
 using System.Web.Mvc;
 
-namespace JSNLog.Tests.Controllers
+namespace JSNLog.TestSite.Controllers
 {
     public class HomeController : Controller
     {
@@ -41,7 +40,7 @@ namespace JSNLog.Tests.Controllers
 
         public ActionResult RequestIdTest(string id)
         {
-            ViewBag.RequestId = HttpContext.GetRequestId();
+//########            ViewBag.RequestId = HttpContext.GetRequestId();
             ViewBag.PassedInRequestId = id;
 
             return View();

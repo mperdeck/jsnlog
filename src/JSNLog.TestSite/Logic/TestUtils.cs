@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
-using JSNLog.Tests.Common;
 
-namespace JSNLog.Tests.Logic
+namespace JSNLog.TestSite.Logic
 {
     public class TestUtils
     {
@@ -96,7 +95,7 @@ namespace JSNLog.Tests.Logic
 
             // Set config cache in JavascriptLogging to contents of xe
             // This essentially injects the config XML into JSNLog (the same way as when reading from web.config).
-            CommonTestHelpers.SetConfigCache(configXml);
+   //###########         CommonTestHelpers.SetConfigCache(configXml);
 
             sb.AppendLine(@"<script type=""text/javascript"">");
             sb.AppendLine("(function () {");
