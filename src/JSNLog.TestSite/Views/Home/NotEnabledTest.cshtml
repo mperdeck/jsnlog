@@ -3,8 +3,7 @@
 <h2>Index2</h2>
 
 <!-- 
-    Ensure no appenders are defined when JSNLog is not enabled,
-    and that logging something doesn't crash the JS
+    Ensure that logging something while enabled is false doesn't crash the JS
 -->
 
 @Html.Raw(JSNLog.TestSite.Logic.TestUtils.SetupTest(
@@ -25,21 +24,7 @@ new [] {
 
 <script type="text/javascript">
     var resultDiv;
-    var appenderDefined = false;
-
-    try {
-        appenderDefined = (a0 !== undefined);
-    }
-    catch (e) {
-    }
-
-
-
-    if (appenderDefined) {
-        resultDiv = $('<div style="border-top: 3px red solid" class="error-occurred">appender a0 unexpectedly defined</div>');
-    } else {
-        resultDiv = $('<div style="border-top: 3px green solid" >not-enabled test passed</div>');
-    }
+    resultDiv = $('<div style="border-top: 3px green solid" >not-enabled test passed</div>');
 
     $('body').append(resultDiv);
 
