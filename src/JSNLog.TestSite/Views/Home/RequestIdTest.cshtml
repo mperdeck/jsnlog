@@ -1,16 +1,16 @@
 ﻿@using JSNLog
 @using System.Web;
+@using JSNLog.Tests.Common;
 
     <h2>RequestIdTest</h2>
     @{ 
-     //############   CommonTestHelpers.SetConfigCache(@"<jsnlog productionLibraryPath=""~/scripts/libs/jsnlog.js""></jsnlog>");
-   //#########     var idFromView = HttpContext.Current.RequestId();
+        CommonTestHelpers.SetConfigCache(@"<jsnlog productionLibraryPath=""~/scripts/libs/jsnlog.js""></jsnlog>");
     }
 
-    <jl-javascript-logger-definitions request-id="@ViewBag.PassedInRequestId" />
+    @Html.Raw(JSNLog.JavascriptLogging.Configure(ViewBag.PassedInRequestId))
 
     <div id="IdFromController">@ViewBag.RequestId</div>
-    @*#############   <div id="IdFromView">@HttpContext.RequestId()</div>*@
+    <div id="IdFromView">@HttpContext.Current.RequestId()</div>
     <div id="IdFromJL"></div>
 
     <script type="text/ecmascript">
