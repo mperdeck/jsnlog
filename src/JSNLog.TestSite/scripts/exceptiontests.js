@@ -6,7 +6,7 @@
 
 JL.setOptions({ 'defaultBeforeSend': TestUtils.beforeSend });
 var a0 = JL.createAjaxAppender('da1');
-
+a0.setOptions({ "url": "http://dummy.com/da1" });
 JL().setOptions({ "appenders": [a0] });
 
 // --------------------------------------------------
@@ -22,7 +22,7 @@ function fa() {
         __timestamp1 = (new Date).getTime();
     }
 
-    TestUtils.Check(a0, 1, [
+    TestUtils.Check('da1', 1, [
       {
           l: 6000,
           m: /i is not defined/,
@@ -44,7 +44,7 @@ function fb() {
         __timestamp2 = (new Date).getTime();
     }
 
-    TestUtils.Check(a0, 2, [
+    TestUtils.Check('da1', 2, [
       {
           l: 6000,
           m: /throwing JL\.Exception.*?\{\"i\":5,\"j\":\"abc\"\}/,
@@ -66,7 +66,7 @@ function fc() {
         __timestamp3 = (new Date).getTime();
     }
 
-    TestUtils.Check(a0, 3, [
+    TestUtils.Check('da1', 3, [
       {
           l: 6000,
           m: /Not derived from Error.*?\{\"i2\":66,\"j2\":\"def\"\}/,
@@ -103,7 +103,7 @@ function fd() {
         __timestamp4 = (new Date).getTime();
     }
 
-    TestUtils.Check(a0, 4, [
+    TestUtils.Check('da1', 4, [
       {
           l: 6000,
           m: /\{\\\"i3\\\":77,\\\"j3\\\":\\\"ghi\\\"\}.*?i is not defined.*?\{\"i4\":88,\"j4\":\"jkl\"\}/,
@@ -123,7 +123,7 @@ function fd() {
         __timestamp5 = (new Date).getTime();
     }
 
-    TestUtils.Check(a0, 5, [
+    TestUtils.Check('da1', 5, [
       {
           l: 6000,
           m: /\{\\\"i3\\\":77,\\\"j3\\\":\\\"ghi\\\"\}.*?i is not defined.*?null/,
