@@ -143,7 +143,6 @@ new [] {
     new T(3000, "x1", 1),
 
     new T(checkNbr: 1, checkAppender: "da1"),
- /*   new T(checkNbr: 1, checkAppender: "a0"),   ################## */
     
     // Situation where appender level is higher than logger level
     
@@ -154,163 +153,163 @@ new [] {
     new T(1500, "l2", 0),
     new T(4000, "l2", 0),
     new T(5000, "l2", 2),
-    new T(checkNbr: 2, checkAppender: "a1"),
+    new T(checkNbr: 2, checkAppender: "da2"),
     
     // Test Batching. Batch size is 3, so only after 3 log should the appender spit them out.
     
     new T(header: "Test Batching"),
 
     new T(2000, "l10", 0), // level too low.
-    new T(checkNbr: 10, checkAppender: "a2"),
+    new T(checkNbr: 10, checkAppender: "da10"),
     new T(5000, "l10", 13),
-    new T(checkNbr: 11, checkAppender: "a2"),
+    new T(checkNbr: 11, checkAppender: "da10"),
     new T(4000, "l10", 13),
-    new T(checkNbr: 12, checkAppender: "a2"),
+    new T(checkNbr: 12, checkAppender: "da10"),
     new T(6000, "l10", 13),
-    new T(checkNbr: 13, checkAppender: "a2"),
+    new T(checkNbr: 13, checkAppender: "da10"),
     new T(7000, "l10", 16),
-    new T(checkNbr: 14, checkAppender: "a2"),
+    new T(checkNbr: 14, checkAppender: "da10"),
     new T(4000, "l10", 16),
-    new T(checkNbr: 15, checkAppender: "a2"),
+    new T(checkNbr: 15, checkAppender: "da10"),
     new T(4000, "l10", 16),
-    new T(checkNbr: 16, checkAppender: "a2"),
+    new T(checkNbr: 16, checkAppender: "da10"),
     
     // IP matching
     
     new T(header: "IP matching"),
 
     new T(4000, "l20b", 0),
-    new T(checkNbr: 20, checkAppender: "a3"),
+    new T(checkNbr: 20, checkAppender: "da20"),
 
     new T(4000, "l20c", 21),
-    new T(checkNbr: 21, checkAppender: "a4"),
+    new T(checkNbr: 21, checkAppender: "da21"),
     
     // ----------
     
     new T(4000, "l21a", 0),
     new T(4000, "l21a.a", 0),  // test inheritance
-    new T(checkNbr: 22, checkAppender: "a0"),
+    new T(checkNbr: 22, checkAppender: "da1"),
 
     new T(4000, "l21b", 0),
-    new T(checkNbr: 23, checkAppender: "a3"),
+    new T(checkNbr: 23, checkAppender: "da20"),
 
     new T(4000, "l21c", 0),
-    new T(checkNbr: 24, checkAppender: "a4"),
+    new T(checkNbr: 24, checkAppender: "da21"),
     
     // ----------
     
     new T(4000, "l22a", 25),
     new T(4000, "l22a.a", 25), // test inheritance
-    new T(checkNbr: 25, checkAppender: "a0"),
+    new T(checkNbr: 25, checkAppender: "da1"),
 
     new T(4000, "l22b", 0),
-    new T(checkNbr: 26, checkAppender: "a3"),
+    new T(checkNbr: 26, checkAppender: "da20"),
 
     new T(4000, "l22c", 27),
-    new T(checkNbr: 27, checkAppender: "a4"),
+    new T(checkNbr: 27, checkAppender: "da21"),
     
     // User Agent matching
     
     new T(header: "User Agent matching - these tests assume current browser is Chrome"),
 
     new T(4000, "l30b", 0),
-    new T(checkNbr: 30, checkAppender: "a5"),
+    new T(checkNbr: 30, checkAppender: "da30"),
 
     new T(4000, "l30c", 31),
-    new T(checkNbr: 31, checkAppender: "a6"),
+    new T(checkNbr: 31, checkAppender: "da31"),
     
     // ----------
     
     new T(4000, "l31a", 0),
     new T(4000, "l31a.a", 0), // test inheritance
-    new T(checkNbr: 32, checkAppender: "a0"),
+    new T(checkNbr: 32, checkAppender: "da1"),
 
     new T(4000, "l31b", 0),
-    new T(checkNbr: 33, checkAppender: "a5"),
+    new T(checkNbr: 33, checkAppender: "da30"),
 
     new T(4000, "l31c", 0),
-    new T(checkNbr: 34, checkAppender: "a6"),
+    new T(checkNbr: 34, checkAppender: "da31"),
     
     // ----------
     
     new T(4000, "l32a", 35),
     new T(4000, "l32a.a", 35), // test inheritance
-    new T(checkNbr: 35, checkAppender: "a0"),
+    new T(checkNbr: 35, checkAppender: "da1"),
 
     new T(4000, "l32b", 0),
-    new T(checkNbr: 36, checkAppender: "a5"),
+    new T(checkNbr: 36, checkAppender: "da30"),
 
     new T(4000, "l32c", 37),
-    new T(checkNbr: 37, checkAppender: "a6"),
+    new T(checkNbr: 37, checkAppender: "da31"),
 
     // -----------
     
     new T(header: "Buffer tests"),
 
     new T(2000, "l40", 0), // will be shifted out when 2 more "store only" log items arrive.
-    new T(checkNbr: 40, checkAppender: "a7"),
+    new T(checkNbr: 40, checkAppender: "da40"),
     new T(2100, "l40", 45),
-    new T(checkNbr: 41, checkAppender: "a7"),
+    new T(checkNbr: 41, checkAppender: "da40"),
     new T(2000, "l40", 45),
-    new T(checkNbr: 42, checkAppender: "a7"),
+    new T(checkNbr: 42, checkAppender: "da40"),
     new T(1900, "l40", 0), // should not be stored
-    new T(checkNbr: 43, checkAppender: "a7"),
+    new T(checkNbr: 43, checkAppender: "da40"),
 
     new T(3000, "l40", 44), // send only
-    new T(checkNbr: 44, checkAppender: "a7"),
+    new T(checkNbr: 44, checkAppender: "da40"),
 
     new T(4000, "l40", 45), // send+send all bufffered
-    new T(checkNbr: 45, checkAppender: "a7"),
+    new T(checkNbr: 45, checkAppender: "da40"),
     
     // ---------
     
     new T(2000, "l40", 52), // Only one store-only item received, so no shifting out when buffer too small
-    new T(checkNbr: 50, checkAppender: "a7"),
+    new T(checkNbr: 50, checkAppender: "da40"),
 
     new T(3000, "l40", 51),
-    new T(checkNbr: 51, checkAppender: "a7"),
+    new T(checkNbr: 51, checkAppender: "da40"),
 
     new T(4000, "l40", 52),
-    new T(checkNbr: 52, checkAppender: "a7"),
+    new T(checkNbr: 52, checkAppender: "da40"),
     
     // ---------
     // No store-only messages, so send-only and send+send-buffered are received with empty buffer
     
     new T(3000, "l40", 53),
-    new T(checkNbr: 53, checkAppender: "a7"),
+    new T(checkNbr: 53, checkAppender: "da40"),
 
     new T(4000, "l40", 54),
-    new T(checkNbr: 54, checkAppender: "a7"),
+    new T(checkNbr: 54, checkAppender: "da40"),
     
     // ---------
     // story-only, then send-only, then send+send-buffered (to see if send-only affects the buffer)
         
     new T(2000, "l40", 63), // Only one store-only item received, so no shifting out when buffer too small
-    new T(checkNbr: 60, checkAppender: "a7"),
+    new T(checkNbr: 60, checkAppender: "da40"),
 
     new T(3000, "l40", 61),
-    new T(checkNbr: 61, checkAppender: "a7"),
+    new T(checkNbr: 61, checkAppender: "da40"),
 
     new T(2000, "l40", 63), // Only two store-only item received, so no shifting out when buffer too small
-    new T(checkNbr: 62, checkAppender: "a7"),
+    new T(checkNbr: 62, checkAppender: "da40"),
 
     new T(4000, "l40", 63),
-    new T(checkNbr: 63, checkAppender: "a7"),
+    new T(checkNbr: 63, checkAppender: "da40"),
     
     // ------
     // Multiple store-only and send+send-buffered items in the same batch
     
     new T(2000, "l41", 67),
-    new T(checkNbr: 64, checkAppender: "a8"),
+    new T(checkNbr: 64, checkAppender: "da41"),
 
     new T(4000, "l41", 67),
-    new T(checkNbr: 65, checkAppender: "a8"),
+    new T(checkNbr: 65, checkAppender: "da41"),
 
     new T(2000, "l41", 67),
-    new T(checkNbr: 66, checkAppender: "a8"),
+    new T(checkNbr: 66, checkAppender: "da41"),
 
     new T(4000, "l41", 67),
-    new T(checkNbr: 67, checkAppender: "a8"),
+    new T(checkNbr: 67, checkAppender: "da41"),
     
     // -------------------------
     // Multiple appenders / no appenders    
@@ -319,27 +318,27 @@ new [] {
 
     new T(2000, "l50", 0),
     new T(2000, "l50.a", 0),
-    new T(checkNbr: 70, checkAppender: "a9"),
-    new T(checkNbr: 70, checkAppender: "a10"),
+    new T(checkNbr: 70, checkAppender: "da51"),
+    new T(checkNbr: 70, checkAppender: "da52"),
 
     new T(3000, "l50", 71),
     new T(3000, "l50.a", 71),
-    new T(checkNbr: 71, checkAppender: "a9"),
-    new T(checkNbr: 72, checkAppender: "a10"),
+    new T(checkNbr: 71, checkAppender: "da51"),
+    new T(checkNbr: 72, checkAppender: "da52"),
 
     new T(4000, "l50", 73),
     new T(4000, "l50.a", 73),
-    new T(checkNbr: 73, checkAppender: "a9"),
-    new T(checkNbr: 73, checkAppender: "a10"),
+    new T(checkNbr: 73, checkAppender: "da51"),
+    new T(checkNbr: 73, checkAppender: "da52"),
 
     // No appenders 
         
     new T(header: "No appenders"),
 
     new T(4000, "l51", 0),
-    new T(checkNbr: 74, checkAppender: "a9"),
-    new T(checkNbr: 74, checkAppender: "a10"),
-    new T(checkNbr: 74, checkAppender: "a0"),
+    new T(checkNbr: 74, checkAppender: "da51"),
+    new T(checkNbr: 74, checkAppender: "da52"),
+    new T(checkNbr: 74, checkAppender: "da1"),
 
     // ----------------------------
     // ALL level 
@@ -348,7 +347,7 @@ new [] {
 
     new T(0, "l60", 80),
     new T(6000, "l60", 80),
-    new T(checkNbr: 80, checkAppender: "a11"),
+    new T(checkNbr: 80, checkAppender: "da60"),
 
     // ----------------------------
     // OFF level 
@@ -357,7 +356,7 @@ new [] {
 
     new T(0, "l61", 0),
     new T(6000, "l61", 0),
-    new T(checkNbr: 81, checkAppender: "a0"),
+    new T(checkNbr: 81, checkAppender: "da1"),
 
     // ---------------------
         
@@ -379,7 +378,7 @@ new [] {
     new T(3000, "", 91, logObject: "function() { return {\"f1\": \"v1a\", \"f2\": \"v2a\"}; }", expectedMsg: "{\"f1\":\"v1a\",\"f2\":\"v2a\"}"),
     new T(3000, "", 91, logObject: "function() { return function() { return {\"f1\": \"v1b\", \"f2\": \"v2b\"}; }; }", expectedMsg: "unknown"),
 
-    new T(checkNbr: 91, checkAppender: "a0"),
+    new T(checkNbr: 91, checkAppender: "da1"),
     
     // ---------------------
         
@@ -394,7 +393,7 @@ new [] {
     new T(3000, "l100", 100, logObject: "\"abc\"", expectedMsg: "abc"),
     new T(3000, "l100", 100, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
     new T(3000, "l100", 100, logObject: "\"xyz\"", expectedMsg: "xyz"),
-    new T(checkNbr: 100, checkAppender: "a0"),
+    new T(checkNbr: 100, checkAppender: "da1"),
 
     new T(3000, "l101", 101, logObject: "\"abc\"", expectedMsg: "abc"),
     new T(3000, "l101", 101, logObject: "\"33msg9\"", expectedMsg: "33msg9"),
@@ -405,7 +404,7 @@ new [] {
     new T(3000, "l101", 101, logObject: "\"abc\"", expectedMsg: "abc"),
     new T(3000, "l101", 0, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
     new T(3000, "l101", 101, logObject: "\"xyz\"", expectedMsg: "xyz"),
-    new T(checkNbr: 101, checkAppender: "a0"),
+    new T(checkNbr: 101, checkAppender: "da1"),
 
     new T(3000, "l102", 102, logObject: "\"abc\"", expectedMsg: "abc"),
     new T(3000, "l102", 102, logObject: "\"33msg9\"", expectedMsg: "33msg9"),
@@ -416,7 +415,7 @@ new [] {
     new T(3000, "l102", 102, logObject: "\"abc\"", expectedMsg: "abc"),
     new T(3000, "l102", 0, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
     new T(3000, "l102", 0, logObject: "\"xyz\"", expectedMsg: "xyz"),
-    new T(checkNbr: 102, checkAppender: "a0"),
+    new T(checkNbr: 102, checkAppender: "da1"),
 
     new T(3000, "l103", 103, logObject: "\"abc\"", expectedMsg: "abc"),
     new T(3000, "l103", 103, logObject: "\"33msg9\"", expectedMsg: "33msg9"),
@@ -430,7 +429,7 @@ new [] {
     new T(3000, "l103", 0, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
     new T(3000, "l103", 103, logObject: "function() { return \"catdog\"; }", expectedMsg: "catdog"),
     new T(3000, "l103", 0, logObject: "\"xyz\"", expectedMsg: "xyz"),
-    new T(checkNbr: 103, checkAppender: "a0"),
+    new T(checkNbr: 103, checkAppender: "da1"),
 
     // Test inheritance of onceOnly
     
@@ -446,7 +445,7 @@ new [] {
     new T(3000, "l103.x", 0, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
     new T(3000, "l103.x", 104, logObject: "function() { return \"catdog\"; }", expectedMsg: "catdog"),
     new T(3000, "l103.x", 0, logObject: "\"xyz\"", expectedMsg: "xyz"),
-    new T(checkNbr: 104, checkAppender: "a0"),
+    new T(checkNbr: 104, checkAppender: "da1"),
     
     // l103.x2 inherits from l103, but overrides onceOnly so only duplicates of msg are stopped
     
@@ -459,7 +458,7 @@ new [] {
     new T(3000, "l103.x2", 105, logObject: "\"abc\"", expectedMsg: "abc"),
     new T(3000, "l103.x2", 0, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
     new T(3000, "l103.x2", 105, logObject: "\"xyz\"", expectedMsg: "xyz"),
-    new T(checkNbr: 105, checkAppender: "a0"),
+    new T(checkNbr: 105, checkAppender: "da1"),
 
     new T(3000, "l103.x3", 106, logObject: "\"abc\"", expectedMsg: "abc"),
     new T(3000, "l103.x3", 106, logObject: "\"33msg9\"", expectedMsg: "33msg9"),
@@ -470,7 +469,7 @@ new [] {
     new T(3000, "l103.x3", 106, logObject: "\"abc\"", expectedMsg: "abc"),
     new T(3000, "l103.x3", 106, logObject: "\"msg 10\"", expectedMsg: "msg 10"),
     new T(3000, "l103.x3", 106, logObject: "\"xyz\"", expectedMsg: "xyz"),
-    new T(checkNbr: 106, checkAppender: "a0"),
+    new T(checkNbr: 106, checkAppender: "da1"),
     
     // -------------
     
@@ -478,7 +477,7 @@ new [] {
 
     new T(3000, "l110", 0, logObject: "'123 xyz 999'", expectedMsg: "123 xyz 999"),
     new T(3000, "l110", 110, logObject: "'123 msg 999'", expectedMsg: "123 msg 999"),
-    new T(checkNbr: 110, checkAppender: "a12"),
+    new T(checkNbr: 110, checkAppender: "da110"),
 
     new T(3000, "l111", 111, logObject: "'123 xyz 999'", expectedMsg: "123 xyz 999"),
     new T(3000, "l111", 0, logObject: "'123 msg 999'", expectedMsg: "123 msg 999"),
@@ -486,5 +485,5 @@ new [] {
     new T(3000, "l111.x2", 0, logObject: "'123 msg 999'", expectedMsg: "123 msg 999"),
     new T(3000, "l111.x1", 111, logObject: "'123 xyz 999'", expectedMsg: "123 xyz 999"),
     new T(3000, "l111.x1", 111, logObject: "'123 msg 999'", expectedMsg: "123 msg 999"),
-    new T(checkNbr: 111, checkAppender: "a0")
+    new T(checkNbr: 111, checkAppender: "da1")
 }))
