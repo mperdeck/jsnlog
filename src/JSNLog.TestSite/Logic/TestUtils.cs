@@ -104,7 +104,8 @@ namespace JSNLog.TestSite.Logic
             sb.AppendLine(@"<script type=""text/javascript"">");
             sb.AppendLine("(function () {");
 
-            sb.AppendLine("JL.setOptions({ 'defaultBeforeSend': TestUtils.beforeSend });");
+            sb.AppendLine(string.Format(
+                "JL.setOptions({{ 'defaultBeforeSend': TestUtils.beforeSend, 'clientIP': '{0}', 'requestId': '{1}' }});", userIp, requestId));
             
             int seq = 0;
             foreach (T t in tests)
