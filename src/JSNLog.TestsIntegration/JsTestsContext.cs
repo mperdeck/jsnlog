@@ -19,9 +19,6 @@ namespace JSNLog.Tests.IntegrationTests
             get; private set;
         }
 
-        // The port 5000 is always used by kestrel.
-        // Also, make sure that nothing else uses that port (such as IIS). ##############
-        private const string _baseUrl = "http://localhost:5000";
         private WebServer _webServer = new WebServer();
 
         public JsTestsContext()
@@ -36,12 +33,6 @@ namespace JSNLog.Tests.IntegrationTests
 
             // To use ChromeDriver, you must have chromedriver.exe. Download from
             // https://sites.google.com/a/chromium.org/chromedriver/downloads
-
-            //var executingAssembly = Assembly.GetExecutingAssembly();
-            //var executingAssemblyLocation = executingAssembly.Location;
-            //string assemblyFolder = Path.GetDirectoryName(executingAssemblyLocation);
-            //string dependenciesFolder = Path.Combine(assemblyFolder, "IntegrationTests", "Dependencies");
-            //###############
 
             string dependenciesFolder =
                 Path.GetFullPath(Path.Combine(jsnlogTestsProjectDirectory, "..\\..\\", "Dependencies"));
@@ -61,7 +52,7 @@ namespace JSNLog.Tests.IntegrationTests
 
         public void OpenPage(string relativeUrl)
         {
-            string absoluteUrl = _baseUrl + relativeUrl;
+            string absoluteUrl = Path.Combine(_webServer.SiteUrl, relativeUrl);
             Driver.Navigate().GoToUrl(absoluteUrl);
         }
 

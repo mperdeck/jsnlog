@@ -11,6 +11,19 @@ namespace JSNLog.Tests.IntegrationTests
     public class WebServer
     {
         private Process _iisServerProcess = null;
+        private int _port = -1;
+
+        public string SiteUrl
+        {
+            get {
+                if ((_iisServerProcess == null) || _iisServerProcess.HasExited)
+                {
+                    throw new Exception("Cannot get SiteUrl if web server not running.");
+                }
+
+                return string.Format("http://localhost:{0}", _port);
+            }
+        }
 
         /// <summary>
         /// Starts a web server for given web site.
@@ -28,9 +41,9 @@ namespace JSNLog.Tests.IntegrationTests
                 throw new Exception("A WebServer object can run only 1 site at the time. Call StopSite before running a new site.");
             }
 
-            for(int port = 5000; port < 5100; port++)
+            for(_port = 5000; _port < 5100; _port++)
             {
-                string arguments = string.Format(@"/path:""{0}"" /port:{1}", sitePath, port);
+                string arguments = string.Format(@"/path:""{0}"" /port:{1}", sitePath, _port);
 
                 var key = Environment.Is64BitOperatingSystem ? "programfiles(x86)" : "programfiles";
                 var programfiles = Environment.GetEnvironmentVariable(key);
