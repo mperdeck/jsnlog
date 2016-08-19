@@ -20,38 +20,31 @@ namespace JSNLog.Tests.IntegrationTests
         }
 
         // The port 5000 is always used by kestrel.
-        // Also, make sure that nothing else uses that port (such as IIS).
+        // Also, make sure that nothing else uses that port (such as IIS). ##############
         private const string _baseUrl = "http://localhost:5000";
-        private readonly Process _serverProcess;
+        private WebServer _webServer = new WebServer();
 
         public JsTestsContext()
         {
             string jsnlogTestsProjectDirectory = Directory.GetCurrentDirectory();
-            string jsnlogTestSiteProjectDirectory = Path.Combine(jsnlogTestsProjectDirectory, "..\\..\\..\\..\\..\\", "JSNLog.TestSite");
+            string jsnlogTestSiteProjectDirectory = 
+                Path.GetFullPath(Path.Combine(jsnlogTestsProjectDirectory, "..\\..\\..\\", "JSNLog.TestSite"));
 
-            _serverProcess = Process.Start(new ProcessStartInfo
-            {
-                FileName = "dotnet",
-                Arguments = "run",
-                WorkingDirectory = jsnlogTestSiteProjectDirectory
-            });
+            _webServer.StartSite(jsnlogTestSiteProjectDirectory);
 
             Thread.Sleep(3000);
-
-            if (_serverProcess.HasExited)
-            {
-                throw new Exception(string.Format("Kestrel server could not be started - exit code: {0}. Before running these tests, " +
-                    "make sure Kestrel is not already running, and that nothing else uses port 5000.", 
-                    _serverProcess.ExitCode));
-            }
 
             // To use ChromeDriver, you must have chromedriver.exe. Download from
             // https://sites.google.com/a/chromium.org/chromedriver/downloads
 
-            var executingAssembly = Assembly.GetExecutingAssembly();
-            var executingAssemblyLocation = executingAssembly.Location;
-            string assemblyFolder = Path.GetDirectoryName(executingAssemblyLocation);
-            string dependenciesFolder = Path.Combine(assemblyFolder, "IntegrationTests", "Dependencies");
+            //var executingAssembly = Assembly.GetExecutingAssembly();
+            //var executingAssemblyLocation = executingAssembly.Location;
+            //string assemblyFolder = Path.GetDirectoryName(executingAssemblyLocation);
+            //string dependenciesFolder = Path.Combine(assemblyFolder, "IntegrationTests", "Dependencies");
+            //###############
+
+            string dependenciesFolder =
+                Path.GetFullPath(Path.Combine(jsnlogTestsProjectDirectory, "..\\..\\", "Dependencies"));
 
             Driver = new ChromeDriver(dependenciesFolder);
         }
@@ -61,7 +54,7 @@ namespace JSNLog.Tests.IntegrationTests
             // Close the browser if there is no error. Otherwise leave open.
             if (!ErrorOnPage())
             {
-                _serverProcess.Kill();
+                _webServer.StopSite();
                 Driver.Quit();
             }
         }
