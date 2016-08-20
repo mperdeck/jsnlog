@@ -1,3 +1,8 @@
+/* 
+ * JSNLog 2.19.2
+ * Open source under the MIT License.
+ * Copyright 2016 Mattijs Perdeck All rights reserved.
+ */
 /// <reference path="Definitions/jsnlog_interfaces.d.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];

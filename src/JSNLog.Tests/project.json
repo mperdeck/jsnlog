@@ -1,5 +1,5 @@
 {
-  "version": "2.19.1",
+  "version": "2.19.2",
   "testRunner": "xunit",
   "description": "JSNLog.Tests Class Library",
   "authors": [
@@ -13,11 +13,14 @@
   "dependencies": {
     "xunit": "2.1.0",
     "dotnet-test-xunit": "1.0.0-rc2-build10025",
-    "JSNLog": "2.19.1"
+    "JSNLog": "2.19.2"
   },
   "tools": {},
   "buildOptions": {
-    "preserveCompilationContext": true
+    "preserveCompilationContext": true,
+    "copyToOutput": {
+      "include": [ "IntegrationTests\\Dependencies\\chromedriver.exe" ]
+    }
   },
   "packOptions": {
     "tags": [
