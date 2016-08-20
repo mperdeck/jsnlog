@@ -30,8 +30,6 @@ var TestUtils;
     function beforeSend(xhr) {
         var appenderThis = this;
         xhr.send = function (json) {
-            //####################################
-            console.log(appenderThis.url);
             if (!window[appenderThis.url]) {
                 window[appenderThis.url] = [];
             }

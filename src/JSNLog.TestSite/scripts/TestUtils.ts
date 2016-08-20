@@ -38,10 +38,6 @@ module TestUtils {
 		var appenderThis = this;
         xhr.send = function (json) {
 
-            //####################################
-            console.log(appenderThis.url);
-
-
             if (!(<any>window)[appenderThis.url]) { (<any>window)[appenderThis.url] = []; }
 
             var item = JSON.parse(json);
