@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace JSNLog.Tests.Logic
+namespace JSNLog.TestSite.Logic
 {
     /// <summary>
     /// A single T defines both an action and an expected outcome.

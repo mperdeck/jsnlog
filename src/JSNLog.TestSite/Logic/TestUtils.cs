@@ -1,13 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Xml;
-using JSNLog.Infrastructure;
 using JSNLog.Tests.Common;
-using Microsoft.AspNetCore.Http;
 
-namespace JSNLog.Tests.Logic
+namespace JSNLog.TestSite.Logic
 {
     public class TestUtils
     {
@@ -100,16 +95,18 @@ namespace JSNLog.Tests.Logic
             var sb = new StringBuilder();
 
             // Set config cache in JavascriptLogging to contents of xe
+            // This essentially injects the config XML into JSNLog (the same way as when reading from web.config).
             CommonTestHelpers.SetConfigCache(configXml);
 
-            var configProcessor = new ConfigProcessor();
-            configProcessor.ProcessRootExec(sb, s => s, userIp, requestId, false);
+            var jsnlogJavaScriptConfig = JSNLog.JavascriptLogging.Configure(); 
+            sb.AppendLine(jsnlogJavaScriptConfig);
 
             sb.AppendLine(@"<script type=""text/javascript"">");
             sb.AppendLine("(function () {");
 
-            sb.AppendLine("JL.setOptions({ 'defaultBeforeSend': TestUtils.beforeSend });");
-
+            sb.AppendLine(string.Format(
+                "JL.setOptions({{ 'defaultBeforeSend': TestUtils.beforeSend, 'clientIP': '{0}', 'requestId': '{1}' }});", userIp, requestId));
+            
             int seq = 0;
             foreach (T t in tests)
             {
@@ -131,7 +128,7 @@ namespace JSNLog.Tests.Logic
                     string expected = Expected(t.CheckNbr, tests);
 
                     // Generate check js
-                    string checkJs = string.Format("TestUtils.Check({0}, {1}, {2});", t.CheckAppender, t.CheckNbr, expected);
+                    string checkJs = string.Format("TestUtils.Check('{0}', {1}, {2});", t.CheckAppender, t.CheckNbr, expected);
                     sb.AppendLine("");
                     sb.AppendLine(checkJs);
                     sb.AppendLine("// ----------------------");
