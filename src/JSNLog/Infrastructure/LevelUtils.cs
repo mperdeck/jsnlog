@@ -165,5 +165,19 @@ namespace JSNLog.Infrastructure
 
             LevelNumber(level);
         }
+
+        /// <summary>
+        /// Returns a string with all named levels, separated by |
+        /// 
+        /// This is used by the web site project.
+        /// </summary>
+        /// <returns></returns>
+        public static string NamedLevels()
+        {
+            string[] names = Enum.GetNames(typeof(Level));
+
+            string namedLevels = string.Join("|", names);
+            return namedLevels;
+        }
     }
 }
