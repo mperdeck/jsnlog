@@ -5,7 +5,8 @@ using System.Text;
 
 namespace JSNLog.Infrastructure
 {
-    internal class LevelUtils
+    // make LevelUtils public, so the web site project can access this info
+    public class LevelUtils
     {
         /// <summary>
         /// Converts a number to a level.
