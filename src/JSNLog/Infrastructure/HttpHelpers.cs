@@ -43,9 +43,9 @@ namespace JSNLog.Infrastructure
         public static string GetUserIp(this HttpContext httpContext)
         {
 #if NET40
-            string userIp = httpContext.Request.UserHostAddress;
+            string userIp = (string.IsNullOrEmpty(HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]) ? httpContext.Request.UserHostAddress : HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
 #else
-            string userIp = Utils.SafeToString(httpContext.Connection.RemoteIpAddress);
+            string userIp = (string.IsNullOrEmpty(HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]) ? Utils.SafeToString(httpContext.Connection.RemoteIpAddress) : HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
 #endif
             return userIp;
         }
