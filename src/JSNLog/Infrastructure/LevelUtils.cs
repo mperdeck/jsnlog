@@ -5,7 +5,8 @@ using System.Text;
 
 namespace JSNLog.Infrastructure
 {
-    internal class LevelUtils
+    // make LevelUtils public, so the web site project can access this info
+    public class LevelUtils
     {
         /// <summary>
         /// Converts a number to a level.
@@ -163,6 +164,20 @@ namespace JSNLog.Infrastructure
             if (string.IsNullOrEmpty(level)) { return; }
 
             LevelNumber(level);
+        }
+
+        /// <summary>
+        /// Returns a string with all named levels, separated by |
+        /// 
+        /// This is used by the web site project.
+        /// </summary>
+        /// <returns></returns>
+        public static string NamedLevels()
+        {
+            string[] names = Enum.GetNames(typeof(Level));
+
+            string namedLevels = string.Join("|", names);
+            return namedLevels;
         }
     }
 }
