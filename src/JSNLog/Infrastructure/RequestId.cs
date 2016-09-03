@@ -71,12 +71,7 @@ namespace JSNLog.Infrastructure
         /// <returns></returns>
         public static string GetLogRequestId(this HttpContext httpContext)
         {
-            // Even though the code for NET40 and DNX is the same for getting the headers,
-            // the type of the headers variable will be different.
-            var headers = httpContext.Request.Headers;
-
-            string requestId = headers[Constants.HttpHeaderRequestIdName];
-            return requestId;
+            return httpContext.GetRequestHeader(Constants.HttpHeaderRequestIdName);
         }
 
         public static string GetLogRequestId(this Dictionary<string,string> headers)

@@ -13,6 +13,7 @@ namespace JSNLog
         public const string PackageName = "JSNLog";
         public const string ContextItemRequestIdName = "__JSNLog_RequestId";
         public const string HttpHeaderRequestIdName = "JSNLog-RequestId";
+        public const string HttpHeaderXForwardedFor = "X-Forwarded-For";
         public const string GlobalMethodCalledAfterJsnlogJsLoaded = "__jsnlog_configure";
         public const string ConfigRootName = "jsnlog";
         public const string RegexBool = "^(true|false)$";
