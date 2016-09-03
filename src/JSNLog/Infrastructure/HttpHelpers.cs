@@ -47,7 +47,24 @@ namespace JSNLog.Infrastructure
 #else
             string userIp = Utils.SafeToString(httpContext.Connection.RemoteIpAddress);
 #endif
+
+            string xForwardedFor = httpContext.GetRequestHeader(Constants.HttpHeaderXForwardedFor);
+            if (!string.IsNullOrEmpty(xForwardedFor))
+            {
+                userIp = xForwardedFor + ", " + userIp;
+            }
+
             return userIp;
+        }
+
+        public static string GetRequestHeader(this HttpContext httpContext, string requestHeaderName)
+        {
+            // Even though the code for NET40 and DNX is the same for getting the headers,
+            // the type of the headers variable will be different.
+            var headers = httpContext.Request.Headers;
+
+            string requestHeaderValue = headers[requestHeaderName];
+            return requestHeaderValue;
         }
     }
 }
