@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <metadata minClientVersion="3.4">
+  <metadata minClientVersion="2.8.6">
     <id>JSNLog</id>   
     <version>__Version__</version>
     <title>JSNLog - JavaScript Logging Package</title>
