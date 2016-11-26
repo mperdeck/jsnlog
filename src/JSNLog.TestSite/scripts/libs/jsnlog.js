@@ -1,5 +1,5 @@
 /* 
- * JSNLog 2.20.1
+ * JSNLog 2.20.2
  * Open source under the MIT License.
  * Copyright 2016 Mattijs Perdeck All rights reserved.
  */
