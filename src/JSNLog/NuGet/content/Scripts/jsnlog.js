@@ -1,5 +1,5 @@
 /* 
- * JSNLog 2.20.2
+ * JSNLog 2.21.0
  * Open source under the MIT License.
  * Copyright 2016 Mattijs Perdeck All rights reserved.
  */
@@ -238,7 +238,13 @@ var JL;
                     return new StringifiedLogObject(finalString, null, finalString);
                 }
                 else {
-                    return new StringifiedLogObject(null, actualLogObject, JSON.stringify(actualLogObject));
+                    if (typeof JL.serialize === 'function') {
+                        finalString = JL.serialize.call(this, actualLogObject);
+                    }
+                    else {
+                        finalString = JSON.stringify(actualLogObject);
+                    }
+                    return new StringifiedLogObject(null, actualLogObject, finalString);
                 }
             default:
                 return new StringifiedLogObject("unknown", null, "unknown");
@@ -251,6 +257,7 @@ var JL;
         copyProperty("clientIP", options, this);
         copyProperty("requestId", options, this);
         copyProperty("defaultBeforeSend", options, this);
+        copyProperty("serialize", options, this);
         return this;
     }
     JL.setOptions = setOptions;
