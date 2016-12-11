@@ -1,5 +1,5 @@
 /* 
- * JSNLog 2.21.0
+ * JSNLog 2.22.0
  * Open source under the MIT License.
  * Copyright 2016 Mattijs Perdeck All rights reserved.
  */
@@ -815,6 +815,19 @@ if (typeof window !== 'undefined' && !window.onerror) {
             "errorMsg": errorMsg, "url": url,
             "line number": lineNumber, "column": column
         }, errorObj);
+        // Tell browser to run its own error handler as well   
+        return false;
+    };
+}
+// Deal with unhandled exceptions thrown in promises
+if (typeof window !== 'undefined' && !window.onunhandledrejection) {
+    window.onunhandledrejection = function (event) {
+        // Send object with all data to server side log, using severity fatal, 
+        // from logger "onerrorLogger"
+        JL("onerrorLogger").fatalException({
+            "msg": "unhandledrejection",
+            "errorMsg": event.reason.message
+        }, event.reason);
         // Tell browser to run its own error handler as well   
         return false;
     };

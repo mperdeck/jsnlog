@@ -1,5 +1,5 @@
 {
-  "version": "2.21.0",
+  "version": "2.22.0",
   "testRunner": "xunit",
   "description": "JSNLog.Tests Class Library",
   "authors": [
@@ -13,7 +13,7 @@
   "dependencies": {
     "xunit": "2.1.0",
     "dotnet-test-xunit": "1.0.0-rc2-build10025",
-    "JSNLog": "2.21.0"
+    "JSNLog": "2.22.0"
   },
   "tools": {},
   "buildOptions": {
