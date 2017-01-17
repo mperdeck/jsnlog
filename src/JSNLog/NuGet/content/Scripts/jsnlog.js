@@ -1,5 +1,5 @@
 /* 
- * JSNLog 2.22.0
+ * JSNLog 2.22.1
  * Open source under the MIT License.
  * Copyright 2016 Mattijs Perdeck All rights reserved.
  */
@@ -826,7 +826,7 @@ if (typeof window !== 'undefined' && !window.onunhandledrejection) {
         // from logger "onerrorLogger"
         JL("onerrorLogger").fatalException({
             "msg": "unhandledrejection",
-            "errorMsg": event.reason.message
+            "errorMsg": event.reason ? event.reason.message : null
         }, event.reason);
         // Tell browser to run its own error handler as well   
         return false;
