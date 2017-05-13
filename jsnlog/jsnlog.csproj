@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.0</TargetFramework>
+    <TargetFrameworks>netstandard1.0;net40</TargetFrameworks>
     <PackageId>AppLogger.YOUR_NAME</PackageId>
     <PackageVersion>1.0.0</PackageVersion>
     <Authors>YOUR_NAME</Authors>
@@ -12,4 +12,13 @@
     <PackageTags>logger logging logs</PackageTags>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\**\*.cs" Exclude="Resources\**\*.cs" />
+    <!-- This is here so that the conditionally included files below are all visible in VS -->
+    <None Include="**\*.cs;Resources\**\*.*" />
+    <EmbeddedResource Include="**\*.resx" />
+  </ItemGroup>
 </Project>

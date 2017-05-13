@@ -1,6 +1,7 @@
 {
   "version": 2,
   "targets": {
+    ".NETFramework,Version=v4.0": {},
     ".NETStandard,Version=v1.0": {
       "Microsoft.NETCore.Platforms/1.1.0": {
         "type": "package",
@@ -1862,6 +1863,7 @@
     }
   },
   "projectFileDependencyGroups": {
+    ".NETFramework,Version=v4.0": [],
     ".NETStandard,Version=v1.0": [
       "NETStandard.Library >= 1.6.1"
     ]
@@ -1877,11 +1879,16 @@
       "projectPath": "C:\\Dev\\JSNLog\\jsnlog\\jsnlog\\jsnlog.csproj",
       "outputPath": "C:\\Dev\\JSNLog\\jsnlog\\jsnlog\\obj\\",
       "projectStyle": "PackageReference",
+      "crossTargeting": true,
       "originalTargetFrameworks": [
-        "netstandard1.0"
+        "netstandard1.0",
+        "net40"
       ],
       "frameworks": {
         "netstandard1.0": {
+          "projectReferences": {}
+        },
+        "net40": {
           "projectReferences": {}
         }
       }
@@ -1895,7 +1902,8 @@
             "autoReferenced": true
           }
         }
-      }
+      },
+      "net40": {}
     }
   }
 }
