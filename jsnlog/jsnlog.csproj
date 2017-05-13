@@ -4,9 +4,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net452'">
+    <DefineConstants>NET452</DefineConstants>
+    <DefineConstants>SUPPORTSXML</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
+    <DefineConstants>NETSTANDARD</DefineConstants>
   </PropertyGroup>
-
 </Project>
 

@@ -1,0 +1,6 @@
+C:\Dev\JSNLog\jsnlog\jsnlog\bin\Release\net452\jsnlog.dll
+C:\Dev\JSNLog\jsnlog\jsnlog\bin\Release\net452\jsnlog.pdb
+C:\Dev\JSNLog\jsnlog\jsnlog\obj\Release\net452\jsnlog.csprojResolveAssemblyReference.cache
+C:\Dev\JSNLog\jsnlog\jsnlog\obj\Release\net452\jsnlog.AssemblyInfo.cs
+C:\Dev\JSNLog\jsnlog\jsnlog\obj\Release\net452\jsnlog.dll
+C:\Dev\JSNLog\jsnlog\jsnlog\obj\Release\net452\jsnlog.pdb
