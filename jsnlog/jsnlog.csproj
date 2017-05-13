@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.0</TargetFramework>
+    <PackageId>AppLogger.YOUR_NAME</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Authors>YOUR_NAME</Authors>
+    <Description>Awesome application logging utility</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <Copyright>Copyright 2016 (c) Contoso Corporation. All rights reserved.</Copyright>
+    <PackageTags>logger logging logs</PackageTags>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>AppLogger.YOUR_NAME</id>
+    <version>2.44.6</version>
+    <authors>YOUR_NAME</authors>
+    <owners>YOUR_NAME</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Awesome application logging utility</description>
+    <releaseNotes>First release</releaseNotes>
+    <copyright>Copyright 2016 (c) Contoso Corporation. All rights reserved.</copyright>
+    <tags>logger logging logs</tags>
+    <dependencies>
+      <group targetFramework=".NETStandard1.0">
+        <dependency id="NETStandard.Library" version="1.6.1" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Dev\JSNLog\jsnlog\jsnlog\bin\Release\netstandard1.0\jsnlog.dll" target="lib\netstandard1.0\jsnlog.dll" />
+  </files>
+</package>
