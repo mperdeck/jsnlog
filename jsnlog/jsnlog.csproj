@@ -1,38 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net452'">
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
+    <TargetFrameworkIdentifier>.NETStandard</TargetFrameworkIdentifier>
+  </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>net452;netstandard1.0</TargetFramework>
+    <TargetFrameworks>net452;netstandard1.3</TargetFrameworks>
     <RuntimeIdentifier>win7-x86</RuntimeIdentifier>
   </PropertyGroup>
   
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net452'">
-    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.1'">
-    <TargetFrameworkIdentifier>.NETStandard</TargetFrameworkIdentifier>
-  </PropertyGroup>
-  
-  <ItemGroup>
-    <Compile Include="**\*.cs" Exclude="Platforms\**\*.cs;Resources\**\*.cs" />
-    <!-- This is here so that the conditionally included files below are all visible in VS -->
-    <None Include="Platforms\**\*.cs;Resources\**\*.*" />
-    <EmbeddedResource Include="**\*.resx" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' != 'net452' ">
-    <PackageReference Include="NETStandard.Library" Version="1.1" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.IdentityModel" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Compile Include="Platforms\net45\**\*.cs" />
-  </ItemGroup>
 </Project>
+

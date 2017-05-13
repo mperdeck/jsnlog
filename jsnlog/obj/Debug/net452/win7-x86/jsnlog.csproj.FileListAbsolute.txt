@@ -1,0 +1,5 @@
+C:\Dev\JSNLog\jsnlog\jsnlog\bin\Debug\net452\win7-x86\jsnlog.dll
+C:\Dev\JSNLog\jsnlog\jsnlog\bin\Debug\net452\win7-x86\jsnlog.pdb
+C:\Dev\JSNLog\jsnlog\jsnlog\obj\Debug\net452\win7-x86\jsnlog.AssemblyInfo.cs
+C:\Dev\JSNLog\jsnlog\jsnlog\obj\Debug\net452\win7-x86\jsnlog.dll
+C:\Dev\JSNLog\jsnlog\jsnlog\obj\Debug\net452\win7-x86\jsnlog.pdb
