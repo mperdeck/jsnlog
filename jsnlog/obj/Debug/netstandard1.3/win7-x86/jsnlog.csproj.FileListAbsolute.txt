@@ -1,7 +1,6 @@
 C:\Dev\JSNLog\jsnlog\jsnlog\bin\Debug\netstandard1.3\win7-x86\jsnlog.deps.json
 C:\Dev\JSNLog\jsnlog\jsnlog\bin\Debug\netstandard1.3\win7-x86\jsnlog.dll
 C:\Dev\JSNLog\jsnlog\jsnlog\bin\Debug\netstandard1.3\win7-x86\jsnlog.pdb
-C:\Dev\JSNLog\jsnlog\jsnlog\obj\Debug\netstandard1.3\win7-x86\jsnlog.csprojResolveAssemblyReference.cache
 C:\Dev\JSNLog\jsnlog\jsnlog\obj\Debug\netstandard1.3\win7-x86\jsnlog.AssemblyInfo.cs
 C:\Dev\JSNLog\jsnlog\jsnlog\obj\Debug\netstandard1.3\win7-x86\jsnlog.dll
 C:\Dev\JSNLog\jsnlog\jsnlog\obj\Debug\netstandard1.3\win7-x86\jsnlog.pdb
