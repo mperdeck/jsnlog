@@ -11,10 +11,9 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("YOUR_NAME")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("jsnlog")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
-[assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright 2016 (c) Contoso Corporation. All rights reserved.")]
-[assembly: System.Reflection.AssemblyDescriptionAttribute("Awesome application logging utility")]
+[assembly: System.Reflection.AssemblyDescriptionAttribute("Package Description")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("jsnlog")]

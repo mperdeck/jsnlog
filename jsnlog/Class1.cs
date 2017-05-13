@@ -1,13 +1,8 @@
 ﻿using System;
 
-namespace AppLogger
+namespace jsnlog
 {
-    public class Logger
+    public class Class1
     {
-        public static string Log(string text)
-        {
-            return text + " hello from core";
-        }
     }
 }
-

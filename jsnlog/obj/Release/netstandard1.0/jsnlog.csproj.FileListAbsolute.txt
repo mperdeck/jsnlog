@@ -1,7 +1,0 @@
-C:\Dev\JSNLog\jsnlog\jsnlog\bin\Release\netstandard1.0\jsnlog.deps.json
-C:\Dev\JSNLog\jsnlog\jsnlog\bin\Release\netstandard1.0\jsnlog.dll
-C:\Dev\JSNLog\jsnlog\jsnlog\bin\Release\netstandard1.0\jsnlog.pdb
-C:\Dev\JSNLog\jsnlog\jsnlog\obj\Release\netstandard1.0\jsnlog.csprojResolveAssemblyReference.cache
-C:\Dev\JSNLog\jsnlog\jsnlog\obj\Release\netstandard1.0\jsnlog.AssemblyInfo.cs
-C:\Dev\JSNLog\jsnlog\jsnlog\obj\Release\netstandard1.0\jsnlog.dll
-C:\Dev\JSNLog\jsnlog\jsnlog\obj\Release\netstandard1.0\jsnlog.pdb
