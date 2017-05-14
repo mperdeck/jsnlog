@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-#if NET40
+#if NET452
 using System.Web;
 #else
 using Microsoft.AspNetCore.Http;
@@ -42,7 +42,7 @@ namespace JSNLog.Infrastructure
 
         public static string GetUserIp(this HttpContext httpContext)
         {
-#if NET40
+#if NET452
             string userIp = httpContext.Request.UserHostAddress;
 #else
             string userIp = Utils.SafeToString(httpContext.Connection.RemoteIpAddress);

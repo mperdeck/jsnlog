@@ -20,7 +20,7 @@ namespace JSNLog.Infrastructure
             return localTime;
         }
 
-#if NET40
+#if NET452
         // NameValueCollection is unknown in DNX environments
 
         public static Dictionary<string, string> ToDictionary(NameValueCollection nameValueCollection)

@@ -10,7 +10,7 @@ using JSNLog.Exceptions;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
-#if NET40
+#if NET452
 using System.Web.Configuration;
 #endif
 
@@ -40,7 +40,7 @@ namespace JSNLog.Infrastructure
             }
         }
 
-#if NET40
+#if NET452
         public static XmlElement RootElement()
         {
             XmlElement xe = WebConfigurationManager.GetSection(Constants.ConfigRootName) as XmlElement;

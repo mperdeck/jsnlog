@@ -4,7 +4,7 @@ using System.Xml;
 using JSNLog.Exceptions;
 using JSNLog.Infrastructure;
 using JSNLog.LogHandling;
-#if NET40
+#if NET452
 using System.Web;
 #else
 using Microsoft.AspNetCore.Http;
@@ -25,7 +25,7 @@ namespace JSNLog
         /// <returns>
         /// A script tag with the JavaScript to do all configuration.
         /// </returns>
-#if NET40
+#if NET452
         public static string Configure(string requestId = null)
         {
             return HttpContext.Current.Configure(requestId);
@@ -56,7 +56,7 @@ namespace JSNLog
         /// The site can call this method to get the request id for use in server side logging.
         /// </summary>
         /// <returns></returns>
-#if NET40
+#if NET452
         public static string RequestId()
         {
             return HttpContext.Current.RequestId();
@@ -94,7 +94,7 @@ namespace JSNLog
 
         private static JsnlogConfiguration _jsnlogConfiguration = null;
 
-#if NET40
+#if NET452
         private static ILoggingAdapter _logger = new CommonLoggingAdapter();
 #else
         private static ILoggingAdapter _logger = null;
@@ -134,7 +134,7 @@ namespace JSNLog
 
         public static JsnlogConfiguration GetJsnlogConfiguration()
         {
-#if NET40
+#if NET452
             return GetJsnlogConfiguration(() => XmlHelpers.RootElement());
 #else
             return GetJsnlogConfigurationWithoutWebConfig();
@@ -182,7 +182,7 @@ namespace JSNLog
         public static void SetJsnlogConfiguration(
             JsnlogConfiguration jsnlogConfiguration, ILoggingAdapter loggingAdapter = null)
         {
-#if NET40
+#if NET452
             SetJsnlogConfiguration(() => XmlHelpers.RootElement(), jsnlogConfiguration, loggingAdapter);
 #else
             SetJsnlogConfigurationWithoutWebConfig(jsnlogConfiguration, loggingAdapter);

@@ -9,7 +9,7 @@ namespace JSNLog.Infrastructure
     {
         public static string VirtualToAbsolutePath(string virtualPath)
         {
-#if NET40
+#if NET452
             return System.Web.VirtualPathUtility.ToAbsolute(virtualPath);
 #else
             //TODO: virtual path transalation for DNX.

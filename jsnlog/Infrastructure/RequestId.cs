@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-#if NET40
+#if NET452
 using System.Web;
 #else
 using Microsoft.AspNetCore.Http;
@@ -22,7 +22,7 @@ namespace JSNLog.Infrastructure
         /// <returns></returns>
         private static string IISRequestId(HttpContext httpContext)
         {
-#if NET40
+#if NET452
             var provider = (IServiceProvider)HttpContext.Current;
             if (provider != null)
             {
@@ -45,7 +45,7 @@ namespace JSNLog.Infrastructure
 
         private static string GetRequestIdFromContext(HttpContext httpContext)
         {
-#if NET40
+#if NET452
             return (string)(HttpContext.Current.Items[Constants.ContextItemRequestIdName]);
 #else
             return httpContext.TraceIdentifier;
@@ -54,7 +54,7 @@ namespace JSNLog.Infrastructure
 
         private static void SetRequestIdInContext(HttpContext httpContext, string requestId)
         {
-#if NET40
+#if NET452
             HttpContext.Current.Items[Constants.ContextItemRequestIdName] = requestId;
 #else
             httpContext.TraceIdentifier = requestId;
