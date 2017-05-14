@@ -1,14 +1,19 @@
 /* 
- * JSNLog 2.22.1
+ * JSNLog 2.23.0
  * Open source under the MIT License.
  * Copyright 2016 Mattijs Perdeck All rights reserved.
  */
 /// <reference path="Definitions/jsnlog_interfaces.d.ts"/>
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 function JL(loggerName) {
     // If name is empty, return the root logger
     if (!loggerName) {
@@ -71,7 +76,6 @@ function JL(loggerName) {
     }, JL.__);
     return logger;
 }
-var JL;
 (function (JL) {
     // Initialise requestId to empty string. If you don't do this and the user
     // does not set it via setOptions, then the JSNLog-RequestId header will
@@ -459,7 +463,7 @@ var JL;
     var AjaxAppender = (function (_super) {
         __extends(AjaxAppender, _super);
         function AjaxAppender(appenderName) {
-            _super.call(this, appenderName, AjaxAppender.prototype.sendLogItemsAjax);
+            return _super.call(this, appenderName, AjaxAppender.prototype.sendLogItemsAjax) || this;
         }
         AjaxAppender.prototype.setOptions = function (options) {
             copyProperty("url", options, this);
@@ -564,7 +568,7 @@ var JL;
     var ConsoleAppender = (function (_super) {
         __extends(ConsoleAppender, _super);
         function ConsoleAppender(appenderName) {
-            _super.call(this, appenderName, ConsoleAppender.prototype.sendLogItemsConsole);
+            return _super.call(this, appenderName, ConsoleAppender.prototype.sendLogItemsConsole) || this;
         }
         ConsoleAppender.prototype.clog = function (logEntry) {
             console.log(logEntry);
