@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <metadata minClientVersion="2.8.6">
-    <id>JSNLog2</id>   
+    <id>JSNLog</id>   
     <version>2.22.1</version>
     <title>JSNLog - JavaScript Logging Package</title>
     <authors>Matt Perdeck</authors>
@@ -10,7 +10,7 @@
     <iconUrl>http://jsnlog.com/Nuget/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>JavaScript logging package that lets you log exceptions, AJAX timeouts and other client side events in your server side log.</description>
-    <copyright>Copyright 2016</copyright>
+    <copyright>Copyright 2017</copyright>
     <tags>JavaScript logging exceptions ajax log4net nlog elmah serilog</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.5.2">

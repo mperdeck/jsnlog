@@ -11,9 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("jsnlog")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("Mattijs Perdeck")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
-[assembly: System.Reflection.AssemblyDescriptionAttribute("Package Description")]
+[assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright 2017 Mattijs Perdeck")]
+[assembly: System.Reflection.AssemblyDescriptionAttribute("JavaScript logging package that lets you log exceptions, AJAX timeouts and other " +
+    "client side events in your server side log. Supports ASP.NET 4.x (.Net 4.5.2+) a" +
+    "nd ASP.NET CORE (.NETStandard 1.3).")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("jsnlog")]

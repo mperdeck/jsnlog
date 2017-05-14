@@ -1,6 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.3</TargetFrameworks>
+    <Title>JSNLog.AspNetCore - JavaScript Logging Package for ASP.NET CORE</Title>
+    <PackageId>JSNLog.AspNetCore</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Authors>Mattijs Perdeck</Authors>
+    <Description>JavaScript logging package that lets you log exceptions, AJAX timeouts and other client side events in your server side log. Supports ASP.NET 4.x (.Net 4.5.2+) and ASP.NET CORE (.NETStandard 1.3).</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>http://jsnlog.com</PackageProjectUrl>
+    <PackageIconUrl>http://jsnlog.com/Nuget/icon.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/mperdeck?tab=repositories&amp;q=jsnlog&amp;type=&amp;language=</RepositoryUrl>
+    <Copyright>Copyright 2017 Mattijs Perdeck</Copyright>
+    <PackageTags>JavaScript logging exceptions ajax log4net nlog elmah serilog ASP.NET 4.x ASP.NET CORE .NETStandard</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net452'">

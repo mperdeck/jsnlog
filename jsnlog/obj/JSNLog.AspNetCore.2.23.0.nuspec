@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>JSNLog.AspNetCore</id>
+    <version>2.23.0</version>
+    <title>JSNLog.AspNetCore - JavaScript Logging Package for ASP.NET CORE</title>
+    <authors>Mattijs Perdeck</authors>
+    <owners>Mattijs Perdeck</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>http://jsnlog.com/</projectUrl>
+    <iconUrl>http://jsnlog.com/Nuget/icon.png</iconUrl>
+    <description>JavaScript logging package that lets you log exceptions, AJAX timeouts and other client side events in your server side log. Supports ASP.NET 4.x (.Net 4.5.2+) and ASP.NET CORE (.NETStandard 1.3).</description>
+    <copyright>Copyright 2017 Mattijs Perdeck</copyright>
+    <tags>JavaScript logging exceptions ajax log4net nlog elmah serilog ASP.NET 4.x ASP.NET CORE .NETStandard</tags>
+    <repository url="https://github.com/mperdeck?tab=repositories&amp;q=jsnlog&amp;type=&amp;language=" />
+    <dependencies>
+      <group targetFramework=".NETStandard1.3">
+        <dependency id="NETStandard.Library" version="1.6.1" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETFramework4.5.2" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\dev\jsnlog\jsnlog\jsnlog\bin\Release\net452\jsnlog.dll" target="lib\net452\jsnlog.dll" />
+    <file src="C:\dev\jsnlog\jsnlog\jsnlog\bin\Release\netstandard1.3\jsnlog.dll" target="lib\netstandard1.3\jsnlog.dll" />
+  </files>
+</package>
