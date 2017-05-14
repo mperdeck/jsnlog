@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 // Get the compiler to create a strong named assembly, using the key pair in this file.
 // Note that they key file gets checked into Github, as per
 // http://stackoverflow.com/questions/36141302/why-is-it-recommended-to-include-the-private-key-used-for-assembly-signing-in-op
-[assembly: AssemblyKeyFileAttribute("jsnlog.strongname.snk")]
+[assembly: AssemblyKeyFileAttribute("../jsnlog.strongname.snk")]
 
 // Allow project JSNLog.Tests to access the internals of this project. Public key is needed because JSNLog has a strong name.
 [assembly: InternalsVisibleTo("JSNLog.Tests, PublicKey=" +
