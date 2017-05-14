@@ -2,7 +2,7 @@
 <package>
   <metadata minClientVersion="2.8.6">
     <id>JSNLog</id>   
-    <version>2.22.1</version>
+    <version>0.0.0</version>
     <title>JSNLog - JavaScript Logging Package</title>
     <authors>Matt Perdeck</authors>
     <owners>Matt Perdeck</owners>
@@ -10,10 +10,10 @@
     <iconUrl>http://jsnlog.com/Nuget/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>JavaScript logging package that lets you log exceptions, AJAX timeouts and other client side events in your server side log.</description>
-    <copyright>Copyright 2016</copyright>
+    <copyright>Copyright 2017</copyright>
     <tags>JavaScript logging exceptions ajax log4net nlog elmah serilog</tags>
     <dependencies>
-      <group targetFramework=".NETFramework4.0">
+      <group targetFramework=".NETFramework4.5.2">
         <!-- IMPORTANT
                The CommonLogging NuGet package and the JSNLog package have the same dependencies
                and files. This because CommonLogging is purely a convenience package - JSNLog
@@ -50,9 +50,9 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\net40\jsnlog.*"     target="lib\net40\" />
+    <file src="bin\Release\net452\jsnlog.*"     target="lib\net452\" />
 
-    <file src="NuGet\content\Scripts\*.*"   target="content\Scripts" />
+   <file src="NuGet\content\Scripts\*.*"   target="content\Scripts" />
     <file src="NuGet\content\App_Start\*.*" target="content\App_Start" />
     <file src="NuGet\content\*.*"           target="content" />
     <file src="NuGet\readme.txt"            target="" />
