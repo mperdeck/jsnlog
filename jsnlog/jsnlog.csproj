@@ -12,6 +12,9 @@
     <RepositoryUrl>https://github.com/mperdeck?tab=repositories&amp;q=jsnlog&amp;type=&amp;language=</RepositoryUrl>
     <Copyright>Copyright 2017 Mattijs Perdeck</Copyright>
     <PackageTags>JavaScript logging exceptions ajax log4net nlog elmah serilog ASP.NET 4.x ASP.NET CORE .NETStandard</PackageTags>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>jsnlog.strongname.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net452'">
@@ -21,5 +24,16 @@
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
     <DefineConstants>NETSTANDARD</DefineConstants>
   </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Web" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
+    <PackageReference Include="Common.Logging">
+      <Version>3.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Owin">
+      <Version>2.1.0</Version>
+    </PackageReference>
+  </ItemGroup>
 </Project>
 
