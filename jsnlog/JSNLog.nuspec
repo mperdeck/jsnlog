@@ -39,7 +39,7 @@
         <dependency id="Microsoft.Owin" version="2.1.0" />
         
         <!-- Use low minimum version to make installation easier with old code -->
-        <dependency id="Newtonsoft.Json" version="4.0.1" />
+        <dependency id="Newtonsoft.Json" version="9.0.1" />
       </group>
     </dependencies>
   </metadata>
