@@ -1,22 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2D08F091-3626-4123-9806-9E63A2C909D7}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3635C106-9BF7-432B-AF2E-2E050C8677C4}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "JSNLog", "src\JSNLog\JSNLog.xproj", "{DC2F1E35-C7CC-4054-8671-424E801A104E}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "JSNLog.Tests", "src\JSNLog.Tests\JSNLog.Tests.xproj", "{650F9C8C-3496-416B-9E73-29B74B074A45}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSNLog.TestSite", "src\JSNLog.TestSite\JSNLog.TestSite.csproj", "{A1E398F0-A83E-47DE-9932-6F0005D45DF4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSNLog.TestsIntegration", "src\JSNLog.TestsIntegration\JSNLog.TestsIntegration.csproj", "{8A2AB9CF-2057-44A3-B598-01E8F46DECB4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jsnlog", "jsnlog\jsnlog.csproj", "{11B79AEC-E8C7-4E36-BBE9-ED1496336E3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,28 +11,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DC2F1E35-C7CC-4054-8671-424E801A104E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC2F1E35-C7CC-4054-8671-424E801A104E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DC2F1E35-C7CC-4054-8671-424E801A104E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DC2F1E35-C7CC-4054-8671-424E801A104E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{650F9C8C-3496-416B-9E73-29B74B074A45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{650F9C8C-3496-416B-9E73-29B74B074A45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{650F9C8C-3496-416B-9E73-29B74B074A45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{650F9C8C-3496-416B-9E73-29B74B074A45}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1E398F0-A83E-47DE-9932-6F0005D45DF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1E398F0-A83E-47DE-9932-6F0005D45DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1E398F0-A83E-47DE-9932-6F0005D45DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1E398F0-A83E-47DE-9932-6F0005D45DF4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A2AB9CF-2057-44A3-B598-01E8F46DECB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A2AB9CF-2057-44A3-B598-01E8F46DECB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A2AB9CF-2057-44A3-B598-01E8F46DECB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A2AB9CF-2057-44A3-B598-01E8F46DECB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11B79AEC-E8C7-4E36-BBE9-ED1496336E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11B79AEC-E8C7-4E36-BBE9-ED1496336E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11B79AEC-E8C7-4E36-BBE9-ED1496336E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11B79AEC-E8C7-4E36-BBE9-ED1496336E3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{DC2F1E35-C7CC-4054-8671-424E801A104E} = {2D08F091-3626-4123-9806-9E63A2C909D7}
-		{650F9C8C-3496-416B-9E73-29B74B074A45} = {2D08F091-3626-4123-9806-9E63A2C909D7}
 	EndGlobalSection
 EndGlobal
