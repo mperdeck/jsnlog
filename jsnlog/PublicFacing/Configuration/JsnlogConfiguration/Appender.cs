@@ -37,6 +37,7 @@ namespace JSNLog
         [XmlAttribute]
 #endif
         public uint batchSize { get; set; }
+        public uint batchTimeout { get; set; }
 
         public Appender()
         {
@@ -48,6 +49,7 @@ namespace JSNLog
 
             bufferSize = 0;
             batchSize = 1;
+            batchTimeout = 2147483647;
         }
 
         // --------------------------------------------------------
@@ -57,6 +59,7 @@ namespace JSNLog
         protected string FieldStoreInBufferLevel { get { return "storeInBufferLevel"; } }
         protected string FieldBufferSize { get { return "bufferSize"; } }
         protected string FieldBatchSize { get { return "batchSize"; } }
+        protected string FieldBatchTimeout { get { return "batchTimeout"; } }
 
         protected void CreateAppender(StringBuilder sb, Dictionary<string, string> appenderNames, int sequence,
             Func<string, string> virtualToAbsoluteFunc, string jsCreateMethodName, string configurationObjectName)
@@ -132,7 +135,8 @@ namespace JSNLog
             JavaScriptHelpers.AddJsonField(jsonFields, FieldStoreInBufferLevel, storeInBufferLevel, levelValue);
             JavaScriptHelpers.AddJsonField(jsonFields, FieldBufferSize, bufferSize);
             JavaScriptHelpers.AddJsonField(jsonFields, FieldBatchSize, batchSize);
-            
+            JavaScriptHelpers.AddJsonField(jsonFields, FieldBatchTimeout, batchTimeout);
+
             base.AddJsonFields(jsonFields, appenderNames, virtualToAbsoluteFunc);
         }
     }
