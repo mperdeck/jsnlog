@@ -31,11 +31,19 @@ using System.Runtime.InteropServices;
 // http://stackoverflow.com/questions/36141302/why-is-it-recommended-to-include-the-private-key-used-for-assembly-signing-in-op
 [assembly: AssemblyKeyFileAttribute("../jsnlog.strongname.snk")]
 
-// Allow project JSNLog.Tests to access the internals of this project. Public key is needed because JSNLog has a strong name.
+// Allow project JSNLog.Tests to access the internals of this project. 
+// Have to add the public key of JSNLog.Tests (which lives in the JSNLog.Tests solution), 
+// because this JSNLog project is strongly signed.
+//
+// See https://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.internalsvisibletoattribute(v=vs.110).aspx 
+// To get the public key, in Visual Studio command window, run:
+// sn -p jsnlog.tests.strongname.snk public.out
+// sn -tp public.out
+//
 [assembly: InternalsVisibleTo("JSNLog.Tests, PublicKey=" +
-    "002400000480000094000000060200000024000052534131000400000100010015488505fd9c86" +
-    "9dfb9af3ee7d980a24f9a379fbea34c6311b481f77688c74fae162335ae47a8ef800bfd83c1795" +
-    "97ab12c86278065bd9cbc1997863f5bc4a2f03b5a519e0b7097edb5649e7d982b94f7d6c8ef60d" +
-    "35f79aaf9785d1f79d5bc0c529edc38fb99dc88cb7475d32946286b0766b3bc32bc4bd9871768f" +
-    "70ea49ba")]
+    "002400000480000094000000060200000024000052534131000400000100010089dd0d93cfa65f" +
+    "cebdc52181975e43cbe31d26ed803efeaa3ba5df99b602c5ca0dfc5131d14f15f8e57845171632" +
+    "53ffb1f070476dd13062903dda4fa93deb0982bf3e7956da923e94f40ac22b42c356d8c4b9434f" +
+    "a81d2c528afa798d7ff7ff3691a19e270acc184ed7c77a0c74991558be3e06ce8a08e8169d1ba3" +
+    "78d17283")]
 
