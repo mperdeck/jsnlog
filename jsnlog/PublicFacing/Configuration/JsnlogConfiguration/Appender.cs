@@ -37,6 +37,10 @@ namespace JSNLog
         [XmlAttribute]
 #endif
         public uint batchSize { get; set; }
+
+#if SUPPORTSXML
+        [XmlAttribute]
+#endif
         public uint batchTimeout { get; set; }
 
         public Appender()
