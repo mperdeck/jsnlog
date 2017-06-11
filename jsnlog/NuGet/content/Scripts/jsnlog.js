@@ -1,5 +1,5 @@
 /* 
- * JSNLog 2.23.0
+ * JSNLog 2.24.0
  * Open source under the MIT License.
  * Copyright 2016 Mattijs Perdeck All rights reserved.
  */
@@ -356,13 +356,44 @@ function JL(loggerName) {
             this.storeInBufferLevel = -2147483648;
             this.bufferSize = 0; // buffering switch off by default
             this.batchSize = 1;
+            this.batchTimeout = 2147483647;
             // Holds all log items with levels higher than storeInBufferLevel 
             // but lower than level. These items may never be sent.
             this.buffer = [];
             // Holds all items that we do want to send, until we have a full
             // batch (as determined by batchSize).
             this.batchBuffer = [];
+            // Holds the id of the timer implementing the batch timeout.
+            // Can be null.
+            this.batchTimeoutTimer = null;
         }
+        Appender.prototype.clearTimeoutTimer = function () {
+            if (this.batchTimeoutTimer) {
+                clearTimeout(this.batchTimeoutTimer);
+                this.batchTimeoutTimer = null;
+            }
+        };
+        ;
+        Appender.prototype.addLogItemToBuffer = function (logItem) {
+            this.batchBuffer.push(logItem);
+            // If this is the first item in the buffer, set the timer
+            // to ensure it will be sent within the timeout period.
+            // If it is not the first item, leave the timer alone so to not to 
+            // increase the timeout for the first item.
+            //
+            // To determine if this is the first item, look at the timer variable.
+            // Do not look at the buffer lenght, because we also put items in the buffer
+            // via a concat (bypassing this function).
+            var that = this;
+            if (!this.batchTimeoutTimer) {
+                this.batchTimeoutTimer = setTimeout(function () {
+                    // use call to ensure that the this as used inside sendBatch when it runs is the
+                    // same this at this point.
+                    that.sendBatch.call(that);
+                }, this.batchTimeout);
+            }
+        };
+        ;
         Appender.prototype.setOptions = function (options) {
             copyProperty("level", options, this);
             copyProperty("ipRegex", options, this);
@@ -372,6 +403,7 @@ function JL(loggerName) {
             copyProperty("storeInBufferLevel", options, this);
             copyProperty("bufferSize", options, this);
             copyProperty("batchSize", options, this);
+            copyProperty("batchTimeout", options, this);
             if (this.bufferSize < this.buffer.length) {
                 this.buffer.length = this.bufferSize;
             }
@@ -421,7 +453,7 @@ function JL(loggerName) {
             }
             if (levelNbr < this.sendWithBufferLevel) {
                 // Want to send the item, but not the contents of the buffer
-                this.batchBuffer.push(logItem);
+                this.addLogItemToBuffer(logItem);
             }
             else {
                 // Want to send both the item and the contents of the buffer.
@@ -430,15 +462,20 @@ function JL(loggerName) {
                     this.batchBuffer = this.batchBuffer.concat(this.buffer);
                     this.buffer.length = 0;
                 }
-                this.batchBuffer.push(logItem);
+                this.addLogItemToBuffer(logItem);
             }
             if (this.batchBuffer.length >= this.batchSize) {
                 this.sendBatch();
                 return;
             }
         };
+        ;
         // Processes the batch buffer
+        //
+        // Make this public, so it can be called from outside the library,
+        // when the page is unloaded.
         Appender.prototype.sendBatch = function () {
+            this.clearTimeoutTimer();
             if (this.batchBuffer.length == 0) {
                 return;
             }
