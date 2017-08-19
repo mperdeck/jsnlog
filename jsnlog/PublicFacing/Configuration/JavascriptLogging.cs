@@ -182,7 +182,8 @@ namespace JSNLog
         public static void SetJsnlogConfiguration(
             JsnlogConfiguration jsnlogConfiguration, ILoggingAdapter loggingAdapter = null)
         {
-#if NET452
+#if !AspNetCore
+            // When using ASP Net CORE, we never use the web.config file
             SetJsnlogConfiguration(() => XmlHelpers.RootElement(), jsnlogConfiguration, loggingAdapter);
 #else
             SetJsnlogConfigurationWithoutWebConfig(jsnlogConfiguration, loggingAdapter);
