@@ -34,7 +34,11 @@ namespace JSNLog
         {
             output.TagName = ""; // Remove the jl-javascript-logger-definitions tag completely
 
+#if NET452
+            System.Web.HttpContext httpContext = _httpContextAccessor.HttpContext;
+#else
             HttpContext httpContext = _httpContextAccessor.HttpContext;
+#endif
             string JSCode = httpContext.Configure(RequestId);
 
             output.Content.SetHtmlContent(JSCode);
