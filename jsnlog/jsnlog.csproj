@@ -24,8 +24,8 @@
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
     <DefineConstants>NETSTANDARD</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(BuildFor)' == 'Core'">
-    <DefineConstants>AspNetCore</DefineConstants>
+  <PropertyGroup Condition="('$(BuildFor)' == 'Core') Or ('$(TargetFramework)' == 'netstandard1.6')">
+    <DefineConstants>RunningAspNetCore</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="1.1.2" />

@@ -1,4 +1,4 @@
-﻿#if !AspNetCore
+﻿#if !RunningAspNetCore
 
 using System;
 using System.Collections.Generic;
