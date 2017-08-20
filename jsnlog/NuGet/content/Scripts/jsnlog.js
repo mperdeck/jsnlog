@@ -1,7 +1,7 @@
 /* 
- * JSNLog 2.24.0
+ * JSNLog 2.24.1
  * Open source under the MIT License.
- * Copyright 2016 Mattijs Perdeck All rights reserved.
+ * Copyright 2012-2017 Mattijs Perdeck All rights reserved.
  */
 /// <reference path="Definitions/jsnlog_interfaces.d.ts"/>
 var __extends = (this && this.__extends) || (function () {

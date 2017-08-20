@@ -12,7 +12,7 @@ namespace JSNLog.Infrastructure
 #if NET452
             return System.Web.VirtualPathUtility.ToAbsolute(virtualPath);
 #else
-            //TODO: virtual path transalation for DNX.
+            //TODO: virtual path translation for DNX.
             // Probably get an instance of IApplicationEnvironment and then get the info from there.
             // If the application is in a virtual directory,
             // ~/myfile.jpg may have absolute url /myapp/myfile.jpg.

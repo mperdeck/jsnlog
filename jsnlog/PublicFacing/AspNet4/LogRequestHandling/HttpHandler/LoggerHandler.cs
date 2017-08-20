@@ -1,4 +1,4 @@
-﻿#if NET452
+﻿#if !RunningAspNetCore
 
 using System;
 using System.Collections.Generic;
