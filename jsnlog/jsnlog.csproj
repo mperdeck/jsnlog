@@ -49,5 +49,11 @@
       <Version>9.0.1</Version>
     </PackageReference>
   </ItemGroup>
+  <Target Name="LogProperties" BeforeTargets="PrepareForBuild">
+	<Message Text="----------------" Importance="high" />
+	<Message Text="TargetFramework = $(TargetFramework)" Importance="high" />
+	<Message Text="BuildFor = $(BuildFor)" Importance="high" />
+	<Message Text="----------------" Importance="high" />
+  </Target>
 </Project>
 
