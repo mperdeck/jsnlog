@@ -9,7 +9,7 @@
     <projectUrl>http://jsnlog.com</projectUrl>
     <iconUrl>http://jsnlog.com/Nuget/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Equal to JSNLog package, except that this does not modify your web.config, and does not install the JavaScript library and the MVC route for logging requests. For use in class libraries instead of web sites. If in doubt, just the JSNLog package.</description>
+    <description>Equal to JSNLog package, except that this does not modify your web.config, and does not install the JavaScript library and the MVC route for logging requests. For use in class libraries instead of web sites. If in doubt, just use the JSNLog package.</description>
     <copyright>Copyright 2012-2017</copyright>
     <tags>JavaScript logging exceptions ajax log4net nlog elmah serilog</tags>
     <dependencies>
