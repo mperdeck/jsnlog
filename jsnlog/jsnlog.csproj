@@ -1,9 +1,61 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
+
+  <Target Name="PostcompileScript" AfterTargets="Build" Condition=" '$(IsCrossTargetingBuild)' != 'true' ">
+    <Message Importance="High" Text="This is a --------one time only!!!--------- test" />
+  </Target>
+
+  
+  
+  
+  
+<!-- must upgrade vs to vry latest version. See black on yellow flag in vs. -->
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Message Text="-----copying--net452;------- $(OutputPath)" Importance="high" />
+
+    <ItemGroup>
+      <PackageFile Include="$(OutputPath)$(PackageId).*.nupkg" />
+    </ItemGroup>
+
+    <!-- 
+    Cannot use Move here, otherwise you get error saying the file is in use by another process 
+    Have to use wildcard * here. If you use the exact version, you will get a file not found error when one or more parts
+    of the version start with 0. In that case, the nuget pack drops the leading 0 (!), so the actual name of the .nupkg file
+    doesn't match the file name you would generate here.
+    -->
+    <Copy SourceFiles="%(PackageFile.Identity)" DestinationFolder="g:\temp\packageshare\" />
+    <!--   <Copy SourceFiles="%(PackageFile.Identity)" DestinationFolder="g:\temp\packageshare\" /> -->
+    <!--    <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="g:\temp\packageshare\" />   -->
+  </Target>
+
+  
+  
+  
+  
+<!--
+<TargetFrameworks>net452;netstandard1.6</TargetFrameworks>
+    <IsPackable>true</IsPackable>
+
+-->
+
   <PropertyGroup>
+    <GenerateNugetPackage Condition=" '$(GenerateNugetPackage)' == '' ">true</GenerateNugetPackage>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild Condition=" ('$(Configuration)' == 'Release') And ('$(GenerateNugetPackage)' == 'true') ">true</GeneratePackageOnBuild>
+    <MajorPackageVersion>5</MajorPackageVersion>
+    <PackageVersion>$(MajorPackageVersion).$([System.DateTime]::Now.ToString(yyMMdd)).$([System.DateTime]::Now.ToString(hhmmss))</PackageVersion>
+    
+    
+    
+
+
+
     <TargetFrameworks>net452;netstandard1.6</TargetFrameworks>
     <Title>JSNLog.AspNetCore - JavaScript Logging Package for ASP.NET CORE</Title>
     <PackageId>JSNLog.AspNetCore</PackageId>
-    <PackageVersion>0.0.0</PackageVersion>
+    
+    
+    
     <Authors>Mattijs Perdeck</Authors>
     <Description>JavaScript logging package that lets you log exceptions, AJAX timeouts and other client side events in your server side log. Supports ASP.NET 4.x (.Net 4.5.2+) and ASP.NET CORE (.NETStandard 1.6).</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
