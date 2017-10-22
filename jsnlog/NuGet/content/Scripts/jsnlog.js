@@ -1,5 +1,5 @@
 /* 
- * JSNLog 2.24.1
+ * JSNLog 2.24.2
  * Open source under the MIT License.
  * Copyright 2012-2017 Mattijs Perdeck All rights reserved.
  */
@@ -869,7 +869,5 @@ if (typeof window !== 'undefined' && !window.onunhandledrejection) {
             "msg": "unhandledrejection",
             "errorMsg": event.reason ? event.reason.message : null
         }, event.reason);
-        // Tell browser to run its own error handler as well   
-        return false;
     };
 }
