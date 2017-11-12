@@ -1,9 +1,8 @@
 /* 
- * JSNLog 2.24.2
+ * JSNLog 2.24.3
  * Open source under the MIT License.
  * Copyright 2012-2017 Mattijs Perdeck All rights reserved.
  */
-/// <reference path="Definitions/jsnlog_interfaces.d.ts"/>
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -774,12 +773,9 @@ function JL(loggerName) {
                     // Pass message to all appenders
                     // Note that these appenders could be Winston transports
                     // https://github.com/flatiron/winston
-                    //
-                    // These transports do not take the logger name as a parameter.
-                    // So add it to the meta information, so even Winston transports will
-                    // store this info.
                     compositeMessage.meta = compositeMessage.meta || {};
-                    compositeMessage.meta.loggerName = this.loggerName;
+                    // Note that if the user is logging an object, compositeMessage.meta will hold a reference to that object.
+                    // Do not add fields to compositeMessage.meta, otherwise the user's object will get that field out of the blue.
                     i = this.appenders.length - 1;
                     while (i >= 0) {
                         this.appenders[i].log(levelToString(level), compositeMessage.msg, compositeMessage.meta, function () { }, level, compositeMessage.finalString, this.loggerName);
