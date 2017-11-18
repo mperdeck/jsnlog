@@ -41,7 +41,17 @@ namespace JSNLog
 #if SUPPORTSXML
         [XmlAttribute]
 #endif
+        public uint maxBatchSize { get; set; }
+
+#if SUPPORTSXML
+        [XmlAttribute]
+#endif
         public uint batchTimeout { get; set; }
+
+#if SUPPORTSXML
+        [XmlAttribute]
+#endif
+        public uint sendTimeout { get; set; }
 
         public Appender()
         {
@@ -53,7 +63,9 @@ namespace JSNLog
 
             bufferSize = 0;
             batchSize = 1;
+            maxBatchSize = 20;
             batchTimeout = 2147483647;
+            sendTimeout = 5000;
         }
 
         // --------------------------------------------------------
@@ -63,7 +75,9 @@ namespace JSNLog
         protected string FieldStoreInBufferLevel { get { return "storeInBufferLevel"; } }
         protected string FieldBufferSize { get { return "bufferSize"; } }
         protected string FieldBatchSize { get { return "batchSize"; } }
+        protected string FieldMaxBatchSize { get { return "maxBatchSize"; } }
         protected string FieldBatchTimeout { get { return "batchTimeout"; } }
+        protected string FieldSendTimeout { get { return "sendTimeout"; } }
 
         protected void CreateAppender(StringBuilder sb, Dictionary<string, string> appenderNames, int sequence,
             Func<string, string> virtualToAbsoluteFunc, string jsCreateMethodName, string configurationObjectName)
@@ -139,7 +153,9 @@ namespace JSNLog
             JavaScriptHelpers.AddJsonField(jsonFields, FieldStoreInBufferLevel, storeInBufferLevel, levelValue);
             JavaScriptHelpers.AddJsonField(jsonFields, FieldBufferSize, bufferSize);
             JavaScriptHelpers.AddJsonField(jsonFields, FieldBatchSize, batchSize);
+            JavaScriptHelpers.AddJsonField(jsonFields, FieldMaxBatchSize, maxBatchSize);
             JavaScriptHelpers.AddJsonField(jsonFields, FieldBatchTimeout, batchTimeout);
+            JavaScriptHelpers.AddJsonField(jsonFields, FieldSendTimeout, sendTimeout);
 
             base.AddJsonFields(jsonFields, appenderNames, virtualToAbsoluteFunc);
         }
