@@ -22,6 +22,7 @@ namespace JSNLog.LogHandling
             public string n {get;set;}
             public string l {get;set;}
             public string t {get;set;}
+            public string u { get; set; }
         }
 
         private class LogRequestData
@@ -184,6 +185,7 @@ namespace JSNLog.LogHandling
             string message = logItem.m;
             string logger = logItem.n;
             string level = logItem.l; // note that level as sent by the javascript is a number
+            string entryId = logItem.u;
 
             DateTime utcDate = DateTime.UtcNow;
             string timestampMs = logItem.t;
@@ -206,7 +208,7 @@ namespace JSNLog.LogHandling
 
             // ----------------
 
-            var logRequest = new LogRequest(message, logger, level, utcDate, jsonmessage, logRequestBase);
+            var logRequest = new LogRequest(message, logger, level, utcDate, entryId, jsonmessage, logRequestBase);
             var loggingEventArgs = new LoggingEventArgs(logRequest) 
             {
                 Cancel = false,
@@ -225,6 +227,7 @@ namespace JSNLog.LogHandling
 
             loggingEventArgs.FinalMessage = messageFormat
                 .Replace("%message", message)
+                .Replace("%entryId", entryId)
                 .Replace("%jsonmessage", jsonmessage)
                 .Replace("%utcDateServer", serverSideTimeUtc.ToString(dateFormat))
                 .Replace("%utcDate", utcDate.ToString(dateFormat))
