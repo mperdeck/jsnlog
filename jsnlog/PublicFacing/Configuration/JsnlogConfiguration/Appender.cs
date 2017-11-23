@@ -107,6 +107,12 @@ namespace JSNLog
                 throw new MissingAttributeException(configurationObjectName, FieldName);
             }
 
+            if (maxBatchSize < batchSize)
+            {
+                throw new GeneralAppenderException(name,
+                    string.Format("maxBatchSize ({0}) is smaller than batchSize ({1})", maxBatchSize, batchSize));
+            }
+
             // Ensure that if any of the buffer specific attributes are provided, they are all provided, and that they make sense.
 
             bool levelGiven = !string.IsNullOrEmpty(level);
