@@ -22,7 +22,7 @@ namespace JSNLog
         public override string ToString()
         {
             return string.Format(
-                "FinalLogger: {0}, FinalLevel: {1}, FinalMessage: {2}, ServerSideMessageFormat: {3}, LogRequest: {{{5}}}",
+                "FinalLogger: {0}, FinalLevel: {1}, FinalMessage: {2}, ServerSideMessageFormat: {3}, LogRequest: {{{4}}}",
                 FinalLogger, FinalLevel, FinalMessage, ServerSideMessageFormat, LogRequest);
         }
     }
