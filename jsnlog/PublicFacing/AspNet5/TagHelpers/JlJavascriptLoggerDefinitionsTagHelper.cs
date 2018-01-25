@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace JSNLog
@@ -18,12 +20,10 @@ namespace JSNLog
         // Pascal case gets translated into lower-kebab-case.
         public string RequestId { get; set; }
 
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        // See https://www.jerriepelser.com/blog/accessing-request-object-inside-tag-helper-aspnet-core/
 
-        public JlJavascriptLoggerDefinitionsTagHelper(IHttpContextAccessor httpContextAccessor)
-        {
-            _httpContextAccessor = httpContextAccessor;
-        }
+        [ViewContext]
+        public ViewContext ViewContext { get; set; }
 
         public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
@@ -34,7 +34,7 @@ namespace JSNLog
         {
             output.TagName = ""; // Remove the jl-javascript-logger-definitions tag completely
 
-            HttpContext httpContext = _httpContextAccessor.HttpContext;
+            HttpContext httpContext = ViewContext.HttpContext;
             string JSCode = httpContext.Configure(RequestId);
 
             output.Content.SetHtmlContent(JSCode);
