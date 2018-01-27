@@ -49,7 +49,7 @@ namespace JSNLog
                 {
                     try
                     {
-                        _logger.LogInformation(null, e, "JSNLog - Exception while processing a log request", null);
+                        _logger.LogInformation($"JSNLog: Exception while processing log request -  {e}");
                     }
                     catch
                     {
