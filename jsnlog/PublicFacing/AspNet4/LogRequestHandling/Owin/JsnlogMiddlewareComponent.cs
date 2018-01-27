@@ -37,7 +37,16 @@ namespace JSNLog
 
             if (LoggingUrlHelpers.IsLoggingUrl(context.Request.Uri.OriginalString))
             {
-                ProcessRequest(context);
+                try
+                {
+                    ProcessRequest(context);
+                }
+                catch
+                {
+                    // An exception was thrown while processing a log request.
+                    // Just eat it here, seeing there doesn't seem to be an easy and reliable way
+                    // to log the exception.
+                }
                 return;
             }
 

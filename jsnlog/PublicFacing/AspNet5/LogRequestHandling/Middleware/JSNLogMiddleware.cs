@@ -11,6 +11,7 @@ using JSNLog.Infrastructure.AspNet5;
 using Microsoft.Extensions.Primitives;
 using JSNLog.Infrastructure;
 using JSNLog.LogHandling;
+using Microsoft.Extensions.Logging;
 
 // Be sure to leave the namespace at JSNLog.
 namespace JSNLog
@@ -22,20 +23,39 @@ namespace JSNLog
     public class JSNLogMiddleware
     {
         private readonly RequestDelegate next;
+        private readonly ILogger _logger;
 
-        public JSNLogMiddleware(RequestDelegate next)
+        public JSNLogMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
         {
             this.next = next;
+            _logger = loggerFactory.CreateLogger<JSNLogMiddleware>();
         }
 
         public async Task Invoke(HttpContext context)
         {
             // If this is a logging request (based on its url), do the logging and don't pass on the request
             // to the rest of the pipeline.
+
+            // If there is an exception whilst processing the log request (for example when the connection with the
+            // Internet disappears), try to log that exception. If that goes wrong too, fail silently.
             string url = context.Request.GetDisplayUrl();
             if (LoggingUrlHelpers.IsLoggingUrl(url))
             {
-                ProcessRequest(context);
+                try
+                {
+                    ProcessRequest(context);
+                }
+                catch (Exception e)
+                {
+                    try
+                    {
+                        _logger.LogInformation(null, e, "JSNLog - Exception while processing a log request", null);
+                    }
+                    catch
+                    {
+                    }
+                }
+
                 return;
             }
 
