@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.6</TargetFrameworks>
+    <TargetFrameworks>net452;netstandard2.0</TargetFrameworks>
     <Title>JSNLog.AspNetCore - JavaScript Logging Package for ASP.NET CORE</Title>
     <PackageId>JSNLog.AspNetCore</PackageId>
     <PackageVersion>0.0.0</PackageVersion>
     <Authors>Mattijs Perdeck</Authors>
-    <Description>JavaScript logging package that lets you log exceptions, AJAX timeouts and other client side events in your server side log. Supports ASP.NET 4.x (.Net 4.5.2+) and ASP.NET CORE (.NETStandard 1.6).</Description>
+    <Description>JavaScript logging package that lets you log exceptions, AJAX timeouts and other client side events in your server side log. Supports ASP.NET 4.x (.Net 4.5.2+) and ASP.NET CORE (.NETStandard 2.0+).</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>http://jsnlog.com</PackageProjectUrl>
     <PackageIconUrl>http://jsnlog.com/Nuget/icon.png</PackageIconUrl>
@@ -21,10 +21,10 @@
     <DefineConstants>NET452</DefineConstants>
     <DefineConstants>SUPPORTSXML</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <DefineConstants>NETSTANDARD</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition="('$(BuildFor)' == 'Core') Or ('$(TargetFramework)' == 'netstandard1.6')">
+  <PropertyGroup Condition="('$(BuildFor)' == 'Core') Or ('$(TargetFramework)' == 'netstandard2.0')">
     <DefineConstants>RunningAspNetCore</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
