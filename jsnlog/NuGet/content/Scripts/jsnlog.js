@@ -1,5 +1,5 @@
 /* 
- * JSNLog 2.25.1
+ * JSNLog 2.26.0
  * Open source under the MIT License.
  * Copyright 2012-2017 Mattijs Perdeck All rights reserved.
  */
@@ -244,7 +244,9 @@ function JL(loggerName) {
                     else {
                         finalString = JSON.stringify(actualLogObject);
                     }
-                    return new StringifiedLogObject(null, actualLogObject, finalString);
+                    // Set the msg field to "" instead of null. Some Winston transports
+                    // assume that the msg field is not null.
+                    return new StringifiedLogObject("", actualLogObject, finalString);
                 }
             default:
                 return new StringifiedLogObject("unknown", null, "unknown");
@@ -661,7 +663,9 @@ function JL(loggerName) {
                     // it will set xhr.readyState == 4 and xhr.status != 200 (0 if request could not be sent) immediately.
                     // However, Edge and IE will not change the readyState at all if the internet goes away while waiting
                     // for a response.
-                    if ((that.xhr.readyState == 4) && (that.xhr.status == 200)) {
+                    // Some servers will return a 204 (success, no content) when the JSNLog endpoint
+                    // returns the empty response. So check on any code in the 2.. range, not just 200.
+                    if ((that.xhr.readyState == 4) && (that.xhr.status >= 200 && that.xhr.status < 300)) {
                         successCallback();
                     }
                 };
