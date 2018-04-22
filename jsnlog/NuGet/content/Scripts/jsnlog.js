@@ -1,5 +1,5 @@
 /* 
- * JSNLog 2.26.1
+ * JSNLog 2.26.2
  * Open source under the MIT License.
  * Copyright 2012-2017 Mattijs Perdeck All rights reserved.
  */
@@ -437,7 +437,7 @@ function JL(loggerName) {
             // increase the timeout for the first item.
             //
             // To determine if this is the first item, look at the timer variable.
-            // Do not look at the buffer lenght, because we also put items in the buffer
+            // Do not look at the buffer length, because we also put items in the buffer
             // via a concat (bypassing this function).
             //
             // The setTimer method only sets the timer if it is not already running.
@@ -586,7 +586,7 @@ function JL(loggerName) {
                 that.batchBuffer.splice(0, that.nbrLogItemsBeingSent);
                 // If items had to be skipped, add a WARN message
                 if (that.nbrLogItemsSkipped > 0) {
-                    that.batchBuffer.push(newLogItem(getWarnLevel(), "Lost " + that.nbrLogItemsSkipped + " messages while connection with the server was down. Reduce lost messages by increasing the ajaxAppender option maxBatchSize.", that.appenderName));
+                    that.batchBuffer.push(newLogItem(getWarnLevel(), "Lost " + that.nbrLogItemsSkipped + " messages. Either connection with the server was down or logging was disabled via the enabled option. Reduce lost messages by increasing the ajaxAppender option maxBatchSize.", that.appenderName));
                     that.nbrLogItemsSkipped = 0;
                 }
                 that.onSendingEnded.call(that);
@@ -633,6 +633,14 @@ function JL(loggerName) {
             // is only called when it tries to log something, so the requestId has to be 
             // determined right at the start of request processing.
             try {
+                // Do not send logs, if JL.enabled is set to false.
+                //
+                // Do not call successCallback here. After each timeout, jsnlog will retry sending the message.
+                // If jsnlog gets re-enabled, it will then log the number of messages logged.
+                // If it doesn't get re-enabled, amount of cpu cycles wasted is minimal.
+                if (!allow(this)) {
+                    return;
+                }
                 // If a request is in progress, abort it.
                 // Otherwise, it may call the success callback, which will be very confusing.
                 // It may also stop the inflight request from resulting in a log at the server.
@@ -740,6 +748,14 @@ function JL(loggerName) {
         };
         ConsoleAppender.prototype.sendLogItemsConsole = function (logItems, successCallback) {
             try {
+                // Do not send logs, if JL.enabled is set to false
+                //
+                // Do not call successCallback here. After each timeout, jsnlog will retry sending the message.
+                // If jsnlog gets re-enabled, it will then log the number of messages logged.
+                // If it doesn't get re-enabled, amount of cpu cycles wasted is minimal.
+                if (!allow(this)) {
+                    return;
+                }
                 if (!JL._console) {
                     return;
                 }
@@ -918,6 +934,9 @@ function JL(loggerName) {
     });
 })(JL || (JL = {}));
 if (typeof exports !== 'undefined') {
+    // Allows SystemJs to import jsnlog.js. See
+    // https://github.com/mperdeck/jsnlog.js/issues/56
+    exports.__esModule = true;
     exports.JL = JL;
 }
 // Support AMD module format
