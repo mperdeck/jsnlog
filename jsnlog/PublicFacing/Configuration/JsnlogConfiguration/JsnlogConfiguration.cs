@@ -112,5 +112,33 @@ namespace JSNLog
                 throw new ConfigurationException(displayName, e);
             }
         }
+
+        public void Validate()
+        {
+            var appenders = new List<Appender>();
+
+            if (ajaxAppenders != null)
+            {
+                appenders.AddRange(ajaxAppenders);
+            }
+
+            if (consoleAppenders != null)
+            {
+                appenders.AddRange(consoleAppenders);
+            }
+
+            if (appenders.Any(a=>string.IsNullOrWhiteSpace(a.name)))
+            {
+                throw new GeneralAppenderException(@"""""", "Found an appender that does not have a name, or that has an empty name");
+            }
+
+            var appendersNames = appenders.Select(a => a.name);
+
+            string duplicateName = appendersNames.GroupBy(a => a).Where(g => g.Skip(1).Any()).SelectMany(a => a).FirstOrDefault();
+            if (duplicateName != null)
+            {
+                throw new GeneralAppenderException(duplicateName, "There are multiple appenders with this name. However, appender names must be unique.");
+            }
+        }
     }
 }

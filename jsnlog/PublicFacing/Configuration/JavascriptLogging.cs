@@ -104,7 +104,15 @@ namespace JSNLog
         internal static JsnlogConfiguration GetJsnlogConfigurationWithoutWebConfig()
         {
             // If there is no configuration, return the default configuration
-            return _jsnlogConfiguration ?? new JsnlogConfiguration();
+
+            if (_jsnlogConfiguration == null)
+            {
+                return new JsnlogConfiguration();
+            }
+
+            _jsnlogConfiguration.Validate();
+
+            return _jsnlogConfiguration;
         }
 
         // All unit tests run under DOTNETCLI
