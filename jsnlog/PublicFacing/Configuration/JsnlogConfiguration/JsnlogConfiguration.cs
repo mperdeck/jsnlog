@@ -129,7 +129,7 @@ namespace JSNLog
 
             if (appenders.Any(a=>string.IsNullOrWhiteSpace(a.name)))
             {
-                throw new GeneralAppenderException(@"""""", "Found an appender that does not have a name, or that has an empty name");
+                throw new GeneralAppenderException(@"""""", "Appenders have to have a name, and it must not be empty.");
             }
 
             var appendersNames = appenders.Select(a => a.name);
