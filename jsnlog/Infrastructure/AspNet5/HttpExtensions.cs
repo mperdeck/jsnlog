@@ -25,7 +25,7 @@ namespace JSNLog.Infrastructure.AspNet5
             var queryString = request.QueryString.Value;
 
             // PERF: Calculate string length to allocate correct buffer size for StringBuilder.
-            var length = request.Scheme.Length + SchemeDelimiter.Length + host.Length
+            var length = request.Scheme.Length + SchemeDelimiter.Length + (host?.Length ?? 0)
                 + pathBase.Length + path.Length + queryString.Length;
 
             return new StringBuilder(length)
