@@ -1,5 +1,3 @@
-#if RunningAspNetCore
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -72,7 +70,7 @@ namespace JSNLog
             var logRequestBase = new LogRequestBase(
                 userAgent: headers.SafeGet("User-Agent"),
                 userHostAddress: context.Wrapper().GetUserIp(),
-                requestId: context.GetLogRequestId(),
+                requestId: context.Wrapper().GetLogRequestId(),
                 url: (urlReferrer ?? url).ToString(),
                 queryParameters: ToDictionary(context.Request.Query),
                 cookies: ToDictionary(context.Request.Cookies),
@@ -149,5 +147,3 @@ namespace JSNLog
         
     }
 }
-
-#endif

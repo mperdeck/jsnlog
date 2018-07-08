@@ -4,17 +4,16 @@ using System.Xml;
 using JSNLog.Exceptions;
 using JSNLog.Infrastructure;
 using JSNLog.LogHandling;
-#if !RunningAspNetCore
+#if NETFRAMEWORK
 using System.Web;
-#else
-using Microsoft.AspNetCore.Http;
 #endif
+using Microsoft.AspNetCore.Http;
 
 namespace JSNLog
 {
     public static class JavascriptLogging
     {
-#if !RunningAspNetCore
+#if NETFRAMEWORK
         /// <summary>
         /// Call this method for every request to generate a script tag with JavaScript
         /// that configures all loggers and appenders, based on the jsnlog element in the web.config.
@@ -28,7 +27,7 @@ namespace JSNLog
         /// </returns>
         public static string Configure(string requestId = null)
         {
-            return HttpContext.Current.Configure(requestId);
+            return System.Web.HttpContext.Current.Configure(requestId);
         }
 #endif
 
@@ -56,27 +55,16 @@ namespace JSNLog
         /// The site can call this method to get the request id for use in server side logging.
         /// </summary>
         /// <returns></returns>
-#if !RunningAspNetCore
+#if NETFRAMEWORK
         public static string RequestId()
         {
-            return HttpContext.Current.RequestId();
+            return System.Web.HttpContext.Current.Wrapper().RequestId();
         }
 #endif
 
-        public static string RequestId(this HttpContext httpContext)
+        public static string RequestId(this Microsoft.AspNetCore.Http.HttpContext httpContext)
         {
-            string requestId = httpContext.GetLogRequestId();
-
-            // If requestId is empty string, regard that as a valid requestId.
-            // jsnlog.js will send such request ids when the request id has not been
-            // set. In that case, you don't want to generate a new request id for
-            // a log request, because that would be confusing.
-            if (requestId == null)
-            {
-                requestId = httpContext.GetRequestId();
-            }
-
-            return requestId;
+            return httpContext.Wrapper().RequestId();
         }
 
         // Definitions for the OnLogging event. Search for OnLogging to see how it is used.
@@ -94,7 +82,10 @@ namespace JSNLog
 
         private static JsnlogConfiguration _jsnlogConfiguration = null;
 
-#if !RunningAspNetCore
+#if NETFRAMEWORK
+        // If targeting Net Framework whilst running in a Core web site, this will at first be 
+        // wrongly set to the CommonLogging adapter. But it then gets overwritten by 
+        // SetJsnlogConfiguration when that method is called by UseJsnlog.
         private static ILoggingAdapter _logger = new CommonLoggingAdapter();
 #else
         private static ILoggingAdapter _logger = null;
@@ -142,8 +133,9 @@ namespace JSNLog
 
         public static JsnlogConfiguration GetJsnlogConfiguration()
         {
-#if !RunningAspNetCore
-            // Never use web.config in Asp Net Core
+#if NETFRAMEWORK
+            // When using ASP Net CORE with a Net Framework target (such as net47), 
+            // assume XmlHelpers.RootElement() will always be null.
             return GetJsnlogConfiguration(() => XmlHelpers.RootElement());
 #else
             return GetJsnlogConfigurationWithoutWebConfig();
@@ -191,8 +183,9 @@ namespace JSNLog
         public static void SetJsnlogConfiguration(
             JsnlogConfiguration jsnlogConfiguration, ILoggingAdapter loggingAdapter = null)
         {
-#if !RunningAspNetCore
-            // When using ASP Net CORE, we never use the web.config file
+#if NETFRAMEWORK
+            // When using ASP Net CORE with a Net Framework target (such as net47), 
+            // assume XmlHelpers.RootElement() will always be null.
             SetJsnlogConfiguration(() => XmlHelpers.RootElement(), jsnlogConfiguration, loggingAdapter);
 #else
             SetJsnlogConfigurationWithoutWebConfig(jsnlogConfiguration, loggingAdapter);
