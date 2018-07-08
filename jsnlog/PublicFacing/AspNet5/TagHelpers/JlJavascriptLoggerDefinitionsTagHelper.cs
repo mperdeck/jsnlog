@@ -1,5 +1,3 @@
-#if RunningAspNetCore
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,5 +41,3 @@ namespace JSNLog
         }
     }
 }
-
-#endif

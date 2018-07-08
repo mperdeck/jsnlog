@@ -1,4 +1,3 @@
-#if RunningAspNetCore
 // AspNetCore is set in the .csproj file, based on an MSBuild property set in the build script
 
 using System;
@@ -39,5 +38,3 @@ namespace JSNLog.Infrastructure.AspNet5
         }
     }
 }
-
-#endif
