@@ -29,18 +29,31 @@ namespace JSNLog
         {
             return System.Web.HttpContext.Current.Configure(requestId);
         }
+
+        public static string Configure(this System.Web.HttpContext httpContext, string requestId = null)
+        {
+            return Configure(
+                httpContext.Wrapper().GetUserIp(),
+                string.IsNullOrEmpty(requestId) ? httpContext.Wrapper().GetRequestId() : requestId);
+        }
 #endif
 
-        public static string Configure(this HttpContext httpContext, string requestId = null)
+        public static string Configure(this Microsoft.AspNetCore.Http.HttpContext httpContext, string requestId = null)
+        {
+            return Configure(
+                httpContext.Wrapper().GetUserIp(),
+                string.IsNullOrEmpty(requestId) ? httpContext.Wrapper().GetRequestId() : requestId);
+        }
+
+        public static string Configure(string userIp, string requestId = null)
         {
             StringBuilder sb = new StringBuilder();
 
-            string userIp = httpContext.Wrapper().GetUserIp();
             var configProcessor = new ConfigProcessor();
 
             // If someone passes in a null requestId via a ViewBag, then it may be converted to empty string 
             configProcessor.ProcessRoot(
-                string.IsNullOrEmpty(requestId) ? httpContext.GetRequestId() : requestId, 
+                requestId,
                 sb, userIp);
 
             return sb.ToString();
