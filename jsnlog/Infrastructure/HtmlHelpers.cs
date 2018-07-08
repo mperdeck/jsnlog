@@ -7,7 +7,7 @@ namespace JSNLog.Infrastructure
     {
         public static string JavaScriptStringEncode(string value, bool addDoubleQuotes)
         {
-#if NET452
+#if NETFRAMEWORK
             return System.Web.HttpUtility.JavaScriptStringEncode(value, addDoubleQuotes);
 #else
             // copied from https://github.com/mono/mono/blob/master/mcs/class/System.Web/System.Web/HttpUtility.cs

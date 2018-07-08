@@ -1,5 +1,5 @@
 ﻿// All unit tests run under dotnet cli
-#if SUPPORTSXML
+#if NETFRAMEWORK
 
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using JSNLog.Exceptions;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
-#if NET452
+#if NETFRAMEWORK
 using System.Web.Configuration;
 #endif
 
@@ -40,7 +40,7 @@ namespace JSNLog.Infrastructure
             }
         }
 
-#if NET452
+#if NETFRAMEWORK
         public static XmlElement RootElement()
         {
             XmlElement xe = WebConfigurationManager.GetSection(Constants.ConfigRootName) as XmlElement;

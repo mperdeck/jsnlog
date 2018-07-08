@@ -12,7 +12,7 @@ namespace JSNLog
 {
     public class AjaxAppender : Appender, ICanCreateJsonFields, ICanCreateElement
     {
-#if SUPPORTSXML
+#if NETFRAMEWORK
         [XmlAttribute]
 #endif
         public string url { get; set; }

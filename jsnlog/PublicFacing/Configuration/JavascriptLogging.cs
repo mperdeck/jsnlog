@@ -116,7 +116,7 @@ namespace JSNLog
         }
 
         // All unit tests run under DOTNETCLI
-#if SUPPORTSXML
+#if NETFRAMEWORK
 
         // Seam used for unit testing. During unit testing, gets an xml element created by the test. 
         // During production get the jsnlog element from web.config.
@@ -170,7 +170,7 @@ namespace JSNLog
         }
 
         // All unit tests run under DOTNETCLI
-#if SUPPORTSXML
+#if NETFRAMEWORK
         internal static void SetJsnlogConfiguration(
             Func<XmlElement> lxe, JsnlogConfiguration jsnlogConfiguration, ILoggingAdapter logger = null)
         {

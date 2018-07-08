@@ -12,22 +12,22 @@ namespace JSNLog
 {
     public class FilterOptions: ICanCreateJsonFields 
     {
-#if SUPPORTSXML
+#if NETFRAMEWORK
         [XmlAttribute]
 #endif
         public string level { get; set; }
 
-#if SUPPORTSXML
+#if NETFRAMEWORK
         [XmlAttribute]
 #endif
         public string ipRegex { get; set; }
 
-#if SUPPORTSXML
+#if NETFRAMEWORK
         [XmlAttribute]
 #endif
         public string userAgentRegex { get; set; }
 
-#if SUPPORTSXML
+#if NETFRAMEWORK
         [XmlAttribute]
 #endif
         public string disallow { get; set; }

@@ -11,52 +11,52 @@ using JSNLog.Exceptions;
 
 namespace JSNLog
 {
-#if SUPPORTSXML
+#if NETFRAMEWORK
     [XmlRoot("jsnlog")]
 #endif
     public class JsnlogConfiguration : ICanCreateJsonFields
     {
-#if SUPPORTSXML
+#if NETFRAMEWORK
         [XmlAttribute]
 #endif
         public bool enabled { get; set; }
 
-#if SUPPORTSXML
+#if NETFRAMEWORK
         [XmlAttribute]
 #endif
         public uint maxMessages { get; set; }
 
-#if SUPPORTSXML
+#if NETFRAMEWORK
         [XmlAttribute]
 #endif
         public string defaultAjaxUrl { get; set; }
 
-#if SUPPORTSXML
+#if NETFRAMEWORK
         [XmlAttribute]
 #endif
         public string corsAllowedOriginsRegex { get; set; }
 
-#if SUPPORTSXML
+#if NETFRAMEWORK
         [XmlAttribute]
 #endif
         public string serverSideLogger { get; set; }
 
-#if SUPPORTSXML
+#if NETFRAMEWORK
         [XmlAttribute]
 #endif
         public string serverSideLevel { get; set; }
 
-#if SUPPORTSXML
+#if NETFRAMEWORK
         [XmlAttribute]
 #endif
         public string serverSideMessageFormat { get; set; }
 
-#if SUPPORTSXML
+#if NETFRAMEWORK
         [XmlAttribute]
 #endif
         public string dateFormat { get; set; }
 
-#if SUPPORTSXML
+#if NETFRAMEWORK
         [XmlAttribute]
 #endif
         public string productionLibraryPath { get; set; }
@@ -64,17 +64,17 @@ namespace JSNLog
         // Be sure to make everything Properties. While the XML serializer handles fields ok,
         // the JSON serializer used in ASP.NET 5 doesn't.
 
-#if SUPPORTSXML
+#if NETFRAMEWORK
         [XmlElement("logger")]
 #endif
         public List<Logger> loggers { get; set; }
 
-#if SUPPORTSXML
+#if NETFRAMEWORK
         [XmlElement("ajaxAppender")]
 #endif
         public List<AjaxAppender> ajaxAppenders { get; set; }
 
-#if SUPPORTSXML
+#if NETFRAMEWORK
         [XmlElement("consoleAppender")]
 #endif
         public List<ConsoleAppender> consoleAppenders { get; set; }
