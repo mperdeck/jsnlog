@@ -36,7 +36,7 @@ namespace JSNLog
         {
             StringBuilder sb = new StringBuilder();
 
-            string userIp = httpContext.GetUserIp();
+            string userIp = httpContext.Wrapper().GetUserIp();
             var configProcessor = new ConfigProcessor();
 
             // If someone passes in a null requestId via a ViewBag, then it may be converted to empty string 

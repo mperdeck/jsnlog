@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace jsnlog.Infrastructure.ContextWrapper
+namespace JSNLog
 {
     public class NetFrameworkContextWrapper: ContextWrapperCommon
     {
@@ -14,6 +14,17 @@ namespace jsnlog.Infrastructure.ContextWrapper
         public NetFrameworkContextWrapper(HttpContext httpContext)
         {
             _httpContext = httpContext;
+        }
+
+        public override string GetRequestUserIp()
+        {
+            return _httpContext.Request.UserHostAddress;
+        }
+
+        public override string GetRequestHeader(string requestHeaderName)
+        {
+            var headers = _httpContext.Request.Headers;
+            return headers[requestHeaderName];
         }
     }
 }

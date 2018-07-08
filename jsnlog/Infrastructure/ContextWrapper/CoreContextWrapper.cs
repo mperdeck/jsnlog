@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JSNLog.Infrastructure;
 using Microsoft.AspNetCore.Http;
 
-namespace jsnlog.Infrastructure.ContextWrapper
+namespace JSNLog
 {
     public class CoreContextWrapper : ContextWrapperCommon
     {
@@ -14,6 +15,17 @@ namespace jsnlog.Infrastructure.ContextWrapper
         public CoreContextWrapper(HttpContext httpContext)
         {
             _httpContext = httpContext;
+        }
+
+        public override string GetRequestUserIp()
+        {
+            return Utils.SafeToString(_httpContext.Connection.RemoteIpAddress);
+        }
+
+        public override string GetRequestHeader(string requestHeaderName)
+        {
+            var headers = _httpContext.Request.Headers;
+            return headers[requestHeaderName];
         }
     }
 }

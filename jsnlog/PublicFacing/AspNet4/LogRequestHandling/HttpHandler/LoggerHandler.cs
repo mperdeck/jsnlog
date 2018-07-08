@@ -1,4 +1,4 @@
-﻿#if !RunningAspNetCore
+﻿#if NETFRAMEWORK
 
 using System;
 using System.Collections.Generic;
@@ -36,7 +36,7 @@ namespace JSNLog
         {
             var logRequestBase = new LogRequestBase(
                 userAgent: context.Request.UserAgent,
-                userHostAddress: context.GetUserIp(),
+                userHostAddress: context.Wrapper().GetUserIp(),
                 requestId: context.GetLogRequestId(),
                 url: (context.Request.UrlReferrer ?? context.Request.Url).ToString(),
                 queryParameters: Utils.ToDictionary(context.Request.QueryString),

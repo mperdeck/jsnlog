@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace jsnlog.Infrastructure.ContextWrapper
+namespace JSNLog
 {
     public static class ContextWrapperExtensions
     {
