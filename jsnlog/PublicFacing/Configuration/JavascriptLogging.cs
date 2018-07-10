@@ -73,6 +73,11 @@ namespace JSNLog
         {
             return System.Web.HttpContext.Current.Wrapper().RequestId();
         }
+
+        public static string RequestId(this System.Web.HttpContext httpContext)
+        {
+            return httpContext.Wrapper().RequestId();
+        }
 #endif
 
         public static string RequestId(this Microsoft.AspNetCore.Http.HttpContext httpContext)
