@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard2.0</TargetFrameworks>
-    <Title>JSNLog.AspNetCore - JavaScript Logging Package for ASP.NET CORE</Title>
-    <PackageId>JSNLog.AspNetCore</PackageId>
+    <Title>JSNLog - JavaScript Logging Package for ASP.NET CORE and ASP.NET FRAMEWORK</Title>
+    <PackageId>JSNLog</PackageId>
     <PackageVersion>0.0.0</PackageVersion>
     <Authors>Mattijs Perdeck</Authors>
     <Description>JavaScript logging package that lets you log exceptions, AJAX timeouts and other client side events in your server side log. Supports ASP.NET 4.x (.Net 4.5.2+) and ASP.NET CORE (.NETStandard 2.0+).</Description>
@@ -10,8 +10,8 @@
     <PackageProjectUrl>http://jsnlog.com</PackageProjectUrl>
     <PackageIconUrl>http://jsnlog.com/Nuget/icon.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/mperdeck?tab=repositories&amp;q=jsnlog&amp;type=&amp;language=</RepositoryUrl>
-    <Copyright>Copyright 2017 Mattijs Perdeck</Copyright>
-    <PackageTags>JavaScript logging exceptions ajax log4net nlog elmah serilog ASP.NET 4.x ASP.NET CORE .NETStandard</PackageTags>
+    <Copyright>Copyright 2018 Mattijs Perdeck</Copyright>
+    <PackageTags>JavaScript logging exceptions ajax log4net nlog elmah serilog ASP.NET FRAMEWORK ASP.NET CORE .NETStandard</PackageTags>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>jsnlog.strongname.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
@@ -40,13 +40,6 @@
       <Version>9.0.1</Version>
     </PackageReference>
   </ItemGroup>
-  
-  <Target Name="LogProperties" BeforeTargets="PrepareForBuild">
-	<Message Text="----------------" Importance="high" />
-	<Message Text="TargetFramework = $(TargetFramework)" Importance="high" />
-	<Message Text="BuildFor = $(BuildFor)" Importance="high" />
-	<Message Text="----------------" Importance="high" />
-  </Target>
 
   <ItemGroup>
     <Content Include="NuGet\readme.txt">
