@@ -2,6 +2,6 @@
 JSNLog is not yet fully installed
 ==================================
 
-To finish the installation, two more steps need to be done. See
+To finish the installation, visit:
 
-http://jsnlog.com/Documentation/DownloadInstall#addtoyourpages
+http://jsnlog.com/Documentation/DownloadInstall
