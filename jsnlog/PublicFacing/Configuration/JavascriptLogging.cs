@@ -104,11 +104,10 @@ namespace JSNLog
         // If targeting Net Framework whilst running in a Core web site, this will at first be 
         // wrongly set to the CommonLogging adapter. But it then gets overwritten by 
         // SetJsnlogConfiguration when that method is called by UseJsnlog.
-        private static ILoggingAdapter _logger = new CommonLoggingAdapter();
+        private static ILoggingBatchAdapter _logger = LoggerToBatchAdapter.ToBatch(new CommonLoggingAdapter());
 #else
-        private static ILoggingAdapter _logger = null;
+        private static ILoggingBatchAdapter _logger = null;
 #endif
-
 
         internal static JsnlogConfiguration GetJsnlogConfigurationWithoutWebConfig()
         {
@@ -160,13 +159,13 @@ namespace JSNLog
 #endif
         }
 
-        internal static ILoggingAdapter GetLogger()
+        internal static ILoggingBatchAdapter GetLogger()
         {
             return _logger;
         }
 
         internal static void SetJsnlogConfigurationWithoutWebConfig(
-            JsnlogConfiguration jsnlogConfiguration, ILoggingAdapter loggingAdapter = null)
+            JsnlogConfiguration jsnlogConfiguration, ILoggingBatchAdapter loggingAdapter = null)
         {
             _jsnlogConfiguration = jsnlogConfiguration;
 
@@ -182,7 +181,7 @@ namespace JSNLog
         // All unit tests run under DOTNETCLI
 #if NETFRAMEWORK
         internal static void SetJsnlogConfiguration(
-            Func<XmlElement> lxe, JsnlogConfiguration jsnlogConfiguration, ILoggingAdapter logger = null)
+            Func<XmlElement> lxe, JsnlogConfiguration jsnlogConfiguration, ILoggingBatchAdapter logger = null)
         {
             // Always allow setting the config to null, because GetJsnlogConfiguration retrieves web.config when config is null.
             if (jsnlogConfiguration != null)
@@ -199,7 +198,7 @@ namespace JSNLog
 #endif
 
         public static void SetJsnlogConfiguration(
-            JsnlogConfiguration jsnlogConfiguration, ILoggingAdapter loggingAdapter = null)
+            JsnlogConfiguration jsnlogConfiguration, ILoggingBatchAdapter loggingAdapter)
         {
 #if NETFRAMEWORK
             // When using ASP Net CORE with a Net Framework target (such as net47), 
@@ -211,5 +210,10 @@ namespace JSNLog
         }
 
 #endregion
+
+        public static void SetJsnlogConfiguration(JsnlogConfiguration jsnlogConfiguration, ILoggingAdapter loggingAdapter = null)
+        {
+            SetJsnlogConfiguration(jsnlogConfiguration, LoggerToBatchAdapter.ToBatch(loggingAdapter));
+        }
     }
 }

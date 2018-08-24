@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using JSNLog.Infrastructure;
 using System.Net;
@@ -62,7 +62,7 @@ namespace JSNLog.LogHandling
         {
             JsnlogConfiguration jsnlogConfiguration = JavascriptLogging.GetJsnlogConfiguration();
 
-            ILoggingAdapter logger = JavascriptLogging.GetLogger();
+            ILoggingBatchAdapter logger = JavascriptLogging.GetLogger();
 
             if ((httpMethod != "POST") && (httpMethod != "OPTIONS"))
             {
@@ -102,12 +102,8 @@ namespace JSNLog.LogHandling
                 ProcessLogRequestExec(json, logRequestBase, serverSideTimeUtc, jsnlogConfiguration);
 
             // ---------------------------------
-            // Pass log data to Common Logging
-
-            foreach (FinalLogData logData in logDatas)
-            {
-                logger.Log(logData);
-            }
+            // Pass log data to Processor
+            logger.Process(logDatas);
         }
 
         /// <summary>
