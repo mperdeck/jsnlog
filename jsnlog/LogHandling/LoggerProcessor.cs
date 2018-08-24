@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using JSNLog.Infrastructure;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using JSNLog.Exceptions;
 
 namespace JSNLog.LogHandling
@@ -56,13 +57,13 @@ namespace JSNLog.LogHandling
         /// <param name="response">
         /// Empty response object. This method can add headers, etc.
         /// </param>
-        internal static void ProcessLogRequest(string json, LogRequestBase logRequestBase,
+        internal static async Task ProcessLogRequest(string json, LogRequestBase logRequestBase,
             DateTime serverSideTimeUtc,
             string httpMethod, string origin, LogResponse response)
         {
             JsnlogConfiguration jsnlogConfiguration = JavascriptLogging.GetJsnlogConfiguration();
 
-            ILoggingAdapter logger = JavascriptLogging.GetLogger();
+            ILoggingBatchAdapter logger = JavascriptLogging.GetLogger();
 
             if ((httpMethod != "POST") && (httpMethod != "OPTIONS"))
             {
@@ -102,12 +103,8 @@ namespace JSNLog.LogHandling
                 ProcessLogRequestExec(json, logRequestBase, serverSideTimeUtc, jsnlogConfiguration);
 
             // ---------------------------------
-            // Pass log data to Common Logging
-
-            foreach (FinalLogData logData in logDatas)
-            {
-                logger.Log(logData);
-            }
+            // Pass log data to Processor
+            await logger.Process(logDatas);
         }
 
         /// <summary>
