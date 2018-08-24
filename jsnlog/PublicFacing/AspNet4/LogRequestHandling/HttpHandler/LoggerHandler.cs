@@ -1,4 +1,4 @@
-﻿#if NETFRAMEWORK
+#if NETFRAMEWORK
 
 using System;
 using System.Collections.Generic;
@@ -9,6 +9,7 @@ using System.Collections.Specialized;
 using System.Xml;
 using JSNLog.LogHandling;
 using System.IO;
+using System.Threading.Tasks;
 using JSNLog.Infrastructure;
 using System.Web.SessionState;
 
@@ -25,14 +26,14 @@ namespace JSNLog
     // http://stackoverflow.com/questions/7247409/regarding-the-usage-of-irequiressessionstate
     // http://stackoverflow.com/questions/8039014/irequiressessionstate-vs-ireadonlysessionstate
 
-    public class LoggerHandler : IHttpHandler, IReadOnlySessionState
+    public class LoggerHandler : HttpTaskAsyncHandler, IReadOnlySessionState
     {
         public bool IsReusable
         {
             get { return true; }
         }
 
-        public void ProcessRequest(HttpContext context)
+        public override async Task ProcessRequestAsync(HttpContext context)
         {
             var logRequestBase = new LogRequestBase(
                 userAgent: context.Request.UserAgent,
@@ -55,7 +56,7 @@ namespace JSNLog
 
             var logResponse = new LogResponse();
 
-            LoggerProcessor.ProcessLogRequest(json, logRequestBase,
+            await LoggerProcessor.ProcessLogRequest(json, logRequestBase,
                 serverSideTimeUtc,
                 httpMethod, origin, logResponse);
 

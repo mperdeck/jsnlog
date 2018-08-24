@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JSNLog
 {
@@ -11,12 +12,14 @@ namespace JSNLog
             _adapter = adapter;
         }
 
-        public void Process(IEnumerable<FinalLogData> finalLogData)
+        public Task Process(IEnumerable<FinalLogData> finalLogData)
         {
             foreach (var data in finalLogData)
             {
                 _adapter.Log(data);
             }
+
+            return Task.FromResult(1);
         }
 
         public static ILoggingBatchAdapter ToBatch(ILoggingAdapter logger)

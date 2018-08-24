@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JSNLog
 {
     public interface ILoggingBatchAdapter
     {
-        void Process(IEnumerable<FinalLogData> finalLogData);
+        Task Process(IEnumerable<FinalLogData> finalLogData);
     }
 }

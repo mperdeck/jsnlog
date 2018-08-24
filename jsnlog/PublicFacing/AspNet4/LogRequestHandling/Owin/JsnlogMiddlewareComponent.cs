@@ -1,4 +1,4 @@
-﻿#if NETFRAMEWORK
+#if NETFRAMEWORK
 
 using System;
 using System.Collections.Generic;
@@ -39,7 +39,7 @@ namespace JSNLog
             {
                 try
                 {
-                    ProcessRequest(context);
+                    await ProcessRequest(context);
                 }
                 catch
                 {
@@ -54,7 +54,7 @@ namespace JSNLog
             await _next.Invoke(environment);
         }
 
-        private void ProcessRequest(IOwinContext context)
+        private async Task ProcessRequest(IOwinContext context)
         {
             var headers = ToDictionary(context.Request.Headers);
             string urlReferrer = headers.SafeGet("Referer");
@@ -83,7 +83,7 @@ namespace JSNLog
 
             var response = new LogResponse();
 
-            LoggerProcessor.ProcessLogRequest(json, logRequestBase,
+            await LoggerProcessor.ProcessLogRequest(json, logRequestBase,
                 serverSideTimeUtc,
                 httpMethod, origin, response);
 

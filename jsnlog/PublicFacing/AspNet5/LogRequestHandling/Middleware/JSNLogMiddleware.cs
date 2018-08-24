@@ -41,7 +41,7 @@ namespace JSNLog
             {
                 try
                 {
-                    ProcessRequest(context);
+                    await ProcessRequest(context);
                 }
                 catch (Exception e)
                 {
@@ -61,7 +61,7 @@ namespace JSNLog
             await next(context);
         }
 
-        private void ProcessRequest(HttpContext context)
+        private async Task ProcessRequest(HttpContext context)
         {
             var headers = ToDictionary(context.Request.Headers);
             string urlReferrer = headers.SafeGet("Referer");
@@ -90,7 +90,7 @@ namespace JSNLog
 
             var response = new LogResponse();
 
-            LoggerProcessor.ProcessLogRequest(json, logRequestBase,
+            await LoggerProcessor.ProcessLogRequest(json, logRequestBase,
                 serverSideTimeUtc,
                 httpMethod, origin, response);
 

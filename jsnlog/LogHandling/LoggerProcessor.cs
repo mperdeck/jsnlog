@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using JSNLog.Infrastructure;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using JSNLog.Exceptions;
 
 namespace JSNLog.LogHandling
@@ -56,7 +57,7 @@ namespace JSNLog.LogHandling
         /// <param name="response">
         /// Empty response object. This method can add headers, etc.
         /// </param>
-        internal static void ProcessLogRequest(string json, LogRequestBase logRequestBase,
+        internal static async Task ProcessLogRequest(string json, LogRequestBase logRequestBase,
             DateTime serverSideTimeUtc,
             string httpMethod, string origin, LogResponse response)
         {
@@ -103,7 +104,7 @@ namespace JSNLog.LogHandling
 
             // ---------------------------------
             // Pass log data to Processor
-            logger.Process(logDatas);
+            await logger.Process(logDatas);
         }
 
         /// <summary>
