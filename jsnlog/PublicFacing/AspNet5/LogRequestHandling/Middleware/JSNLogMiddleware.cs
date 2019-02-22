@@ -41,7 +41,7 @@ namespace JSNLog
             {
                 try
                 {
-                    ProcessRequest(context);
+                    await ProcessRequestAsync(context);
                 }
                 catch (Exception e)
                 {
@@ -61,7 +61,7 @@ namespace JSNLog
             await next(context);
         }
 
-        private void ProcessRequest(HttpContext context)
+        private async Task ProcessRequestAsync(HttpContext context)
         {
             var headers = ToDictionary(context.Request.Headers);
             string urlReferrer = headers.SafeGet("Referer");
@@ -85,7 +85,7 @@ namespace JSNLog
             string json;
             using (var reader = new StreamReader(context.Request.Body, encoding))
             {
-                json = reader.ReadToEnd();
+                json = await reader.ReadToEndAsync();
             }
 
             var response = new LogResponse();
