@@ -16,6 +16,8 @@ namespace JSNLog
         string RequestId { get; }
         string Url { get; }
 
+        LogTraceContext TraceContext { get; }
+        
         Dictionary<string, string> QueryParameters { get; }
         Dictionary<string, string> Cookies { get; }
         Dictionary<string, string> Headers { get; }

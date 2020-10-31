@@ -25,14 +25,42 @@ namespace JSNLog
 
             Object message = LogMessageHelpers.DeserializeIfPossible(finalLogData.FinalMessage);
 
-            switch (finalLogData.FinalLevel)
+            IDisposable scope = null;
+            try
             {
-                case Level.TRACE: logger.LogTrace("{logMessage}", message); break;
-                case Level.DEBUG: logger.LogDebug("{logMessage}", message); break;
-                case Level.INFO: logger.LogInformation("{logMessage}", message); break;
-                case Level.WARN: logger.LogWarning("{logMessage}", message); break;
-                case Level.ERROR: logger.LogError("{logMessage}", message); break;
-                case Level.FATAL: logger.LogCritical("{logMessage}", message); break;
+                if (finalLogData.LogRequest.TraceContext != null)
+                {
+                    scope = logger.BeginScope("Client TraceContext: TraceId={TraceId},SpanId={SpanId},ParentId={ParentId}",
+                        finalLogData.LogRequest.TraceContext.TraceId,
+                        finalLogData.LogRequest.TraceContext.SpanId,
+                        finalLogData.LogRequest.TraceContext.ParentId ?? "0000000000000000");
+                }
+
+                switch (finalLogData.FinalLevel)
+                {
+                    case Level.TRACE:
+                        logger.LogTrace("{logMessage}", message);
+                        break;
+                    case Level.DEBUG:
+                        logger.LogDebug("{logMessage}", message);
+                        break;
+                    case Level.INFO:
+                        logger.LogInformation("{logMessage}", message);
+                        break;
+                    case Level.WARN:
+                        logger.LogWarning("{logMessage}", message);
+                        break;
+                    case Level.ERROR:
+                        logger.LogError("{logMessage}", message);
+                        break;
+                    case Level.FATAL:
+                        logger.LogCritical("{logMessage}", message);
+                        break;
+                }
+            }
+            finally
+            {
+                scope?.Dispose();
             }
         }
     }

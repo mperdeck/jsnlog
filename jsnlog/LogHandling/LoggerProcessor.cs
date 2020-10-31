@@ -10,21 +10,34 @@ namespace JSNLog.LogHandling
     internal class LoggerProcessor
     {
         /// <summary>
-        /// The log data sent in a single log request from the client.
-        /// It is expected that this list has 2 items:
-        /// * the requestId (key: r)
-        /// * the array with log items (key: lg)
+        /// Individual log item
         /// </summary>
-        
         private class LogRequestSingleMsg
         {
             public string m {get;set;}
             public string n {get;set;}
+            public LogRequestSingleTraceContext c { get; set; }
             public string l {get;set;}
             public string t {get;set;}
             public string u { get; set; }
         }
 
+        /// <summary>
+        /// W3C Trace Context (distributed trace-id, span-id, and parent span-id)
+        /// </summary>
+        private class LogRequestSingleTraceContext
+        {
+            public string d {get;set;}
+            public string p {get;set;}
+            public string s {get;set;}
+        }
+
+        /// <summary>
+        /// The log data sent in a single log request from the client.
+        /// It is expected that this list has 2 items:
+        /// * the requestId (key: r)
+        /// * the array with log items (key: lg)
+        /// </summary>
         private class LogRequestData
         {
             public string r {get;set;}
@@ -198,6 +211,12 @@ namespace JSNLog.LogHandling
             {
             }
 
+            LogTraceContext logTraceContext = null;
+            if (logItem.c != null)
+            {
+                logTraceContext = new LogTraceContext(logItem.c.d, logItem.c.s, logItem.c.p);
+            }
+
             // ----------------
 
             string jsonmessage = "";
@@ -208,7 +227,7 @@ namespace JSNLog.LogHandling
 
             // ----------------
 
-            var logRequest = new LogRequest(message, logger, level, utcDate, entryId, jsonmessage, logRequestBase);
+            var logRequest = new LogRequest(message, logger, level, utcDate, entryId, jsonmessage, logRequestBase, logTraceContext);
             var loggingEventArgs = new LoggingEventArgs(logRequest) 
             {
                 Cancel = false,
