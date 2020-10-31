@@ -11,9 +11,12 @@ namespace JSNLog
         public DateTime UtcDate { get; private set; }
         public string EntryId { get; private set; }
         public string JsonMessage { get; private set; }
+        
+        public LogTraceContext TraceContext { get; }
 
         public LogRequest(string message, string logger, string level,
-            DateTime utcDate, string entryId, string jsonMessage, LogRequestBase logRequestBase)
+            DateTime utcDate, string entryId, string jsonMessage, LogRequestBase logRequestBase,
+            LogTraceContext traceContext)
             : base(logRequestBase)
         {
             Message = message;
@@ -22,6 +25,7 @@ namespace JSNLog
             UtcDate = utcDate;
             EntryId = entryId;
             JsonMessage = jsonMessage;
+            TraceContext = traceContext;
         }
 
         public override string ToString()
