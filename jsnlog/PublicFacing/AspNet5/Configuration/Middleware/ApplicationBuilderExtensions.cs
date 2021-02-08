@@ -16,11 +16,12 @@ namespace JSNLog
         /// <param name="builder"></param>
         /// <param name="loggingAdapter"></param>
         /// <param name="jsnlogConfiguration"></param>
-        public static void UseJSNLog(this IApplicationBuilder builder,
+        /// <returns>The configured IApplicationBuilder instance</returns>
+        public static IApplicationBuilder UseJSNLog(this IApplicationBuilder builder,
             ILoggingAdapter loggingAdapter, JsnlogConfiguration jsnlogConfiguration = null)
         {
             JavascriptLogging.SetJsnlogConfiguration(jsnlogConfiguration, loggingAdapter);
-            builder.UseMiddleware<JSNLogMiddleware>();
+            return builder.UseMiddleware<JSNLogMiddleware>();
         }
     }
 }
