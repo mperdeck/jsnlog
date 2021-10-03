@@ -33,32 +33,44 @@ namespace JSNLog
         {
             // If this is a logging request (based on its url), do the logging and don't pass on the request
             // to the rest of the pipeline.
-
-            // If there is an exception whilst processing the log request (for example when the connection with the
-            // Internet disappears), try to log that exception. If that goes wrong too, fail silently.
             string url = context.Request.GetDisplayUrl();
             if (LoggingUrlHelpers.IsLoggingUrl(url))
             {
-                try
-                {
-                    await ProcessRequestAsync(context);
-                }
-                catch (Exception e)
-                {
-                    try
-                    {
-                        _logger.LogInformation($"JSNLog: Exception while processing log request -  {e}");
-                    }
-                    catch
-                    {
-                    }
-                }
-
+                await ProcessLoggerRequestAsync(context);
                 return;
             }
 
             // It was not a logging request
             await next(context);
+
+            JsnlogConfiguration jsnlogConfiguration = JavascriptLogging.GetJsnlogConfiguration();
+            if (jsnlogConfiguration.insertJsnlogHtmlInAllHtmlResponse)
+            {
+
+            }
+        }
+
+        private async Task ProcessLoggerRequestAsync(HttpContext context)
+        {
+            // If there is an exception whilst processing the log request (for example when the connection with the
+            // Internet disappears), try to log that exception. If that goes wrong too, fail silently.
+
+            try
+            {
+                await ProcessRequestAsync(context);
+            }
+            catch (Exception e)
+            {
+                try
+                {
+                    _logger.LogInformation($"JSNLog: Exception while processing log request -  {e}");
+                }
+                catch
+                {
+                }
+            }
+
+            return;
         }
 
         private async Task ProcessRequestAsync(HttpContext context)
