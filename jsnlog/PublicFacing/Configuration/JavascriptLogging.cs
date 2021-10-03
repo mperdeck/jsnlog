@@ -112,11 +112,13 @@ namespace JSNLog
 
         internal static JsnlogConfiguration GetJsnlogConfigurationWithoutWebConfig()
         {
-            // If there is no configuration, return the default configuration
+            // If there is no configuration, return the default configuration.
+            // In that case, assume the user is after the minimal configuration, where the JSNLog middleware
+            // automatically inserts the jsnlog script tag and config js code in all html responses from the server.
 
             if (_jsnlogConfiguration == null)
             {
-                return new JsnlogConfiguration();
+                return new JsnlogConfiguration() { insertJsnlogHtmlInAllHtmlResponse = true };
             }
 
             _jsnlogConfiguration.Validate();

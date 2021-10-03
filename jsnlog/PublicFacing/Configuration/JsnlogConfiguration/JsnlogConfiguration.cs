@@ -61,6 +61,11 @@ namespace JSNLog
 #endif
         public string productionLibraryPath { get; set; }
 
+#if NETFRAMEWORK
+        [XmlAttribute]
+#endif
+        public bool insertJsnlogHtmlInAllHtmlResponse { get; set; }
+
         // Be sure to make everything Properties. While the XML serializer handles fields ok,
         // the JSON serializer used in ASP.NET 5 doesn't.
 
