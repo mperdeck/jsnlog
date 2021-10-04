@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
 	  <!--No longer supports net452;-->
-	  <TargetFrameworks>netstandard2.1;netcoreapp3.1;net5.0</TargetFrameworks>
+	  <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;net5.0</TargetFrameworks>
     <Title>JSNLog - JavaScript Logging Package for ASP.NET CORE</Title>
     <PackageId>JSNLog</PackageId>
     <PackageVersion>0.0.0</PackageVersion>
     <Authors>Mattijs Perdeck</Authors>
     <Description>
-		JavaScript logging package that lets you log exceptions, AJAX timeouts and other client side events in your server side log. Supports .Net Core 2.1+ only.
+		JavaScript logging package that lets you log exceptions, AJAX timeouts and other client side events in your server side log. Supports .Net Core 2.0+ only.
 
         For ASP.NET 4.x (.Net 4.5.2+), install version 2.30.0 of this package.
 	</Description>
