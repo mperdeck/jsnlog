@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if !NETFRAMEWORK
+
+using System;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -161,3 +163,5 @@ namespace JSNLog.Infrastructure
         public override long Position { get; set; }
     }
 }
+
+#endif

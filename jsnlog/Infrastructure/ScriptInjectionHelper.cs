@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if !NETFRAMEWORK
+
+using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,3 +68,5 @@ namespace JSNLog.Infrastructure
             array.AsSpan().LastIndexOf(sought);
     }
 }
+
+#endif

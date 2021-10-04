@@ -10,6 +10,7 @@ using Microsoft.Extensions.Primitives;
 using JSNLog.Infrastructure;
 using JSNLog.LogHandling;
 using Microsoft.Extensions.Logging;
+using WebSite.App_Code;
 
 #if !NETCORE2
 using Microsoft.AspNetCore.Http.Features;
@@ -52,6 +53,12 @@ namespace JSNLog
                 await _next(context);
             }
 
+#if NETFRAMEWORK
+            throw new Exception(
+                "Automatic insertion of JSNLog into HTML pages is not supported in netstandard2.0. " +
+                $"Upgrade to netstandard2.1 or for other options see {SiteConstants.InstallPageUrl}");
+#else
+
             // Use a custom StreamWrapper to rewrite output on Write/WriteAsync, so it contains
             // the jsnlog.js script tag and JavaScript for jsnlog configuration
 
@@ -69,6 +76,7 @@ namespace JSNLog
 
                 await _next(context);
             }
+#endif
         }
 
         private async Task ProcessLoggerRequestAsync(HttpContext context)

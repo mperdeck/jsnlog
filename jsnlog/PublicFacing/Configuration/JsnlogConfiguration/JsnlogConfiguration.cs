@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using JSNLog.Infrastructure;
 using JSNLog.ValueInfos;
 using JSNLog.Exceptions;
+using WebSite.App_Code;
 
 namespace JSNLog
 {
@@ -64,7 +65,29 @@ namespace JSNLog
 #if NETFRAMEWORK
         [XmlAttribute]
 #endif
-        public bool insertJsnlogHtmlInAllHtmlResponse { get; set; }
+
+        private bool _insertJsnlogHtmlInAllHtmlResponse = false;
+
+        public bool insertJsnlogHtmlInAllHtmlResponse 
+        {
+            get
+            {
+                return _insertJsnlogHtmlInAllHtmlResponse;
+            }
+            set
+            {
+#if NETFRAMEWORK
+                if (value)
+                {
+                    throw new Exception(
+                        "The JsnlogConfiguration.insertJsnlogHtmlInAllHtmlResponse property cannot be set to true in netstandard2.0. " +
+                        $"Upgrade to netstandard2.1 or for other options see {SiteConstants.InstallPageUrl}");
+                }
+#endif
+
+                _insertJsnlogHtmlInAllHtmlResponse = value;
+            }
+        }
 
         // Be sure to make everything Properties. While the XML serializer handles fields ok,
         // the JSON serializer used in ASP.NET 5 doesn't.
