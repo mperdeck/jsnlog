@@ -3,3 +3,15 @@
 <div class="text-center">
     <h1>jsnlog.test.net3</h1>
 </div>
+
+<script>
+    window.addEventListener("load", function () {
+        console.log('window load');
+
+        // Log a string to the server
+        JL().fatal("fatal log message");
+
+        // Cause a run time error that will be caught and logged to the server
+        x = thisvariabledoesnotexist;
+    });
+</script>
