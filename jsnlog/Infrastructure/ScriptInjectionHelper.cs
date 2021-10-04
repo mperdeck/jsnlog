@@ -51,17 +51,15 @@ namespace JSNLog.Infrastructure
                 return;
             }
 
-            var endIndex = index + _bodyBytes.Length;
-
             // Write pre-marker buffer
-            await baseStream.WriteAsync(buffer, 0, index - 1);
+            await baseStream.WriteAsync(buffer, 0, index);
 
             // Write the injected script
             var scriptBytes = Encoding.UTF8.GetBytes(scriptToInject);
             await baseStream.WriteAsync(scriptBytes, 0, scriptBytes.Length);
 
             // Write the rest of the buffer/HTML doc
-            await baseStream.WriteAsync(buffer, endIndex, buffer.Length - endIndex);
+            await baseStream.WriteAsync(buffer, index, buffer.Length - index);
         }
 
         static int LastIndexOf<T>(this T[] array, T[] sought) where T : IEquatable<T> =>
