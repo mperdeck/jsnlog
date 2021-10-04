@@ -50,7 +50,9 @@ namespace JSNLog
             JsnlogConfiguration jsnlogConfiguration = JavascriptLogging.GetJsnlogConfiguration();
             if (!jsnlogConfiguration.insertJsnlogHtmlInAllHtmlResponse)
             {
+                // If automatic insertion is not on, simply call the rest of the pipeline and return.
                 await _next(context);
+                return;
             }
 
 #if NETFRAMEWORK
