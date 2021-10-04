@@ -63,15 +63,7 @@ namespace JSNLog
 
         private static JsnlogConfiguration _jsnlogConfiguration = null;
 
-#if NETFRAMEWORK
-        // If targeting Net Framework whilst running in a Core web site, this will at first be 
-        // wrongly set to the CommonLogging adapter. But it then gets overwritten by 
-        // SetJsnlogConfiguration when that method is called by UseJsnlog.
-        private static ILoggingAdapter _logger = new CommonLoggingAdapter();
-#else
         private static ILoggingAdapter _logger = null;
-#endif
-
 
         internal static JsnlogConfiguration GetJsnlogConfigurationWithoutWebConfig()
         {
