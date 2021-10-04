@@ -118,7 +118,11 @@ namespace JSNLog
 
             if (_jsnlogConfiguration == null)
             {
-                return new JsnlogConfiguration() { insertJsnlogHtmlInAllHtmlResponse = true };
+                return new JsnlogConfiguration() 
+                { 
+                    insertJsnlogHtmlInAllHtmlResponse = true,
+                    productionLibraryPath = WebSite.App_Code.SiteConstants.CdnJsDownloadUrl
+                };
             }
 
             _jsnlogConfiguration.Validate();
