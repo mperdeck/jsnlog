@@ -29,6 +29,10 @@ namespace WebSite.App_Code
         public static string CdnJsDownloadUrl = "https://cdnjs.cloudflare.com/ajax/libs/jsnlog/" + CurrentJSNLogJsVersion + "/jsnlog.min.js";
         public static string CdnJsScriptTag = @"<script crossorigin=""anonymous"" src=""" + CdnJsDownloadUrl + @"""></script>";
 
+        public const string JsnlogHost = "https://jsnlog.com";
+        public const string InstallPageUrl = JsnlogHost + "/Documentation/DownloadInstall";
+
+
         // This causes NuGet to search for all packages with "JSNLog" - so the user will see
         // JSNLog.NLog, etc. as well.
         public const string NugetDownloadUrl = "https://www.nuget.org/packages?q=jsnlog";
