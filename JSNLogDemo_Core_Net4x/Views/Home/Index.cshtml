@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div>
+    <h1>JSNLogDemo_Core_Net4x</h1>
+	<p>
+	Log messages are sent to server the moment this page is opened.
+	</p>
+	<p>
+	The code generating the log messages is in js/jsnlogdemo.js.
+	</p>
+	<p>
+	JSNLog sets the <i>window.onerror</i> handler when it loads, so uncaught JavaScript exceptions are sent to your server side log.
+	However, it will only do that if <i>window.onerror</i> has not already been set 
+	(<a href="http://jsnlog.com/Documentation/HowTo/ExceptionLogging">details</a>). That way, if you are setting your own onerror handler, it won't override that.  
+	</p>
+    </div>
+
+    <script src="/js/jsnlogdemo.js"></script>
+	
+	
+    <jl-javascript-logger-definitions/>
+
+    <script src="/lib/jsnlog/jsnlog.js"></script>
+
+</body>
+</html>
+
+
+
