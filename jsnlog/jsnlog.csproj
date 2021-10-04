@@ -13,7 +13,7 @@
 	</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>http://jsnlog.com</PackageProjectUrl>
-    <PackageIconUrl>http://jsnlog.com/Nuget/icon.png</PackageIconUrl>
+    <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/mperdeck?tab=repositories&amp;q=jsnlog&amp;type=&amp;language=</RepositoryUrl>
     <Copyright>Copyright 2021 Mattijs Perdeck</Copyright>
     <PackageTags>JavaScript logging exceptions ajax log4net nlog elmah serilog ASP.NET CORE .NETStandard</PackageTags>
@@ -22,7 +22,7 @@
     <DelaySign>False</DelaySign>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net452'">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <DefineConstants>NETFRAMEWORK</DefineConstants>
   </PropertyGroup>
 
@@ -41,7 +41,7 @@
     </ItemGroup>
 
 	<!--assumes net452 no longer used-->
-	<ItemGroup Condition="'$(TargetFramework)' != 'netstandard2.1'">
+	<ItemGroup Condition="('$(TargetFramework)' != 'netstandard2.0') AND ('$(TargetFramework)' != 'netstandard2.1')">
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 
@@ -68,6 +68,7 @@
       <Pack>true</Pack>
       <PackagePath>readme.txt</PackagePath>
     </Content>
+	  <None Include="NuGet\icon.png" Pack="true" PackagePath=""/>
   </ItemGroup>  
 </Project>
 
