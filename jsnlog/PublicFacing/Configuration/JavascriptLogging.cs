@@ -13,31 +13,6 @@ namespace JSNLog
 {
     public static class JavascriptLogging
     {
-#if NETFRAMEWORK
-        /// <summary>
-        /// Call this method for every request to generate a script tag with JavaScript
-        /// that configures all loggers and appenders, based on the jsnlog element in the web.config.
-        /// </summary>
-        /// <param name="requestId">
-        /// Request Id to be included in all logging requests sent by jsnlog.js from the client.
-        /// If null, a new request id will be generated (the same one that will be returned from RequestId method).
-        /// </param>
-        /// <returns>
-        /// A script tag with the JavaScript to do all configuration.
-        /// </returns>
-        public static string Configure(string requestId = null)
-        {
-            return System.Web.HttpContext.Current.Configure(requestId);
-        }
-
-        public static string Configure(this System.Web.HttpContext httpContext, string requestId = null)
-        {
-            return Configure(
-                httpContext.Wrapper().GetUserIp(),
-                string.IsNullOrEmpty(requestId) ? httpContext.Wrapper().GetRequestId() : requestId);
-        }
-#endif
-
         public static string Configure(this Microsoft.AspNetCore.Http.HttpContext httpContext, string requestId = null)
         {
             return Configure(
@@ -68,18 +43,6 @@ namespace JSNLog
         /// The site can call this method to get the request id for use in server side logging.
         /// </summary>
         /// <returns></returns>
-#if NETFRAMEWORK
-        public static string RequestId()
-        {
-            return System.Web.HttpContext.Current.Wrapper().RequestId();
-        }
-
-        public static string RequestId(this System.Web.HttpContext httpContext)
-        {
-            return httpContext.Wrapper().RequestId();
-        }
-#endif
-
         public static string RequestId(this Microsoft.AspNetCore.Http.HttpContext httpContext)
         {
             return httpContext.Wrapper().RequestId();
@@ -131,39 +94,9 @@ namespace JSNLog
         }
 
         // All unit tests run under DOTNETCLI
-#if NETFRAMEWORK
-
-        // Seam used for unit testing. During unit testing, gets an xml element created by the test. 
-        // During production get the jsnlog element from web.config.
-        //
-        // >>>>>>
-        // Note that calling this method with a given xe is a way to cache that xe's config
-        // for the next call to GetJsnlogConfiguration().
-        internal static JsnlogConfiguration GetJsnlogConfiguration(Func<XmlElement> lxe)
-        {
-            if (_jsnlogConfiguration == null)
-            {
-                XmlElement xe = lxe();
-                if (xe != null)
-                {
-                    _jsnlogConfiguration = XmlHelpers.DeserialiseXml<JsnlogConfiguration>(xe);
-                }
-            }
-
-            return GetJsnlogConfigurationWithoutWebConfig();
-        }
-
-#endif
-
         public static JsnlogConfiguration GetJsnlogConfiguration()
         {
-#if NETFRAMEWORK
-            // When using ASP Net CORE with a Net Framework target (such as net47), 
-            // assume XmlHelpers.RootElement() will always be null.
-            return GetJsnlogConfiguration(() => XmlHelpers.RootElement());
-#else
             return GetJsnlogConfigurationWithoutWebConfig();
-#endif
         }
 
         internal static ILoggingAdapter GetLogger()
@@ -207,13 +140,7 @@ namespace JSNLog
         public static void SetJsnlogConfiguration(
             JsnlogConfiguration jsnlogConfiguration, ILoggingAdapter loggingAdapter = null)
         {
-#if NETFRAMEWORK
-            // When using ASP Net CORE with a Net Framework target (such as net47), 
-            // assume XmlHelpers.RootElement() will always be null.
-            SetJsnlogConfiguration(() => XmlHelpers.RootElement(), jsnlogConfiguration, loggingAdapter);
-#else
             SetJsnlogConfigurationWithoutWebConfig(jsnlogConfiguration, loggingAdapter);
-#endif
         }
 
 #endregion

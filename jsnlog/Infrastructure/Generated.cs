@@ -1,5 +1,4 @@
 // Generated.cs gets copied from Generated.cs.template
-// During the copy, 3.0.0 is replaced by the actual version.
 
 namespace WebSite.App_Code
 {
