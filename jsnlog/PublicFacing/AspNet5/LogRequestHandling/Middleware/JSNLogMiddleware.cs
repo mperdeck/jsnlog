@@ -11,6 +11,10 @@ using JSNLog.Infrastructure;
 using JSNLog.LogHandling;
 using Microsoft.Extensions.Logging;
 
+#if !NETCORE2
+using Microsoft.AspNetCore.Http.Features;
+#endif
+
 // Be sure to leave the namespace at JSNLog.
 namespace JSNLog
 {
@@ -20,12 +24,12 @@ namespace JSNLog
     /// </summary>
     public class JSNLogMiddleware
     {
-        private readonly RequestDelegate next;
+        private readonly RequestDelegate _next;
         private readonly ILogger _logger;
 
         public JSNLogMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
         {
-            this.next = next;
+            _next = next;
             _logger = loggerFactory.CreateLogger<JSNLogMiddleware>();
         }
 
@@ -41,12 +45,29 @@ namespace JSNLog
             }
 
             // It was not a logging request
-            await next(context);
 
             JsnlogConfiguration jsnlogConfiguration = JavascriptLogging.GetJsnlogConfiguration();
-            if (jsnlogConfiguration.insertJsnlogHtmlInAllHtmlResponse)
+            if (!jsnlogConfiguration.insertJsnlogHtmlInAllHtmlResponse)
             {
+                await _next(context);
+            }
 
+            // Use a custom StreamWrapper to rewrite output on Write/WriteAsync, so it contains
+            // the jsnlog.js script tag and JavaScript for jsnlog configuration
+
+            string injectedCode = context.Configure(null);
+
+            using (var filteredResponse = new ResponseStreamWrapper(context.Response.Body, context, injectedCode))
+            {
+#if !NETCORE2
+                // Use new IHttpResponseBodyFeature for abstractions of pilelines/streams etc.
+                // For 3.x this works reliably while direct Response.Body was causing random HTTP failures
+                context.Features.Set<IHttpResponseBodyFeature>(new StreamResponseBodyFeature(filteredResponse));
+#else
+                context.Response.Body = filteredResponse;
+#endif
+
+                await _next(context);
             }
         }
 
