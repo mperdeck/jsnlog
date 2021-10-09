@@ -65,13 +65,13 @@ namespace JSNLog
         [XmlAttribute]
 #endif
 
-        private bool _insertJsnlogHtmlInAllHtmlResponse = false;
+        private bool _insertJsnlogInHtmlResponses = false;
 
-        public bool insertJsnlogHtmlInAllHtmlResponse 
+        public bool insertJsnlogInHtmlResponses 
         {
             get
             {
-                return _insertJsnlogHtmlInAllHtmlResponse;
+                return _insertJsnlogInHtmlResponses;
             }
             set
             {
@@ -79,12 +79,12 @@ namespace JSNLog
                 if (value)
                 {
                     throw new Exception(
-                        "The JsnlogConfiguration.insertJsnlogHtmlInAllHtmlResponse property cannot be set to true in netstandard2.0. " +
+                        "The JsnlogConfiguration.insertJsnlogInHtmlResponses property cannot be set to true in netstandard2.0. " +
                         $"Upgrade to netstandard2.1 or for other options see {SiteConstants.InstallPageUrl}");
                 }
 #endif
 
-                _insertJsnlogHtmlInAllHtmlResponse = value;
+                _insertJsnlogInHtmlResponses = value;
             }
         }
 

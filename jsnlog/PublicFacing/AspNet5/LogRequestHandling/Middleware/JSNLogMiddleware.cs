@@ -47,7 +47,7 @@ namespace JSNLog
             // It was not a logging request
 
             JsnlogConfiguration jsnlogConfiguration = JavascriptLogging.GetJsnlogConfiguration();
-            if (!jsnlogConfiguration.insertJsnlogHtmlInAllHtmlResponse)
+            if (!jsnlogConfiguration.insertJsnlogInHtmlResponses)
             {
                 // If automatic insertion is not on, simply call the rest of the pipeline and return.
                 await _next(context);
