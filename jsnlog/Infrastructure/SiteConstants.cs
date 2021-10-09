@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WebSite.App_Code
+namespace JSNLog.Infrastructure
 {
-    // Copied from web site project.
+    // Moved from web site project.
     //TODO: move web site project to jsnlog solution, have only one copy of this file
     public static class SiteConstants
     {

@@ -1,6 +1,6 @@
 // Generated.cs gets copied from Generated.cs.template
 
-namespace WebSite.App_Code
+namespace JSNLog.Infrastructure
 {
     public static class Generated
     {

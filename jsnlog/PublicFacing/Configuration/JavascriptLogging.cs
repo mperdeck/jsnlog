@@ -76,7 +76,7 @@ namespace JSNLog
                 return new JsnlogConfiguration() 
                 { 
                     insertJsnlogHtmlInAllHtmlResponse = true,
-                    productionLibraryPath = WebSite.App_Code.SiteConstants.CdnJsDownloadUrl
+                    productionLibraryPath = SiteConstants.CdnJsDownloadUrl
                 };
             }
 

@@ -8,7 +8,6 @@ using System.Xml.Serialization;
 using JSNLog.Infrastructure;
 using JSNLog.ValueInfos;
 using JSNLog.Exceptions;
-using WebSite.App_Code;
 
 namespace JSNLog
 {

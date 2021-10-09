@@ -10,7 +10,6 @@ using Microsoft.Extensions.Primitives;
 using JSNLog.Infrastructure;
 using JSNLog.LogHandling;
 using Microsoft.Extensions.Logging;
-using WebSite.App_Code;
 
 #if !NETCORE2
 using Microsoft.AspNetCore.Http.Features;
