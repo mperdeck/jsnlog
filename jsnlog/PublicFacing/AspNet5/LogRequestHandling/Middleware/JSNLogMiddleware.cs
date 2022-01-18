@@ -16,6 +16,11 @@ using jsnlog.Infrastructure;
 using Microsoft.AspNetCore.Http.Features;
 #endif
 
+/// <summary>
+/// This class based on 
+/// https://weblog.west-wind.com/posts/2020/Mar/29/Content-Injection-with-Response-Rewriting-in-ASPNET-Core-3x
+/// </summary>
+
 // Be sure to leave the namespace at JSNLog.
 namespace JSNLog
 {
@@ -50,7 +55,7 @@ namespace JSNLog
             JsnlogConfiguration jsnlogConfiguration = JavascriptLogging.GetJsnlogConfiguration();
             if (!jsnlogConfiguration.insertJsnlogInHtmlResponses)
             {
-                // If automatic insertion is not on, simply call the rest of the pipeline and return.
+                // If automatic insertion is not enabled, simply call the rest of the pipeline and return.
                 await _next(context);
                 return;
             }
@@ -60,13 +65,28 @@ namespace JSNLog
                 "Automatic insertion of JSNLog into HTML pages is not supported in netstandard2.0. " +
                 $"Upgrade to netstandard2.1 or for other options see {SiteConstants.InstallPageUrl}");
 #else
+            // Check other content for HTML
+            await HandleHtmlInjection(context);
+#endif
+        }
 
-            // Use a custom StreamWrapper to rewrite output on Write/WriteAsync, so it contains
-            // the jsnlog.js script tag and JavaScript for jsnlog configuration
+#if !NETFRAMEWORK
+        /// <summary>
+        /// Inspects the responses for all requests for HTML documents
+        /// and injects the JavaScript to configure JSNLog client side.
+        ///
+        /// Uses a wrapper stream to wrap the response and examine
+        /// only text/html requests - other content is passed through
+        /// as is.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        private async Task HandleHtmlInjection(HttpContext context)
+        {
+            var path = context.Request.Path.Value;
 
-            string injectedCode = context.Configure(null);
-
-            using (var filteredResponse = new ResponseStreamWrapper(context.Response.Body, context, injectedCode))
+            // Use a custom StreamWrapper to rewrite output on Write/WriteAsync
+            using (var filteredResponse = new ResponseStreamWrapper(context.Response.Body, context))
             {
 #if !NETCORE2
                 // Use new IHttpResponseBodyFeature for abstractions of pilelines/streams etc.
@@ -78,7 +98,7 @@ namespace JSNLog
 
                 await _next(context);
             }
-#endif
         }
+#endif
     }
 }
