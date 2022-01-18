@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Collections.Specialized;
+using Microsoft.Extensions.Primitives;
 
 namespace JSNLog.Infrastructure
 {
@@ -36,7 +37,7 @@ namespace JSNLog.Infrastructure
         }
 #endif
 
-        public static Dictionary<string, string> ToDictionary(IEnumerable<KeyValuePair<string, string>> nameValueCollection)
+        public static Dictionary<string, string> ToDictionary(this IEnumerable<KeyValuePair<string, string>> nameValueCollection)
         {
             var result = new Dictionary<string, string>();
 
@@ -53,6 +54,17 @@ namespace JSNLog.Infrastructure
             T value;
             dictionary.TryGetValue(key, out value);
             return value;
+        }
+
+        public static Dictionary<string, string> ToDictionary(this IEnumerable<KeyValuePair<string, StringValues>> values)
+        {
+            var result = new Dictionary<string, string>();
+            foreach (var kvp in values)
+            {
+                result[kvp.Key] = kvp.Value.ToString();
+            }
+
+            return result;
         }
 
         public static string SafeToString<T>(this T obj)
