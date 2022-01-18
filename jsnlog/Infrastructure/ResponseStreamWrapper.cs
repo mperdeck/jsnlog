@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Http;
 namespace JSNLog.Infrastructure
 {
     /// <summary>
-    /// Wraps the Response Stream to inject the given script into all HTML pages just before the </body> tag.
+    /// Wraps the Response Stream to inject the JSNLog config script into all HTML pages just before the </body> tag.
     ///
     /// This class based on 
     /// https://weblog.west-wind.com/posts/2020/Mar/29/Content-Injection-with-Response-Rewriting-in-ASPNET-Core-3x
@@ -23,19 +23,19 @@ namespace JSNLog.Infrastructure
     {
         private Stream _baseStream;
         private HttpContext _context;
-        private string _scriptToInject;
-
         private bool _isContentLengthSet = false;
 
-        public ResponseStreamWrapper(Stream baseStream, HttpContext context, string scriptToInject)
+        public ResponseStreamWrapper(Stream baseStream, HttpContext context)
         {
             _baseStream = baseStream;
             _context = context;
             CanWrite = true;
-            _scriptToInject = scriptToInject;
         }
 
-        public override void Flush() => _baseStream.Flush();
+        public override void Flush()
+        {
+            _baseStream.Flush();
+        }
 
         public override Task FlushAsync(CancellationToken cancellationToken)
         {
@@ -69,56 +69,71 @@ namespace JSNLog.Infrastructure
             IsHtmlResponse(forceReCheck: true);
         }
 
-#if !NETFRAMEWORK
         public override void Write(ReadOnlySpan<byte> buffer)
         {
             _baseStream.Write(buffer);
         }
-#endif
 
         public override void WriteByte(byte value)
         {
             _baseStream.WriteByte(value);
         }
 
-
         public override void Write(byte[] buffer, int offset, int count)
         {
             if (IsHtmlResponse())
             {
-                ScriptInjectionHelper.InjectScriptAsync(buffer, offset, count, _context, _baseStream, _scriptToInject)
+                ScriptInjectionHelper.InjectScriptAsync(buffer.AsMemory(offset, count), _context, _baseStream)
                                               .GetAwaiter()
                                               .GetResult();
             }
             else
-                _baseStream.Write(buffer, offset, count);
+            {
+                _baseStream?.Write(buffer, offset, count);
+            }
         }
 
-        public override async Task WriteAsync(byte[] buffer, int offset, int count,
+        public override Task WriteAsync(byte[] buffer, int offset, int count,
                                               CancellationToken cancellationToken)
+        {
+            return WriteAsync(buffer.AsMemory(offset, count), cancellationToken).AsTask();
+        }
+
+        public override async ValueTask WriteAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken = default)
         {
             if (IsHtmlResponse())
             {
-                await ScriptInjectionHelper.InjectScriptAsync(
-                    buffer, offset, count,
-                    _context, _baseStream, _scriptToInject);
+                await ScriptInjectionHelper.InjectScriptAsync(buffer, _context, _baseStream);
             }
             else
-                await _baseStream.WriteAsync(buffer, offset, count, cancellationToken);
+            {
+                if (_baseStream != null)
+                    await _baseStream.WriteAsync(buffer, cancellationToken);
+            }
         }
 
-
         private bool? _isHtmlResponse = null;
-        
 
         private bool IsHtmlResponse(bool forceReCheck = false)
         {
             if (!forceReCheck && _isHtmlResponse != null)
                 return _isHtmlResponse.Value;
 
+            // we need to check if the active request is still valid
+            // this can fail if we're in the middle of an error response
+            // or url rewrite in which case we can't intercept
+            if (_context?.Response == null)
+                return false;
+
+            // Requirements for script injection:
+            // * has to have result body
+            // * 200 or 500 response
+            // * text/html response
+            // * UTF-8 formatted (explicit or no charset)
+
             _isHtmlResponse =
                 _context.Response?.Body != null &&
-                _context.Response.StatusCode == 200 &&
+                (_context.Response.StatusCode == 200 || _context.Response.StatusCode == 500) &&
                 _context.Response.ContentType != null &&
                 _context.Response.ContentType.Contains("text/html", StringComparison.OrdinalIgnoreCase) &&
                 (_context.Response.ContentType.Contains("utf-8", StringComparison.OrdinalIgnoreCase) ||
@@ -134,27 +149,74 @@ namespace JSNLog.Infrastructure
             {
                 _context.Response.Headers.ContentLength = null;
                 _isContentLengthSet = true;
-            } 
-                
+            }
+
             return _isHtmlResponse.Value;
         }
 
-#if !NETFRAMEWORK
-        public override ValueTask WriteAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken = default)
-        {
-            return _baseStream.WriteAsync(buffer, cancellationToken);
-        }
-#endif
-
         protected override void Dispose(bool disposing)
         {
-            _baseStream?.Dispose();
+            //_baseStream?.Dispose();
             _baseStream = null;
             _context = null;
 
             base.Dispose(disposing);
         }
 
+        #region Byte Helpers
+        /// <summary>
+        /// Tries to find a
+        /// </summary>
+        /// <param name="buffer">byte array to be searched</param>
+        /// <param name="bufferToFind">byte to find</param>
+        /// <returns></returns>
+        public static int IndexOfByteArray(byte[] buffer, byte[] bufferToFind)
+        {
+            if (buffer.Length == 0 || bufferToFind.Length == 0)
+                return -1;
+
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                if (buffer[i] == bufferToFind[0])
+                {
+                    bool innerMatch = true;
+                    for (int j = 1; j < bufferToFind.Length; j++)
+                    {
+                        if (buffer[i + j] != bufferToFind[j])
+                        {
+                            innerMatch = false;
+                            break;
+                        }
+                    }
+                    if (innerMatch)
+                        return i;
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// Returns an index into a byte array to find a string in the byte array.
+        /// Exact match using the encoding provided or UTF-8 by default.
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <param name="stringToFind"></param>
+        /// <param name="encoding"></param>
+        /// <returns></returns>
+        public static int IndexOfByteArray(byte[] buffer, string stringToFind, Encoding encoding = null)
+        {
+            if (encoding == null)
+                encoding = Encoding.UTF8;
+
+            if (buffer.Length == 0 || string.IsNullOrEmpty(stringToFind))
+                return -1;
+
+            var bytes = encoding.GetBytes(stringToFind);
+
+            return IndexOfByteArray(buffer, bytes);
+        }
+        #endregion
 
         public override bool CanRead { get; }
         public override bool CanSeek { get; }
