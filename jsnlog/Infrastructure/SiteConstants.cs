@@ -19,8 +19,8 @@ namespace JSNLog.Infrastructure
         public const string HandlerExtension = ".logger";
         public const string DefaultDefaultAjaxUrl = "/jsnlog" + HandlerExtension;
 
-        public const string DemoGithubUrl = "https://github.com/mperdeck/jsnlogSimpleWorkingDemos/tree/master/jsnlogSimpleWorkingDemos";
-        public const string DemoGithubUrlNetCore = DemoGithubUrl + "/NetCore";
+        public const string DemoGithubUrl = "https://github.com/mperdeck/jsnlogSimpleWorkingDemos/tree/master";
+        public const string DemoGithubUrlNetCore = DemoGithubUrl + "/jsnlogSimpleWorkingDemos/NetCore";
         public const string DemoAspNetCoreGithubUrl = DemoGithubUrlNetCore + "/JSNLogDemo_Core_NetCoreApp2";
         public const string AngularJsDemoGithubUrl = "https://github.com/mperdeck/JSNLog.AngularJS";
         public const string Angular2CoreDemoGithubUrl = "https://github.com/mperdeck/jsnlog.AngularCoreDemo";
