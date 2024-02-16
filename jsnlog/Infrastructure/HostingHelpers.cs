@@ -9,9 +9,6 @@ namespace JSNLog.Infrastructure
     {
         public static string VirtualToAbsolutePath(string virtualPath)
         {
-#if NETFRAMEWORK
-            return System.Web.VirtualPathUtility.ToAbsolute(virtualPath);
-#else
             //TODO: virtual path translation for DNX.
             // Probably get an instance of IApplicationEnvironment and then get the info from there.
             // If the application is in a virtual directory,
@@ -24,7 +21,6 @@ namespace JSNLog.Infrastructure
 
             // For now, just remove ~ from the left of the url
             return virtualPath.TrimStart('~');
-#endif
         }
     }
 }

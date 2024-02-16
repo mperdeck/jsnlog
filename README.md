@@ -1,14 +1,16 @@
 # JSNLog
 
-This package logs JavaScript errors, AJAX timeouts and other *client* side events in your *server* side log.
+This JavaScript logging package logs JavaScript exceptions, AJAX timeouts and other *client* side events in your *server* side log.
 
-There are editions for:
+Editions for:
 
-* **.Net** - logs client side events to Elmah, Log4Net, NLog, Serilog and Common.Logging ([Documentation](http://jsnlog.com); [NuGet](https://www.nuget.org/packages?q=jsnlog))
+* **.Net Core** - logs client side events to loggers added during startup ([Documentation](http://jsnlog.com?version=netjs); [NuGet](https://www.nuget.org/packages/JSNLog/))
 
-* **Node.Js** - logs both client side and server side events to any Winston transport ([Documentation](http://nodejs.jsnlog.com); [npm (client side)](https://www.npmjs.com/package/jsnlog); [npm (server side)](https://www.npmjs.com/package/jsnlog-nodejs)).
+* **.Net Framework** - logs client side events to Elmah, Log4Net, NLog, Serilog and Common.Logging ([Documentation](http://jsnlog.com?version=netframeworkjs); [NuGet](https://www.nuget.org/packages?q=jsnlog))
 
-* **Plain JavaScript** - logs client side events to a server ([Documentation](http://js.jsnlog.com); [npm](https://www.npmjs.com/package/jsnlog)). 
+* **Node.Js** - logs both client side and server side events to any Winston transport ([Documentation](http://jsnlog.com?version=nodejs); [npm (client side)](https://www.npmjs.com/package/jsnlog); [npm (server side)](https://www.npmjs.com/package/jsnlog-nodejs)).
+
+* **Plain JavaScript** - logs client side events to a server ([Documentation](http://jsnlog.com?version=js); [npm](https://www.npmjs.com/package/jsnlog)). 
 
 [License: MIT](https://github.com/mperdeck/jsnlog/blob/master/LICENSE.md)
 

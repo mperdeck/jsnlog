@@ -1,51 +1,60 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net452;netstandard2.0</TargetFrameworks>
-    <Title>JSNLog - JavaScript Logging Package for ASP.NET CORE and ASP.NET FRAMEWORK</Title>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;net5.0</TargetFrameworks>
+    <Title>JSNLog - JavaScript Logging Package for ASP.NET CORE 2.0+</Title>
     <PackageId>JSNLog</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageVersion>0.0.0</PackageVersion>
     <Authors>Mattijs Perdeck</Authors>
-    <Description>JavaScript logging package that lets you log exceptions, AJAX timeouts and other client side events in your server side log. Supports ASP.NET 4.x (.Net 4.5.2+) and ASP.NET CORE (.NETStandard 2.0+).</Description>
+    <Description>
+		JavaScript logging package that lets you log exceptions, AJAX timeouts and other client side events in your server side log. Supports .Net Core 2.0+ only.
+
+        For ASP.NET 4.x (.Net 4.5.2+), install version 2.30.0 of this package.
+	</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>http://jsnlog.com</PackageProjectUrl>
-    <PackageIconUrl>http://jsnlog.com/Nuget/icon.png</PackageIconUrl>
+    <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/mperdeck?tab=repositories&amp;q=jsnlog&amp;type=&amp;language=</RepositoryUrl>
-    <Copyright>Copyright 2018 Mattijs Perdeck</Copyright>
-    <PackageTags>JavaScript logging exceptions ajax log4net nlog elmah serilog ASP.NET FRAMEWORK ASP.NET CORE .NETStandard</PackageTags>
+    <Copyright>Copyright 2023 Mattijs Perdeck</Copyright>
+    <PackageTags>JavaScript logging exceptions ajax ASP.NET CORE .NETStandard</PackageTags>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>jsnlog.strongname.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net452'">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <DefineConstants>NETFRAMEWORK</DefineConstants>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="1.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="1.1.3" />
-  </ItemGroup>
-  
-  <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
-    <Reference Include="System.Web" />
-    <PackageReference Include="Common.Logging">
-      <Version>3.3.1</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Owin">
-      <Version>2.1.0</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>9.0.1</Version>
-    </PackageReference>
-  </ItemGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+		<DefineConstants>NETCORE2</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+		<DefineConstants>NETCORE3</DefineConstants>
+	</PropertyGroup>
+
+    <ItemGroup Condition="('$(TargetFramework)' == 'netstandard2.0') or ('$(TargetFramework)' == 'netstandard2.1')">
+		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.*" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.*" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.*" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.1.*" />
+    </ItemGroup>
+
+	<ItemGroup Condition="('$(TargetFramework)' != 'netstandard2.0') AND ('$(TargetFramework)' != 'netstandard2.1')">
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+	</ItemGroup>
 
   <ItemGroup>
     <Content Include="NuGet\readme.txt">
       <Pack>true</Pack>
       <PackagePath>readme.txt</PackagePath>
     </Content>
-  </ItemGroup>  
+	  <None Include="NuGet\icon.png" Pack="true" PackagePath=""/>
+  </ItemGroup>
 </Project>
 

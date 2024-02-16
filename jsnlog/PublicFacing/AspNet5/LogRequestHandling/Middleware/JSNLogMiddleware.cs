@@ -10,6 +10,16 @@ using Microsoft.Extensions.Primitives;
 using JSNLog.Infrastructure;
 using JSNLog.LogHandling;
 using Microsoft.Extensions.Logging;
+using jsnlog.Infrastructure;
+
+#if !NETCORE2
+using Microsoft.AspNetCore.Http.Features;
+#endif
+
+/// <summary>
+/// This class based on 
+/// https://weblog.west-wind.com/posts/2020/Mar/29/Content-Injection-with-Response-Rewriting-in-ASPNET-Core-3x
+/// </summary>
 
 // Be sure to leave the namespace at JSNLog.
 namespace JSNLog
@@ -20,12 +30,12 @@ namespace JSNLog
     /// </summary>
     public class JSNLogMiddleware
     {
-        private readonly RequestDelegate next;
+        private readonly RequestDelegate _next;
         private readonly ILogger _logger;
 
         public JSNLogMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
         {
-            this.next = next;
+            _next = next;
             _logger = loggerFactory.CreateLogger<JSNLogMiddleware>();
         }
 
@@ -33,117 +43,62 @@ namespace JSNLog
         {
             // If this is a logging request (based on its url), do the logging and don't pass on the request
             // to the rest of the pipeline.
-
-            // If there is an exception whilst processing the log request (for example when the connection with the
-            // Internet disappears), try to log that exception. If that goes wrong too, fail silently.
             string url = context.Request.GetDisplayUrl();
             if (LoggingUrlHelpers.IsLoggingUrl(url))
             {
-                try
-                {
-                    await ProcessRequestAsync(context);
-                }
-                catch (Exception e)
-                {
-                    try
-                    {
-                        _logger.LogInformation($"JSNLog: Exception while processing log request -  {e}");
-                    }
-                    catch
-                    {
-                    }
-                }
-
+                await LoggerRequestHelpers.ProcessLoggerRequestAsync(context, _logger);
                 return;
             }
 
             // It was not a logging request
-            await next(context);
-        }
 
-        private async Task ProcessRequestAsync(HttpContext context)
-        {
-            var headers = ToDictionary(context.Request.Headers);
-            string urlReferrer = headers.SafeGet("Referer");
-            string url = context.Request.GetDisplayUrl();
-
-            var logRequestBase = new LogRequestBase(
-                userAgent: headers.SafeGet("User-Agent"),
-                userHostAddress: context.Wrapper().GetUserIp(),
-                requestId: context.Wrapper().GetLogRequestId(),
-                url: (urlReferrer ?? url).ToString(),
-                queryParameters: ToDictionary(context.Request.Query),
-                cookies: ToDictionary(context.Request.Cookies),
-                headers: headers);
-
-            DateTime serverSideTimeUtc = DateTime.UtcNow;
-            string httpMethod = context.Request.Method;
-            string origin = headers.SafeGet("Origin");
-
-            Encoding encoding = HttpHelpers.GetEncoding(headers.SafeGet("Content-Type"));
-
-            string json;
-            using (var reader = new StreamReader(context.Request.Body, encoding))
+            JsnlogConfiguration jsnlogConfiguration = JavascriptLogging.GetJsnlogConfiguration();
+            if (!jsnlogConfiguration.insertJsnlogInHtmlResponses)
             {
-                json = await reader.ReadToEndAsync();
+                // If automatic insertion is not enabled, simply call the rest of the pipeline and return.
+                await _next(context);
+                return;
             }
 
-            var response = new LogResponse();
-
-            LoggerProcessor.ProcessLogRequest(json, logRequestBase,
-                serverSideTimeUtc,
-                httpMethod, origin, response);
-
-            // Send dummy response. That way, the log request will not remain "pending"
-            // in eg. Chrome dev tools.
-            //
-            // This must be given a MIME type of "text/plain"
-            // Otherwise, the browser may try to interpret the empty string as XML.
-            // When the user uses Firefox, and right clicks on the page and chooses "Inspect Element",
-            // then in that debugger's console it will say "no element found".
-            // See
-            // http://www.acnenomor.com/307387p1/how-do-i-setup-my-ajax-post-request-to-prevent-no-element-found-on-empty-response
-            // http://stackoverflow.com/questions/975929/firefox-error-no-element-found/976200#976200
-
-            ToAspNet5Response(response, context.Response);
-            context.Response.ContentType = "text/plain";
-            context.Response.ContentLength = 0;
+#if NETFRAMEWORK
+            throw new Exception(
+                "Automatic insertion of JSNLog into HTML pages is not supported in netstandard2.0. " +
+                $"Upgrade to netstandard2.1 or for other options see {SiteConstants.InstallPageUrl}");
+#else
+            // Check other content for HTML
+            await HandleHtmlInjection(context);
+#endif
         }
 
-        private void ToAspNet5Response(LogResponse logResponse, HttpResponse owinResponse)
+#if !NETFRAMEWORK
+        /// <summary>
+        /// Inspects the responses for all requests for HTML documents
+        /// and injects the JavaScript to configure JSNLog client side.
+        ///
+        /// Uses a wrapper stream to wrap the response and examine
+        /// only text/html requests - other content is passed through
+        /// as is.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        private async Task HandleHtmlInjection(HttpContext context)
         {
-            owinResponse.StatusCode = logResponse.StatusCode;
+            var path = context.Request.Path.Value;
 
-            foreach (KeyValuePair<string, string> kvp in logResponse.Headers)
+            // Use a custom StreamWrapper to rewrite output on Write/WriteAsync
+            using (var filteredResponse = new ResponseStreamWrapper(context.Response.Body, context))
             {
-                owinResponse.Headers[kvp.Key] = kvp.Value;
+#if !NETCORE2
+                // Use new IHttpResponseBodyFeature for abstractions of pilelines/streams etc.
+                // For 3.x this works reliably while direct Response.Body was causing random HTTP failures
+                context.Features.Set<IHttpResponseBodyFeature>(new StreamResponseBodyFeature(filteredResponse));
+#else
+                context.Response.Body = filteredResponse;
+#endif
+
+                await _next(context);
             }
         }
-
-        private Dictionary<string, string> ToDictionary(IEnumerable<KeyValuePair<string, string>> values)
-        {
-            var result = new Dictionary<string, string>();
-            foreach (var kvp in values)
-            {
-                result[kvp.Key] = kvp.Value.ToString();
-            }
-
-            return result;
-        }
-
-        private Dictionary<string, string> ToDictionary(IEnumerable<KeyValuePair<string, StringValues>> values)
-        {
-            var result = new Dictionary<string, string>();
-            foreach (var kvp in values)
-            {
-                result[kvp.Key] = kvp.Value.ToString();
-            }
-
-            return result;
-        }
-
-
-
-        
+#endif
     }
 }

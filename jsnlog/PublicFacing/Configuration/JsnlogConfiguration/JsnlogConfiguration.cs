@@ -61,6 +61,33 @@ namespace JSNLog
 #endif
         public string productionLibraryPath { get; set; }
 
+#if NETFRAMEWORK
+        [XmlAttribute]
+#endif
+
+        private bool _insertJsnlogInHtmlResponses = false;
+
+        public bool insertJsnlogInHtmlResponses 
+        {
+            get
+            {
+                return _insertJsnlogInHtmlResponses;
+            }
+            set
+            {
+#if NETFRAMEWORK
+                if (value)
+                {
+                    throw new Exception(
+                        "The JsnlogConfiguration.insertJsnlogInHtmlResponses property cannot be set to true in netstandard2.0. " +
+                        $"Upgrade to netstandard2.1 or for other options see {SiteConstants.InstallPageUrl}");
+                }
+#endif
+
+                _insertJsnlogInHtmlResponses = value;
+            }
+        }
+
         // Be sure to make everything Properties. While the XML serializer handles fields ok,
         // the JSON serializer used in ASP.NET 5 doesn't.
 

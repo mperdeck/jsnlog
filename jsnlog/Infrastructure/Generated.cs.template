@@ -1,0 +1,12 @@
+﻿// Generated.cs gets copied from Generated.cs.template
+
+namespace JSNLog.Infrastructure
+{
+    public static class Generated
+    {
+        public static string Version { get { return "__Version__";  } }
+        public static string FrameworkVersion { get { return "__FrameworkVersion__"; } }
+        public static string JSNLogJsVersion { get { return "__JSNLogJsVersion__"; } }
+    }
+}
+
