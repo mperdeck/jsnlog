@@ -19,6 +19,7 @@ namespace JSNLog.Infrastructure
         public const string HandlerExtension = ".logger";
         public const string DefaultDefaultAjaxUrl = "/jsnlog" + HandlerExtension;
 
+        public const string DemoGithubUrlNetFramework = "https://github.com/mperdeck/jsnlogSimpleWorkingDemos.NetFramework/tree/main";
         public const string DemoGithubUrl = "https://github.com/mperdeck/jsnlogSimpleWorkingDemos/tree/master";
         public const string DemoGithubUrlNetCore = DemoGithubUrl + "/jsnlogSimpleWorkingDemos/NetCore";
         public const string DemoAspNetCoreGithubUrl = DemoGithubUrlNetCore + "/JSNLogDemo_Core_NetCoreApp2";
