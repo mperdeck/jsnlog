@@ -39,6 +39,11 @@ namespace JSNLog
 #if NETFRAMEWORK
         [XmlAttribute]
 #endif
+        public string corsAllowedHeaders { get; set; }
+
+#if NETFRAMEWORK
+        [XmlAttribute]
+#endif
         public string serverSideLogger { get; set; }
 
 #if NETFRAMEWORK

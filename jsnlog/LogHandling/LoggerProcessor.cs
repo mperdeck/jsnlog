@@ -88,9 +88,15 @@ namespace JSNLog.LogHandling
                 // Only if the origin is allowed send CORS headers
                 if (originIsAllowed)
                 {
+                    string allowedHeaders = "jsnlog-requestid, content-type";
+                    if (!string.IsNullOrWhiteSpace(jsnlogConfiguration.corsAllowedHeaders))
+                    {
+                        allowedHeaders += "," + jsnlogConfiguration.corsAllowedHeaders.Trim().Trim(',');
+                    }
+
                     response.AppendHeader("Access-Control-Max-Age", Constants.CorsAccessControlMaxAgeInSeconds.ToString());
                     response.AppendHeader("Access-Control-Allow-Methods", "POST");
-                    response.AppendHeader("Access-Control-Allow-Headers", "jsnlog-requestid, content-type");
+                    response.AppendHeader("Access-Control-Allow-Headers", allowedHeaders);
                 }
 
                 return;
