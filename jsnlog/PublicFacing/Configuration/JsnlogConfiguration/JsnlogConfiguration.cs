@@ -11,9 +11,7 @@ using JSNLog.Exceptions;
 
 namespace JSNLog
 {
-#if NETFRAMEWORK
     [XmlRoot("jsnlog")]
-#endif
     public class JsnlogConfiguration : ICanCreateJsonFields
     {
 #if NETFRAMEWORK
