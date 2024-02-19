@@ -6,18 +6,6 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-// Get rid of the below attributes, because 1) When compiling for NetStandard they get copied from somewhere and the compiler 
-// complains the below are duplicates; and 2) they are not used anyway.
-
-//[assembly: AssemblyTitle("JSNLog")]
-//[assembly: AssemblyDescription("")]
-//[assembly: AssemblyConfiguration("")]
-//[assembly: AssemblyCompany("")]
-//[assembly: AssemblyProduct("JSNLog")]
-//[assembly: AssemblyCopyright("Copyright ©  2016")]
-//[assembly: AssemblyTrademark("")]
-//[assembly: AssemblyCulture("")]
-
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
 // COM, set the ComVisible attribute to true on that type.
