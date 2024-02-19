@@ -35,7 +35,9 @@ using System.Runtime.InteropServices;
 // Have to add the public key of JSNLog.Tests (which lives in the JSNLog.Tests solution), 
 // because this JSNLog project is strongly signed.
 //
-// See https://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.internalsvisibletoattribute(v=vs.110).aspx 
+// See
+// https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.internalsvisibletoattribute?view=net-8.0&redirectedfrom=MSDN 
+// https://learn.microsoft.com/en-us/dotnet/fundamentals/runtime-libraries/system-runtime-compilerservices-internalsvisibletoattribute
 // To get the public key, in Visual Studio command window, run:
 // sn -p jsnlog.tests.strongname.snk public.out
 // sn -tp public.out
