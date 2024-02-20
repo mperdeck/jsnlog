@@ -13,44 +13,28 @@ namespace JSNLog
 {
     public class Appender : FilterOptions, ICanCreateJsonFields 
     {
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public string name { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public string sendWithBufferLevel { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public string storeInBufferLevel { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public uint bufferSize { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public uint batchSize { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public uint maxBatchSize { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public uint batchTimeout { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public uint sendTimeout { get; set; }
 
         public Appender()

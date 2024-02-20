@@ -11,63 +11,43 @@ using JSNLog.Exceptions;
 
 namespace JSNLog
 {
+    // JsnlogConfiguration has to still have the XmlAttribute attributes, because the unit tests
+    // still use XML definitions. Once those are replaced by C# definitions, the Xml attributes
+    // can go.
     [XmlRoot("jsnlog")]
     public class JsnlogConfiguration : ICanCreateJsonFields
     {
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public bool enabled { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public uint maxMessages { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public string defaultAjaxUrl { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public string corsAllowedOriginsRegex { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public string corsAllowedHeaders { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public string serverSideLogger { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public string serverSideLevel { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public string serverSideMessageFormat { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public string dateFormat { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public string productionLibraryPath { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
-
         private bool _insertJsnlogInHtmlResponses = false;
 
         public bool insertJsnlogInHtmlResponses 
@@ -94,19 +74,13 @@ namespace JSNLog
         // Be sure to make everything Properties. While the XML serializer handles fields ok,
         // the JSON serializer used in ASP.NET 5 doesn't.
 
-#if NETFRAMEWORK
         [XmlElement("logger")]
-#endif
         public List<Logger> loggers { get; set; }
 
-#if NETFRAMEWORK
         [XmlElement("ajaxAppender")]
-#endif
         public List<AjaxAppender> ajaxAppenders { get; set; }
 
-#if NETFRAMEWORK
         [XmlElement("consoleAppender")]
-#endif
         public List<ConsoleAppender> consoleAppenders { get; set; }
 
         public JsnlogConfiguration()

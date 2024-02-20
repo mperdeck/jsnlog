@@ -13,19 +13,13 @@ namespace JSNLog
 {
     public class Logger : FilterOptions, ICanCreateJsonFields, ICanCreateElement
     {
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public string appenders { get; set; }
 
-#if NETFRAMEWORK
         [XmlAttribute]
-#endif
         public string name { get; set; }
 
-#if NETFRAMEWORK
         [XmlElement("onceOnly")]
-#endif
         public List<OnceOnlyOptions> onceOnlies { get; set; }
 
         // --------------------------------------------------------
