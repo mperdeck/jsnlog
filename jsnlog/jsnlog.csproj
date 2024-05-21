@@ -39,14 +39,11 @@
 		<PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.*" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.*" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.1.*" />
+		<PackageReference Include="System.Text.Json" Version="4.6.0" />
     </ItemGroup>
 
 	<ItemGroup Condition="('$(TargetFramework)' != 'netstandard2.0') AND ('$(TargetFramework)' != 'netstandard2.1')">
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
 	</ItemGroup>
 
   <ItemGroup>
@@ -54,7 +51,7 @@
       <Pack>true</Pack>
       <PackagePath>readme.txt</PackagePath>
     </Content>
-	  <None Include="NuGet\icon.png" Pack="true" PackagePath=""/>
+	  <None Include="NuGet\icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
 </Project>
 

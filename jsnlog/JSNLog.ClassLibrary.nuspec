@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <metadata minClientVersion="2.8.6">
-    <id>JSNLog.ClassLibrary</id>   
+    <id>JSNLog.ClassLibrary</id>
     <version>0.0.0</version>
     <title>JSNLog.ClassLibrary - Class library for JSNLog</title>
     <authors>Matt Perdeck</authors>
@@ -19,7 +19,7 @@
 				* JSNLog
 				* CommonLogging - a copy of JSNLog, except for the id.
 				* JSNLog.ClassLibrary.nuspec - does not copy contents files or the readme.txt file, and does not depend on WebActivatorEx. For use in class libraries.
-		
+
                The CommonLogging NuGet package and the JSNLog package have the same dependencies
                and files. This because CommonLogging is purely a convenience package - JSNLog
                already builds on Common.Logging, so it is not really needed. Only reason it is there
@@ -30,9 +30,9 @@
                in the other as well. -->
         <dependency id="Common.Logging" version="3.3.1" />
 
-        <!-- 
-		    The below definition causes NuGet to load version 2.1.0 if no version of 
-		    Microsoft.Owin has already been installed (it tries to install the LOWEST 
+        <!--
+		    The below definition causes NuGet to load version 2.1.0 if no version of
+		    Microsoft.Owin has already been installed (it tries to install the LOWEST
 		    possible version of a package).
 
 		    This will work fine in a .Net 4.0 project. Note that versions past 2.1.0 no longer support .Net 4.0.
@@ -41,9 +41,9 @@
 		    JSNLog project in its references) to the version that is actually installed in the project.
         -->
         <dependency id="Microsoft.Owin" version="2.1.0" />
-        
+
         <!-- Use low minimum version to make installation easier with old code -->
-        <dependency id="Newtonsoft.Json" version="9.0.1" />
+        <dependency id="System.Text.Json" version="4.6.0" />
       </group>
     </dependencies>
   </metadata>

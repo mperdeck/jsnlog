@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace JSNLog.Infrastructure
 {
@@ -8,14 +8,14 @@ namespace JSNLog.Infrastructure
     {
         public static T DeserializeJson<T>(string json)
         {
-            T result = JsonConvert.DeserializeObject<T>(json);
+            T result = JsonSerializer.Deserialize<T>(json);
             return result;
         }
 
         public static bool IsPotentialJson(string msg)
         {
             string trimmedMsg = msg.Trim();
-            return (trimmedMsg.StartsWith("{") && trimmedMsg.EndsWith("}")); 
+            return (trimmedMsg.StartsWith("{") && trimmedMsg.EndsWith("}"));
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace JSNLog.Infrastructure
         /// <summary>
         /// Takes a log message and finds out if it contains a valid JSON string.
         /// If so, returns it unchanged.
-        /// 
+        ///
         /// Otherwise, surrounds the string with quotes (") and escapes the string for JavaScript.
         /// </summary>
         /// <param name="ms"></param>
